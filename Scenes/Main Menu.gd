@@ -80,10 +80,14 @@ func _on_username_text_changed(new_text:String):
 
 
 func _on_h_slider_2_value_changed(value:float):
-	Globals.volumen = value
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), Globals.volumen)
+	Globals.timer = value
+	if get_parent().get_node("Map/Timer") == null:
+		return
+	get_parent().get_node("Map/Timer").wait_time = Globals.timer
+	Data.save_file()
 
 
 func _on_volumen_value_changed(value:float):
-	Globals.timer = value
-	get_parent().get_node("Map/Timer").wait_time = Globals.timer
+	Globals.volumen = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
+	Data.save_file()

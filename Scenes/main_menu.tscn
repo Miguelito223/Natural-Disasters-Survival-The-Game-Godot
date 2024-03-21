@@ -45,6 +45,7 @@ theme_override_font_sizes/font_size = 50
 text = "Exit"
 
 [node name="Multiplayer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 651.0
 offset_top = 194.0
@@ -103,7 +104,6 @@ theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Settings" type="VBoxContainer" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 602.0
 offset_top = 243.0
@@ -126,6 +126,26 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing"
 
+[node name="Volumen Label" type="Label" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Volumen:"
+
+[node name="Volumen" type="HSlider" parent="Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="TIme label" type="Label" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "time of any 
+disaster/weather:"
+
+[node name="Time" type="HSlider" parent="Settings"]
+layout_mode = 2
+max_value = 3600.0
+
 [node name="Back" type="Button" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -145,4 +165,6 @@ text = "Back"
 [connection signal="toggled" from="Settings/fps" to="." method="_on_fps_toggled"]
 [connection signal="toggled" from="Settings/vsync" to="." method="_on_vsycn_toggled"]
 [connection signal="toggled" from="Settings/antialiasing" to="." method="_on_antialiasing_toggled"]
+[connection signal="value_changed" from="Settings/Volumen" to="." method="_on_volumen_value_changed"]
+[connection signal="value_changed" from="Settings/Time" to="." method="_on_h_slider_2_value_changed"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]

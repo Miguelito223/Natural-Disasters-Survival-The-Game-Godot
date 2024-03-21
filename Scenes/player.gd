@@ -5,7 +5,7 @@ var id = 1
 var SPEED = 0
 const SPEED_RUN = 10.0
 const SPEED_WALK = 5.0
-const JUMP_VELOCITY = 4.5
+const JUMP_VELOCITY = 7
 const SENSIBILITY = 0.07
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -97,6 +97,11 @@ func _process(delta):
 			damage(alpha_hot + alpha_cold)	
 		elif alpha_hot != 0:	
 			damage(alpha_hot + alpha_cold)
+
+	if Globals.Wind_speed > 0:
+		await $"Wind sound".finished
+		$"Wind sound".play()
+		
 			
 
 	

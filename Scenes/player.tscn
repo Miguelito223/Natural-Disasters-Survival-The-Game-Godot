@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=16 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
+[ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
 [ext_resource type="Script" path="res://Scenes/Pause_menu.gd" id="2_vj7s0"]
 [ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
-[ext_resource type="AudioStream" uid="uid://dygyu1tp6uplp" path="res://Sounds/heartbeat.wav" id="5_8ukqg"]
+[ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xeewm"]
@@ -118,6 +119,9 @@ trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_v3hyh")
 draw_pass_1 = SubResource("RibbonTrailMesh_lwh6c")
 
+[node name="Wind sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_8ny0w")
+
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)
 
@@ -187,6 +191,26 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing"
 
+[node name="Volumen Label" type="Label" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Volumen:"
+
+[node name="Volumen" type="HSlider" parent="Pause menu/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="TIme label" type="Label" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "time of any 
+disaster/weather:"
+
+[node name="Time" type="HSlider" parent="Pause menu/Settings"]
+layout_mode = 2
+max_value = 3600.0
+
 [node name="Back" type="Button" parent="Pause menu/Settings"]
 process_mode = 3
 layout_mode = 2
@@ -245,7 +269,7 @@ texture = ExtResource("4_ni53t")
 
 [node name="Heartbeat" type="AudioStreamPlayer" parent="Hud"]
 process_mode = 3
-stream = ExtResource("5_8ukqg")
+stream = ExtResource("6_vn0ni")
 
 [node name="Chat" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -273,12 +297,12 @@ offset_right = 281.0
 offset_bottom = 800.0
 text = "Enter"
 
-[node name="Wind sound" type="AudioStreamPlayer" parent="."]
-
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Exit" to="Pause menu" method="_on_exit_pressed"]
 [connection signal="toggled" from="Pause menu/Settings/fps" to="Pause menu" method="_on_fps_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/vsync" to="Pause menu" method="_on_vsync_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/antialiasing" to="Pause menu" method="_on_antialiasing_toggled"]
+[connection signal="value_changed" from="Pause menu/Settings/Volumen" to="Pause menu" method="_on_volumen_value_changed"]
+[connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]
 [connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]

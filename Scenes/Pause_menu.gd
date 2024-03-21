@@ -99,3 +99,20 @@ func _input(event):
 
 		if event.pressed and event.keycode == KEY_ESCAPE:
 			pause()
+
+func _on_time_value_changed(value:float):
+	Globals.timer = value
+
+	if get_parent().get_parent().get_node("Timer") == null:
+		return
+
+	get_parent().get_parent().get_node("Timer").wait_time = Globals.timer
+	Data.save_file()
+
+func _on_volumen_value_changed(value:float):
+	Globals.volumen = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
+	Data.save_file()
+
+
+
