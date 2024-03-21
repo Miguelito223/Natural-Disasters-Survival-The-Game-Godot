@@ -87,10 +87,10 @@ func _process(delta):
 	Temperature = clamp(Temperature, -275.5, 275.5)
 	Humidity = clamp(Humidity, 0, 100)
 
-	Temperature = lerp(Temperature, Temperature_target, 0.005)
-	Humidity = lerp(Humidity, Humidity_target, 0.005)
+	Temperature = lerpf(Temperature, Temperature_target, 0.005)
+	Humidity = lerpf(Humidity, Humidity_target, 0.005)
 	Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-	Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
+	Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
 
 	sync_temp.rpc(Temperature)
 	sync_humidity.rpc(Humidity)
