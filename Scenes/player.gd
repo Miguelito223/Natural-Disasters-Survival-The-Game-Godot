@@ -150,4 +150,4 @@ func _unhandled_input(event):
 
 
 func setspawnpos():
-	self.position = Vector3(0,5,0)
+	self.position = Vector3(1024,100,1024)
