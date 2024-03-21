@@ -14,6 +14,8 @@ func _ready():
 	$Settings/fps.button_pressed = Globals.FPS
 	$Settings/vsync.button_pressed = Globals.vsync
 	$Settings/antialiasing.button_pressed = Globals.antialiasing
+	$Settings/Volumen.value = Globals.volumen
+	$Settings/Time.value = Globals.timer
 
 
 func _on_ip_text_changed(new_text:String):
@@ -56,11 +58,13 @@ func _on_fps_toggled(toggled_on:bool):
 
 func _on_vsycn_toggled(toggled_on:bool):
 	Globals.vsync = toggled_on
+	ProjectSettings.set_setting("display/window/vsync/vsync_mode", Globals.antialiasing)
 	Data.save_file()
 
 
 func _on_antialiasing_toggled(toggled_on:bool):
 	Globals.antialiasing = toggled_on
+	ProjectSettings.set_setting("rendering/anti_aliasing/screen_space_roughness_limiter/enabled", Globals.antialiasing)
 	Data.save_file()
 
 
@@ -73,3 +77,13 @@ func _on_back_pressed():
 func _on_username_text_changed(new_text:String):
 	Globals.username = new_text
 	Data.save_file()
+
+
+func _on_h_slider_2_value_changed(value:float):
+	Globals.volumen = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), Globals.volumen)
+
+
+func _on_volumen_value_changed(value:float):
+	Globals.timer = value
+	get_parent().get_node("Map/Timer").wait_time = Globals.timer

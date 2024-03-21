@@ -9,6 +9,8 @@ func save_file():
 		"Vsync": Globals.vsync,
 		"Antialasing": Globals.antialiasing,
 		"FPS": Globals.FPS,
+		"Volumen": 0,
+		"Timer": 60,
 		"IP": Globals.ip,
 		"Port": Globals.port,
 		"Username": Globals.username,
@@ -45,6 +47,8 @@ func load_file():
 		Globals.FPS = data.FPS
 		Globals.vsync = data.Vsync
 		Globals.antialiasing = data.Antialasing
+		Globals.volumen = data.Volumen
+		Globals.timer = data.Timer
 		Globals.ip = data.IP
 		Globals.port = data.Port
 		Globals.username = data.Username

@@ -26,6 +26,9 @@ func _process(_delta):
 	$Heart.scale = Vector2(w,h)
 	$Heart.position = Vector2(x,y)
 
+	if Globals.FPS:
+		$FPS.text = "FPS: " + str(Engine.get_frames_per_second())
+
 	if Time.get_unix_time_from_system() >= NextHeartSoundTime:
 		$Heartbeat.play()
 		NextHeartSoundTime = Time.get_unix_time_from_system() + freq/1

@@ -11,6 +11,8 @@ var Enet: ENetMultiplayerPeer
 var vsync = false
 var FPS = false
 var antialiasing = false
+var volumen = 0
+var timer = 60
 
 #Globals Weather
 var Temperature = 23
