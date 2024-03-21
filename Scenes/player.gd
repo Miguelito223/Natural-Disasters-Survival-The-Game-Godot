@@ -58,8 +58,6 @@ func _ready():
 	if not is_multiplayer_authority():
 		return
 
-	rain_node.emitting = false
-
 	setspawnpos()
 
 	get_node("Pause menu").visible = false

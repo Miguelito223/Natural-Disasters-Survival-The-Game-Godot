@@ -110,6 +110,7 @@ material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3052p")
+emitting = false
 amount = 100
 randomness = 1.0
 visibility_aabb = AABB(-10, -4, -10, 20, 20, 20)
@@ -263,6 +264,8 @@ offset_top = 769.0
 offset_right = 281.0
 offset_bottom = 800.0
 text = "Enter"
+
+[node name="Wind sound" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Exit" to="Pause menu" method="_on_exit_pressed"]
