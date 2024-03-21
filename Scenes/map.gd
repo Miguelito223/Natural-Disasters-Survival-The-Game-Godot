@@ -175,6 +175,7 @@ func is_linghting_storm():
 
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
+	Globals.pressure_target = randi_range(8000,9000)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
@@ -191,12 +192,13 @@ func is_meteor_shower():
 
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
+	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	for i in range(5000, 20000):
 		var meteor = meteor_scene.instantiate()
-		meteor.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
 		await get_tree().create_timer(5).timeout
 
@@ -219,6 +221,7 @@ func is_sun():
 
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
+	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
@@ -228,6 +231,7 @@ func is_cloud():
 
 	Globals.Temperature_target =  randi_range(20,25)
 	Globals.Humidity_target = randi_range(10,30)
+	Globals.pressure_target = randi_range(9000,10000)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target =  randi_range(0, 10)
 
@@ -237,6 +241,7 @@ func is_raining():
 
 	Globals.Temperature_target =   randi_range(10,20)
 	Globals.Humidity_target =  randi_range(20,40)
+	Globals.pressure_target = randi_range(9000,9020)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 20)
 
@@ -246,6 +251,7 @@ func is_storm():
 
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
+	Globals.pressure_target = randi_range(8000,9000)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 

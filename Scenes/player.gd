@@ -58,7 +58,7 @@ func _ready():
 	if not is_multiplayer_authority():
 		return
 
-	$Rain.emitter = false
+	$Rain.emitting = false
 
 	setspawnpos()
 

@@ -19,14 +19,17 @@ var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_
 #Globals Weather
 var Temperature = 23
 var pressure = 10000
+var oxygen = 100
 var Humidity = 25
 var Wind_Direction = Vector3(1,0,0)
 var Wind_speed = 0
+
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #Globals Weather target
 var Temperature_target = 23
 var pressure_target = 10000
+var oxygen_target = 100
 var Humidity_target = 25
 var Wind_Direction_target = Vector3(1,0,0)
 var Wind_speed_target = 0
@@ -34,6 +37,7 @@ var Wind_speed_target = 0
 #Globals Weather original
 var Temperature_original = 23
 var pressure_original = 10000
+var oxygen_original = 100
 var Humidity_original = 25
 var Wind_Direction_original = Vector3(1,0,0)
 var Wind_speed_original = 0
@@ -72,6 +76,10 @@ func sync_pressure(new_value):
 	pressure = new_value
 
 @rpc("any_peer", "call_local")
+func sync_oxygen(new_value):
+	oxygen = new_value
+
+@rpc("any_peer", "call_local")
 func sync_wind_speed(new_value):
 	Wind_speed = new_value
 
@@ -88,9 +96,13 @@ func _process(delta):
 
 	Temperature = clamp(Temperature, -275.5, 275.5)
 	Humidity = clamp(Humidity, 0, 100)
+	pressure = clamp(pressure, 0, INF)
+	oxygen = clamp(oxygen, 0, INF)
 
 	Temperature = lerpf(Temperature, Temperature_target, 0.005)
 	Humidity = lerpf(Humidity, Humidity_target, 0.005)
+	pressure = clamp(pressure, pressure_target, 0.005)
+	oxygen = clamp(oxygen, oxygen_target, 0.005)
 	Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
 	Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
 
@@ -99,6 +111,7 @@ func _process(delta):
 	sync_wind_speed.rpc(Wind_speed)
 	sync_Wind_Direction.rpc(Wind_Direction)
 	sync_pressure.rpc(pressure)
+	sync_oxygen.rpc(oxygen)
 		
 
 func hostwithport(port):

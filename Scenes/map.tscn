@@ -18,6 +18,7 @@ sky_material = SubResource("PhysicalSkyMaterial_qvhd5")
 [sub_resource type="Environment" id="Environment_cfhfe"]
 background_mode = 2
 sky = SubResource("Sky_lk1p6")
+fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 fog_density = 0.0
 volumetric_fog_density = 0.0
 

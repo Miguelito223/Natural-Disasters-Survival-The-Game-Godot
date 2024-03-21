@@ -138,6 +138,7 @@ text = "Resolution"
 
 [node name="resolutions" type="OptionButton" parent="Settings"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 30
 
 [node name="Volumen Label" type="Label" parent="Settings"]
 layout_mode = 2
