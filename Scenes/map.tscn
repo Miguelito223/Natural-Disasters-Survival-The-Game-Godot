@@ -25,13 +25,14 @@ transform = Transform3D(-0.992265, 0.00450559, -0.124057, -0.124138, -0.0360142,
 shadow_enabled = true
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
 spawn_path = NodePath("..")
 
 [node name="Meteor" parent="." instance=ExtResource("3_m3nwu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1000, 0)
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 60.0
 autostart = true
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]

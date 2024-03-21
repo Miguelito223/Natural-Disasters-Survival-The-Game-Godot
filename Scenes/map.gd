@@ -12,7 +12,6 @@ enum weather {
 
 var current_weather = weather.sun
 
-
 var noise = FastNoiseLite.new()
 var noise_seed
 
@@ -45,7 +44,7 @@ func receive_seeds(received_noise_seed):
 
 func generate_terrain():
 	print("Generating world...")
-	
+
 	var terrain = Terrain3D.new()
 	terrain.set_collision_enabled(false)
 	terrain.storage = Terrain3DStorage.new()
@@ -60,6 +59,7 @@ func generate_terrain():
 	terrain.texture_list.set_texture(texture.texture_id, texture)
 	terrain.name = "Terrain3D"
 
+	await get_tree().create_timer(2).timeout
 	
 	noise.frequency = 0.0005
 	noise.seed = noise_seed
@@ -68,6 +68,8 @@ func generate_terrain():
 		for y in 2048:
 			img.set_pixel(x,y, Color(noise.get_noise_2d(x,y) * 0.5, 0., 0., 1.))
 	terrain.storage.import_images([img,null,null],  Vector3(0,0,0), 0.0, 300.)
+
+	terrain.set_collision_enabled(true)
 
 
 func _process(_delta):
@@ -104,24 +106,25 @@ func _process(_delta):
 	
 	
 func _on_timer_timeout():
-	current_weather = weather.switch_weather
-	switch_weather()
+	sync_weather()
 
-func switch_weather():
-	var random_weather = randi_range(0,3)
-	match random_weather:
+func sync_weather():
+    # El servidor genera un número aleatorio y lo envía a los clientes
+	var random_weather = randi_range(0, 3)
+	set_weather.rpc(random_weather)
+
+@rpc("any_peer", "call_local")
+func set_weather(weather_index):
+	match weather_index:
 		0:
 			current_weather = weather.sun
 			is_sun()
-			
 		1:
 			current_weather = weather.cloud
 			is_cloud()
-			
 		2:
 			current_weather = weather.raining
 			is_raining()
-			
 		3:
 			current_weather = weather.storm
 			is_storm()
@@ -130,37 +133,37 @@ func is_sun():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.rain_node = false
 
-	Globals.Temperature = lerpf(Globals.Temperature, randi_range(20,31), 0.005)
-	Globals.Humidity = lerpf(Globals.Temperature, randi_range(0,20), 0.005)
-	Globals.Wind_Direction = lerp(Globals.Wind_Direction, Vector3(randi_range(-1,1),0,randi_range(-1,1)), 0.005)
-	Globals.Wind_speed = lerpf(Globals.Wind_speed , randi_range(0, 10), 0.005)
+	Globals.Temperature_target = randi_range(20,31)
+	Globals.Humidity_target = randi_range(0,20)
+	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 10)
 
 func is_cloud():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.rain_node = false
 
-	Globals.Temperature = lerpf(Globals.Temperature, randi_range(20,25), 0.005)
-	Globals.Humidity = lerpf(Globals.Humidity,randi_range(10,30), 0.005)
-	Globals.Wind_Direction = lerp(Globals.Wind_Direction, Vector3(randi_range(-1,1),0,randi_range(-1,1)), 0.005)
-	Globals.Wind_speed = lerpf(Globals.Wind_speed, randi_range(0, 10), 0.005)
+	Globals.Temperature_target =  randi_range(20,25)
+	Globals.Humidity_target = randi_range(10,30)
+	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target =  randi_range(0, 10)
 
 func is_raining():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.rain_node = true
 
-	Globals.Temperature =  lerpf(Globals.Temperature, randi_range(10,20), 0.005)
-	Globals.Humidity = lerpf(Globals.Humidity, randi_range(20,40),0.005)
-	Globals.Wind_Direction = lerp(Globals.Wind_Direction, Vector3(randi_range(-1,1),0,randi_range(-1,1)), 0.005)
-	Globals.Wind_speed = lerpf(Globals.Wind_speed, randi_range(0, 20), 0.005)
+	Globals.Temperature_target =   randi_range(10,20)
+	Globals.Humidity_target =  randi_range(20,40)
+	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 20)
 
 func is_storm():
 	for player in get_tree().get_nodes_in_group("player"):
 		player.rain_node = true
 
-	Globals.Temperature = lerpf(Globals.Temperature, randi_range(5,15),0.005)
-	Globals.Humidity = lerpf(Globals.Humidity, randi_range(30,40), 0.005)
-	Globals.Wind_Direction = lerp(Globals.Wind_Direction, Vector3(randi_range(-1,1),0,randi_range(-1,1)),0.005)
-	Globals.Wind_speed = lerpf(Globals.Wind_speed, randi_range(0, 30),0.005)
+	Globals.Temperature_target =  randi_range(5,15)
+	Globals.Humidity_target = randi_range(30,40)
+	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 30)
 
 
 func player_join(id):

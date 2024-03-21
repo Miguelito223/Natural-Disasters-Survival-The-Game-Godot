@@ -5,6 +5,7 @@
 [node name="Main" type="Node3D"]
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/map.tscn")
 spawn_path = NodePath("..")
 
 [node name="Main Menu" parent="." instance=ExtResource("1_wlo3y")]

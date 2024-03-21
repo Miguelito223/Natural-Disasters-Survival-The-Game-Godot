@@ -23,7 +23,7 @@ use_particle_trails = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3hyh"]
 emission_shape = 3
-emission_box_extents = Vector3(10, 1, 10)
+emission_box_extents = Vector3(10, 20, 10)
 direction = Vector3(0, -1, 0)
 spread = 5.0
 initial_velocity_min = 15.0
@@ -84,6 +84,18 @@ properties/13/replication_mode = 1
 properties/14/path = NodePath(".:mass")
 properties/14/spawn = true
 properties/14/replication_mode = 1
+properties/15/path = NodePath("Rain:emitting")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("Rain:position")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("Rain:rotation")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("Rain:scale")
+properties/18/spawn = true
+properties/18/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

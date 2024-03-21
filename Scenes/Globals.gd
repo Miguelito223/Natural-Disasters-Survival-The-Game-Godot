@@ -14,10 +14,27 @@ var antialiasing = false
 
 #Globals Weather
 var Temperature = 23
+var pressure = 10000
 var Humidity = 25
 var Wind_Direction = Vector3(1,0,0)
 var Wind_speed = 0
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+#Globals Weather target
+var Temperature_target = 23
+var pressure_target = 10000
+var Humidity_target = 25
+var Wind_Direction_target = Vector3(1,0,0)
+var Wind_speed_target = 0
+var gravity_target = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+#Globals Weather original
+var Temperature_original = 23
+var pressure_original = 10000
+var Humidity_original = 25
+var Wind_Direction_original = Vector3(1,0,0)
+var Wind_speed_original = 0
+var gravity_original = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var seconds = Time.get_unix_time_from_system()
 
@@ -46,7 +63,11 @@ func sync_temp(new_value):
 
 @rpc("any_peer", "call_local")
 func sync_humidity(new_value):
-	Humidity = new_value
+	pressure = new_value
+
+@rpc("any_peer", "call_local")
+func sync_pressure(new_value):
+	pressure = new_value
 
 @rpc("any_peer", "call_local")
 func sync_wind_speed(new_value):
@@ -63,10 +84,19 @@ func _process(delta):
 	if not get_tree().get_multiplayer().is_server():
 		return
 
+	Temperature = clamp(Temperature, -275.5, 275.5)
+	Humidity = clamp(Humidity, 0, 100)
+
+	Temperature = lerp(Temperature, Temperature_target, 0.005)
+	Humidity = lerp(Humidity, Humidity_target, 0.005)
+	Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+	Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
+
 	sync_temp.rpc(Temperature)
 	sync_humidity.rpc(Humidity)
 	sync_wind_speed.rpc(Wind_speed)
 	sync_Wind_Direction.rpc(Wind_Direction)
+	sync_pressure.rpc(pressure)
 		
 
 func hostwithport(port):
@@ -134,3 +164,5 @@ func _ready():
 		await get_tree().create_timer(2).timeout
 
 		hostwithport(port)
+
+	
