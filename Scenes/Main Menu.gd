@@ -58,13 +58,13 @@ func _on_fps_toggled(toggled_on:bool):
 
 func _on_vsycn_toggled(toggled_on:bool):
 	Globals.vsync = toggled_on
-	ProjectSettings.set_setting("display/window/vsync/vsync_mode", Globals.antialiasing)
+	ProjectSettings.set_setting("display/window/vsync/vsync_mode", toggled_on)
 	Data.save_file()
 
 
 func _on_antialiasing_toggled(toggled_on:bool):
 	Globals.antialiasing = toggled_on
-	ProjectSettings.set_setting("rendering/anti_aliasing/screen_space_roughness_limiter/enabled", Globals.antialiasing)
+	ProjectSettings.set_setting("rendering/anti_aliasing/screen_space_roughness_limiter/enabled", toggled_on)
 	Data.save_file()
 
 
@@ -83,11 +83,11 @@ func _on_h_slider_2_value_changed(value:float):
 	Globals.timer = value
 	if get_parent().get_node("Map/Timer") == null:
 		return
-	get_parent().get_node("Map/Timer").wait_time = Globals.timer
+	get_parent().get_node("Map/Timer").wait_time = value
 	Data.save_file()
 
 
 func _on_volumen_value_changed(value:float):
 	Globals.volumen = value
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
 	Data.save_file()
