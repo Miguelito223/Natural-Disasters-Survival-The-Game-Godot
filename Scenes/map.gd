@@ -33,10 +33,12 @@ func _ready():
 	terrain.texture_list = Terrain3DTextureList.new()
 	add_child(terrain, true)
 	terrain.material.world_background = Terrain3DMaterial.NOISE
-	terrain.texture.name = "Grass"
-	terrain.texture.texture_id = 0
+	var texture = Terrain3DTexture.new()
 	var image = load("res://Textures/leafy_grass_diff_4k.jpg")
-	terrain.texture.albedo_texture = image
+	texture.name = "Grass"
+	texture.texture_id = 0
+	texture.albedo_texture = image
+	terrain.texture_list.set_texture(texture.texture_id, texture)
 	terrain.name = "Terrain3D"
 
 	var noise = FastNoiseLite.new()
