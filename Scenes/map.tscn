@@ -1,0 +1,104 @@
+[gd_scene load_steps=16 format=3 uid="uid://cllvucut8u42n"]
+
+[ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
+[ext_resource type="Terrain3DStorage" uid="uid://domhr0vyxtu6c" path="res://new_terrain_3d_storage.tres" id="2_7evt3"]
+[ext_resource type="Texture2D" uid="uid://bcefm7lmqefab" path="res://Textures/rocky_trail_02_diff_4k.jpg" id="2_aio8l"]
+[ext_resource type="PackedScene" uid="uid://c6xgmy3mkckea" path="res://Scenes/meteors.tscn" id="3_m3nwu"]
+[ext_resource type="Texture2D" uid="uid://b1tdwc7h4ca6y" path="res://Textures/leafy_grass_diff_4k.jpg" id="4_epui5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xl78b"]
+
+[sub_resource type="Sky" id="Sky_lk1p6"]
+sky_material = SubResource("ProceduralSkyMaterial_xl78b")
+
+[sub_resource type="Environment" id="Environment_cfhfe"]
+background_mode = 2
+sky = SubResource("Sky_lk1p6")
+fog_density = 0.0
+volumetric_fog_density = 0.0
+
+[sub_resource type="Gradient" id="Gradient_i0n1v"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1gk6j"]
+noise_type = 2
+frequency = 0.03
+cellular_jitter = 3.0
+cellular_return_type = 0
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 50.0
+domain_warp_fractal_type = 2
+domain_warp_fractal_lacunarity = 1.5
+domain_warp_fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_h6yy7"]
+seamless = true
+color_ramp = SubResource("Gradient_i0n1v")
+noise = SubResource("FastNoiseLite_1gk6j")
+
+[sub_resource type="Terrain3DMaterial" id="Terrain3DMaterial_xsb7s"]
+_shader_parameters = {
+"_mouse_layer": 2147483648,
+"blend_sharpness": 0.87,
+"height_blending": true,
+"macro_variation1": Color(1, 1, 1, 1),
+"macro_variation2": Color(1, 1, 1, 1),
+"noise1_angle": 0.0,
+"noise1_offset": Vector2(0.5, 0.5),
+"noise1_scale": 0.04,
+"noise2_scale": 0.076,
+"noise3_scale": 0.225,
+"noise_texture": SubResource("NoiseTexture2D_h6yy7"),
+"world_noise_blend_far": 1.0,
+"world_noise_blend_near": 0.5,
+"world_noise_height": 64.0,
+"world_noise_lod_distance": 7500.0,
+"world_noise_max_octaves": 4,
+"world_noise_min_octaves": 2,
+"world_noise_offset": null,
+"world_noise_scale": 5.0
+}
+world_background = 2
+
+[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_x0330"]
+name = "Earth"
+albedo_texture = ExtResource("2_aio8l")
+uv_scale = 0.019
+
+[sub_resource type="Terrain3DTexture" id="Terrain3DTexture_rxf56"]
+name = "Grass"
+texture_id = 1
+albedo_texture = ExtResource("4_epui5")
+
+[sub_resource type="Terrain3DTextureList" id="Terrain3DTextureList_lgbxf"]
+textures = Array[Terrain3DTexture]([SubResource("Terrain3DTexture_x0330"), SubResource("Terrain3DTexture_rxf56")])
+
+[node name="Map" type="Node3D"]
+script = ExtResource("1_cimji")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cfhfe")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.992265, 0.00450559, -0.124057, -0.124138, -0.0360142, 0.991611, 0, 0.999341, 0.0362949, 0, 0, 0)
+shadow_enabled = true
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[node name="Terrain3D" type="Terrain3D" parent="."]
+storage = ExtResource("2_7evt3")
+material = SubResource("Terrain3DMaterial_xsb7s")
+texture_list = SubResource("Terrain3DTextureList_lgbxf")
+
+[node name="Meteor" parent="." instance=ExtResource("3_m3nwu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1000, 0)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
+
+[connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

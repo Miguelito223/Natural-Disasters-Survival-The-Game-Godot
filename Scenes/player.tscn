@@ -1,0 +1,261 @@
+[gd_scene load_steps=15 format=3 uid="uid://c51w31cirngs7"]
+
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
+[ext_resource type="Script" path="res://Scenes/Pause_menu.gd" id="2_vj7s0"]
+[ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
+[ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
+[ext_resource type="AudioStream" uid="uid://dygyu1tp6uplp" path="res://Sounds/heartbeat.wav" id="5_8ukqg"]
+[ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xeewm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ypag4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4028"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3052p"]
+depth_draw_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+use_particle_trails = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3hyh"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 10)
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+
+[sub_resource type="Curve" id="Curve_yf2re"]
+max_value = 0.1
+_data = [Vector2(0, 0.0498229), 0.0, 0.0, 0, 0, Vector2(0.203065, 0.1), 0.0, 0.0, 0, 0, Vector2(0.511494, 0.0594901), 0.0, 0.0, 0, 0, Vector2(1, 0.0516643), 0.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_count = 5
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_lwh6c"]
+curve = SubResource("Curve_yf2re")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8gfme"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:rotation_edit_mode")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:rotation_order")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Head:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Head:position")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+properties/7/path = NodePath("Head:scale")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Head/Camera3D:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Head/Camera3D:position")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("Head/Camera3D:scale")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath(".:hearth")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath(".:body_temperature")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath(".:body_oxygen")
+properties/13/spawn = true
+properties/13/replication_mode = 1
+properties/14/path = NodePath(".:mass")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_btpoi")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_xeewm")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+mesh = SubResource("CapsuleMesh_ypag4")
+material = SubResource("StandardMaterial3D_r4028")
+
+[node name="Rain" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_3052p")
+amount = 100
+randomness = 1.0
+visibility_aabb = AABB(-10, -4, -10, 20, 20, 20)
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_v3hyh")
+draw_pass_1 = SubResource("RibbonTrailMesh_lwh6c")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0307612, 0.608149, -0.407722)
+current = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8gfme")
+
+[node name="Pause menu" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("2_vj7s0")
+
+[node name="Panel" type="Panel" parent="Pause menu"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="Pause menu"]
+process_mode = 3
+offset_left = 664.0
+offset_top = 448.0
+offset_right = 866.0
+offset_bottom = 606.0
+scale = Vector2(3, 1.5)
+
+[node name="Settings" type="Button" parent="Pause menu/Menu"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Settings"
+
+[node name="Exit" type="Button" parent="Pause menu/Menu"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Exit"
+
+[node name="Settings" type="VBoxContainer" parent="Pause menu"]
+process_mode = 3
+visible = false
+offset_left = 599.0
+offset_top = 259.0
+offset_right = 815.0
+offset_bottom = 652.0
+scale = Vector2(3, 1.5)
+
+[node name="fps" type="CheckButton" parent="Pause menu/Settings"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "FPS:"
+
+[node name="vsync" type="CheckButton" parent="Pause menu/Settings"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Vsync"
+
+[node name="antialiasing" type="CheckButton" parent="Pause menu/Settings"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Antialiasing"
+
+[node name="Back" type="Button" parent="Pause menu/Settings"]
+process_mode = 3
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Hud" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("3_pgssk")
+
+[node name="Panel" type="Panel" parent="Hud"]
+process_mode = 3
+offset_left = 2.0
+offset_top = 865.0
+offset_right = 45.0
+offset_bottom = 905.0
+scale = Vector2(8.35709, 5.28957)
+
+[node name="Label" type="Label" parent="Hud"]
+process_mode = 3
+offset_left = 17.0
+offset_top = 875.0
+offset_right = 63.0
+offset_bottom = 898.0
+text = "Temp: 17º
+Humidity: 20%
+Wind Direction: 0º
+Wind Velocity: 0 km
+Body Temp: 37º
+Body Oxygen: 100%
+Body Health: 100
+
+"
+
+[node name="Panel2" type="Panel" parent="Hud"]
+process_mode = 3
+offset_left = 199.0
+offset_top = 894.0
+offset_right = 248.0
+offset_bottom = 934.0
+scale = Vector2(2.92153, 3.89434)
+
+[node name="Heart" type="Sprite2D" parent="Hud"]
+process_mode = 3
+position = Vector2(272.5, 972.5)
+scale = Vector2(1.08594, 1.19531)
+texture = ExtResource("4_ni53t")
+
+[node name="Heartbeat" type="AudioStreamPlayer" parent="Hud"]
+process_mode = 3
+stream = ExtResource("5_8ukqg")
+
+[node name="Chat" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("6_wgonp")
+
+[node name="TextEdit" type="TextEdit" parent="Chat"]
+process_mode = 3
+offset_top = 606.0
+offset_right = 284.0
+offset_bottom = 770.0
+editable = false
+
+[node name="LineEdit" type="LineEdit" parent="Chat"]
+process_mode = 3
+offset_left = 2.0
+offset_top = 770.0
+offset_right = 230.0
+offset_bottom = 801.0
+
+[node name="Button" type="Button" parent="Chat"]
+process_mode = 3
+offset_left = 231.0
+offset_top = 769.0
+offset_right = 281.0
+offset_bottom = 800.0
+text = "Enter"
+
+[connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
+[connection signal="pressed" from="Pause menu/Menu/Exit" to="Pause menu" method="_on_exit_pressed"]
+[connection signal="toggled" from="Pause menu/Settings/fps" to="Pause menu" method="_on_fps_toggled"]
+[connection signal="toggled" from="Pause menu/Settings/vsync" to="Pause menu" method="_on_vsync_toggled"]
+[connection signal="toggled" from="Pause menu/Settings/antialiasing" to="Pause menu" method="_on_antialiasing_toggled"]
+[connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]
+[connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]

@@ -1,0 +1,148 @@
+[gd_scene load_steps=2 format=3 uid="uid://dshrj55scr44d"]
+
+[ext_resource type="Script" path="res://Scenes/Main Menu.gd" id="1_r752f"]
+
+[node name="Main Menu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r752f")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 634.0
+offset_top = 339.0
+offset_right = 836.0
+offset_bottom = 578.0
+scale = Vector2(3, 1.5)
+
+[node name="Play" type="Button" parent="Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "play"
+
+[node name="Settings" type="Button" parent="Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Settings"
+
+[node name="Exit" type="Button" parent="Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Exit"
+
+[node name="Multiplayer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 651.0
+offset_top = 194.0
+offset_right = 843.0
+offset_bottom = 606.0
+scale = Vector2(3, 1.5)
+
+[node name="username label" type="Label" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Username:"
+
+[node name="username" type="LineEdit" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Michael2911"
+
+[node name="Ip label" type="Label" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "IP:"
+
+[node name="ip" type="LineEdit" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "127.0.0.1"
+
+[node name="port label" type="Label" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Port:"
+
+[node name="port" type="LineEdit" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+placeholder_text = "25565"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Multiplayer"]
+layout_mode = 2
+alignment = 1
+
+[node name="join" type="Button" parent="Multiplayer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Join"
+
+[node name="host" type="Button" parent="Multiplayer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "host
+"
+
+[node name="Back" type="Button" parent="Multiplayer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Settings" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 602.0
+offset_top = 243.0
+offset_right = 818.0
+offset_bottom = 636.0
+scale = Vector2(3, 1.5)
+
+[node name="fps" type="CheckButton" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "FPS:"
+
+[node name="vsync" type="CheckButton" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Vsync"
+
+[node name="antialiasing" type="CheckButton" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Antialiasing"
+
+[node name="Back" type="Button" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="Menu/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Menu/Exit" to="." method="_on_exit_pressed"]
+[connection signal="text_changed" from="Multiplayer/username" to="." method="_on_username_text_changed"]
+[connection signal="text_changed" from="Multiplayer/ip" to="." method="_on_ip_text_changed"]
+[connection signal="text_changed" from="Multiplayer/port" to="." method="_on_port_text_changed"]
+[connection signal="pressed" from="Multiplayer/HBoxContainer/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Multiplayer/HBoxContainer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Multiplayer/Back" to="." method="_on_back_pressed"]
+[connection signal="toggled" from="Settings/fps" to="." method="_on_fps_toggled"]
+[connection signal="toggled" from="Settings/vsync" to="." method="_on_vsycn_toggled"]
+[connection signal="toggled" from="Settings/antialiasing" to="." method="_on_antialiasing_toggled"]
+[connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]

@@ -1,0 +1,111 @@
+[gd_scene load_steps=18 format=3 uid="uid://c6xgmy3mkckea"]
+
+[ext_resource type="Script" path="res://Scenes/meteors.gd" id="1_hdxcr"]
+[ext_resource type="Texture2D" uid="uid://b1koius8x6ptl" path="res://Textures/map_slot0_albedo_bump.png" id="2_8dhg8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qoupj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nfk2t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ptpq"]
+albedo_texture = ExtResource("2_8dhg8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nkvcn"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_54kgu"]
+offsets = PackedFloat32Array(0, 0.461039, 1)
+colors = PackedColorArray(1, 0.451763, 0.134836, 1, 0, 0, 0, 1, 0.344076, 0.344076, 0.344076, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2pmkc"]
+gradient = SubResource("Gradient_54kgu")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yqud3"]
+emission_shape = 2
+emission_sphere_radius = 0.5
+direction = Vector3(0, 0, 0)
+gravity = Vector3(0, 9.8, 0)
+scale_min = 0.1
+scale_max = 0.5
+color_ramp = SubResource("GradientTexture1D_2pmkc")
+
+[sub_resource type="SphereMesh" id="SphereMesh_hqrhf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wipg6"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_87f6d"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.8, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1cdtt"]
+gradient = SubResource("Gradient_87f6d")
+
+[sub_resource type="Curve" id="Curve_baojq"]
+_data = [Vector2(0.144898, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rfffs"]
+curve = SubResource("Curve_baojq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_72bi4"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_max = 360.0
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_rfffs")
+color_ramp = SubResource("GradientTexture1D_1cdtt")
+
+[sub_resource type="QuadMesh" id="QuadMesh_8abkf"]
+
+[node name="Meteor" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_qoupj")
+gravity_scale = 100.0
+script = ExtResource("1_hdxcr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_nfk2t")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
+material = SubResource("StandardMaterial3D_8ptpq")
+
+[node name="Smoke" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_nkvcn")
+amount = 200
+lifetime = 3.0
+visibility_aabb = AABB(-0.658692, -1.53968, -0.967607, 1.3916, 3.07936, 1.93521)
+process_material = SubResource("ParticleProcessMaterial_yqud3")
+draw_passes = 2
+draw_pass_1 = SubResource("SphereMesh_hqrhf")
+draw_pass_2 = null
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0336982, 2.38419e-07, -0.00724411)
+material_override = SubResource("StandardMaterial3D_wipg6")
+amount = 200
+randomness = 1.0
+visibility_aabb = AABB(-0.985438, -3.25902, -1.0986, 1.97088, 6.51804, 2.1972)
+process_material = SubResource("ParticleProcessMaterial_72bi4")
+draw_pass_1 = SubResource("QuadMesh_8abkf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

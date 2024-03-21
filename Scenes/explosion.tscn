@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://doi73cvnxims6"]
+
+[ext_resource type="Script" path="res://Scenes/Area3D.gd" id="1_pkc1d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qtdo2"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_gy6ag"]
+offsets = PackedFloat32Array(0, 0.228889, 0.404444, 0.617778, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1, 0.922561, 0.383717, 0, 1, 0.187176, 0.187176, 0.187176, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_q850k"]
+gradient = SubResource("Gradient_gy6ag")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v0fus"]
+emission_shape = 2
+emission_sphere_radius = 5.05
+angle_max = 360.0
+direction = Vector3(1, 1, 1)
+spread = 0.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_max = 100.0
+scale_min = 0.5
+color_ramp = SubResource("GradientTexture1D_q850k")
+
+[sub_resource type="SphereMesh" id="SphereMesh_bjxpd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_up542"]
+
+[node name="Explosion" type="GPUParticles3D"]
+material_override = SubResource("StandardMaterial3D_qtdo2")
+emitting = false
+amount = 200
+one_shot = true
+explosiveness = 0.47
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_v0fus")
+draw_pass_1 = SubResource("SphereMesh_bjxpd")
+
+[node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("1_pkc1d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(10.5226, 0, 0, 0, 10.5226, 0, 0, 0, 10.5226, 0, 0, 0)
+shape = SubResource("SphereShape3D_up542")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
