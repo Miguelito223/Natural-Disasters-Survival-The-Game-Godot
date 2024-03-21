@@ -14,6 +14,8 @@ func _ready():
 	$Settings/fps.button_pressed = Globals.FPS
 	$Settings/vsync.button_pressed = Globals.vsync
 	$Settings/antialiasing.button_pressed = Globals.antialiasing
+	$Settings/Volumen.value = Globals.volumen
+	$Settings/Time.value = Globals.timer
 
 
 func _on_ip_text_changed(new_text:String):
