@@ -11,6 +11,8 @@ func save_file():
 		"FPS": Globals.FPS,
 		"Volumen": Globals.volumen,
 		"Timer": Globals.timer,
+		"Fullscreen": Globals.fullscreen,
+		"Resolution": Globals.resolution,
 		"IP": Globals.ip,
 		"Port": Globals.port,
 		"Username": Globals.username,
@@ -48,6 +50,8 @@ func load_file():
 		Globals.vsync = data.Vsync
 		Globals.antialiasing = data.Antialasing
 		Globals.volumen = data.Volumen
+		Globals.fullscreen = data.Fullscreen
+		Globals.resolution = str_to_var("Vector2i" + data.Resolution)
 		Globals.timer = data.Timer
 		Globals.ip = data.IP
 		Globals.port = data.Port

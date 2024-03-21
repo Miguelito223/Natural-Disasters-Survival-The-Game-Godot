@@ -24,7 +24,7 @@ use_particle_trails = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v3hyh"]
 emission_shape = 3
-emission_box_extents = Vector3(10, 20, 10)
+emission_box_extents = Vector3(100, 200, 100)
 direction = Vector3(0, -1, 0)
 spread = 5.0
 initial_velocity_min = 15.0
@@ -111,10 +111,9 @@ material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_3052p")
-emitting = false
-amount = 100
+amount = 500
 randomness = 1.0
-visibility_aabb = AABB(-10, -4, -10, 20, 20, 20)
+visibility_aabb = AABB(-238.814, -188.671, -192.689, 477.629, 389.343, 385.378)
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_v3hyh")
 draw_pass_1 = SubResource("RibbonTrailMesh_lwh6c")
@@ -190,6 +189,19 @@ process_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing"
+
+[node name="Fullscreen" type="CheckButton" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Fullscreen"
+
+[node name="Resolutions Label" type="Label" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Resolution"
+
+[node name="resolutions" type="OptionButton" parent="Pause menu/Settings"]
+layout_mode = 2
 
 [node name="Volumen Label" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
@@ -302,6 +314,8 @@ text = "Enter"
 [connection signal="toggled" from="Pause menu/Settings/fps" to="Pause menu" method="_on_fps_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/vsync" to="Pause menu" method="_on_vsync_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/antialiasing" to="Pause menu" method="_on_antialiasing_toggled"]
+[connection signal="toggled" from="Pause menu/Settings/Fullscreen" to="Pause menu" method="_on_fullscreen_toggled"]
+[connection signal="item_selected" from="Pause menu/Settings/resolutions" to="Pause menu" method="_on_resolutions_item_selected"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen" to="Pause menu" method="_on_volumen_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]
 [connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]

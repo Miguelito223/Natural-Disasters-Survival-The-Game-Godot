@@ -13,6 +13,8 @@ var FPS = false
 var antialiasing = false
 var volumen = 1
 var timer = 60
+var fullscreen = false
+var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())
 
 #Globals Weather
 var Temperature = 23
@@ -28,7 +30,6 @@ var pressure_target = 10000
 var Humidity_target = 25
 var Wind_Direction_target = Vector3(1,0,0)
 var Wind_speed_target = 0
-var gravity_target = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #Globals Weather original
 var Temperature_original = 23
@@ -36,7 +37,6 @@ var pressure_original = 10000
 var Humidity_original = 25
 var Wind_Direction_original = Vector3(1,0,0)
 var Wind_speed_original = 0
-var gravity_original = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var seconds = Time.get_unix_time_from_system()
 

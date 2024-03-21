@@ -75,6 +75,9 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_curve = SubResource("CurveTexture_rfffs")
 color_ramp = SubResource("GradientTexture1D_1cdtt")
+sub_emitter_mode = 1
+sub_emitter_frequency = 4.0
+sub_emitter_keep_velocity = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_8abkf"]
 
@@ -103,6 +106,7 @@ draw_pass_2 = null
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0336982, 2.38419e-07, -0.00724411)
 material_override = SubResource("StandardMaterial3D_wipg6")
 amount = 200
+sub_emitter = NodePath("../Smoke")
 randomness = 1.0
 visibility_aabb = AABB(-0.985438, -3.25902, -1.0986, 1.97088, 6.51804, 2.1972)
 process_material = SubResource("ParticleProcessMaterial_72bi4")

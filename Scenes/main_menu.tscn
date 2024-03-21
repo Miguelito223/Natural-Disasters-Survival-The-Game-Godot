@@ -126,6 +126,19 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing"
 
+[node name="Fullscreen" type="CheckButton" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Fullscreen"
+
+[node name="Resolutions Label" type="Label" parent="Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Resolution"
+
+[node name="resolutions" type="OptionButton" parent="Settings"]
+layout_mode = 2
+
 [node name="Volumen Label" type="Label" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
@@ -165,6 +178,8 @@ text = "Back"
 [connection signal="toggled" from="Settings/fps" to="." method="_on_fps_toggled"]
 [connection signal="toggled" from="Settings/vsync" to="." method="_on_vsycn_toggled"]
 [connection signal="toggled" from="Settings/antialiasing" to="." method="_on_antialiasing_toggled"]
+[connection signal="toggled" from="Settings/Fullscreen" to="." method="_on_fullscreen_toggled"]
+[connection signal="item_selected" from="Settings/resolutions" to="." method="_on_resolutions_item_selected"]
 [connection signal="value_changed" from="Settings/Volumen" to="." method="_on_volumen_value_changed"]
 [connection signal="value_changed" from="Settings/Time" to="." method="_on_h_slider_2_value_changed"]
 [connection signal="pressed" from="Settings/Back" to="." method="_on_back_pressed"]

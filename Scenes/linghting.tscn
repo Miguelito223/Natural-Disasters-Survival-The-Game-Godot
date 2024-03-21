@@ -1,0 +1,109 @@
+[gd_scene load_steps=15 format=3 uid="uid://dni5hbhwlxmdi"]
+
+[ext_resource type="Script" path="res://Scenes/linghting.gd" id="1_uao1k"]
+[ext_resource type="Texture2D" uid="uid://dhwpuiof0nxhn" path="res://addons/kenney_particle_pack/spark_05.png" id="1_x1lqt"]
+[ext_resource type="Texture2D" uid="uid://kq40l8aspg2k" path="res://addons/kenney_particle_pack/light_03.png" id="2_jotbc"]
+[ext_resource type="Texture2D" uid="uid://bmpv20xa7w4u5" path="res://addons/kenney_particle_pack/flare_01.png" id="4_csjk3"]
+[ext_resource type="AudioStream" uid="uid://bt5d80o3awq26" path="res://Sounds/disasters/nature/lightning_strike.mp3" id="5_apjid"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jem84"]
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("1_x1lqt")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjbmq"]
+particle_flag_align_y = true
+direction = Vector3(0, -1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+color = Color(0, 1, 1, 1)
+sub_emitter_mode = 1
+sub_emitter_frequency = 100.0
+sub_emitter_keep_velocity = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_8jrdf"]
+size = Vector2(10000, 10000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ghvqt"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_jotbc")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1lfm6"]
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+color = Color(0, 1, 1, 1)
+sub_emitter_mode = 1
+sub_emitter_frequency = 100.0
+sub_emitter_keep_velocity = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_tdmw4"]
+size = Vector2(10000, 10000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e6wr2"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("4_csjk3")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+grow_amount = 16.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xpfg1"]
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+color = Color(0, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_q3mvv"]
+size = Vector2(10000, 10000)
+
+[node name="Linghting" type="Node3D"]
+script = ExtResource("1_uao1k")
+
+[node name="spark" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_jem84")
+amount = 1
+explosiveness = 0.78
+visibility_aabb = AABB(-1000, -1000, -757.075, 2000, 2000, 1514.15)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_fjbmq")
+draw_pass_1 = SubResource("QuadMesh_8jrdf")
+
+[node name="light" type="GPUParticles3D" parent="spark"]
+material_override = SubResource("StandardMaterial3D_ghvqt")
+amount = 1
+visibility_aabb = AABB(-10000, -7151.76, -10000, 20000, 20000, 20000)
+process_material = SubResource("ParticleProcessMaterial_1lfm6")
+draw_pass_1 = SubResource("QuadMesh_tdmw4")
+
+[node name="star" type="GPUParticles3D" parent="spark/light"]
+material_override = SubResource("StandardMaterial3D_e6wr2")
+amount = 1
+visibility_aabb = AABB(-500, -499.988, -500, 1000, 1000, 1000)
+process_material = SubResource("ParticleProcessMaterial_xpfg1")
+draw_pass_1 = SubResource("QuadMesh_q3mvv")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="spark"]
+stream = ExtResource("5_apjid")
+autoplay = true
+max_distance = 300.0

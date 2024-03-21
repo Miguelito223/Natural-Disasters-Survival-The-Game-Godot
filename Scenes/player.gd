@@ -58,6 +58,8 @@ func _ready():
 	if not is_multiplayer_authority():
 		return
 
+	$Rain.emitter = false
+
 	setspawnpos()
 
 	get_node("Pause menu").visible = false
@@ -98,9 +100,12 @@ func _process(delta):
 		elif alpha_hot != 0:	
 			damage(alpha_hot + alpha_cold)
 
+
+
 	if Globals.Wind_speed > 0:
-		await $"Wind sound".finished
-		$"Wind sound".play()
+		if not $"Wind sound".playing:
+			$"Wind sound".play()
+
 		
 			
 
@@ -153,4 +158,4 @@ func _unhandled_input(event):
 
 
 func setspawnpos():
-	self.position = Vector3(1024,100,1024)
+	self.position = Vector3(1024,1000,1024)

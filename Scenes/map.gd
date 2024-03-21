@@ -2,15 +2,25 @@ extends Node3D
 
 var player_scene = preload("res://Scenes/player.tscn")
 
-enum weather {
-	switch_weather,
+enum weather_and_disaster {
+	switch_weather_and_disaster,
 	sun,
 	cloud,
 	raining,
 	storm,
+	linghting_storm,
+	tsunami,
+	meteor_shower,
+	volcano,
+	tornado,
+	acid_rain,
+	earthquake,
 }
 
-var current_weather = weather.sun
+var current_weather_and_disaster = weather_and_disaster.sun
+
+var linghting_scene = preload("res://Scenes/linghting.tscn")
+var meteor_scene = preload("res://Scenes/meteors.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -31,6 +41,8 @@ func _ready():
 
 	if get_tree().get_multiplayer().is_server():
 		generate_seed()
+
+	$Timer.wait_time = Globals.timer
 
 
 func generate_seed():
@@ -74,17 +86,19 @@ func generate_terrain():
 
 func _process(_delta):
 
-	match current_weather:
-		weather.switch_weather:
-			print("Sitching weather...")
-		weather.sun:
+	match current_weather_and_disaster:
+		weather_and_disaster.switch_weather_and_disaster:
+			print("Sitching weather and disaster...")
+		weather_and_disaster.sun:
 			print("Is Sun :D")
-		weather.cloud:
-			print("Oh OH D: its clouding")
-		weather.raining:
-			print("Oh OH D: its raining")
-		weather.storm:
-			print("stoooooooooorm")
+		weather_and_disaster.cloud:
+			print("is cloud")
+		weather_and_disaster.raining:
+			print("is raining")
+		weather_and_disaster.storm:
+			print("is storm")
+		weather_and_disaster.linghting_storm:
+			print("is linghting storm")
 
 
 	for i in get_child_count():
@@ -106,28 +120,98 @@ func _process(_delta):
 	
 	
 func _on_timer_timeout():
-	sync_weather()
+	sync_weather_and_disaster()
 
-func sync_weather():
-    # El servidor genera un número aleatorio y lo envía a los clientes
-	var random_weather = randi_range(0, 3)
-	set_weather.rpc(random_weather)
+func sync_weather_and_disaster():
+	# El servidor genera un número aleatorio y lo envía a los clientes
+	var random_weather_and_disaster = randi_range(0,10)
+	set_weather_and_disaster.rpc(random_weather_and_disaster)
 
 @rpc("any_peer", "call_local")
-func set_weather(weather_index):
-	match weather_index:
+func set_weather_and_disaster(weather_and_disaster_index):
+	match weather_and_disaster_index:
 		0:
-			current_weather = weather.sun
+			current_weather_and_disaster = weather_and_disaster.sun
 			is_sun()
 		1:
-			current_weather = weather.cloud
+			current_weather_and_disaster = weather_and_disaster.cloud
 			is_cloud()
 		2:
-			current_weather = weather.raining
+			current_weather_and_disaster = weather_and_disaster.raining
 			is_raining()
 		3:
-			current_weather = weather.storm
+			current_weather_and_disaster = weather_and_disaster.storm
 			is_storm()
+		4:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_linghting_storm()
+
+		5:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_tsunami()
+
+		6:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_meteor_shower()
+		7:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_volcano()
+		8:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_tornado()
+		9:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_acid_rain()
+		10:
+			current_weather_and_disaster = weather_and_disaster.storm
+			is_earthquake()
+
+func is_tsunami():
+	pass
+
+func is_linghting_storm():
+	for player in get_tree().get_nodes_in_group("player"):
+		player.rain_node = true
+
+	Globals.Temperature_target =  randi_range(5,15)
+	Globals.Humidity_target = randi_range(30,40)
+	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 30)
+
+	for i in range(5000, 20000):
+		var lighting = linghting_scene.instantiate()
+		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		add_child(lighting, true)
+		await get_tree().create_timer(5).timeout
+
+
+func is_meteor_shower():
+	for player in get_tree().get_nodes_in_group("player"):
+		player.rain_node = false
+
+	Globals.Temperature_target = randi_range(20,31)
+	Globals.Humidity_target = randi_range(0,20)
+	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 10)
+
+	for i in range(5000, 20000):
+		var meteor = meteor_scene.instantiate()
+		meteor.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		add_child(meteor, true)
+		await get_tree().create_timer(5).timeout
+
+func is_volcano():
+	pass
+
+func is_tornado():
+	pass
+
+func is_acid_rain():
+	pass
+
+func is_earthquake():
+	pass
+
 
 func is_sun():
 	for player in get_tree().get_nodes_in_group("player"):
