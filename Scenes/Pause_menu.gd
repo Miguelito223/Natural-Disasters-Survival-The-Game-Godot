@@ -48,14 +48,22 @@ func _on_exit_pressed():
 	Globals.is_networking = false
 
 
-
 func _on_fps_toggled(toggled_on:bool):
 	Globals.FPS = toggled_on
 	Data.save_file()
 
+
+func _on_vsycn_toggled(toggled_on:bool):
+	Globals.vsync = toggled_on
+	ProjectSettings.set_setting("display/window/vsync/vsync_mode", toggled_on)
+	Data.save_file()
+
+
 func _on_antialiasing_toggled(toggled_on:bool):
 	Globals.antialiasing = toggled_on
+	ProjectSettings.set_setting("rendering/anti_aliasing/screen_space_roughness_limiter/enabled", toggled_on)
 	Data.save_file()
+
 
 
 func _on_back_pressed():
@@ -64,9 +72,6 @@ func _on_back_pressed():
 
 
 
-func _on_vsync_toggled(toggled_on:bool):
-	Globals.vsync = toggled_on
-	Data.save_file()
 
 
 func tab():
@@ -106,12 +111,12 @@ func _on_time_value_changed(value:float):
 	if get_parent().get_parent().get_node("Timer") == null:
 		return
 
-	get_parent().get_parent().get_node("Timer").wait_time = Globals.timer
+	get_parent().get_parent().get_node("Timer").wait_time = value
 	Data.save_file()
 
 func _on_volumen_value_changed(value:float):
 	Globals.volumen = value
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
 	Data.save_file()
 
 
