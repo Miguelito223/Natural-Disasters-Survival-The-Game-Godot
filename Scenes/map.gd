@@ -173,7 +173,10 @@ func is_linghting_storm():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			player.rain_node.emitting = true
+			if Globals.is_networking:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+			else:
+				player.rain_node.emitting = true
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
@@ -238,7 +241,10 @@ func is_tornado():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			player.rain_node.emitting = true
+			if Globals.is_networking:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+			else:
+				player.rain_node.emitting = true
 	
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
@@ -262,7 +268,10 @@ func is_acid_rain():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			player.rain_node.emitting = true
+			if Globals.is_networking:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+			else:
+				player.rain_node.emitting = true
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
@@ -327,7 +336,10 @@ func is_raining():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			player.rain_node.emitting = true
+			if Globals.is_networking:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+			else:
+				player.rain_node.emitting = true
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
@@ -343,7 +355,10 @@ func is_storm():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			player.rain_node.emitting = true
+			if Globals.is_networking:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+			else:
+				player.rain_node.emitting = true
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)

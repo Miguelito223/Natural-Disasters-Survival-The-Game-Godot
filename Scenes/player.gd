@@ -14,18 +14,21 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var Max_Hearth = 100
 var Max_temp = 44
 var Max_oxygen = 100
+var Max_bradiation = 1
+
 
 var min_Hearth = 0
 var min_temp = 24
 var min_oxygen = 0
+var min_bdradiation = 0
 
 var mass = 75
 
 var hearth = Max_Hearth
 
-var body_temperature = 37
-var body_oxygen = 100
-var body_bradiation = 0
+var body_temperature = Max_temp
+var body_oxygen = Max_oxygen
+var body_bradiation = min_bdradiation
 
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
@@ -48,9 +51,12 @@ func damage(value):
 func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
+		hearth = Max_Hearth
+		body_temperature = Max_temp
+		body_oxygen = Max_oxygen
+		body_bradiation = min_bdradiation
 		print("you death")
-		if Globals.is_networking:
-			get_tree().get_multiplayer().multiplayer_peer.close()
+		setspawnpos()
 		
 
 func _ready():
@@ -58,6 +64,8 @@ func _ready():
 		$Head/Camera3D.current = is_multiplayer_authority()
 
 		get_node("Pause menu").visible = is_multiplayer_authority()
+
+		$Rain.emitting = is_multiplayer_authority()
 
 		if not is_multiplayer_authority():
 			return
@@ -118,7 +126,7 @@ func _process(delta):
 
 
 		if Globals.oxygen <= 0:
-			body_oxygen = clamp(body_oxygen - 5, 0, 100)
+			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 
 
@@ -128,7 +136,7 @@ func _process(delta):
 
 
 		if Globals.bradiation >= 1:
-			body_bradiation = clamp(body_bradiation + 0.01, 0, 1)
+			body_bradiation = clamp(body_bradiation + 0.01, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 
 		if body_bradiation >= 1:
