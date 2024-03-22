@@ -145,6 +145,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0307612, 0.608149, -0.407722)
 current = true
 
+[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8gfme")
 

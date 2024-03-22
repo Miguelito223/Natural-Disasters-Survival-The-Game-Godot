@@ -16,7 +16,7 @@ func _process(delta):
 	var ray_origin = global_transform.origin
 	var ray_end = ray_origin + Vector3(0, -ray_length, 0)
 	var ray_cast = $RayCast
-	ray_cast.cast_to = Vector3(0, -ray_length, 0)
+	ray_cast.target_position = Vector3(0, -ray_length, 0)
 	ray_cast.force_raycast_update()
 	
 	if ray_cast.is_colliding():

@@ -17,16 +17,12 @@ func _ready():
 
 	var explosion = explosion_scene.instantiate()
 	explosion.position = self.position
-	add_child(explosion, true)
+	explosion.emitting = true
+	get_parent().add_child(explosion, true)
 
 	await $spark.finished
 	self.queue_free()
 
 	await explosion.finished
 	explosion.queue_free()
-
-
-func _on_area_3d_body_entered(body:Node3D):
-	if body.is_in_group("player"):
-		body.damage(20)
 

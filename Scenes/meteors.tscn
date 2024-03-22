@@ -1,9 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://c6xgmy3mkckea"]
+[gd_scene load_steps=18 format=3 uid="uid://c6xgmy3mkckea"]
 
 [ext_resource type="Script" path="res://Scenes/meteors.gd" id="1_hdxcr"]
 [ext_resource type="Texture2D" uid="uid://b1koius8x6ptl" path="res://Textures/map_slot0_albedo_bump.png" id="2_8dhg8"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qoupj"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nfk2t"]
 
@@ -123,8 +121,6 @@ properties/11/spawn = true
 properties/11/replication_mode = 1
 
 [node name="Meteor" type="RigidBody3D"]
-physics_material_override = SubResource("PhysicsMaterial_qoupj")
-gravity_scale = 100.0
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
