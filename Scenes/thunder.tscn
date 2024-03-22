@@ -131,7 +131,6 @@ script = ExtResource("1_ig5to")
 stream = ExtResource("2_023p5")
 volume_db = 35.0
 max_db = 6.0
-stream_paused = true
 max_distance = 4096.0
 
 [node name="spark" type="GPUParticles3D" parent="."]
