@@ -99,11 +99,11 @@ func sync_Wind_Direction(new_value):
 
 func _process(delta):
 	if not is_networking:
-		Temperature = clampf(Temperature, -275.5, 275.5)
-		Humidity = clampf(Humidity, 0, 100)
-		bradiation = clampf(bradiation, 0, 100)
-		pressure = clampf(pressure, 0, INF)
-		oxygen = clampf(oxygen, 0, 100)
+		Temperature = clamp(Temperature, -275.5, 275.5)
+		Humidity = clamp(Humidity, 0, 100)
+		bradiation = clamp(bradiation, 0, 100)
+		pressure = clamp(pressure, 0, INF)
+		oxygen = clamp(oxygen, 0, 100)
 
 		Temperature = lerpf(Temperature, Temperature_target, 0.005)
 		Humidity = lerpf(Humidity, Humidity_target, 0.005)
@@ -123,13 +123,13 @@ func _process(delta):
 		pressure = clamp(pressure, 0, INF)
 		oxygen = clamp(oxygen, 0, 100)
 
-		Temperature = lerpf(Temperature, Temperature_target, 0.005)
-		Humidity = lerpf(Humidity, Humidity_target, 0.005)
-		bradiation = lerpf(bradiation, bradiation_target, 0.005)
-		pressure = lerpf(pressure, pressure_target, 0.005)
-		oxygen = lerpf(oxygen, oxygen_target, 0.005)
+		Temperature = lerp(Temperature, Temperature_target, 0.005)
+		Humidity = lerp(Humidity, Humidity_target, 0.005)
+		bradiation = lerp(bradiation, bradiation_target, 0.005)
+		pressure = lerp(pressure, pressure_target, 0.005)
+		oxygen = lerp(oxygen, oxygen_target, 0.005)
 		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-		Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
+		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
 
 		sync_temp.rpc(Temperature)
 		sync_humidity.rpc(Humidity)

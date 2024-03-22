@@ -126,10 +126,10 @@ func _process(delta):
 
 
 		if Globals.oxygen <= 0:
-			body_oxygen = clampf(body_oxygen - 5, min_oxygen, Max_oxygen)
+			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		else:
-			body_oxygen = clampf(body_oxygen + 5, min_oxygen, Max_oxygen)
+			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		
 		
@@ -139,10 +139,10 @@ func _process(delta):
 
 
 		if Globals.bradiation >= 100:
-			body_bradiation = clampf(body_bradiation + 1, min_bdradiation, Max_bradiation)
+			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 		else:
-			body_bradiation = clampf(body_bradiation - 1, min_bdradiation, Max_bradiation)
+			body_bradiation = clamp(body_bradiation - 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 
 		if body_bradiation >= 100:
@@ -198,24 +198,25 @@ func _process(delta):
 				damage(alpha_hot + alpha_cold)
 
 		if Globals.oxygen <= 0:
-			body_oxygen = clampf(body_oxygen - 5, min_oxygen, Max_oxygen)
+			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		else:
-			body_oxygen = clampf(body_oxygen + 5, min_oxygen, Max_oxygen)
+			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		
 		if body_oxygen <= 0:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
+		print(Globals.bradiation)
 
 		if Globals.bradiation >= 100:
-			body_bradiation = clampf(body_bradiation + 1, min_bdradiation, Max_bradiation)
+			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 		else:
-			body_bradiation = clampf(body_bradiation - 1, min_bdradiation, Max_bradiation)
+			body_bradiation = clamp(body_bradiation - 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
-
+		
 		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
