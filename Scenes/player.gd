@@ -25,6 +25,7 @@ var hearth = Max_Hearth
 
 var body_temperature = 37
 var body_oxygen = 100
+var body_bradiation = 0
 
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
@@ -116,9 +117,23 @@ func _process(delta):
 				damage(alpha_hot + alpha_cold)
 
 
-		
+		if Globals.oxygen <= 0:
+			body_oxygen = clamp(body_oxygen - 5, 0, 100)
+			await get_tree().create_timer(1).timeout
 
 
+		if body_oxygen <= 0:
+			if randi_range(1,25) == 25:
+				damage(randi_range(1,30))
+
+
+		if Globals.bradiation >= 1:
+			body_bradiation = clamp(body_bradiation + 0.01, 0, 1)
+			await get_tree().create_timer(1).timeout
+
+		if body_bradiation >= 1:
+			if randi_range(1,25) == 25:
+				damage(randi_range(1,30))
 
 		if Globals.Wind_speed > 0:
 			if not $"Wind sound".playing:

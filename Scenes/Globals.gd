@@ -86,6 +86,10 @@ func sync_oxygen(new_value):
 	oxygen = new_value
 
 @rpc("any_peer", "call_local")
+func sync_bradiation(new_value):
+	bradiation = new_value
+
+@rpc("any_peer", "call_local")
 func sync_wind_speed(new_value):
 	Wind_speed = new_value
 
@@ -133,6 +137,7 @@ func _process(delta):
 		sync_Wind_Direction.rpc(Wind_Direction)
 		sync_pressure.rpc(pressure)
 		sync_oxygen.rpc(oxygen)
+		sync_bradiation.rpc(bradiation)
 		
 
 func hostwithport(port):
