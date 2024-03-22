@@ -204,7 +204,6 @@ func _process(delta):
 			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		
-		
 		if body_oxygen <= 0:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
