@@ -4,9 +4,13 @@ var player_scene = preload("res://Scenes/player.tscn")
 
 var current_weather_and_disaster = "Sun"
 var current_weather_and_disaster_int = "Sun"
+var shake_strength = 1
+var shake_duration = 2
+var shake_timer = 0
 
-var linghting_scene = preload("res://Scenes/linghting.tscn")
+var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
+var tornado_scene = preload("res://Scenes/tornado.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -188,7 +192,7 @@ func is_linghting_storm():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
-	for i in range(5000, 20000):
+	while true:
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
@@ -213,7 +217,7 @@ func is_meteor_shower():
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = false
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-	for i in range(5000, 20000):
+	while true:
 		var meteor = meteor_scene.instantiate()
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
@@ -245,6 +249,12 @@ func is_tornado():
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true
+
+
+	var tornado = tornado_scene.instantiate()
+	tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+	add_child(tornado, true)
+
 	
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
@@ -256,11 +266,11 @@ func is_tornado():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
-	for i in range(5000, 20000):
+	while true:
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
-		if current_weather_and_disaster != "Linghting storm":
+		if current_weather_and_disaster != "Tornado":
 			break
 		await get_tree().create_timer(5).timeout
 
@@ -283,11 +293,29 @@ func is_acid_rain():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
+func shake_objects(node):
+	for child in node.get_children():
+		if child.is_in_group("movable_objects"): # Verifica si el nodo es un Spatial (objeto 3D)
+			var x = randi_range(-shake_strength, shake_strength)
+			var y = randi_range(-shake_strength, shake_strength)
+			var z = randi_range(-shake_strength, shake_strength)
+			child.translation += Vector3(x, y, z)
+
+		# Llama recursivamente a la función para procesar los hijos del nodo actual
+		if child.get_child_count() > 0:
+			shake_objects(child)
+
 func is_earthquake():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
+
+	while true:
+		shake_objects(self)
+		if current_weather_and_disaster != "Earthquake":
+			break
+		await get_tree().create_timer(1).timeout
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = false
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)

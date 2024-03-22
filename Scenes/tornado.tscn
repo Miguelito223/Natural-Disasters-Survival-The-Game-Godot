@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://tjhhsh3ck07n"]
+[gd_scene load_steps=10 format=3 uid="uid://tjhhsh3ck07n"]
 
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="1_inpw0"]
 [ext_resource type="Script" path="res://Scenes/tornado.gd" id="1_yllgf"]
@@ -50,6 +50,8 @@ color = Color(0.309804, 0.196078, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_lgd8c"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_peyem"]
+
 [node name="Tornado" type="Node3D"]
 script = ExtResource("1_yllgf")
 
@@ -68,3 +70,11 @@ amount = 10000
 visibility_aabb = AABB(-6.55933, -1.99424, -6.57001, 13.1186, 3.98739, 13.1392)
 process_material = SubResource("ParticleProcessMaterial_i8b2v")
 draw_pass_1 = SubResource("QuadMesh_lgd8c")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(10, 0, 0, 0, 100, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("BoxShape3D_peyem")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
