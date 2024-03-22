@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 #Network
 var ip = "127.0.0.1"
