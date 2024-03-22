@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=18 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
+[ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
+[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xeewm"]
 
@@ -145,10 +147,11 @@ grow_vertical = 2
 
 [node name="Menu" type="VBoxContainer" parent="Pause menu"]
 process_mode = 3
-offset_left = 664.0
-offset_top = 448.0
-offset_right = 866.0
-offset_bottom = 606.0
+visible = false
+offset_left = 644.0
+offset_top = 352.0
+offset_right = 846.0
+offset_bottom = 510.0
 scale = Vector2(3, 1.5)
 
 [node name="Settings" type="Button" parent="Pause menu/Menu"]
@@ -165,11 +168,10 @@ text = "Exit"
 
 [node name="Settings" type="VBoxContainer" parent="Pause menu"]
 process_mode = 3
-visible = false
 offset_left = 599.0
-offset_top = 259.0
-offset_right = 815.0
-offset_bottom = 652.0
+offset_top = 158.0
+offset_right = 855.0
+offset_bottom = 671.0
 scale = Vector2(3, 1.5)
 
 [node name="fps" type="CheckButton" parent="Pause menu/Settings"]
@@ -283,6 +285,39 @@ texture = ExtResource("4_ni53t")
 [node name="Heartbeat" type="AudioStreamPlayer" parent="Hud"]
 process_mode = 3
 stream = ExtResource("6_vn0ni")
+
+[node name="Warning Hud" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("7_k0mbh")
+
+[node name="Panel" type="Panel" parent="Warning Hud"]
+process_mode = 3
+offset_left = 711.0
+offset_top = 1.0
+offset_right = 754.0
+offset_bottom = 41.0
+scale = Vector2(9.91709, 5.28957)
+
+[node name="Label" type="Label" parent="Warning Hud"]
+process_mode = 3
+offset_left = 726.0
+offset_top = 11.0
+offset_right = 878.0
+offset_bottom = 216.0
+text = "Current Disasters/Weather is:"
+
+[node name="Panel2" type="Panel" parent="Warning Hud"]
+process_mode = 3
+offset_left = 972.0
+offset_top = 27.0
+offset_right = 1021.0
+offset_bottom = 67.0
+scale = Vector2(2.92153, 3.89434)
+
+[node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
+position = Vector2(1042, 102)
+scale = Vector2(7.58173, 7.86641)
+texture = ExtResource("8_5jfek")
 
 [node name="Chat" type="CanvasLayer" parent="."]
 process_mode = 3

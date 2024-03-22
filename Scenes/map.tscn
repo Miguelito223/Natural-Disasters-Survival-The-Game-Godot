@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 
 [sub_resource type="Gradient" id="Gradient_40qbs"]
-colors = PackedColorArray(0, 0, 0, 1, 0.00392157, 0, 0.168627, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_u2jy2"]
 gradient = SubResource("Gradient_40qbs")
@@ -36,7 +36,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 900),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(-6.28319, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_5s0dj"]

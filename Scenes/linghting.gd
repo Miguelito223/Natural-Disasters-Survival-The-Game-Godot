@@ -12,7 +12,7 @@ func _ready():
 	$spark/light.one_shot = true
 	$spark/light/star.emitting = true
 	$spark/light/star.one_shot = true
-	$AudioStreamPlayer3D.stream = lol[randi_range(0, lol.size())]
+	$AudioStreamPlayer3D.stream = lol[randi_range(0, lol.size() - 1)]
 	$AudioStreamPlayer3D.play()
 
 	var explosion = explosion_scene.instantiate()

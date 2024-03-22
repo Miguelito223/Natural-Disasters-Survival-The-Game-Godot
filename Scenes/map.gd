@@ -17,7 +17,8 @@ enum weather_and_disaster {
 	earthquake,
 }
 
-var current_weather_and_disaster = weather_and_disaster.sun
+var current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.sun]
+var current_weather_and_disaster_int = weather_and_disaster.sun
 
 var linghting_scene = preload("res://Scenes/linghting.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
@@ -62,7 +63,7 @@ func generate_terrain():
 	terrain.storage = Terrain3DStorage.new()
 	terrain.texture_list = Terrain3DTextureList.new()
 	add_child(terrain, true)
-	terrain.material.world_background = Terrain3DMaterial.NONE
+	terrain.material.world_background = Terrain3DMaterial.NOISE
 	var texture = Terrain3DTexture.new()
 	var image = load("res://Textures/leafy_grass_diff_4k.jpg")
 	texture.name = "Grass"
@@ -85,22 +86,6 @@ func generate_terrain():
 
 
 func _process(_delta):
-
-	match current_weather_and_disaster:
-		weather_and_disaster.switch_weather_and_disaster:
-			print("Sitching weather and disaster...")
-		weather_and_disaster.sun:
-			print("Is Sun :D")
-		weather_and_disaster.cloud:
-			print("is cloud")
-		weather_and_disaster.raining:
-			print("is raining")
-		weather_and_disaster.storm:
-			print("is storm")
-		weather_and_disaster.linghting_storm:
-			print("is linghting storm")
-
-
 	for i in get_child_count():
 		var object = get_child(i)
 		if object.get_class() == "CharacterBody3D":
@@ -131,39 +116,42 @@ func sync_weather_and_disaster():
 func set_weather_and_disaster(weather_and_disaster_index):
 	match weather_and_disaster_index:
 		0:
-			current_weather_and_disaster = weather_and_disaster.sun
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.sun]
+			current_weather_and_disaster_int = weather_and_disaster.sun
 			is_sun()
 		1:
-			current_weather_and_disaster = weather_and_disaster.cloud
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.cloud]
+			current_weather_and_disaster_int = weather_and_disaster.cloud
 			is_cloud()
 		2:
-			current_weather_and_disaster = weather_and_disaster.raining
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.raining]
+			current_weather_and_disaster_int = weather_and_disaster.raining
 			is_raining()
 		3:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.storm]
 			is_storm()
 		4:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.linghting_storm]
 			is_linghting_storm()
 
 		5:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.tsunami]
 			is_tsunami()
 
 		6:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.meteor_shower]
 			is_meteor_shower()
 		7:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.volcano]
 			is_volcano()
 		8:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.tornado]
 			is_tornado()
 		9:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.acid_rain]
 			is_acid_rain()
 		10:
-			current_weather_and_disaster = weather_and_disaster.storm
+			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.earthquake]
 			is_earthquake()
 
 func is_tsunami():
@@ -209,10 +197,24 @@ func is_tornado():
 	pass
 
 func is_acid_rain():
-	pass
+	for player in get_tree().get_nodes_in_group("player"):
+		player.rain_node = true
+
+	Globals.Temperature_target = randi_range(20,31)
+	Globals.Humidity_target = randi_range(0,20)
+	Globals.pressure_target = randi_range(10000,10020)
+	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 10)
 
 func is_earthquake():
-	pass
+	for player in get_tree().get_nodes_in_group("player"):
+		player.rain_node = false
+
+	Globals.Temperature_target = randi_range(20,31)
+	Globals.Humidity_target = randi_range(0,20)
+	Globals.pressure_target = randi_range(10000,10020)
+	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(0, 10)
 
 
 func is_sun():
@@ -236,7 +238,7 @@ func is_cloud():
 	Globals.Wind_speed_target =  randi_range(0, 10)
 
 func is_raining():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in get_tree().get_multiplayer().get_network():
 		player.rain_node = true
 
 	Globals.Temperature_target =   randi_range(10,20)
@@ -257,19 +259,33 @@ func is_storm():
 
 
 func player_join(id):
+	print("Joined player id: " + str(id))
 	var player = player_scene.instantiate()
 	player.id = id
 	player.name = str(id)
+	Globals.players_conected_array.append(player)
+	Globals.players_conected_int = Globals.players_conected_array.size() - 1
 	add_child(player,true)
 
-	receive_seeds.rpc(noise_seed)
+	if get_tree().get_multiplayer().is_server():
+		receive_seeds.rpc(noise_seed)
 
 func player_disconect(id):
+	print("Disconected player id: " + str(id))
 	var player = get_node(str(id))
 	if is_instance_valid(player):
+		Globals.players_conected_array.erase(player)
+		Globals.players_conected_int = Globals.players_conected_array.size() - 1
 		player.queue_free()
 
 func server_disconect():
+	Globals.Temperature_target = Globals.Temperature_original
+	Globals.Humidity_target = Globals.Humidity_original
+	Globals.pressure_target = Globals.pressure_original
+	Globals.Wind_Direction_target = Globals.Wind_Direction_original
+	Globals.Wind_speed_target = Globals.Wind_speed_original
+	Globals.players_conected_array.clear()
+	Globals.players_conected_int = Globals.players_conected_array.size() - 1
 	self.queue_free()
 	get_parent().get_node("Main Menu").show()
 
@@ -280,7 +296,3 @@ func server_fail():
 
 func server_connected():
 	print("connected to server :)")
-
-
-func _on_player_spawner_spawned(node:Node):
-	node.setspawnpos()

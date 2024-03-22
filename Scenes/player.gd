@@ -6,7 +6,7 @@ var SPEED = 0
 const SPEED_RUN = 10.0
 const SPEED_WALK = 5.0
 const JUMP_VELOCITY = 7
-const SENSIBILITY = 0.07
+const SENSIBILITY = 0.01
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -105,6 +105,8 @@ func _process(delta):
 	if Globals.Wind_speed > 0:
 		if not $"Wind sound".playing:
 			$"Wind sound".play()
+	else:
+		$"Wind sound".stop()
 
 		
 			
