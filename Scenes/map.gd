@@ -159,7 +159,8 @@ func is_tsunami():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
 
-
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -172,6 +173,8 @@ func is_linghting_storm():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.pressure_target = randi_range(8000,9000)
@@ -199,6 +202,8 @@ func is_meteor_shower():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	for i in range(5000, 20000):
 		var meteor = meteor_scene.instantiate()
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
@@ -213,6 +218,8 @@ func is_volcano():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(30,40)
 	Globals.Humidity_target = randi_range(0,10)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -224,7 +231,8 @@ func is_tornado():
 		var player = get_child(i)
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
-
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.pressure_target = randi_range(8000,9000)
@@ -237,6 +245,8 @@ func is_acid_rain():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -249,6 +259,8 @@ func is_earthquake():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -261,7 +273,9 @@ func is_sun():
 		var player = get_child(i)
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
-
+	
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -274,6 +288,8 @@ func is_cloud():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(20,25)
 	Globals.Humidity_target = randi_range(10,30)
 	Globals.pressure_target = randi_range(9000,10000)
@@ -286,6 +302,8 @@ func is_raining():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =   randi_range(10,20)
 	Globals.Humidity_target =  randi_range(20,40)
 	Globals.pressure_target = randi_range(9000,9020)
@@ -298,6 +316,8 @@ func is_storm():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
 
+	$WorldEnvironment.environment.volumetric_fog_enabled = true
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.pressure_target = randi_range(8000,9000)

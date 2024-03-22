@@ -20,7 +20,8 @@
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y4sl8"]
-depth_draw_mode = 2
+transparency = 1
+cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
@@ -120,8 +121,9 @@ material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y4sl8")
-amount = 500
-randomness = 1.0
+amount = 1000
+lifetime = 2.0
+randomness = 0.44
 visibility_aabb = AABB(-238.814, -188.671, -192.689, 477.629, 389.343, 385.378)
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
