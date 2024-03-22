@@ -20,7 +20,6 @@ background_mode = 2
 sky = SubResource("Sky_lk1p6")
 fog_light_color = Color(0.517647, 0.552941, 0.607843, 1)
 fog_density = 0.0
-volumetric_fog_enabled = true
 
 [sub_resource type="Animation" id="Animation_y7xl6"]
 resource_name = "DNC"

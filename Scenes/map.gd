@@ -231,6 +231,7 @@ func is_tornado():
 		var player = get_child(i)
 		if player.is_in_group("player"):
 			player.rain_node.emitting = true
+	
 	$WorldEnvironment.environment.volumetric_fog_enabled = true
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
@@ -238,6 +239,14 @@ func is_tornado():
 	Globals.pressure_target = randi_range(8000,9000)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
+
+	for i in range(5000, 20000):
+		var lighting = linghting_scene.instantiate()
+		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		add_child(lighting, true)
+		if current_weather_and_disaster != "Linghting storm":
+			break
+		await get_tree().create_timer(5).timeout
 
 func is_acid_rain():
 	for i in get_child_count():

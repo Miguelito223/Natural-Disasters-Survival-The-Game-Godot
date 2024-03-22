@@ -92,9 +92,12 @@ func _on_settings_pressed():
 
 
 func _on_exit_pressed():
-	
-	get_tree().get_multiplayer().multiplayer_peer.close()
-	Globals.is_networking = false
+	if Globals.is_networking:
+		get_tree().get_multiplayer().multiplayer_peer.close()
+		Globals.is_networking = false
+	else:
+		get_parent().get_parent().get_parent().get_node("Main Menu").show()
+		get_parent().get_parent().queue_free()
 
 
 func _on_fps_toggled(toggled_on:bool):
