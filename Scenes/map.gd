@@ -129,36 +129,44 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			is_raining()
 		3:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.storm]
+			current_weather_and_disaster_int = weather_and_disaster.storm
 			is_storm()
 		4:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.linghting_storm]
+			current_weather_and_disaster_int = weather_and_disaster.linghting_storm
 			is_linghting_storm()
 
 		5:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.tsunami]
+			current_weather_and_disaster_int = weather_and_disaster.tsunami
 			is_tsunami()
 
 		6:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.meteor_shower]
+			current_weather_and_disaster_int = weather_and_disaster.meteor_shower
 			is_meteor_shower()
 		7:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.volcano]
+			current_weather_and_disaster_int = weather_and_disaster.volcano
 			is_volcano()
 		8:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.tornado]
+			current_weather_and_disaster_int = weather_and_disaster.tornado
 			is_tornado()
 		9:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.acid_rain]
+			current_weather_and_disaster_int = weather_and_disaster.acid_rain
 			is_acid_rain()
 		10:
 			current_weather_and_disaster = weather_and_disaster.keys()[weather_and_disaster.earthquake]
+			current_weather_and_disaster_int = weather_and_disaster.earthquake
 			is_earthquake()
 
 func is_tsunami():
 	pass
 
 func is_linghting_storm():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = true
 
 	Globals.Temperature_target =  randi_range(5,15)
@@ -171,11 +179,13 @@ func is_linghting_storm():
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
+		if current_weather_and_disaster != weather_and_disaster.keys()[weather_and_disaster.linghting_storm]:
+			break
 		await get_tree().create_timer(5).timeout
 
 
 func is_meteor_shower():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = false
 
 	Globals.Temperature_target = randi_range(20,31)
@@ -188,6 +198,8 @@ func is_meteor_shower():
 		var meteor = meteor_scene.instantiate()
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
+		if current_weather_and_disaster != weather_and_disaster.keys()[weather_and_disaster.meteor_shower]:
+			break
 		await get_tree().create_timer(5).timeout
 
 func is_volcano():
@@ -197,7 +209,7 @@ func is_tornado():
 	pass
 
 func is_acid_rain():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = true
 
 	Globals.Temperature_target = randi_range(20,31)
@@ -207,7 +219,7 @@ func is_acid_rain():
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 func is_earthquake():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = false
 
 	Globals.Temperature_target = randi_range(20,31)
@@ -218,7 +230,7 @@ func is_earthquake():
 
 
 func is_sun():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = false
 
 	Globals.Temperature_target = randi_range(20,31)
@@ -228,7 +240,7 @@ func is_sun():
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 func is_cloud():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = false
 
 	Globals.Temperature_target =  randi_range(20,25)
@@ -248,7 +260,7 @@ func is_raining():
 	Globals.Wind_speed_target = randi_range(0, 20)
 
 func is_storm():
-	for player in get_tree().get_nodes_in_group("player"):
+	for player in Globals.players_conected_array:
 		player.rain_node = true
 
 	Globals.Temperature_target =  randi_range(5,15)
