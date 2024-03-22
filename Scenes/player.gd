@@ -116,6 +116,9 @@ func _process(delta):
 				damage(alpha_hot + alpha_cold)
 
 
+		
+
+
 
 		if Globals.Wind_speed > 0:
 			if not $"Wind sound".playing:
