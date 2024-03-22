@@ -19,33 +19,33 @@ var fullscreen = false
 var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())
 
 #Globals Weather
-var Temperature = 23
-var pressure = 10000
-var oxygen = 100
-var bradiation = 0
-var Humidity = 25
-var Wind_Direction = Vector3(1,0,0)
-var Wind_speed = 0
+var Temperature: float = 23
+var pressure: float = 10000
+var oxygen: float  = 100
+var bradiation: float = 0
+var Humidity: float = 25
+var Wind_Direction: Vector3 = Vector3(1,0,0)
+var Wind_speed: float = 0
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #Globals Weather target
-var Temperature_target = 23
-var pressure_target = 10000
-var oxygen_target = 100
-var bradiation_target = 0
-var Humidity_target = 25
-var Wind_Direction_target = Vector3(1,0,0)
-var Wind_speed_target = 0
+var Temperature_target: float = 23
+var pressure_target: float = 10000
+var oxygen_target: float = 100
+var bradiation_target: float = 0
+var Humidity_target: float = 25
+var Wind_Direction_target: Vector3 = Vector3(1,0,0)
+var Wind_speed_target: float = 0
 
 #Globals Weather original
-var Temperature_original = 23
-var pressure_original = 10000
-var oxygen_original = 100
-var bradiation_original = 0
-var Humidity_original = 25
-var Wind_Direction_original = Vector3(1,0,0)
-var Wind_speed_original = 0
+var Temperature_original: float = 23
+var pressure_original: float = 10000
+var oxygen_original: float = 100
+var bradiation_original: float = 0
+var Humidity_original: float = 25
+var Wind_Direction_original: Vector3 = Vector3(1,0,0)
+var Wind_speed_original: float = 0
 
 var seconds = Time.get_unix_time_from_system()
 
@@ -105,13 +105,13 @@ func _process(delta):
 		pressure = clamp(pressure, 0, INF)
 		oxygen = clamp(oxygen, 0, 100)
 
-		Temperature = lerpf(Temperature, Temperature_target, 0.005)
-		Humidity = lerpf(Humidity, Humidity_target, 0.005)
-		pressure = lerpf(pressure, pressure_target, 0.005)
-		bradiation = lerpf(bradiation, bradiation_target, 0.005)
-		oxygen = lerpf(oxygen, oxygen_target, 0.005)
-		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-		Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
+		Temperature = lerp(Temperature, Temperature_target, 0.005 * delta)
+		Humidity = lerp(Humidity, Humidity_target, 0.005 * delta )
+		bradiation = lerp(bradiation, bradiation_target, 0.005 * delta )
+		pressure = lerp(pressure, pressure_target, 0.005 * delta )
+		oxygen = lerp(oxygen, oxygen_target, 0.005 * delta )
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005 * delta)
+		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005 * delta)
 	else:
 
 		if not get_tree().get_multiplayer().is_server():
@@ -123,13 +123,13 @@ func _process(delta):
 		pressure = clamp(pressure, 0, INF)
 		oxygen = clamp(oxygen, 0, 100)
 
-		Temperature = lerp(Temperature, Temperature_target, 0.005)
-		Humidity = lerp(Humidity, Humidity_target, 0.005)
-		bradiation = lerp(bradiation, bradiation_target, 0.005)
-		pressure = lerp(pressure, pressure_target, 0.005)
-		oxygen = lerp(oxygen, oxygen_target, 0.005)
-		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
+		Temperature = lerp(Temperature, Temperature_target, 0.005 * delta)
+		Humidity = lerp(Humidity, Humidity_target, 0.005 * delta  )
+		bradiation = lerp(bradiation, bradiation_target, 0.005 * delta  )
+		pressure = lerp(pressure, pressure_target, 0.005 * delta )
+		oxygen = lerp(oxygen, oxygen_target, 0.005 * delta)
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005 * delta)
+		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005 * delta)
 
 		sync_temp.rpc(Temperature)
 		sync_humidity.rpc(Humidity)

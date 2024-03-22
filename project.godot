@@ -79,3 +79,7 @@ Mouse_Action={
 [physics]
 
 3d/default_gravity=100.0
+
+[rendering]
+
+global_illumination/voxel_gi/quality=1
