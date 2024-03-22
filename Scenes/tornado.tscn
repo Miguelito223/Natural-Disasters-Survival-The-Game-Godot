@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://tjhhsh3ck07n"]
+[gd_scene load_steps=9 format=3 uid="uid://tjhhsh3ck07n"]
 
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="1_inpw0"]
+[ext_resource type="Script" path="res://Scenes/tornado.gd" id="1_yllgf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pk3x1"]
 transparency = 1
@@ -50,6 +51,7 @@ color = Color(0.309804, 0.196078, 0, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_lgd8c"]
 
 [node name="Tornado" type="Node3D"]
+script = ExtResource("1_yllgf")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_pk3x1")

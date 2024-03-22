@@ -12,11 +12,8 @@ shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 albedo_texture = ExtResource("3_avm0v")
-billboard_mode = 3
+billboard_mode = 2
 billboard_keep_scale = true
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fjbmq"]
 particle_flag_align_y = true
@@ -147,7 +144,7 @@ draw_pass_1 = SubResource("QuadMesh_8jrdf")
 material_override = SubResource("StandardMaterial3D_ghvqt")
 amount = 1
 lifetime = 1.5
-visibility_aabb = AABB(-10000, -7151.76, -10000, 20000, 20000, 20000)
+visibility_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
 process_material = SubResource("ParticleProcessMaterial_1lfm6")
 draw_pass_1 = SubResource("QuadMesh_tdmw4")
 
