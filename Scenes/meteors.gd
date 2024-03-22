@@ -9,8 +9,7 @@ func _ready():
 	self.gravity_scale = Globals.gravity
 	$CollisionShape3D.scale = self.scale
 
-
-func explosion():
+func _on_body_entered(_body):
 	var explosion_node = explosion_scene.instantiate()
 	explosion_node.position = self.position
 	explosion_node.emitting = true
@@ -19,7 +18,3 @@ func explosion():
 	
 	await explosion_node.finished
 	explosion_node.queue_free()
-
-
-func _on_body_entered(_body):
-	explosion()

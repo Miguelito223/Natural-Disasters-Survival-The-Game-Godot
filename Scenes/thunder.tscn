@@ -1,17 +1,17 @@
 [gd_scene load_steps=16 format=3 uid="uid://dni5hbhwlxmdi"]
 
-[ext_resource type="Script" path="res://Scenes/linghting.gd" id="1_uao1k"]
-[ext_resource type="Texture2D" uid="uid://dhwpuiof0nxhn" path="res://Sprites/kenney_particle_pack/spark_05.png" id="2_ti080"]
-[ext_resource type="Texture2D" uid="uid://kq40l8aspg2k" path="res://Sprites/kenney_particle_pack/light_03.png" id="3_kg4ls"]
-[ext_resource type="Texture2D" uid="uid://bmpv20xa7w4u5" path="res://Sprites/kenney_particle_pack/flare_01.png" id="4_b7bsc"]
-[ext_resource type="AudioStream" uid="uid://bqcdqccfjtfd2" path="res://Sounds/disasters/nature/closethunder04.mp3" id="5_gudeu"]
+[ext_resource type="Script" path="res://Scenes/thunder.gd" id="1_ig5to"]
+[ext_resource type="AudioStream" uid="uid://bqcdqccfjtfd2" path="res://Sounds/disasters/nature/closethunder04.mp3" id="2_023p5"]
+[ext_resource type="Texture2D" uid="uid://dhwpuiof0nxhn" path="res://Sprites/kenney_particle_pack/spark_05.png" id="3_avm0v"]
+[ext_resource type="Texture2D" uid="uid://kq40l8aspg2k" path="res://Sprites/kenney_particle_pack/light_03.png" id="4_r770o"]
+[ext_resource type="Texture2D" uid="uid://bmpv20xa7w4u5" path="res://Sprites/kenney_particle_pack/flare_01.png" id="5_w6hi2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jem84"]
 blend_mode = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
-albedo_texture = ExtResource("2_ti080")
+albedo_texture = ExtResource("3_avm0v")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -37,7 +37,7 @@ blend_mode = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
-albedo_texture = ExtResource("3_kg4ls")
+albedo_texture = ExtResource("4_r770o")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -61,7 +61,7 @@ transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
-albedo_texture = ExtResource("4_b7bsc")
+albedo_texture = ExtResource("5_w6hi2")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -127,11 +127,11 @@ properties/15/path = NodePath(".:rotation")
 properties/15/spawn = true
 properties/15/replication_mode = 1
 
-[node name="Linghting" type="Node3D"]
-script = ExtResource("1_uao1k")
+[node name="thunder" type="Node3D"]
+script = ExtResource("1_ig5to")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_gudeu")
+stream = ExtResource("2_023p5")
 max_distance = 300.0
 
 [node name="spark" type="GPUParticles3D" parent="."]
