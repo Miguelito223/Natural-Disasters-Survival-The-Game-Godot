@@ -49,6 +49,7 @@ var seconds = Time.get_unix_time_from_system()
 @onready var main = get_tree().root.get_node("Main")
 @onready var map = get_tree().root.get_node("Main/Map")
 var map_scene = preload("res://Scenes/map.tscn")
+var player_scene = preload("res://Scenes/player.tscn")
 
 
 func convert_MetoSU(metres):
@@ -91,29 +92,40 @@ func sync_Wind_Direction(new_value):
 
 func _process(delta):
 	if not is_networking:
-		return
+		Temperature = clamp(Temperature, -275.5, 275.5)
+		Humidity = clamp(Humidity, 0, 100)
+		pressure = clamp(pressure, 0, INF)
+		oxygen = clamp(oxygen, 0, INF)
 
-	if not get_tree().get_multiplayer().is_server():
-		return
+		Temperature = lerpf(Temperature, Temperature_target, 0.005)
+		Humidity = lerpf(Humidity, Humidity_target, 0.005)
+		pressure = clamp(pressure, pressure_target, 0.005)
+		oxygen = clamp(oxygen, oxygen_target, 0.005)
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+		Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
+	else:
 
-	Temperature = clamp(Temperature, -275.5, 275.5)
-	Humidity = clamp(Humidity, 0, 100)
-	pressure = clamp(pressure, 0, INF)
-	oxygen = clamp(oxygen, 0, INF)
+		if not get_tree().get_multiplayer().is_server():
+			return
 
-	Temperature = lerpf(Temperature, Temperature_target, 0.005)
-	Humidity = lerpf(Humidity, Humidity_target, 0.005)
-	pressure = clamp(pressure, pressure_target, 0.005)
-	oxygen = clamp(oxygen, oxygen_target, 0.005)
-	Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-	Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
+		Temperature = clamp(Temperature, -275.5, 275.5)
+		Humidity = clamp(Humidity, 0, 100)
+		pressure = clamp(pressure, 0, INF)
+		oxygen = clamp(oxygen, 0, INF)
 
-	sync_temp.rpc(Temperature)
-	sync_humidity.rpc(Humidity)
-	sync_wind_speed.rpc(Wind_speed)
-	sync_Wind_Direction.rpc(Wind_Direction)
-	sync_pressure.rpc(pressure)
-	sync_oxygen.rpc(oxygen)
+		Temperature = lerpf(Temperature, Temperature_target, 0.005)
+		Humidity = lerpf(Humidity, Humidity_target, 0.005)
+		pressure = clamp(pressure, pressure_target, 0.005)
+		oxygen = clamp(oxygen, oxygen_target, 0.005)
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+		Wind_speed = lerpf(Wind_speed, Wind_speed_target, 0.005)
+
+		sync_temp.rpc(Temperature)
+		sync_humidity.rpc(Humidity)
+		sync_wind_speed.rpc(Wind_speed)
+		sync_Wind_Direction.rpc(Wind_Direction)
+		sync_pressure.rpc(pressure)
+		sync_oxygen.rpc(oxygen)
 		
 
 func hostwithport(port):
@@ -131,7 +143,7 @@ func hostwithport(port):
 		print("Fatal Error in server")
 
 
-func hostwithip(ip, port):
+func joinwithip(ip, port):
 	Enet = ENetMultiplayerPeer.new()
 	var error = Enet.create_client(ip, port)
 	if error == OK:

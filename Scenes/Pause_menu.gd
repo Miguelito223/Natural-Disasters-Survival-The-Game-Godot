@@ -37,24 +37,40 @@ func addresolutions():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if not is_multiplayer_authority():
-		return
 
-	$Menu.show()
-	$Settings.hide()
+	if not Globals.is_networking:
+		$Menu.show()
+		$Settings.hide()
 
-	addresolutions()
-	DisplayServer.window_set_size(Globals.resolution)
-	get_viewport().set_size(Globals.resolution)
+		addresolutions()
+		DisplayServer.window_set_size(Globals.resolution)
+		get_viewport().set_size(Globals.resolution)
 
-	$Settings/fps.button_pressed = Globals.FPS
-	$Settings/vsync.button_pressed = Globals.vsync
-	$Settings/Fullscreen.button_pressed = Globals.fullscreen
-	$Settings/antialiasing.button_pressed = Globals.antialiasing
-	$Settings/Volumen.value = Globals.volumen
-
-	if get_tree().get_multiplayer().is_server():
+		$Settings/fps.button_pressed = Globals.FPS
+		$Settings/vsync.button_pressed = Globals.vsync
+		$Settings/Fullscreen.button_pressed = Globals.fullscreen
+		$Settings/antialiasing.button_pressed = Globals.antialiasing
+		$Settings/Volumen.value = Globals.volumen
 		$Settings/Time.value = Globals.timer
+	else:
+		if not is_multiplayer_authority():
+			return
+
+		$Menu.show()
+		$Settings.hide()
+
+		addresolutions()
+		DisplayServer.window_set_size(Globals.resolution)
+		get_viewport().set_size(Globals.resolution)
+
+		$Settings/fps.button_pressed = Globals.FPS
+		$Settings/vsync.button_pressed = Globals.vsync
+		$Settings/Fullscreen.button_pressed = Globals.fullscreen
+		$Settings/antialiasing.button_pressed = Globals.antialiasing
+		$Settings/Volumen.value = Globals.volumen
+
+		if get_tree().get_multiplayer().is_server():
+			$Settings/Time.value = Globals.timer
 
 
 func _on_ip_text_changed(new_text:String):
@@ -63,14 +79,6 @@ func _on_ip_text_changed(new_text:String):
 
 func _on_port_text_changed(new_text:String):
 	Globals.port = int(new_text)
-
-
-func _on_join_pressed():
-	Globals.hostwithip(Globals.ip, Globals.port)
-
-
-func _on_host_pressed():
-	Globals.hostwithport(Globals.port)
 
 
 func _on_play_pressed():
@@ -147,13 +155,25 @@ func _input(event):
 			pause()
 
 func _on_time_value_changed(value:float):
-	Globals.timer = value
+	if not Globals.is_networking:
+		Globals.timer = value
 
-	if get_parent().get_parent().get_node("Timer") == null:
-		return
+		if get_parent().get_parent().get_node("Timer") == null:
+			return
 
-	get_parent().get_parent().get_node("Timer").wait_time = value
-	Data.save_file()
+		get_parent().get_parent().get_node("Timer").wait_time = value
+		Data.save_file()
+	else:
+		if not get_tree().get_multiplayer().is_server():
+			return
+		
+		Globals.timer = value
+
+		if get_parent().get_parent().get_node("Timer") == null:
+			return
+
+		get_parent().get_parent().get_node("Timer").wait_time = value
+		Data.save_file()
 
 func _on_volumen_value_changed(value:float):
 	Globals.volumen = value
@@ -177,3 +197,6 @@ func _on_fullscreen_toggled(toggled_on:bool):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	Globals.fullscreen = toggled_on
 	Data.save_file()
+
+func _on_reset_player_pressed():
+	get_parent().setspawnpos()

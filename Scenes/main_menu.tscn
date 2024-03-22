@@ -22,16 +22,21 @@ grow_vertical = 2
 
 [node name="Menu" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 634.0
-offset_top = 339.0
-offset_right = 836.0
-offset_bottom = 578.0
+offset_left = 511.0
+offset_top = 312.0
+offset_right = 815.0
+offset_bottom = 632.0
 scale = Vector2(3, 1.5)
 
-[node name="Play" type="Button" parent="Menu"]
+[node name="singleplayer" type="Button" parent="Menu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
-text = "play"
+text = "Singleplayer"
+
+[node name="multiplayer" type="Button" parent="Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Multiplayer"
 
 [node name="Settings" type="Button" parent="Menu"]
 layout_mode = 2
@@ -104,10 +109,10 @@ text = "Back"
 
 [node name="Settings" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 602.0
-offset_top = 243.0
-offset_right = 818.0
-offset_bottom = 636.0
+offset_left = 442.0
+offset_top = 230.0
+offset_right = 777.0
+offset_bottom = 698.0
 scale = Vector2(3, 1.5)
 
 [node name="fps" type="CheckButton" parent="Settings"]
@@ -118,22 +123,22 @@ text = "FPS:"
 [node name="vsync" type="CheckButton" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Vsync"
+text = "Vsync:"
 
 [node name="antialiasing" type="CheckButton" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Antialiasing"
+text = "Antialiasing:"
 
 [node name="Fullscreen" type="CheckButton" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Fullscreen"
+text = "Fullscreen:"
 
 [node name="Resolutions Label" type="Label" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "Resolution"
+text = "Resolution:"
 
 [node name="resolutions" type="OptionButton" parent="Settings"]
 layout_mode = 2
@@ -152,8 +157,7 @@ step = 0.001
 [node name="TIme label" type="Label" parent="Settings"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
-text = "time of any 
-disaster/weather:"
+text = "Time disaster/weather:"
 
 [node name="Time" type="HSlider" parent="Settings"]
 layout_mode = 2
@@ -166,7 +170,8 @@ text = "Back"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 
-[connection signal="pressed" from="Menu/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Menu/singleplayer" to="." method="_on_singleplayer_pressed"]
+[connection signal="pressed" from="Menu/multiplayer" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Menu/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="Menu/Exit" to="." method="_on_exit_pressed"]
 [connection signal="text_changed" from="Multiplayer/username" to="." method="_on_username_text_changed"]

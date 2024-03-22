@@ -65,7 +65,7 @@ func _on_port_text_changed(new_text:String):
 
 
 func _on_join_pressed():
-	Globals.hostwithip(Globals.ip, Globals.port)
+	Globals.joinwithip(Globals.ip, Globals.port)
 
 
 func _on_host_pressed():
@@ -145,3 +145,11 @@ func _on_fullscreen_toggled(toggled_on:bool):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 	Globals.fullscreen = toggled_on
 	Data.save_file()
+
+
+func _on_singleplayer_pressed():
+	var map = Globals.map_scene.instantiate()
+	get_parent().add_child(map)
+	self.hide()
+	var player = Globals.player_scene.instantiate()
+	map.add_child(player, true)
