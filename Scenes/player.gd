@@ -14,7 +14,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var Max_Hearth = 100
 var Max_temp = 44
 var Max_oxygen = 100
-var Max_bradiation = 1
+var Max_bradiation = 100
 
 
 var min_Hearth = 0
@@ -26,7 +26,7 @@ var mass = 75
 
 var hearth = Max_Hearth
 
-var body_temperature = Max_temp
+var body_temperature = 37
 var body_oxygen = Max_oxygen
 var body_bradiation = min_bdradiation
 
@@ -52,7 +52,7 @@ func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
 		hearth = Max_Hearth
-		body_temperature = Max_temp
+		body_temperature = 37
 		body_oxygen = Max_oxygen
 		body_bradiation = min_bdradiation
 		print("you death")
@@ -128,18 +128,24 @@ func _process(delta):
 		if Globals.oxygen <= 0:
 			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
-
-
+		else:
+			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
+			await get_tree().create_timer(1).timeout
+		
+		
 		if body_oxygen <= 0:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
 
-		if Globals.bradiation >= 1:
-			body_bradiation = clamp(body_bradiation + 0.01, min_bdradiation, Max_bradiation)
+		if Globals.bradiation >= 100:
+			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
+			await get_tree().create_timer(1).timeout
+		else:
+			body_bradiation = clamp(body_bradiation - 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 
-		if body_bradiation >= 1:
+		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
@@ -191,7 +197,29 @@ func _process(delta):
 			elif alpha_hot != 0:	
 				damage(alpha_hot + alpha_cold)
 
+		if Globals.oxygen <= 0:
+			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
+			await get_tree().create_timer(1).timeout
+		else:
+			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
+			await get_tree().create_timer(1).timeout
+		
+		
+		if body_oxygen <= 0:
+			if randi_range(1,25) == 25:
+				damage(randi_range(1,30))
 
+
+		if Globals.bradiation >= 100:
+			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
+			await get_tree().create_timer(1).timeout
+		else:
+			body_bradiation = clamp(body_bradiation - 1, min_bdradiation, Max_bradiation)
+			await get_tree().create_timer(1).timeout
+
+		if body_bradiation >= 100:
+			if randi_range(1,25) == 25:
+				damage(randi_range(1,30))
 
 		if Globals.Wind_speed > 0:
 			if not $"Wind sound".playing:
