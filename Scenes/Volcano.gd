@@ -12,7 +12,7 @@ func _ready():
 
 func _launch_fireball():
 	# Instanciar una nueva bola de fuego y lanzarla
-	var fireball = fireball_scene.instance()
+	var fireball = fireball_scene.instantiate()
 	var launch_direction = Vector3(0, 1, 0)  # Dirección hacia arriba
 	var launch_vector = launch_direction * launch_force
 	fireball.global_transform.origin = global_transform.origin  # Posición inicial en el volcán
