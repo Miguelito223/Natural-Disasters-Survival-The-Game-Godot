@@ -15,6 +15,3 @@ func _on_body_entered(_body):
 	explosion_node.emitting = true
 	get_parent().add_child(explosion_node)
 	self.queue_free()
-	
-	await explosion_node.finished
-	explosion_node.queue_free()

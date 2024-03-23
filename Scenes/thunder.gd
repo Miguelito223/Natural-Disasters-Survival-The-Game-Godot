@@ -20,9 +20,7 @@ func _ready():
 	explosion.emitting = true
 	get_parent().add_child(explosion, true)
 
-	await $spark.finished
+
+
+func _on_spark_finished():
 	self.queue_free()
-
-	await explosion.finished
-	explosion.queue_free()
-
