@@ -333,4 +333,14 @@ func _unhandled_input(event):
 
 
 func setspawnpos():
-	self.position = Vector3(1024,10,1024)
+
+	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+	var space_state = get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+	var result = space_state.intersect_ray(ray)
+		
+	if result.has("position"):
+		position = result.position + Vector3(0,5,0)
+	else:
+		position = rand_pos
+
