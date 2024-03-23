@@ -255,6 +255,8 @@ func is_linghting_storm():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
+
+
 	while current_weather_and_disaster == "Linghting storm":
 		if Globals.is_networking:
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))

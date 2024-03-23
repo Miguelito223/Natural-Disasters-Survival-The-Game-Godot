@@ -1,0 +1,81 @@
+[gd_scene load_steps=14 format=3 uid="uid://qf81iinh5hke"]
+
+[ext_resource type="Script" path="res://Scenes/Volcano.gd" id="1_m5bkw"]
+[ext_resource type="PackedScene" uid="uid://ucwf1wbil5c7" path="res://Models/Volcano.blend" id="1_sgmmu"]
+[ext_resource type="Texture2D" uid="uid://ci2jq2evmgdk0" path="res://Materials/lava_anim.png" id="2_13yay"]
+[ext_resource type="Texture2D" uid="uid://c3hos2355t6un" path="res://Materials/base_volcano.png" id="3_l58yh"]
+[ext_resource type="Texture2D" uid="uid://cu4yxjvvcuoyo" path="res://Materials/crater_volcano.png" id="4_04b5e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abjm1"]
+albedo_color = Color(1, 0.717647, 0, 1)
+albedo_texture = ExtResource("2_13yay")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwt8w"]
+albedo_texture = ExtResource("3_l58yh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_481n1"]
+albedo_texture = ExtResource("4_04b5e")
+normal_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_somxg"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Gradient" id="Gradient_w0xb0"]
+offsets = PackedFloat32Array(0, 0.461039, 1)
+colors = PackedColorArray(1, 0.451763, 0.134836, 1, 0, 0, 0, 1, 0.344076, 0.344076, 0.344076, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2pmkc"]
+gradient = SubResource("Gradient_w0xb0")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ep0pk"]
+emission_shape = 1
+emission_sphere_radius = 300.0
+direction = Vector3(0, 1, 0)
+spread = 0.0
+initial_velocity_min = 10.0
+initial_velocity_max = 119.37
+gravity = Vector3(0, 0, 0)
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_2pmkc")
+
+[sub_resource type="SphereMesh" id="SphereMesh_otd4a"]
+
+[node name="Volcano" type="Node3D"]
+script = ExtResource("1_m5bkw")
+
+[node name="Model" parent="." instance=ExtResource("1_sgmmu")]
+
+[node name="Skeleton3D" parent="Model/ref_skeleton" index="0"]
+bones/0/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+bones/5/rotation = Quaternion(-0.142949, 0.863798, 0.0496701, -0.480575)
+bones/8/rotation = Quaternion(0.0953013, 0.718826, 0.625547, -0.287921)
+bones/8/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.0175413, 0.0246519, -0.0627842, 0.997568)
+bones/12/rotation = Quaternion(0.329881, 0.638098, 0.562386, -0.40955)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(-0.116855, -0.0244707, 0.221192, 0.967895)
+bones/13/scale = Vector3(1, 1, 1)
+
+[node name="ref" parent="Model/ref_skeleton/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_abjm1")
+surface_material_override/1 = SubResource("StandardMaterial3D_xwt8w")
+surface_material_override/2 = SubResource("StandardMaterial3D_481n1")
+
+[node name="Smoke" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9663, 267, -5.85772)
+material_override = SubResource("StandardMaterial3D_somxg")
+amount = 1000
+lifetime = 5.0
+randomness = 1.0
+visibility_aabb = AABB(-0.658692, -1.53968, -0.967607, 1.3916, 3.07936, 1.93521)
+process_material = SubResource("ParticleProcessMaterial_ep0pk")
+draw_pass_1 = SubResource("SphereMesh_otd4a")
+
+[editable path="Model"]

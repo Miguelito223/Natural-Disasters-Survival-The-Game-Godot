@@ -6,6 +6,7 @@
 size = Vector3(10000, 1000, 100)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xsbjx"]
+transparency = 1
 albedo_color = Color(0, 0.0352941, 0.486275, 1)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_p2o80"]

@@ -6,9 +6,10 @@ var lol = [preload("res://Sounds/disasters/nature/closethunder01.mp3"), preload(
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	raycast.force_raycast_update()
 	raycast.target_position = Vector3(0, -1000, 0)  # Apuntar hacia abajo
 	raycast.enabled = true
+	raycast.force_raycast_update()
+
 	
 	if raycast.is_colliding():
 		var ground_position = raycast.get_collision_point()

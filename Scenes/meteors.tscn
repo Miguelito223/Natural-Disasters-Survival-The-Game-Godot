@@ -65,7 +65,7 @@ particles_anim_loop = false
 offsets = PackedFloat32Array(0, 0.461039, 1)
 colors = PackedColorArray(1, 0.451763, 0.134836, 1, 0, 0, 0, 1, 0.344076, 0.344076, 0.344076, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2pmkc"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ywdgh"]
 gradient = SubResource("Gradient_54kgu")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yqud3"]
@@ -78,7 +78,7 @@ initial_velocity_max = 10.0
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
 scale_max = 0.5
-color_ramp = SubResource("GradientTexture1D_2pmkc")
+color_ramp = SubResource("GradientTexture1D_ywdgh")
 
 [sub_resource type="SphereMesh" id="SphereMesh_hqrhf"]
 
@@ -143,11 +143,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0336982, -2.38419e-07, 0.0
 material_override = SubResource("StandardMaterial3D_nkvcn")
 amount = 200
 lifetime = 3.0
+randomness = 1.0
 visibility_aabb = AABB(-0.658692, -1.53968, -0.967607, 1.3916, 3.07936, 1.93521)
 process_material = SubResource("ParticleProcessMaterial_yqud3")
-draw_passes = 2
 draw_pass_1 = SubResource("SphereMesh_hqrhf")
-draw_pass_2 = null
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2w7a8")
