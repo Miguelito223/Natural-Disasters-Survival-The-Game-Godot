@@ -12,6 +12,7 @@ var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
 var tornado_scene = preload("res://Scenes/tornado.tscn")
 var tsunami_scene = preload("res://Scenes/tsunami.tscn")
+var volcano_scene = preload("res://Scenes/volcano.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -277,10 +278,15 @@ func is_linghting_storm():
 			else:
 				player.rain_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+
+		var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		var space_state = get_world_3d().direct_space_state
+		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+		var result = space_state.intersect_ray(ray)				
 		
 		var lighting = linghting_scene.instantiate()
-		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		lighting.position = result.position
 		add_child(lighting, true)
 
 		await get_tree().create_timer(1).timeout
@@ -310,6 +316,7 @@ func is_meteor_shower():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
+
 		var meteor = meteor_scene.instantiate()
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
@@ -328,6 +335,15 @@ func is_volcano():
 	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 50)
+
+	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+	var space_state = get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+	var result = space_state.intersect_ray(ray)
+
+	var volcano = volcano_scene.instantiate()
+	volcano.position = result.position
+	add_child(volcano)
 
 	while current_weather_and_disaster == "Volcano":
 		var player
@@ -379,10 +395,16 @@ func is_tornado():
 			else:
 				player.rain_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+
+
+		var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		var space_state = get_world_3d().direct_space_state
+		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+		var result = space_state.intersect_ray(ray)			
 		
 		var lighting = linghting_scene.instantiate()
-		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		lighting.position = result.position
 		add_child(lighting, true)
 
 		await get_tree().create_timer(1).timeout
@@ -563,7 +585,7 @@ func is_storm():
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(8000,9000)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 30)
+	Globals.Wind_speed_target = randi_range(30, 60)
 
 	while current_weather_and_disaster == "Storm":
 		if Globals.is_networking:

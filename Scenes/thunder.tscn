@@ -160,6 +160,7 @@ draw_pass_1 = SubResource("QuadMesh_q3mvv")
 replication_config = SubResource("SceneReplicationConfig_go6sb")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1438.72, 0)
 target_position = Vector3(0, -1000, 0)
 
 [connection signal="finished" from="spark" to="." method="_on_spark_finished"]

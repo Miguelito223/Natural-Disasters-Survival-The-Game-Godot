@@ -3,22 +3,23 @@ extends Node3D
 var movement_speed = 10
 var movement_radius = 50
 
-var ray_length = 100
+var ray_length = 1000
 var ground_height = 0
 
 var tornado_strength = 100
 var radius = 10
 
+
+@onready var ray_cast = $RayCast
+
 func _ready():
+	var ray_origin = global_transform.origin
+	var ray_end = ray_origin + Vector3(0, -ray_length, 0)
+	ray_cast.target_position = Vector3(0, -ray_length, 0)
+	ray_cast.force_raycast_update()
 	set_process(true)
 
 func _process(delta):
-	var ray_origin = global_transform.origin
-	var ray_end = ray_origin + Vector3(0, -ray_length, 0)
-	var ray_cast = $RayCast
-	ray_cast.target_position = Vector3(0, -ray_length, 0)
-	ray_cast.force_raycast_update()
-	
 	if ray_cast.is_colliding():
 		ground_height = ray_cast.get_collision_point().y
 		global_transform.origin.y = ground_height  # Mantener el tornado a la altura del suelo
