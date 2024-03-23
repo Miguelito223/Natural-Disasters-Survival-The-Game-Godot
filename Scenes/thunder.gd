@@ -6,13 +6,6 @@ var lol = [preload("res://Sounds/disasters/nature/closethunder01.mp3"), preload(
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$spark.emitting = true
-	$spark.one_shot = true
-	$spark/light.emitting = true
-	$spark/light.one_shot = true
-	$spark/light/star.emitting = true
-	$spark/light/star.one_shot = true
-
 	raycast.force_raycast_update()
 	raycast.target_position = Vector3(0, -1000, 0)  # Apuntar hacia abajo
 	raycast.enabled = true
@@ -24,7 +17,7 @@ func _ready():
 		self.global_position = ground_position
 		
 		# Configurar la posición de la explosión en la posición del suelo
-		var explosion = explosion_scene.instantiate()
+		var explosion = explosion_scene.instance()
 		explosion.global_position = ground_position
 		get_parent().add_child(explosion)
 		
@@ -35,8 +28,11 @@ func _ready():
 		
 		# Reproducir el efecto visual del rayo
 		$spark.emitting = true
-
-
+		$spark.one_shot = true
+		$spark/light.emitting = true
+		$spark/light.one_shot = true
+		$spark/light/star.emitting = true
+		$spark/light/star.one_shot = true
 
 func _on_spark_finished():
 	self.queue_free()

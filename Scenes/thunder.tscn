@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://dni5hbhwlxmdi"]
+[gd_scene load_steps=15 format=3 uid="uid://dni5hbhwlxmdi"]
 
 [ext_resource type="Script" path="res://Scenes/thunder.gd" id="1_ig5to"]
-[ext_resource type="AudioStream" uid="uid://bqcdqccfjtfd2" path="res://Sounds/disasters/nature/closethunder04.mp3" id="2_023p5"]
 [ext_resource type="Texture2D" uid="uid://dhwpuiof0nxhn" path="res://Sprites/kenney_particle_pack/spark_05.png" id="3_avm0v"]
 [ext_resource type="Texture2D" uid="uid://kq40l8aspg2k" path="res://Sprites/kenney_particle_pack/light_03.png" id="4_r770o"]
 [ext_resource type="Texture2D" uid="uid://bmpv20xa7w4u5" path="res://Sprites/kenney_particle_pack/flare_01.png" id="5_w6hi2"]
@@ -128,7 +127,6 @@ properties/15/replication_mode = 1
 script = ExtResource("1_ig5to")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("2_023p5")
 volume_db = 35.0
 max_db = 6.0
 max_distance = 4096.0
@@ -162,5 +160,6 @@ draw_pass_1 = SubResource("QuadMesh_q3mvv")
 replication_config = SubResource("SceneReplicationConfig_go6sb")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -1000, 0)
 
 [connection signal="finished" from="spark" to="." method="_on_spark_finished"]
