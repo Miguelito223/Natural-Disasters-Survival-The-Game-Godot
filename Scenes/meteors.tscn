@@ -1,12 +1,12 @@
 [gd_scene load_steps=18 format=3 uid="uid://c6xgmy3mkckea"]
 
 [ext_resource type="Script" path="res://Scenes/meteors.gd" id="1_hdxcr"]
-[ext_resource type="Texture2D" uid="uid://b1koius8x6ptl" path="res://Textures/map_slot0_albedo_bump.png" id="2_8dhg8"]
+[ext_resource type="Texture2D" uid="uid://bbnl8dbjl2vg8" path="res://Textures/dark-cracked-concrete-wall.jpg" id="2_bo2bl"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_nfk2t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ptpq"]
-albedo_texture = ExtResource("2_8dhg8")
+albedo_texture = ExtResource("2_bo2bl")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wipg6"]
 transparency = 1

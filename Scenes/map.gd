@@ -57,7 +57,7 @@ func generate_terrain():
 	add_child(terrain, true)
 	terrain.material.world_background = Terrain3DMaterial.NOISE
 	var texture = Terrain3DTexture.new()
-	var image = load("res://Textures/leafy_grass_diff_4k.jpg")
+	var image = load("res://Textures/texture-grass-field.jpg")
 	texture.name = "Grass"
 	texture.texture_id = 0
 	texture.albedo_texture = image
@@ -297,9 +297,8 @@ func shake_objects(node):
 	for child in node.get_children():
 		if child.is_in_group("movable_objects"): # Verifica si el nodo es un Spatial (objeto 3D)
 			var x = randi_range(-shake_strength, shake_strength)
-			var y = randi_range(-shake_strength, shake_strength)
 			var z = randi_range(-shake_strength, shake_strength)
-			child.position += Vector3(x, y, z)
+			child.position += Vector3(x, 0, z)
 
 		# Llama recursivamente a la función para procesar los hijos del nodo actual
 		if child.get_child_count() > 0:
@@ -315,7 +314,6 @@ func is_earthquake():
 		shake_objects(self)
 		if current_weather_and_disaster != "Earthquake":
 			break
-		await get_tree().create_timer(1).timeout
 
 	$WorldEnvironment.environment.volumetric_fog_enabled = false
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
