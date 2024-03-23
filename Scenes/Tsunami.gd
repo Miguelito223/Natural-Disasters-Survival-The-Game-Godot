@@ -16,11 +16,12 @@ func _on_area_3d_body_entered(body:Node3D):
 	if body.is_in_group("player"):
 		body.damage(50)
 
-	# Obtener la dirección del tsunami
-	var body_direction = -body.transform.basis.z.normalized()
-	# Obtener la dirección relativa del objeto al tsunami
-	var relative_direction = global_transform.origin - body.global_transform.origin
-	# Proyectar la dirección relativa en la dirección del tsunami
-	var projected_direction = body_direction.project(relative_direction)
-	# Normalizar y aplicar la velocidad de movimiento
-	move_speed = projected_direction.normalized() * move_speed
+	if body.is_in_group("movable_objects") or body.is_in_group("player") :
+		# Obtener la dirección del tsunami
+		var body_direction = -body.transform.basis.z.normalized()
+		# Obtener la dirección relativa del objeto al tsunami
+		var relative_direction = global_transform.origin - body.global_transform.origin
+		# Proyectar la dirección relativa en la dirección del tsunami
+		var projected_direction = body_direction.project(relative_direction)
+		# Normalizar y aplicar la velocidad de movimiento
+		move_speed = projected_direction.normalized() * move_speed
