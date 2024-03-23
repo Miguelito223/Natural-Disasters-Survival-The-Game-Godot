@@ -33,7 +33,6 @@ var Outdoor = false
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
 @onready var rain_node = $Rain
-@onready var raycast = $RayCast3D # Cambia a RayCast si estás trabajando en 3D
 
 
 func _enter_tree():
@@ -70,11 +69,6 @@ func _ready():
 		if not is_multiplayer_authority():
 			return
 
-		raycast.target_position.y = 10000
-		raycast.enabled = true
-		raycast.force_raycast_update()  # Asegúrate de que el RayCast se actualice correctamente
-
-
 		$Rain.emitting = false
 
 		setspawnpos()
@@ -87,10 +81,6 @@ func _ready():
 		$Head/Camera3D.current = true 
 
 		get_node("Pause menu").visible = false
-
-		raycast.target_position.y = 10000
-		raycast.enabled = true
-		raycast.force_raycast_update()  # Asegúrate de que el RayCast se actualice correctamente
 
 		$Rain.emitting = false
 
@@ -158,7 +148,6 @@ func _process(delta):
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
-		Outdoor = !raycast.is_colliding()
 
 		if Globals.Wind_speed > 0 and Globals.Wind_speed < 50:
 			if not $"Wind sound".playing:
@@ -229,10 +218,6 @@ func _process(delta):
 		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
-
-
-
-		Outdoor = !raycast.is_colliding()
 
 
 		if Globals.Wind_speed > 0:
