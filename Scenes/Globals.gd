@@ -100,7 +100,9 @@ func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(entity.global_transform.origin + Vector3(0, 0, 10), entity.global_transform.origin + Vector3(0, 0, 10) + Wind_Direction * 300)
 	var tr = space_state.intersect_ray(ray)
-	return tr["collider"] != null
+	
+	if tr.size() > 0:
+		return tr.collider != null
 
 
 

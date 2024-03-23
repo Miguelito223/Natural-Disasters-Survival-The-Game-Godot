@@ -16,6 +16,17 @@ var tsunami_scene = preload("res://Scenes/Tsunami.tscn")
 var noise = FastNoiseLite.new()
 var noise_seed
 
+func _exit_tree():
+	Globals.Temperature_target = Globals.Temperature_original
+	Globals.Humidity_target = Globals.Humidity_original
+	Globals.bradiation_target = Globals.bradiation_original
+	Globals.oxygen_target = Globals.oxygen_original
+	Globals.pressure_target = Globals.pressure_original
+	Globals.Wind_Direction_target = Globals.Wind_Direction_original
+	Globals.Wind_speed_target = Globals.Wind_speed_original
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if not Globals.is_networking:
@@ -123,7 +134,7 @@ func wind(object):
 			local_wind = 0
 		
 		# Calcular la velocidad del viento y la fricción
-		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5)^2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
+		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5) ** 2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
 		var frictional_scalar = clamp(wind_vel.length(), -400, 400)
 		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
