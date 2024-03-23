@@ -11,7 +11,7 @@ var shake_timer = 0
 var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
 var tornado_scene = preload("res://Scenes/tornado.tscn")
-var tsunami_scene = preload("res://Scenes/Tsunami.tscn")
+var tsunami_scene = preload("res://Scenes/tsunami.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -121,6 +121,8 @@ func wind(object):
 		var local_wind = area_percentage * Globals.Wind_speed
 		if not is_outdoor:
 			local_wind = 0
+
+		object.body_wind = local_wind
 		
 		# Calcular la velocidad del viento y la fricción
 		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5) ** 2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction

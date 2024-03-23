@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bevx5iyc2q82h"
 path.s3tc="res://.godot/imported/smoke_01.png-e1547df15dd32dacc5c866b9ad9539a8.s3tc.ctex"
+path.etc2="res://.godot/imported/smoke_01.png-e1547df15dd32dacc5c866b9ad9539a8.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Sprites/kenney_particle_pack/smoke_01.png"
-dest_files=["res://.godot/imported/smoke_01.png-e1547df15dd32dacc5c866b9ad9539a8.s3tc.ctex"]
+dest_files=["res://.godot/imported/smoke_01.png-e1547df15dd32dacc5c866b9ad9539a8.s3tc.ctex", "res://.godot/imported/smoke_01.png-e1547df15dd32dacc5c866b9ad9539a8.etc2.ctex"]
 
 [params]
 

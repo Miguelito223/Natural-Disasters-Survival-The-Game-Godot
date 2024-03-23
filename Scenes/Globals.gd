@@ -70,17 +70,17 @@ func convert_VectorToAngle(vector):
 
 func perform_trace(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + direction * 1000)
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + direction * 10)
 	var result = space_state.intersect_ray(ray)
-	if result.size() > 0:
-		return result.position
+	if result.has("collider"):
+		return result.collider != null
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + Vector3(0, 0, 48000))
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + Vector3(0, 0, 480))
 	var result = space_state.intersect_ray(ray)
-	if result.size() > 0:
-		return result.collider
+	if result.has("collider"):
+		return result.collider != null
 
 func is_outdoor(ply):
 	var hit_left = perform_trace(ply, Vector3(1, 0, 0))
@@ -99,10 +99,10 @@ func is_outdoor(ply):
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(entity.global_transform.origin + Vector3(0, 0, 10), entity.global_transform.origin + Vector3(0, 0, 10) + Wind_Direction * 300)
-	var tr = space_state.intersect_ray(ray)
-	
-	if tr.size() > 0:
-		return tr.collider != null
+	var result = space_state.intersect_ray(ray)
+
+	if result.has("collider"):
+		return result.collider != null
 
 
 

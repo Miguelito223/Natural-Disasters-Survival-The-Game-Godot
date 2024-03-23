@@ -28,7 +28,11 @@ var hearth = Max_Hearth
 var body_temperature = 37
 var body_oxygen = Max_oxygen
 var body_bradiation = min_bdradiation
+var body_wind = 0
+
 var Outdoor = false
+
+
 
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
