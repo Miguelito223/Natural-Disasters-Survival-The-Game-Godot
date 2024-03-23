@@ -11,6 +11,7 @@ var shake_timer = 0
 var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
 var tornado_scene = preload("res://Scenes/tornado.tscn")
+var tsunami_scene = preload("res://Scenes/Tsunami.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -163,6 +164,10 @@ func is_tsunami():
 		if player.is_in_group("player"):
 			player.rain_node.emitting = false
 
+	var tsunami = tsunami_scene.instantiate()
+	tsunami.position = Vector3(0,0,0)
+	add_child(tsunami, true)
+
 	$WorldEnvironment.environment.volumetric_fog_enabled = false
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
@@ -173,11 +178,16 @@ func is_tsunami():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
+	while true:
+		if current_weather_and_disaster != "Tsunami":
+			tsunami.queue_free()
+			break
+
 func is_linghting_storm():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			if Globals.is_networking:
+			if Globals.is_networking and player.Outdoor:
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true
@@ -245,7 +255,7 @@ func is_tornado():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			if Globals.is_networking:
+			if Globals.is_networking and player.Outdoor:
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true
@@ -271,6 +281,7 @@ func is_tornado():
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
 		if current_weather_and_disaster != "Tornado":
+			tornado.queue_free()
 			break
 		await get_tree().create_timer(5).timeout
 
@@ -278,7 +289,7 @@ func is_acid_rain():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			if Globals.is_networking:
+			if Globals.is_networking and player.Outdoor:
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true
@@ -362,7 +373,7 @@ func is_raining():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			if Globals.is_networking:
+			if Globals.is_networking and player.Outdoor:
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true
@@ -381,7 +392,7 @@ func is_storm():
 	for i in get_child_count():
 		var player = get_child(i)
 		if player.is_in_group("player"):
-			if Globals.is_networking:
+			if Globals.is_networking and player.Outdoor:
 				player.rain_node.emitting = player.is_multiplayer_authority()
 			else:
 				player.rain_node.emitting = true

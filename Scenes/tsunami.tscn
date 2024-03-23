@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3gkmhq5kjhrj"]
+
+[ext_resource type="Script" path="res://Scenes/Tsunami.gd" id="1_v7drw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1y2fb"]
+size = Vector3(10000, 1000, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xsbjx"]
+transparency = 1
+albedo_color = Color(0, 0.0352941, 0.486275, 1)
+
+[node name="Tsunami" type="CharacterBody3D"]
+script = ExtResource("1_v7drw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10000, 1000, 100)
+shape = SubResource("BoxShape3D_1y2fb")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(10000, 1000, 100)
+material = SubResource("StandardMaterial3D_xsbjx")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_1y2fb")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

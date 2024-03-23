@@ -29,11 +29,12 @@ var hearth = Max_Hearth
 var body_temperature = 37
 var body_oxygen = Max_oxygen
 var body_bradiation = min_bdradiation
+var Outdoor = false
 
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
 @onready var rain_node = $Rain
-
+@onready var raycast = $RayCast # Cambia a RayCast si estás trabajando en 3D
 
 
 func _enter_tree():
@@ -67,6 +68,11 @@ func _ready():
 
 		$Rain.emitting = is_multiplayer_authority()
 
+		raycast.target_position.y = 10000
+		raycast.enabled = true
+		raycast.force_raycast_update()  # Asegúrate de que el RayCast se actualice correctamente
+
+
 		if not is_multiplayer_authority():
 			return
 
@@ -82,6 +88,10 @@ func _ready():
 		$Head/Camera3D.current = true 
 
 		get_node("Pause menu").visible = false
+
+		raycast.target_position.y = 10000
+		raycast.enabled = true
+		raycast.force_raycast_update()  # Asegúrate de que el RayCast se actualice correctamente
 
 		$Rain.emitting = false
 
@@ -149,12 +159,14 @@ func _process(delta):
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
-		if Globals.Wind_speed > 0:
+		Outdoor = !raycast.is_colliding()
+
+		if Globals.Wind_speed > 0 and Globals.Wind_speed < 50:
 			if not $"Wind sound".playing:
 				$"Wind sound".play()
 				$"Wind Morerate sound".stop()
 				$"Wind Extreme sound".stop()
-		elif Globals.Wind_speed > 50:
+		elif Globals.Wind_speed > 50 and Globals.Wind_speed < 100:
 			if not $"Wind Morerate sound".playing:
 				$"Wind sound".stop()
 				$"Wind Morerate sound".play()
@@ -218,6 +230,11 @@ func _process(delta):
 		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
+
+
+
+		Outdoor = !raycast.is_colliding()
+
 
 		if Globals.Wind_speed > 0:
 			if not $"Wind sound".playing:

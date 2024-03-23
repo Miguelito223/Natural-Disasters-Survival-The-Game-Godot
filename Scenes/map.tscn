@@ -94,7 +94,7 @@ transform = Transform3D(1, 0, 0, 0, 1, -4.46638e-06, 0, 4.46638e-06, 1, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="."]
-light_color = Color(0, 0, 0.176471, 1)
+light_color = Color(0, 0.0980392, 0.501961, 1)
 shadow_enabled = true
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]

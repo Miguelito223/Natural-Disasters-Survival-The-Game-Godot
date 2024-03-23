@@ -129,6 +129,10 @@ trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
 draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
 
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 100000, 0)
+collide_with_areas = true
+
 [node name="Wind sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_fjmn6")
 
