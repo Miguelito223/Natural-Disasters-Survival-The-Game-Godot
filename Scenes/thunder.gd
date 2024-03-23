@@ -21,15 +21,16 @@ func _ready():
 		var ground_position = raycast.get_collision_point()
 		
 		# Configurar la posición del efecto visual del rayo en la posición del suelo
-		$spark.global_transform.origin = ground_position
+		self.global_position = ground_position
 		
 		# Configurar la posición de la explosión en la posición del suelo
-		var explosion = explosion_scene.instance()
-		explosion.global_transform.origin = ground_position
+		var explosion = explosion_scene.instantiate()
+		explosion.global_position = ground_position
 		get_parent().add_child(explosion)
 		
 		# Configurar el sonido del trueno
 		$AudioStreamPlayer3D.stream = lol[randi_range(0, lol.size() - 1)]
+		$AudioStreamPlayer3D.global_position = ground_position
 		$AudioStreamPlayer3D.play()
 		
 		# Reproducir el efecto visual del rayo

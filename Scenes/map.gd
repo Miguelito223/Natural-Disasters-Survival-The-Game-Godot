@@ -77,17 +77,63 @@ func generate_terrain():
 
 	terrain.set_collision_enabled(true)
 
+func perform_trace(ply, direction):
+	var physics_server = PhysicsServer3D
+
+	var start_pos = ply.global_transform.origin
+	var end_pos = start_pos + direction * 60000
+
+	# Define una máscara de colisión personalizada
+	var custom_collision_mask = 1 << 31  # Por ejemplo, usa el bit más alto para la máscara personalizada
+
+	# Configura la máscara de colisión
+	physics_server.body_set_collision_mask(ply, custom_collision_mask)
+
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+
+	# Realiza el raycast con la máscara personalizada
+	var space_state = physics_server.space_get_direct_state(get_world_3d().space)
+	var result = space_state.intersect_ray(ray)
+
+	if result.size() > 0:
+		return result.position
+	else:
+		return Vector3.ZERO
 
 func _process(_delta):
-	for i in get_child_count():
-		var object = get_child(i)
+	for object in get_children(true):
 		if object.get_class() == "CharacterBody3D":
-			var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
-			var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
-			var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
-			var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
-			object.velocity =  Wind_Velocity_new
-			object.move_and_slide()
+			var is_outdoor = Globals.is_outdoor(object, false)
+			var pos = object.global_transform.origin
+			var hit_left = perform_trace(object, Vector3(1, 0, 0))
+			var hit_right = perform_trace(object, Vector3(-1, 0, 0))
+			var hit_forward = perform_trace(object, Vector3(0, 1, 0))
+			var hit_behind = perform_trace(object, Vector3(0, -1, 0))
+			
+			var area = (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_forward))) + (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_behind)))
+			var area_percentage = clamp(area / 5000000, 0, 1)
+			
+			var local_wind = area_percentage * Globals.Wind_speed
+			if not is_outdoor:
+				local_wind = 0
+					# Calcular la velocidad del viento
+			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5)^2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
+
+			# Calcular el escalar de fricción
+			var frictional_scalar = clamp(wind_vel.length(), -400, 400)
+
+			# Calcular la velocidad de fricción
+			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
+
+			# Calcular la nueva velocidad del viento
+			var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
+
+			# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
+			if is_outdoor and not Globals.is_something_blocking_wind(object):
+				var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
+				# Aplicar la diferencia de velocidad con un factor de atenuación
+				if delta_velocity.length() != 0:
+					object.set_velocity(delta_velocity * 0.3)
 		elif object.get_class() == "RigidBody3D":
 			var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
 			var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
