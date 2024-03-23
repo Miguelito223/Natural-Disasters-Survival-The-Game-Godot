@@ -203,24 +203,26 @@ func _process(delta):
 			elif alpha_hot != 0:	
 				damage(alpha_hot + alpha_cold)
 
-		if Globals.oxygen <= 0:
+		if Globals.oxygen <= 20:
 			body_oxygen = clamp(body_oxygen - 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		else:
 			body_oxygen = clamp(body_oxygen + 5, min_oxygen, Max_oxygen)
 			await get_tree().create_timer(1).timeout
 		
+		
 		if body_oxygen <= 0:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
-		if Globals.bradiation >= 100:
+
+		if Globals.bradiation >= 80:
 			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 		else:
 			body_bradiation = clamp(body_bradiation - 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
-		
+
 		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
