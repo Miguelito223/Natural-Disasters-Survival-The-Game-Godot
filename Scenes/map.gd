@@ -92,7 +92,7 @@ func perform_trace(ply, direction):
 	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 
 	# Realiza el raycast con la máscara personalizada
-	var space_state = physics_server.space_get_direct_state(get_world_3d().space)
+	var space_state = ply.get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(ray)
 
 	if result.size() > 0:

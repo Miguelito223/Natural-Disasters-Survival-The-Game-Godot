@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 #Network
 var ip = "127.0.0.1"
@@ -69,16 +69,16 @@ func convert_VectorToAngle(vector):
 	return atan2(z,x)
 
 func perform_trace(ply, direction):
-	var space_state = get_world_3d().direct_space_state
+	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + direction * 1000)
 	var result = space_state.intersect_ray(ray)
-	return result.position
+	return result.collider or null
 
 func is_below_sky(ply):
-	var space_state = get_world_3d().direct_space_state
+	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + Vector3(0, 0, 48000))
 	var result = space_state.intersect_ray(ray)
-	return result.collider
+	return result.position or null
 
 func is_outdoor(ply, isprop):
 	var hit_left = perform_trace(ply, Vector3(1, 0, 0))
@@ -97,7 +97,7 @@ func is_outdoor(ply, isprop):
 	return hit_sky
 
 func is_something_blocking_wind(entity):
-	var space_state = PhysicsServer3D.space_get_direct_state(get_tree().physics_space_get("3d"))
+	var space_state = entity.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(entity.global_transform.origin + Vector3(0, 0, 10), entity.global_transform.origin + Vector3(0, 0, 10) + Wind_Direction * 300)
 	var tr = space_state.intersect_ray(ray)
 	return tr["collider"] != null
