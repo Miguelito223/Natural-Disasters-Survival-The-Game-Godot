@@ -153,17 +153,17 @@ func _process(delta):
 				damage(randi_range(1,30))
 
 
-		if Globals.Wind_speed > 0 and Globals.Wind_speed < 50:
+		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:
 				$"Wind sound".play()
 				$"Wind Morerate sound".stop()
 				$"Wind Extreme sound".stop()
-		elif Globals.Wind_speed > 50 and Globals.Wind_speed < 100:
+		elif body_wind > 50 and body_wind < 100:
 			if not $"Wind Morerate sound".playing:
 				$"Wind sound".stop()
 				$"Wind Morerate sound".play()
 				$"Wind Extreme sound".stop()
-		elif Globals.Wind_speed > 100:
+		elif body_wind > 100:
 			if not $"Wind Extreme sound".playing:
 				$"Wind sound".stop()
 				$"Wind Morerate sound".stop()
@@ -172,6 +172,8 @@ func _process(delta):
 			$"Wind sound".stop()
 			$"Wind Morerate sound".stop()
 			$"Wind Extreme sound".stop()
+
+
 	else:
 		var body_heat_genK        = delta
 		var body_heat_genMAX      = 0.01/4
@@ -224,17 +226,17 @@ func _process(delta):
 				damage(randi_range(1,30))
 
 
-		if Globals.Wind_speed > 0:
+		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:
 				$"Wind sound".play()
 				$"Wind Morerate sound".stop()
 				$"Wind Extreme sound".stop()
-		elif Globals.Wind_speed > 50:
+		elif body_wind > 50 and body_wind < 100:
 			if not $"Wind Morerate sound".playing:
 				$"Wind sound".stop()
 				$"Wind Morerate sound".play()
 				$"Wind Extreme sound".stop()
-		elif Globals.Wind_speed > 100:
+		elif body_wind > 100:
 			if not $"Wind Extreme sound".playing:
 				$"Wind sound".stop()
 				$"Wind Morerate sound".stop()
@@ -329,4 +331,4 @@ func _unhandled_input(event):
 
 
 func setspawnpos():
-	self.position = Vector3(1024,1000,1024)
+	self.position = Vector3(1024,50000,1024)
