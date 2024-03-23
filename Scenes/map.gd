@@ -102,9 +102,9 @@ func perform_trace(ply, direction):
 
 func _process(_delta):
 	for object in get_children(true):
-		if object.get_class() == "CharacterBody3D":
-			var is_outdoor = Globals.is_outdoor(object, false)
-			var pos = object.global_transform.origin
+		if object.get_class() == "CharacterBody3D" or object.is_in_group("player"):
+			var is_outdoor = Globals.is_outdoor(object)
+			var pos = object.global_position
 			var hit_left = perform_trace(object, Vector3(1, 0, 0))
 			var hit_right = perform_trace(object, Vector3(-1, 0, 0))
 			var hit_forward = perform_trace(object, Vector3(0, 1, 0))
@@ -116,30 +116,34 @@ func _process(_delta):
 			var local_wind = area_percentage * Globals.Wind_speed
 			if not is_outdoor:
 				local_wind = 0
-					# Calcular la velocidad del viento
+			
+			# Calcular la velocidad del viento
 			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5)^2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
-
-			# Calcular el escalar de fricción
 			var frictional_scalar = clamp(wind_vel.length(), -400, 400)
-
-			# Calcular la velocidad de fricción
 			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
-
-			# Calcular la nueva velocidad del viento
 			var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
 
 			# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
 			if is_outdoor and not Globals.is_something_blocking_wind(object):
 				var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
-				# Aplicar la diferencia de velocidad con un factor de atenuación
-				if delta_velocity.length() != 0:
+				
+				if ((object.velocity - Globals.Wind_speed) - object.velocity).length() != 0:
 					object.set_velocity(delta_velocity * 0.3)
-		elif object.get_class() == "RigidBody3D":
-			var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
-			var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
-			var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
-			var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
-			object.linear_velocity =  Wind_Velocity_new
+
+
+			object.move_and_slide()
+
+		elif object.get_class() == "RigidBody3D" or object.is_in_group("Movable_object"):
+			var is_outdoor = Globals.is_outdoor(object)
+			var blocked = Globals.is_something_blocking_wind(object)
+			
+			if not blocked and is_outdoor:
+				var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
+				var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
+				var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
+				var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
+				object.linear_velocity =  Wind_Velocity_new
+			
 
 	
 	

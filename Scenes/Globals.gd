@@ -72,15 +72,17 @@ func perform_trace(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + direction * 1000)
 	var result = space_state.intersect_ray(ray)
-	return result.collider or null
+	if result.size() > 0:
+		return result.position
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + Vector3(0, 0, 48000))
 	var result = space_state.intersect_ray(ray)
-	return result.position or null
+	if result.size() > 0:
+		return result.collider
 
-func is_outdoor(ply, isprop):
+func is_outdoor(ply):
 	var hit_left = perform_trace(ply, Vector3(1, 0, 0))
 	var hit_right = perform_trace(ply, Vector3(-1, 0, 0))
 	var hit_forward = perform_trace(ply, Vector3(0, 1, 0))
@@ -89,9 +91,7 @@ func is_outdoor(ply, isprop):
 	var in_tunnel = (hit_left and hit_right) and not (hit_forward and hit_behind) or ((not hit_left and not hit_right) and (hit_forward or hit_behind))
 	var hit_sky = is_below_sky(ply)
 
-	if isprop == null or isprop == false:
-		pass
-	else:
+	if ply.is_in_group("player"):
 		ply.Outdoor = hit_sky
 	
 	return hit_sky
