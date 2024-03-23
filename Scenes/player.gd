@@ -216,7 +216,7 @@ func _process(delta):
 				damage(randi_range(1,30))
 
 
-		if Globals.bradiation >= 80 and Outdoor:
+		if Globals.bradiation >= 80 and Globals.is_outdoor(self):
 			body_bradiation = clamp(body_bradiation + 1, min_bdradiation, Max_bradiation)
 			await get_tree().create_timer(1).timeout
 		else:
