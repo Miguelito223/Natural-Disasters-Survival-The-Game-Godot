@@ -89,16 +89,8 @@ func generate_terrain():
 	terrain.set_collision_enabled(true)
 
 func perform_trace(ply, direction):
-	var physics_server = PhysicsServer3D
-
 	var start_pos = ply.global_transform.origin
 	var end_pos = start_pos + direction * 60000
-
-	# Define una máscara de colisión personalizada
-	var custom_collision_mask = 1 << 31  # Por ejemplo, usa el bit más alto para la máscara personalizada
-
-	# Configura la máscara de colisión
-	physics_server.body_set_collision_mask(ply, custom_collision_mask)
 
 	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 
@@ -111,12 +103,9 @@ func perform_trace(ply, direction):
 	else:
 		return Vector3.ZERO
 
-func _process(_delta):
-	for object in get_children(true):
-		wind(object)
-
 func wind(object):
-	if object.get_class() == "CharacterBody3D" or object.is_in_group("player"):
+	# Verificar si el objeto es un jugador
+	if object.is_in_group("player"):
 		var is_outdoor = Globals.is_outdoor(object)
 		var pos = object.global_position
 		var hit_left = perform_trace(object, Vector3(1, 0, 0))
@@ -144,23 +133,26 @@ func wind(object):
 			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
 			
 			if delta_velocity.length() != 0:
-				object.set_velocity(delta_velocity * 0.3)
-
-		# Mover y deslizar el objeto
-		object.move_and_slide()
-
-	elif object.get_class() == "RigidBody3D" or object.is_in_group("Movable_object"):
+				object.velocity = (delta_velocity * 0.3)
+				object.move_and_slide()
+	elif object.is_in_group("movable_objects"):
 		var is_outdoor = Globals.is_outdoor(object)
-		var blocked = Globals.is_something_blocking_wind(object)
-		
-		if not blocked and is_outdoor:
-			var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
-			var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
-			var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
-			var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
-			object.linear_velocity =  Wind_Velocity_new
-		
-	
+
+		if is_outdoor and not Globals.is_something_blocking_wind(object):
+			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
+			var frictional_scalar = clamp(wind_vel.length(), 0, object.mass)
+			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
+			var wind_vel_new = (wind_vel + frictional_velocity) * -1
+			object.linear_velocity = wind_vel_new 
+
+			object.move_and_collide()
+
+# Llama a la función wind para cada objeto en la escena
+func _physics_process(delta):
+	for object in get_tree().get_nodes_in_group("wind_effected_objects"):
+		wind(object)
+
+
 func _on_timer_timeout():
 	sync_weather_and_disaster()
 

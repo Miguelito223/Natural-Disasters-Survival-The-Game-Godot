@@ -86,6 +86,10 @@ _data = {
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
+spawn_path = NodePath("..")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cfhfe")
 
@@ -96,10 +100,6 @@ shadow_enabled = true
 [node name="Moon" type="DirectionalLight3D" parent="."]
 light_color = Color(0, 0.0980392, 0.501961, 1)
 shadow_enabled = true
-
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
-spawn_path = NodePath("..")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0

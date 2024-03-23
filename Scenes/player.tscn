@@ -108,7 +108,7 @@ properties/18/path = NodePath("Rain:scale")
 properties/18/spawn = true
 properties/18/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" groups=["movable_objects", "player"]]
+[node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_btpoi")
 
@@ -121,6 +121,7 @@ material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y4sl8")
+emitting = false
 amount = 1000
 lifetime = 2.0
 randomness = 0.44

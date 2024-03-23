@@ -36,7 +36,8 @@ func _process(delta):
 			
 
 func _on_area_3d_body_entered(body:Node3D):
-	if body.is_in_group("movable_objects"):
+	if body.is_in_group("movable_objects") or body.is_in_group("player") :
 		var direction = (body.global_transform.origin - global_transform.origin).normalized()
 		var force = direction * tornado_strength
 		body.apply_impulse(Vector3.ZERO, force)
+	
