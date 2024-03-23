@@ -3,7 +3,7 @@ extends Node3D
 var player_scene = preload("res://Scenes/player.tscn")
 
 var current_weather_and_disaster = "Sun"
-var current_weather_and_disaster_int = "Sun"
+var current_weather_and_disaster_int = 0
 var shake_strength = 1
 var shake_duration = 2
 var shake_timer = 0
@@ -124,7 +124,7 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			current_weather_and_disaster_int = 2
 			is_raining()
 		3:
-			current_weather_and_disaster = "storm"
+			current_weather_and_disaster = "Storm"
 			current_weather_and_disaster_int = 3
 			is_storm()
 		4:
@@ -159,17 +159,10 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			is_earthquake()
 
 func is_tsunami():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
-
 	var tsunami = tsunami_scene.instantiate()
 	tsunami.position = Vector3(0,0,0)
 	add_child(tsunami, true)
 
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.bradiation_target = 0
@@ -178,23 +171,26 @@ func is_tsunami():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
-	while true:
+	while current_weather_and_disaster == "Meteor shower":
+		var player
+		
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
+
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = false
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+
 		if current_weather_and_disaster != "Tsunami":
 			tsunami.queue_free()
-			break
+
+
 
 func is_linghting_storm():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			if Globals.is_networking and player.Outdoor:
-				player.rain_node.emitting = player.is_multiplayer_authority()
-			else:
-				player.rain_node.emitting = true
 
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-	Globals.Temperature_target =  randi_range(5,15)
+	Globals.Temperature_target = randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
@@ -202,21 +198,39 @@ func is_linghting_storm():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
-	while true:
+	while current_weather_and_disaster == "Linghting storm":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if player.Outdoor:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if player.Outdoor:
+				player.rain_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
-		if current_weather_and_disaster != "Linghting storm":
-			break
-		await get_tree().create_timer(5).timeout
+
+		await get_tree().create_timer(1).timeout
+
+
+
 
 
 func is_meteor_shower():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
-
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.pressure_target = randi_range(10000,10020)
@@ -224,25 +238,29 @@ func is_meteor_shower():
 	Globals.oxygen_target = 100
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
+	
+	while current_weather_and_disaster == "Meteor shower":
+		var player
+		
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
 
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-	while true:
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = false
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+
 		var meteor = meteor_scene.instantiate()
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
-		if current_weather_and_disaster != "Meteor shower":
-			break
-		await get_tree().create_timer(5).timeout
+
+		await get_tree().create_timer(1).timeout
+	
+	
+
 
 func is_volcano():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
-
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(30,40)
 	Globals.Humidity_target = randi_range(0,10)
 	Globals.bradiation_target = 0
@@ -251,23 +269,28 @@ func is_volcano():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 50)
 
+	while current_weather_and_disaster == "Volcano":
+		var player
+		
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
+
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = false
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			
+		await get_tree().create_timer(1).timeout
+
+	
+
+
 func is_tornado():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			if Globals.is_networking and player.Outdoor:
-				player.rain_node.emitting = player.is_multiplayer_authority()
-			else:
-				player.rain_node.emitting = true
-
-
 	var tornado = tornado_scene.instantiate()
 	tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 	add_child(tornado, true)
 
-	
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.bradiation_target = 0
@@ -276,26 +299,43 @@ func is_tornado():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
-	while true:
+	while current_weather_and_disaster == "Tornado":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if player.Outdoor:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if player.Outdoor:
+				player.rain_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
+		
 		if current_weather_and_disaster != "Tornado":
 			tornado.queue_free()
-			break
-		await get_tree().create_timer(5).timeout
+
+		await get_tree().create_timer(1).timeout
+
+
+	
+
+
 
 func is_acid_rain():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			if Globals.is_networking and player.Outdoor:
-				player.rain_node.emitting = player.is_multiplayer_authority()
-			else:
-				player.rain_node.emitting = true
-
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.bradiation_target = 100
@@ -303,6 +343,32 @@ func is_acid_rain():
 	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
+
+	while current_weather_and_disaster == "Acid rain":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if player.Outdoor:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)			
+		else:
+			var player = get_node("Player")
+			if player.Outdoor:
+				player.rain_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)				
+
+		await get_tree().create_timer(1).timeout
+	
+
 
 func shake_objects(node):
 	for child in node.get_children():
@@ -316,18 +382,6 @@ func shake_objects(node):
 			shake_objects(child)
 
 func is_earthquake():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
-
-	while true:
-		shake_objects(self)
-		if current_weather_and_disaster != "Earthquake":
-			break
-
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.bradiation_target = 0
@@ -335,16 +389,30 @@ func is_earthquake():
 	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
+
+	while current_weather_and_disaster == "Earthquake":
+		var player
+		
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
+
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = false
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+
+		shake_objects(self)
+			
+		await get_tree().create_timer(1).timeout
+
+		
+
+
+
 
 
 func is_sun():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
-	
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target = randi_range(20,31)
 	Globals.Humidity_target = randi_range(0,20)
 	Globals.bradiation_target = 0
@@ -353,14 +421,22 @@ func is_sun():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
-func is_cloud():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			player.rain_node.emitting = false
+	while current_weather_and_disaster == "Sun":
+		var player
+		
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
 
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = false
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			
+		await get_tree().create_timer(1).timeout
+
+
+func is_cloud():
 	Globals.Temperature_target =  randi_range(20,25)
 	Globals.Humidity_target = randi_range(10,30)
 	Globals.bradiation_target = 0
@@ -369,17 +445,24 @@ func is_cloud():
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target =  randi_range(0, 10)
 
-func is_raining():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			if Globals.is_networking and player.Outdoor:
-				player.rain_node.emitting = player.is_multiplayer_authority()
-			else:
-				player.rain_node.emitting = true
+	while current_weather_and_disaster == "Cloud":
+		var player
 
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		if Globals.is_networking:
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+		else:
+			player = get_node("Player")
+
+		player.rain_node.emitting = false
+		$WorldEnvironment.environment.volumetric_fog_enabled = true
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			
+		await get_tree().create_timer(1).timeout
+
+
+
+func is_raining():
+
 	Globals.Temperature_target =   randi_range(10,20)
 	Globals.Humidity_target =  randi_range(20,40)
 	Globals.bradiation_target = 0
@@ -387,18 +470,34 @@ func is_raining():
 	Globals.pressure_target = randi_range(9000,9020)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 20)
+	
+	while current_weather_and_disaster == "Raining":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if player.Outdoor:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if player.Outdoor:
+				player.rain_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		
+		await get_tree().create_timer(1).timeout
+
+
 
 func is_storm():
-	for i in get_child_count():
-		var player = get_child(i)
-		if player.is_in_group("player"):
-			if Globals.is_networking and player.Outdoor:
-				player.rain_node.emitting = player.is_multiplayer_authority()
-			else:
-				player.rain_node.emitting = true
-
-	$WorldEnvironment.environment.volumetric_fog_enabled = true
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 	Globals.Temperature_target =  randi_range(5,15)
 	Globals.Humidity_target = randi_range(30,40)
 	Globals.bradiation_target = 0
@@ -406,6 +505,34 @@ func is_storm():
 	Globals.pressure_target = randi_range(8000,9000)
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
+
+	while current_weather_and_disaster == "Storm":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if player.Outdoor:
+				player.rain_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if player.Outdoor:
+				player.rain_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+
+		await get_tree().create_timer(1).timeout
+
+
+	
+
 
 
 func player_join(id):

@@ -34,7 +34,7 @@ var Outdoor = false
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
 @onready var rain_node = $Rain
-@onready var raycast = $RayCast # Cambia a RayCast si estás trabajando en 3D
+@onready var raycast = $RayCast3D # Cambia a RayCast si estás trabajando en 3D
 
 
 func _enter_tree():
@@ -68,13 +68,13 @@ func _ready():
 
 		$Rain.emitting = is_multiplayer_authority()
 
+		if not is_multiplayer_authority():
+			return
+
 		raycast.target_position.y = 10000
 		raycast.enabled = true
 		raycast.force_raycast_update()  # Asegúrate de que el RayCast se actualice correctamente
 
-
-		if not is_multiplayer_authority():
-			return
 
 		$Rain.emitting = false
 
