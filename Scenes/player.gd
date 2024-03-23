@@ -9,7 +9,6 @@ const JUMP_VELOCITY = 7
 const SENSIBILITY = 0.01
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 var Max_Hearth = 100
 var Max_temp = 44
@@ -267,7 +266,7 @@ func _physics_process(delta):
 			
 		# Add the gravity.
 		if not is_on_floor():
-			velocity.y -= gravity * mass * delta 
+			velocity.y -= Globals.gravity * mass * delta 
 
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -295,7 +294,7 @@ func _physics_process(delta):
 	else:
 		# Add the gravity.
 		if not is_on_floor():
-			velocity.y -= gravity * mass * delta 
+			velocity.y -= Globals.gravity * mass * delta 
 
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_accept") and is_on_floor():

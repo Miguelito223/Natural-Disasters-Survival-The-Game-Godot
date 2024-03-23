@@ -102,50 +102,53 @@ func perform_trace(ply, direction):
 
 func _process(_delta):
 	for object in get_children(true):
-		if object.get_class() == "CharacterBody3D" or object.is_in_group("player"):
-			var is_outdoor = Globals.is_outdoor(object)
-			var pos = object.global_position
-			var hit_left = perform_trace(object, Vector3(1, 0, 0))
-			var hit_right = perform_trace(object, Vector3(-1, 0, 0))
-			var hit_forward = perform_trace(object, Vector3(0, 1, 0))
-			var hit_behind = perform_trace(object, Vector3(0, -1, 0))
-			
-			var area = (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_forward))) + (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_behind)))
-			var area_percentage = clamp(area / 5000000, 0, 1)
-			
-			var local_wind = area_percentage * Globals.Wind_speed
-			if not is_outdoor:
-				local_wind = 0
-			
-			# Calcular la velocidad del viento
-			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5)^2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
-			var frictional_scalar = clamp(wind_vel.length(), -400, 400)
-			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
-			var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
+		wind(object)
 
-			# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
-			if is_outdoor and not Globals.is_something_blocking_wind(object):
-				var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
-				
-				if ((object.velocity - Globals.Wind_speed) - object.velocity).length() != 0:
-					object.set_velocity(delta_velocity * 0.3)
+func wind(object):
+	if object.get_class() == "CharacterBody3D" or object.is_in_group("player"):
+		var is_outdoor = Globals.is_outdoor(object)
+		var pos = object.global_position
+		var hit_left = perform_trace(object, Vector3(1, 0, 0))
+		var hit_right = perform_trace(object, Vector3(-1, 0, 0))
+		var hit_forward = perform_trace(object, Vector3(0, 1, 0))
+		var hit_behind = perform_trace(object, Vector3(0, -1, 0))
+		
+		# Calcular el área expuesta al viento
+		var area = (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_forward))) + (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_behind)))
+		var area_percentage = clamp(area / 5000000, 0, 1)
+		
+		# Calcular la velocidad del viento local
+		var local_wind = area_percentage * Globals.Wind_speed
+		if not is_outdoor:
+			local_wind = 0
+		
+		# Calcular la velocidad del viento y la fricción
+		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5)^2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
+		var frictional_scalar = clamp(wind_vel.length(), -400, 400)
+		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
+		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
 
-
-			object.move_and_slide()
-
-		elif object.get_class() == "RigidBody3D" or object.is_in_group("Movable_object"):
-			var is_outdoor = Globals.is_outdoor(object)
-			var blocked = Globals.is_something_blocking_wind(object)
+		# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
+		if is_outdoor and not Globals.is_something_blocking_wind(object):
+			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
 			
-			if not blocked and is_outdoor:
-				var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
-				var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
-				var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
-				var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
-				object.linear_velocity =  Wind_Velocity_new
-			
+			if delta_velocity.length() != 0:
+				object.set_velocity(delta_velocity * 0.3)
 
-	
+		# Mover y deslizar el objeto
+		object.move_and_slide()
+
+	elif object.get_class() == "RigidBody3D" or object.is_in_group("Movable_object"):
+		var is_outdoor = Globals.is_outdoor(object)
+		var blocked = Globals.is_something_blocking_wind(object)
+		
+		if not blocked and is_outdoor:
+			var Wind_Velocity = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
+			var frictional_scalar = clamp(Wind_Velocity.length(), 0, object.mass)
+			var frictional_velocity = frictional_scalar * -Wind_Velocity.normalized()
+			var Wind_Velocity_new = (Wind_Velocity + frictional_velocity) * -1
+			object.linear_velocity =  Wind_Velocity_new
+		
 	
 func _on_timer_timeout():
 	sync_weather_and_disaster()
@@ -233,7 +236,8 @@ func is_tsunami():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		if current_weather_and_disaster != "Tsunami":
+	while current_weather_and_disaster != "Tsunami":
+		if tsunami.is_instance_valid():
 			tsunami.queue_free()
 
 
@@ -306,6 +310,7 @@ func is_meteor_shower():
 		add_child(meteor, true)
 
 		await get_tree().create_timer(1).timeout
+
 	
 	
 
@@ -374,13 +379,12 @@ func is_tornado():
 		var lighting = linghting_scene.instantiate()
 		lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 		add_child(lighting, true)
-		
-		if current_weather_and_disaster != "Tornado":
-			tornado.queue_free()
 
 		await get_tree().create_timer(1).timeout
 
-
+	while current_weather_and_disaster != "Tsunami":
+		if tornado.is_instance_valid():
+			tornado.queue_free()
 	
 
 

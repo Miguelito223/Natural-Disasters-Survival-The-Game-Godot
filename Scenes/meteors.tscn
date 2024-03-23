@@ -120,7 +120,7 @@ properties/11/path = NodePath("Fire/Smoke:scale")
 properties/11/spawn = true
 properties/11/replication_mode = 1
 
-[node name="Meteor" type="RigidBody3D"]
+[node name="Meteor" type="RigidBody3D" groups=["movable_objects"]]
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
