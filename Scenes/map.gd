@@ -288,14 +288,14 @@ func is_linghting_storm():
 		var space_state = get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		var result = space_state.intersect_ray(ray)				
-		
-		var lighting = linghting_scene.instantiate()
-		if result.has("position"):
-			lighting.position = result.position
-		else:
-			lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		if randi_range(1,100) == 100:
+			var lighting = linghting_scene.instantiate()
+			if result.has("position"):
+				lighting.position = result.position
+			else:
+				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 
-		add_child(lighting, true)
+			add_child(lighting, true)
 
 		await get_tree().create_timer(0.5).timeout
 
@@ -431,15 +431,14 @@ func is_tornado():
 		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		result = space_state.intersect_ray(ray)			
 		
-		var lighting = linghting_scene.instantiate()
-		
-		if result.has("position"):
-			lighting.position = result.position
-		else:
-			lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		if randi_range(1,100) == 100:
+			var lighting = linghting_scene.instantiate()
+			if result.has("position"):
+				lighting.position = result.position
+			else:
+				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 
-
-		add_child(lighting, true)
+			add_child(lighting, true)
 
 		await get_tree().create_timer(0.5).timeout
 
