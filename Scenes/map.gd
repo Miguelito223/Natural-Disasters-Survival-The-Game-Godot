@@ -13,6 +13,7 @@ var meteor_scene = preload("res://Scenes/meteors.tscn")
 var tornado_scene = preload("res://Scenes/tornado.tscn")
 var tsunami_scene = preload("res://Scenes/tsunami.tscn")
 var volcano_scene = preload("res://Scenes/Volcano.tscn")
+var earthquake_scene = preload("res://Scenes/earthquake.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
@@ -240,12 +241,12 @@ func is_tsunami():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 	while current_weather_and_disaster != "Tsunami":
 		if is_instance_valid(tsunami):
 			tsunami.queue_free()
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 
@@ -296,7 +297,7 @@ func is_linghting_storm():
 
 		add_child(lighting, true)
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 
@@ -328,7 +329,7 @@ func is_meteor_shower():
 		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 	
 	
@@ -368,13 +369,13 @@ func is_volcano():
 		$WorldEnvironment.environment.volumetric_fog_enabled = true
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 	while current_weather_and_disaster != "Volcano":
 		if is_instance_valid(volcano):
 			volcano.queue_free()
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 	
 
@@ -440,13 +441,13 @@ func is_tornado():
 
 		add_child(lighting, true)
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 	while current_weather_and_disaster != "Tornado":
 		if is_instance_valid(tornado):
 			tornado.queue_free()
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 	
 
 
@@ -482,20 +483,8 @@ func is_acid_rain():
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)				
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 	
-
-
-func shake_objects(node):
-	for child in node.get_children():
-		if child.is_in_group("movable_objects") or child.is_in_group("player") : # Verifica si el nodo es un Spatial (objeto 3D)
-			var x = randi_range(-shake_strength, shake_strength)
-			var z = randi_range(-shake_strength, shake_strength)
-			child.position += Vector3(x, 0, z)
-
-		# Llama recursivamente a la función para procesar los hijos del nodo actual
-		if child.get_child_count() > 0:
-			shake_objects(child)
 
 func is_earthquake():
 	Globals.Temperature_target = randi_range(20,31)
@@ -505,6 +494,9 @@ func is_earthquake():
 	Globals.pressure_target = randi_range(10000,10020)
 	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
+
+	var earquake = earthquake_scene.instantiate()
+	add_child(earquake,true)
 
 	while current_weather_and_disaster == "Earthquake":
 		var player
@@ -518,9 +510,13 @@ func is_earthquake():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		shake_objects(self)
+		earquake.start_earthquake(self)
 			
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
+
+	while current_weather_and_disaster != "Earthquake":
+		if is_instance_valid(earquake):
+			earquake.queue_free()
 
 		
 
@@ -549,7 +545,7 @@ func is_sun():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 func is_cloud():
@@ -573,7 +569,7 @@ func is_cloud():
 		$WorldEnvironment.environment.volumetric_fog_enabled = true
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 
@@ -609,7 +605,7 @@ func is_raining():
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 
@@ -644,7 +640,7 @@ func is_storm():
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.5).timeout
 
 
 	
