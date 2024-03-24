@@ -354,7 +354,7 @@ func is_volcano():
 	else:
 		volcano.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 
-	add_child(volcano)
+	add_child(volcano, true)
 
 	while current_weather_and_disaster == "Volcano":
 		var player

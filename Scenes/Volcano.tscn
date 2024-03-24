@@ -187,7 +187,6 @@ bones/11/rotation = Quaternion(-0.0175413, 0.0246519, -0.0627842, 0.997568)
 bones/12/rotation = Quaternion(0.329881, 0.638098, 0.562386, -0.40955)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/rotation = Quaternion(-0.116855, -0.0244707, 0.221192, 0.967895)
-bones/13/scale = Vector3(1, 1, 1)
 
 [node name="ref" parent="Volcano_Collisions/ref_skeleton/Skeleton3D" index="0"]
 mesh = SubResource("ArrayMesh_eyey5")
