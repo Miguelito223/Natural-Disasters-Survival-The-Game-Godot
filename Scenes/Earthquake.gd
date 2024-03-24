@@ -3,8 +3,6 @@ extends Node3D
 var shake_nodes_strength = 1
 var magnitude = 8
 var magnitude_modifier = 0
-var earthquake_simquality = 0.10
-var next_physics_time = Time.get_ticks_msec()
 
 func _physics_process(_delta):
 	magnitude_modifier_increment()
