@@ -286,7 +286,11 @@ func is_linghting_storm():
 		var result = space_state.intersect_ray(ray)				
 		
 		var lighting = linghting_scene.instantiate()
-		lighting.position = result.position
+		if result.has("position"):
+			lighting.position = result.position
+		else:
+			lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+
 		add_child(lighting, true)
 
 		await get_tree().create_timer(1).timeout
@@ -342,7 +346,11 @@ func is_volcano():
 	var result = space_state.intersect_ray(ray)
 
 	var volcano = volcano_scene.instantiate()
-	volcano.position = result.position
+	if result.has("position"):
+		volcano.position = result.position
+	else:
+		volcano.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+
 	add_child(volcano)
 
 	while current_weather_and_disaster == "Volcano":
@@ -363,8 +371,18 @@ func is_volcano():
 
 
 func is_tornado():
+
+	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+	var space_state = get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+	var result = space_state.intersect_ray(ray)	
+
+		
 	var tornado = tornado_scene.instantiate()
-	tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+	if result.has("position"):
+		tornado.position = result.position
+	else:
+		tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 	add_child(tornado, true)
 
 	Globals.Temperature_target =  randi_range(5,15)
@@ -398,13 +416,19 @@ func is_tornado():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
 
-		var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
-		var space_state = get_world_3d().direct_space_state
-		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
-		var result = space_state.intersect_ray(ray)			
+		rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		space_state = get_world_3d().direct_space_state
+		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+		result = space_state.intersect_ray(ray)			
 		
 		var lighting = linghting_scene.instantiate()
-		lighting.position = result.position
+		
+		if result.has("position"):
+			lighting.position = result.position
+		else:
+			lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+
+
 		add_child(lighting, true)
 
 		await get_tree().create_timer(1).timeout
