@@ -51,6 +51,7 @@ color = Color(0.309804, 0.196078, 0, 1)
 [sub_resource type="QuadMesh" id="QuadMesh_lgd8c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_peyem"]
+size = Vector3(30, 100, 30)
 
 [node name="Tornado" type="Node3D"]
 script = ExtResource("1_yllgf")
@@ -74,7 +75,6 @@ draw_pass_1 = SubResource("QuadMesh_lgd8c")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(10, 0, 0, 0, 100, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("BoxShape3D_peyem")
 
 [node name="RayCast" type="RayCast3D" parent="."]
