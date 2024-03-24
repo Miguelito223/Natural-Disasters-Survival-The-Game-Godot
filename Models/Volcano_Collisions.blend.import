@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ucwf1wbil5c7"
-path="res://.godot/imported/Volcano.blend-a9b80adca34b1637d8b926d9aeb387c9.scn"
+uid="uid://cqtjtnsori7lv"
+path="res://.godot/imported/Volcano_Collisions.blend-5289d83e3f0ec65663813e03a1f5c5ae.scn"
 
 [deps]
 
-source_file="res://Models/Volcano.blend"
-dest_files=["res://.godot/imported/Volcano.blend-a9b80adca34b1637d8b926d9aeb387c9.scn"]
+source_file="res://Models/Volcano_Collisions.blend"
+dest_files=["res://.godot/imported/Volcano_Collisions.blend-5289d83e3f0ec65663813e03a1f5c5ae.scn"]
 
 [params]
 
@@ -29,42 +29,7 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={
-"materials": {
-"base_volcano": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/base_volcano.png"
-},
-"crater_volcano": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/crater_volcano.png"
-},
-"lava_anim": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/base_volcano.png"
-}
-},
-"meshes": {
-"Volcano_ref": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"lods/normal_split_angle": 25.0,
-"save_to_file/enabled": true,
-"save_to_file/make_streamable": "",
-"save_to_file/path": "res://Volcano_ref.res"
-}
-},
-"nodes": {
-"PATH:Camera": {
-"import/skip_import": true
-},
-"PATH:Light": {
-"import/skip_import": true
-}
-}
-}
+_subresources={}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
 blender/nodes/visible=0
@@ -72,7 +37,7 @@ blender/nodes/punctual_lights=true
 blender/nodes/cameras=true
 blender/nodes/custom_properties=true
 blender/nodes/modifiers=1
-blender/meshes/colors=true
+blender/meshes/colors=false
 blender/meshes/uvs=true
 blender/meshes/normals=true
 blender/meshes/tangents=true
