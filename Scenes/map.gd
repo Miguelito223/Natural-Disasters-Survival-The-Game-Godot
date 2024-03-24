@@ -163,7 +163,7 @@ func sync_weather_and_disaster():
 		var random_weather_and_disaster = randi_range(0,10)
 		set_weather_and_disaster.rpc(random_weather_and_disaster)
 	else:
-		var random_weather_and_disaster = randi_range(0,10)
+		var random_weather_and_disaster = randi_range(0,12)
 		set_weather_and_disaster(random_weather_and_disaster)		
 
 @rpc("any_peer", "call_local")
@@ -215,6 +215,15 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			current_weather_and_disaster = "Earthquake"
 			current_weather_and_disaster_int = 10
 			is_earthquake()
+
+		11:
+			current_weather_and_disaster = "Sand Storm"
+			current_weather_and_disaster_int = 11
+			is_sandstorm()
+		11:
+			current_weather_and_disaster = "blizzard"
+			current_weather_and_disaster_int = 12
+			is_blizzard()
 
 func is_tsunami():
 	var tsunami = tsunami_scene.instantiate()
@@ -343,9 +352,86 @@ func is_meteor_shower():
 
 		await get_tree().create_timer(0.5).timeout
 
-	
-	
+func is_sandstorm():
+	Globals.Temperature_target =  randi_range(-20,-35)
+	Globals.Humidity_target = randi_range(20,30)
+	Globals.bradiation_target = 0
+	Globals.oxygen_target = 100
+	Globals.pressure_target = randi_range(8000,9020)
+	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(40, 50)
 
+	while current_weather_and_disaster == "Sand Storm":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			
+		await get_tree().create_timer(0.5).timeout	
+func is_sandstorm():
+	Globals.Temperature_target =  randi_range(30,35)
+	Globals.Humidity_target = randi_range(0,5)
+	Globals.bradiation_target = 0
+	Globals.oxygen_target = 100
+	Globals.pressure_target = randi_range(10000,10020)
+	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_speed_target = randi_range(30, 50)
+
+	while current_weather_and_disaster == "Sand Storm":
+		if Globals.is_networking:
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = player.is_multiplayer_authority()
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		else:
+			var player = get_node("Player")
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = true
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			
+		await get_tree().create_timer(0.5).timeout
 
 func is_volcano():
 	Globals.Temperature_target =  randi_range(30,40)
