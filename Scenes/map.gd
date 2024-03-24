@@ -517,6 +517,8 @@ func is_earthquake():
 		if is_instance_valid(earquake):
 			earquake.queue_free()
 
+		await get_tree().create_timer(0.5).timeout
+
 		
 
 
