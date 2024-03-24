@@ -104,6 +104,15 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("Moon:position")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath("Timer:process_callback")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Timer:autostart")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Timer:one_shot")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
