@@ -1,8 +1,6 @@
 extends Node3D
 
 var shake_strength = 1
-var shake_duration = 2
-var shake_timer = 0
 
 func shake_objects(node):
     for child in node.get_children():
@@ -15,6 +13,3 @@ func shake_objects(node):
         # Llama recursivamente a la función para procesar los hijos del nodo actual
         if child.get_child_count() > 0:
             shake_objects(child)
-
-func start_earthquake(node):
-    shake_objects(node)

@@ -509,7 +509,7 @@ func is_earthquake():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		earquake.start_earthquake(self)
+		earquake.shake_objects(self)
 			
 		await get_tree().create_timer(0.5).timeout
 
