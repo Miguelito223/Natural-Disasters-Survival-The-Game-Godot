@@ -51,6 +51,7 @@ func _ready():
 			generate_seed()
 
 		$Timer.wait_time = Globals.timer
+		$Timer.start()
 
 
 func generate_seed():

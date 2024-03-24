@@ -133,7 +133,6 @@ func hit_chance(chance: int) -> bool:
 			# En el cliente
 			return randf() < (clamp(chance * get_frame_multiplier(), 0, 100) / 100)
 	else:
-
 		return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
 	
 

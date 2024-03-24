@@ -12,13 +12,11 @@ func _on_area_3d_body_entered(body:Node3D):
 		body.IsInWater = true
 		body.damage(50)
 
-	if body.is_in_group("movable_objects"):
+	if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
 		var body_direction = direction
 		var relative_direction = global_transform.origin - body.global_transform.origin
 		var projected_direction = body_direction.project(relative_direction)
 		body.linear_velocity = projected_direction.normalized() * move_speed
-		
-		body.move_and_collide()
 
 	elif body.is_in_group("player"):
 		var body_direction = direction

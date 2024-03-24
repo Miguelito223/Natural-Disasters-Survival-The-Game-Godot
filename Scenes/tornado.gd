@@ -6,7 +6,7 @@ var movement_radius = 50
 var ray_length = 1000
 var ground_height = 0
 
-var tornado_strength = 100
+var tornado_strength = 1000
 var radius = 10
 
 
@@ -37,8 +37,12 @@ func _process(delta):
 			
 
 func _on_area_3d_body_entered(body:Node3D):
-	if body.is_in_group("movable_objects") or body.is_in_group("player") :
+	if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
 		var direction = (body.global_transform.origin - global_transform.origin).normalized()
 		var force = direction * tornado_strength
-		body.apply_impulse(Vector3.ZERO, force)
-	
+		body.apply_central_impulse(force)
+	elif body.is_in_group("player"):
+		var direction = (body.global_transform.origin - global_transform.origin).normalized()
+		var force = direction * tornado_strength
+		body.apply_central_impulse(force)
+		body.move_and_slide()
