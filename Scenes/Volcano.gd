@@ -17,7 +17,7 @@ func _launch_fireball():
 	var launch_vector = launch_direction * launch_force
 	fireball.global_transform.origin = global_transform.origin  # Posición inicial en el volcán
 	fireball.apply_impulse(Vector3.ZERO, launch_vector)  # Aplicar fuerza para lanzar la bola de fuego
-	add_child(fireball)  # Agregar la bola de fuego como hijo del volcán
+	add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
 	# Llamar nuevamente a la función _launch_fireball() después de 'launch_interval' segundos
 	await get_tree().create_timer(launch_interval).timeout

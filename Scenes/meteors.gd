@@ -18,6 +18,9 @@ func _on_body_entered(_body):
 
 
 func _on_area_3d_body_entered(_body):
+	if _body == self:
+		return
+
 	var explosion_node = explosion_scene.instantiate()
 	explosion_node.position = self.position
 	explosion_node.emitting = true

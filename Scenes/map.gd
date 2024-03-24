@@ -245,6 +245,7 @@ func is_tsunami():
 	while current_weather_and_disaster != "Tsunami":
 		if is_instance_valid(tsunami):
 			tsunami.queue_free()
+		await get_tree().create_timer(1).timeout
 
 
 
@@ -438,6 +439,8 @@ func is_tornado():
 	while current_weather_and_disaster != "Tornado":
 		if is_instance_valid(tornado):
 			tornado.queue_free()
+
+		await get_tree().create_timer(1).timeout
 	
 
 
