@@ -12,7 +12,7 @@ var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
 var tornado_scene = preload("res://Scenes/tornado.tscn")
 var tsunami_scene = preload("res://Scenes/tsunami.tscn")
-var volcano_scene = preload("res://Scenes/volcano.tscn")
+var volcano_scene = preload("res://Scenes/Volcano.tscn")
 
 var noise = FastNoiseLite.new()
 var noise_seed
