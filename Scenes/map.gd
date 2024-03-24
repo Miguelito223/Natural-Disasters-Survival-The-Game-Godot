@@ -240,6 +240,8 @@ func is_tsunami():
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
+		await get_tree().create_timer(1).timeout
+
 	while current_weather_and_disaster != "Tsunami":
 		if is_instance_valid(tsunami):
 			tsunami.queue_free()
