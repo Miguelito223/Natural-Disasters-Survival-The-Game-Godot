@@ -238,6 +238,8 @@ func is_tsunami():
 			player = get_node("Player")
 
 		player.rain_node.emitting = false
+		player.sand_node.emitting = false
+		player.dust_node.emitting = false
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
@@ -267,20 +269,28 @@ func is_linghting_storm():
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = player.is_multiplayer_authority()
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
 			var player = get_node("Player")
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = true
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
@@ -321,6 +331,8 @@ func is_meteor_shower():
 			player = get_node("Player")
 
 		player.rain_node.emitting = false
+		player.sand_node.emitting = false
+		player.dust_node.emitting = false
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
@@ -354,20 +366,38 @@ func is_volcano():
 		volcano.position = result.position
 	else:
 		volcano.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
-
+	
 	add_child(volcano, true)
 
 	while current_weather_and_disaster == "Volcano":
-		var player
-		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
-			player = get_node("Player")
-
-		player.rain_node.emitting = false
-		$WorldEnvironment.environment.volumetric_fog_enabled = true
-		$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
+			var player = get_node("Player")
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = true
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 			
 		await get_tree().create_timer(0.5).timeout
 
@@ -407,21 +437,29 @@ func is_tornado():
 		if Globals.is_networking:
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):
-				player.rain_node.emitting = player.is_multiplayer_authority()
+				player.rain_node.emitting =  player.is_multiplayer_authority()
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
 			var player = get_node("Player")
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = true
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
@@ -465,20 +503,28 @@ func is_acid_rain():
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = player.is_multiplayer_authority()
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)			
 		else:
 			var player = get_node("Player")
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = true
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)				
 
@@ -506,6 +552,8 @@ func is_earthquake():
 			player = get_node("Player")
 
 		player.rain_node.emitting = false
+		player.sand_node.emitting = false
+		player.dust_node.emitting = false
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
@@ -543,6 +591,8 @@ func is_sun():
 			player = get_node("Player")
 
 		player.rain_node.emitting = false
+		player.sand_node.emitting = false
+		player.dust_node.emitting = false
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
@@ -567,6 +617,8 @@ func is_cloud():
 			player = get_node("Player")
 
 		player.rain_node.emitting = false
+		player.sand_node.emitting = false
+		player.dust_node.emitting = false
 		$WorldEnvironment.environment.volumetric_fog_enabled = true
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
@@ -589,6 +641,8 @@ func is_raining():
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = player.is_multiplayer_authority()
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -599,10 +653,14 @@ func is_raining():
 			var player = get_node("Player")
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = true
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		
@@ -624,20 +682,28 @@ func is_storm():
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = player.is_multiplayer_authority()
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
 			var player = get_node("Player")
 			if Globals.is_outdoor(player):
 				player.rain_node.emitting = true
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
 				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 

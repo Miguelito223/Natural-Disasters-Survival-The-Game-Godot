@@ -1,9 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=31 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
 [ext_resource type="AudioStream" uid="uid://cwlgb5p4ow3tr" path="res://Sounds/disasters/nature/wind_weak.wav" id="2_fjmn6"]
+[ext_resource type="Texture2D" uid="uid://srk0pveigh2u" path="res://Sprites/kenney_particle_pack/slash_01.png" id="2_uyiao"]
 [ext_resource type="Script" path="res://Scenes/Pause_menu.gd" id="2_vj7s0"]
+[ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="3_kstye"]
 [ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
@@ -33,24 +35,103 @@ particles_anim_loop = false
 use_particle_trails = true
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2km3b"]
-emission_shape = 3
-emission_box_extents = Vector3(100, 200, 100)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 4.0
 direction = Vector3(0, -1, 0)
 spread = 5.0
 initial_velocity_min = 30.0
 initial_velocity_max = 30.0
+color = Color(0, 0, 0.745098, 1)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+sub_emitter_mode = 3
+sub_emitter_amount_at_collision = 1
+
+[sub_resource type="Curve" id="Curve_vyn2q"]
+max_value = 0.5
+_data = [Vector2(0.490797, 0.314624), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_hmkji"]
+curve = SubResource("Curve_vyn2q")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y17jh"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_uyiao")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_584xw"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 4.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+color = Color(0, 0, 0.745098, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_g5it5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yas20"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("3_kstye")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d0h3l"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 4.0
+direction = Vector3(1, -1, 0)
+spread = 5.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+color = Color(0.670588, 0.670588, 0.670588, 1)
+turbulence_enabled = true
 collision_mode = 1
 collision_friction = 0.0
 collision_bounce = 0.0
 
-[sub_resource type="Curve" id="Curve_yf2re"]
-max_value = 0.1
-_data = [Vector2(0, 0.0498229), 0.0, 0.0, 0, 0, Vector2(0.203065, 0.1), 0.0, 0.0, 0, 0, Vector2(0.511494, 0.0594901), 0.0, 0.0, 0, 0, Vector2(1, 0.0516643), 0.0, 0.0, 0, 0]
-point_count = 4
-metadata/_snap_count = 5
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_jh2bo"]
 
-[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_hmkji"]
-curve = SubResource("Curve_yf2re")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhtnm"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("3_kstye")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5dllp"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 50.0
+emission_ring_inner_radius = 4.0
+direction = Vector3(0, -1, 0)
+spread = 5.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+color = Color(1, 0.658824, 0, 1)
+turbulence_enabled = true
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_r5teo"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8gfme"]
 properties/0/path = NodePath(".:position")
@@ -123,20 +204,43 @@ mesh = SubResource("CapsuleMesh_ypag4")
 material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.7699, 0)
 material_override = SubResource("StandardMaterial3D_y4sl8")
 amount = 1000
+sub_emitter = NodePath("../splash")
 lifetime = 2.0
 randomness = 0.44
-visibility_aabb = AABB(-238.814, -188.671, -192.689, 477.629, 389.343, 385.378)
+visibility_aabb = AABB(-65.6526, -792.321, -62.9457, 130.707, 793.557, 125.141)
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
 draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
 
+[node name="splash" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+material_override = SubResource("StandardMaterial3D_y17jh")
+amount = 1000
+lifetime = 2.0
+randomness = 1.0
+visibility_aabb = AABB(-1.00001, -1.00001, -1.00001, 2.00002, 2.00002, 2.00002)
+process_material = SubResource("ParticleProcessMaterial_584xw")
+draw_pass_1 = SubResource("QuadMesh_g5it5")
+
 [node name="Dust" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.642, 0)
 material_override = SubResource("StandardMaterial3D_yas20")
+amount = 1000
+lifetime = 5.0
+visibility_aabb = AABB(-63.2793, -101.831, -92.3613, 156.75, 115.552, 174.674)
+process_material = SubResource("ParticleProcessMaterial_d0h3l")
 draw_pass_1 = SubResource("RibbonTrailMesh_jh2bo")
 
 [node name="Sand" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 31.5593, 0)
+material_override = SubResource("StandardMaterial3D_qhtnm")
+amount = 1000
+lifetime = 5.0
+process_material = SubResource("ParticleProcessMaterial_5dllp")
+draw_pass_1 = SubResource("QuadMesh_r5teo")
 
 [node name="Wind sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_fjmn6")

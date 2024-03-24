@@ -37,6 +37,9 @@ var Outdoor = false
 @onready var head_node =  self.get_node("Head")
 @onready var camera_node =  self.get_node("Head/Camera3D")
 @onready var rain_node = $Rain
+@onready var splash_node = $splash
+@onready var dust_node = $Dust
+@onready var sand_node = $Sand
 
 
 func _enter_tree():
@@ -68,12 +71,16 @@ func _ready():
 
 		get_node("Pause menu").visible = is_multiplayer_authority()
 
-		$Rain.emitting = is_multiplayer_authority()
+		rain_node.emitting = is_multiplayer_authority()
+		sand_node.emitting = is_multiplayer_authority()
+		dust_node.emitting = is_multiplayer_authority()
 
 		if not is_multiplayer_authority():
 			return
 
-		$Rain.emitting = false
+		rain_node.emitting = false
+		sand_node.emitting = false
+		dust_node.emitting = false
 
 		setspawnpos()
 
@@ -86,7 +93,9 @@ func _ready():
 
 		get_node("Pause menu").visible = false
 
-		$Rain.emitting = false
+		rain_node.emitting = false
+		sand_node.emitting = false
+		dust_node.emitting = false
 
 		setspawnpos()
 
