@@ -1,9 +1,12 @@
 extends Node3D
 
-var shake_strength = 1
+var shake_nodes_strength = 1
 var magnitude = 8.0
 var earthquake_simquality = 0.1
 var next_physics_time = Time.get_ticks_msec()
+
+func _physics_process(_delta):
+    shake_nodes(get_parent())
 
 func can_do_physics(nexttime: float) -> bool:
     if Time.get_ticks_msec() / 1000.0 >= self.next_physics_time:
@@ -15,9 +18,9 @@ func can_do_physics(nexttime: float) -> bool:
     else:
         return false
 
-func shake_objects(node):
-# Variables locales
-    var t: float = earthquake_simquality
+func shake_nodes(node):
+    # Variables locales
+    var t: float = self.earthquake_simquality
     var scale_velocity: float = 66 / (1 / get_physics_process_delta_time()) # Calcula la escala de la velocidad
     var mag: float = self.magnitude
 
@@ -43,16 +46,19 @@ func shake_objects(node):
         if child.is_in_group("player"): # Verifica si el nodo es un Spatial (objeto 3D)
             if child.is_on_floor():
                 child.set_velocity(vec * 1.125)
+                child.move_and_slide()
 
         elif child.is_in_group("movable_objects"):
             var mass = child.mass or null
             var velocity_magnitude = child.linear_velocity.length()
             var vel_mod = 1 - clamp(velocity_magnitude / 2000, 0, 1)
             var ang_v = ang_vv * vel_mod
-            child.add_constant_torque(ang_v * 8)
-            child.add_central_force(ang_v * 4)
-            child.freeze = false
+            if mass < 13600 or mass == null:
+                child.add_constant_torque(ang_v * 8)
+                child.add_central_force(ang_v * 4)
+                child.freeze = false
+                child.move_and_collide()
 
         # Llama recursivamente a la función para procesar los hijos del nodo actual
         if child.get_child_count() > 0:
-            shake_objects(child)
+            shake_nodes(child)

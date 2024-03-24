@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=11 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 
@@ -83,6 +83,29 @@ _data = {
 "RESET": SubResource("Animation_5s0dj")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8u7l0"]
+properties/0/path = NodePath("Sun:rotation")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Sun:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Sun:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Timer:wait_time")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("Moon:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Moon:scale")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath("Moon:position")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 
@@ -110,6 +133,9 @@ libraries = {
 "": SubResource("AnimationLibrary_lgbnl")
 }
 autoplay = "DNC"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_8u7l0")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
