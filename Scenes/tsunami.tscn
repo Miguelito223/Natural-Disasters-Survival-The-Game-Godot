@@ -30,7 +30,6 @@ shape = SubResource("BoxShape3D_1y2fb")
 disabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 185.5)
 size = Vector3(10000, 1000, 471)
 material = SubResource("StandardMaterial3D_t3b4l")
 
