@@ -174,13 +174,13 @@ func _process(delta):
 		pressure = clamp(pressure , 0, INF)
 		oxygen = clamp(oxygen, 0, 100)
 
-		Temperature = lerp(Temperature, Temperature_target, 0.005 * delta)
-		Humidity = lerp(Humidity, Humidity_target, 0.005 * delta)
-		bradiation = lerp(bradiation, bradiation_target, 0.005 * delta)
-		pressure = lerp(pressure, pressure_target, 0.005 * delta)
-		oxygen = lerp(oxygen, oxygen_target, 0.005 * delta)
-		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005 * delta)
-		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005 * delta)
+		Temperature = lerp(Temperature, Temperature_target, 0.005)
+		Humidity = lerp(Humidity, Humidity_target, 0.005)
+		bradiation = lerp(bradiation, bradiation_target, 0.005)
+		pressure = lerp(pressure, pressure_target, 0.005)
+		oxygen = lerp(oxygen, oxygen_target, 0.005)
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
 	else:
 
 		if not get_tree().get_multiplayer().is_server():
@@ -192,13 +192,13 @@ func _process(delta):
 		pressure = clamp(pressure , 0, INF)
 		oxygen = clamp(oxygen, 0, 100)
 
-		Temperature = lerp(Temperature, Temperature_target, 0.005 * delta)
-		Humidity = lerp(Humidity, Humidity_target, 0.005 * delta)
-		bradiation = lerp(bradiation, bradiation_target, 0.005 * delta)
-		pressure = lerp(pressure, pressure_target, 0.005 * delta)
-		oxygen = lerp(oxygen, oxygen_target, 0.005 * delta)
-		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005 * delta)
-		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005 * delta)
+		Temperature = lerp(Temperature, Temperature_target, 0.005)
+		Humidity = lerp(Humidity, Humidity_target, 0.005)
+		bradiation = lerp(bradiation, bradiation_target, 0.005)
+		pressure = lerp(pressure, pressure_target, 0.005)
+		oxygen = lerp(oxygen, oxygen_target, 0.005)
+		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
 
 		sync_temp.rpc(Temperature)
 		sync_humidity.rpc(Humidity)

@@ -23,8 +23,5 @@ func _ready():
 	$spark/light/star.emitting = true
 	$spark/light/star.one_shot = true
 
-	await $spark.finished
-	self.queue_free()
-
 func _on_spark_finished():
 	self.queue_free()
