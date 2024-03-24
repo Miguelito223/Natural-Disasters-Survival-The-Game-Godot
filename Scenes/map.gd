@@ -220,7 +220,7 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			current_weather_and_disaster = "Sand Storm"
 			current_weather_and_disaster_int = 11
 			is_sandstorm()
-		11:
+		12:
 			current_weather_and_disaster = "blizzard"
 			current_weather_and_disaster_int = 12
 			is_blizzard()
