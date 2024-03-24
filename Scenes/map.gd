@@ -848,6 +848,8 @@ func player_join(id):
 	Globals.players_conected_int = Globals.players_conected_array.size() - 1
 	add_child(player,true)
 
+	await get_tree().create_timer(1).timeout
+
 	if get_tree().get_multiplayer().is_server():
 		receive_seeds.rpc(noise_seed)
 

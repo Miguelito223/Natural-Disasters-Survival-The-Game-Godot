@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=37 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -13,6 +13,9 @@
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
 [ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
+[ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
+[ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xeewm"]
 
@@ -540,6 +543,31 @@ offset_top = 769.0
 offset_right = 281.0
 offset_bottom = 800.0
 text = "Enter"
+
+[node name="Mobile Buttons" type="CanvasLayer" parent="."]
+
+[node name="Virtual Joystick" parent="Mobile Buttons" instance=ExtResource("14_nhtb3")]
+offset_left = 16.0
+offset_top = -298.0
+offset_right = 316.0
+offset_bottom = 2.0
+visibility_mode = 2
+action_up = ""
+action_down = ""
+
+[node name="pause" type="TouchScreenButton" parent="Mobile Buttons"]
+position = Vector2(37, 31)
+scale = Vector2(10, 9.032)
+texture_normal = ExtResource("15_beddy")
+action = "Pause"
+visibility_mode = 1
+
+[node name="jump" type="TouchScreenButton" parent="Mobile Buttons"]
+position = Vector2(1589, 841)
+scale = Vector2(10, 10)
+texture_normal = ExtResource("16_p2ihs")
+action = "ui_up"
+visibility_mode = 1
 
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Reset Player" to="Pause menu" method="_on_reset_player_pressed"]

@@ -146,16 +146,17 @@ func pause():
 
 	pause_state = !pause_state
 
-func _input(event):
+func _process(_delta):
 	if not is_multiplayer_authority():
 		return
 
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_TAB:
-			tab()
 
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			pause()
+	if Input.is_action_just_pressed("Tab"):
+		tab()
+
+	if Input.is_action_just_pressed("Pause"):
+		pause()
+
 
 func _on_time_value_changed(value:float):
 	if not Globals.is_networking:

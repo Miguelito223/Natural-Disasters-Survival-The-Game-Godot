@@ -282,10 +282,11 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("ui_accept") and IsInWater:
 			velocity.y += JUMP_VELOCITY
 
+
 		if Input.is_action_pressed("Flashligh") and IsInWater:
-			$Head/Head/Camera3D/SpotLight3D.spot_range = 0
+			$Head/Camera3D/SpotLight3D.spot_range = 0
 		else:
-			$Head/Head/Camera3D/SpotLight3D.spot_range = 5.0
+			$Head/Camera3D/SpotLight3D.spot_range = 5.0
 
 		if Input.is_action_pressed("Spring"):
 			SPEED = SPEED_RUN
@@ -317,9 +318,11 @@ func _physics_process(delta):
 
 		if Input.is_action_just_pressed("ui_accept") and IsInWater:
 			velocity.y += JUMP_VELOCITY
-
-		if Input.is_action_just_pressed("Flashligh") and IsInWater:
-			velocity.y += JUMP_VELOCITY
+		
+		if Input.is_action_pressed("Flashligh") and IsInWater:
+			$Head/Camera3D/SpotLight3D.spot_range = 0
+		else:
+			$Head/Camera3D/SpotLight3D.spot_range = 5.0
 
 		if Input.is_action_pressed("Spring"):
 			SPEED = SPEED_RUN
