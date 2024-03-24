@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=22 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -37,8 +37,11 @@ emission_shape = 3
 emission_box_extents = Vector3(100, 200, 100)
 direction = Vector3(0, -1, 0)
 spread = 5.0
-initial_velocity_min = 15.0
-initial_velocity_max = 15.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
 
 [sub_resource type="Curve" id="Curve_yf2re"]
 max_value = 0.1
@@ -121,7 +124,6 @@ material = SubResource("StandardMaterial3D_r4028")
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y4sl8")
-emitting = false
 amount = 1000
 lifetime = 2.0
 randomness = 0.44
@@ -129,6 +131,12 @@ visibility_aabb = AABB(-238.814, -188.671, -192.689, 477.629, 389.343, 385.378)
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
 draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
+
+[node name="Dust" type="GPUParticles3D" parent="."]
+material_override = SubResource("StandardMaterial3D_yas20")
+draw_pass_1 = SubResource("RibbonTrailMesh_jh2bo")
+
+[node name="Sand" type="GPUParticles3D" parent="."]
 
 [node name="Wind sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_fjmn6")
