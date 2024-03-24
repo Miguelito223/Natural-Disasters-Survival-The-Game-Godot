@@ -370,6 +370,12 @@ func is_volcano():
 			
 		await get_tree().create_timer(1).timeout
 
+	while current_weather_and_disaster != "Volcano":
+		if is_instance_valid(volcano):
+			volcano.queue_free()
+
+		await get_tree().create_timer(1).timeout
+
 	
 
 
