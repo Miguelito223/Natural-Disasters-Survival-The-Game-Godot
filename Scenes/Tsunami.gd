@@ -12,7 +12,7 @@ func _on_area_3d_body_entered(body:Node3D):
 		body.IsInWater = true
 		body.damage(50)
 
-	if body.is_in_group("movable_objects") or body.is_in_group("player") :
+	if body.is_in_group("movable_objects"):
 		# Obtener la dirección del tsunami
 		var body_direction = -body.transform.basis.z.normalized()
 		# Obtener la dirección relativa del objeto al tsunami
@@ -20,7 +20,21 @@ func _on_area_3d_body_entered(body:Node3D):
 		# Proyectar la dirección relativa en la dirección del tsunami
 		var projected_direction = body_direction.project(relative_direction)
 		# Normalizar y aplicar la velocidad de movimiento
-		move_speed = projected_direction.normalized() * move_speed
+		body.linear_velocity = projected_direction.normalized() * move_speed
+		
+		body.move_and_collide()
+	elif body.is_in_group("player"):
+		# Obtener la dirección del tsunami
+		var body_direction = -body.transform.basis.z.normalized()
+		# Obtener la dirección relativa del objeto al tsunami
+		var relative_direction = global_transform.origin - body.global_transform.origin
+		# Proyectar la dirección relativa en la dirección del tsunami
+		var projected_direction = body_direction.project(relative_direction)
+		# Normalizar y aplicar la velocidad de movimiento
+		body.velocity = projected_direction.normalized() * move_speed
+		
+		body.move_and_slide()
+
 
 
 func _on_area_3d_body_exited(body:Node3D):
