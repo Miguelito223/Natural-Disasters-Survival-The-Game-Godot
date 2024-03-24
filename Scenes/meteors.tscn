@@ -124,6 +124,8 @@ properties/11/replication_mode = 1
 radius = 1.0
 
 [node name="Meteor" type="RigidBody3D" groups=["movable_objects", "wind_effected_objects"]]
+collision_layer = 255
+collision_mask = 255
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -155,6 +157,8 @@ draw_pass_1 = SubResource("SphereMesh_hqrhf")
 replication_config = SubResource("SceneReplicationConfig_2w7a8")
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_layer = 255
+collision_mask = 255
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("SphereShape3D_gqegd")

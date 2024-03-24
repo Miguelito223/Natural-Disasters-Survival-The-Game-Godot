@@ -7,7 +7,7 @@ var lol = [preload("res://Sounds/disasters/nature/closethunder01.mp3"), preload(
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Configurar la posición de la explosión en la posición del suelo
-	var explosion = explosion_scene.instance()
+	var explosion = explosion_scene.instantiate()
 	explosion.position = self.position
 	get_parent().add_child(explosion)
 	
