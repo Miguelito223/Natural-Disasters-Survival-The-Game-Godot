@@ -125,13 +125,17 @@ func get_physics_multiplier() -> float:
 	return (200.0 / 3.0) / physics_interval
 
 func hit_chance(chance: int) -> bool:
-	if get_tree().get_multiplayer().is_server():
-		# En el servidor
-		return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
+	if Globals.is_networking:
+		if get_tree().get_multiplayer().is_server():
+			# En el servidor
+			return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
+		else:
+			# En el cliente
+			return randf() < (clamp(chance * get_frame_multiplier(), 0, 100) / 100)
 	else:
-		# En el cliente
-		return randf() < (clamp(chance * get_frame_multiplier(), 0, 100) / 100)
 
+		return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
+	
 
 
 

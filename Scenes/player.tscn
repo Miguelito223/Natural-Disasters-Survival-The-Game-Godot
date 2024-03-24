@@ -195,7 +195,7 @@ properties/18/path = NodePath("Rain:scale")
 properties/18/spawn = true
 properties/18/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" groups=["movable_objects", "player", "wind_effected_objects"]]
+[node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_btpoi")
 

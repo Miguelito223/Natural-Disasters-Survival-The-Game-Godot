@@ -20,6 +20,10 @@ config/icon="res://Icons/disasters.png"
 Globals="*res://Scenes/Globals.gd"
 Data="*res://Scenes/Data.gd"
 
+[debug]
+
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=1920

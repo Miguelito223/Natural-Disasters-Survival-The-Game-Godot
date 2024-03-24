@@ -33,6 +33,7 @@ func _exit_tree():
 func _ready():
 	if not Globals.is_networking:
 		$Timer.wait_time = Globals.timer
+		$Timer.start()
 		generate_seed()
 		receive_seeds(noise_seed)
 	else:
@@ -298,7 +299,7 @@ func is_linghting_storm():
 		var space_state = get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		var result = space_state.intersect_ray(ray)				
-		if randi_range(1,100) == 100:
+		if randi_range(1,25) == 25:
 			var lighting = linghting_scene.instantiate()
 			if result.has("position"):
 				lighting.position = result.position
@@ -469,7 +470,7 @@ func is_tornado():
 		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		result = space_state.intersect_ray(ray)			
 		
-		if randi_range(1,100) == 100:
+		if randi_range(1,25) == 25:
 			var lighting = linghting_scene.instantiate()
 			if result.has("position"):
 				lighting.position = result.position
