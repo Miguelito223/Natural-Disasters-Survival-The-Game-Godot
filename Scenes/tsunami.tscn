@@ -27,10 +27,11 @@ script = ExtResource("1_v7drw")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10000, 1000, 100)
 shape = SubResource("BoxShape3D_1y2fb")
+disabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2257)
-size = Vector3(10000, 1000, 4614)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 185.5)
+size = Vector3(10000, 1000, 471)
 material = SubResource("StandardMaterial3D_t3b4l")
 
 [node name="Area3D" type="Area3D" parent="."]

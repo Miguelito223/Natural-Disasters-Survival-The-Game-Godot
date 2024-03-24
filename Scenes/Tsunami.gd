@@ -1,9 +1,9 @@
 extends CharacterBody3D
-var speed = 100
+var speed = 1000
 var move_speed = 50
 
 func _physics_process(delta):
-	self.velocity = -transform.basis.z.normalized() * speed * delta
+	self.velocity = Vector3(0,0,1) * speed * delta
 	move_and_slide()
 
 func _on_area_3d_body_entered(body:Node3D):
