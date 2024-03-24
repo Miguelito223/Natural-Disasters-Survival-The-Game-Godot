@@ -377,7 +377,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			else:
 				player.rain_node.emitting = false
 				player.sand_node.emitting = false
@@ -391,7 +391,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = true
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			else:
 				player.rain_node.emitting = false
 				player.sand_node.emitting = false

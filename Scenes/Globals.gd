@@ -113,6 +113,26 @@ func is_something_blocking_wind(entity):
 
 	return !result.has("collider")
 
+func get_frame_multiplier() -> float:
+	var frame_time: float = Engine.get_frames_per_second()
+	if frame_time == 0:
+		return 0
+	else:
+		return 60 / frame_time
+
+func get_physics_multiplier() -> float:
+	var physics_interval: float = get_physics_process_delta_time()
+	return (200.0 / 3.0) / physics_interval
+
+func hit_chance(chance: int) -> bool:
+	if get_tree().get_multiplayer().is_server():
+		# En el servidor
+		return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
+	else:
+		# En el cliente
+		return randf() < (clamp(chance * get_frame_multiplier(), 0, 100) / 100)
+
+
 
 
 @rpc("any_peer", "call_local")
