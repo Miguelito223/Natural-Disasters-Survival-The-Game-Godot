@@ -23,10 +23,10 @@ func shake_nodes(node):
 	var mag_physmod: float = (mag - 3) / 7
 
 	# Calcula el vector de velocidad
-	var vec: Vector3 = Vector3(randi_range(-15, 15) / 10, randi_range(-5, 4) / 10, 0 ) * (mag * 25)
+	var vec: Vector3 = Vector3(randi_range(-15, 15) / 10, randi_range(-5, 4) / 10, randi_range(-15, 15) / 10 ) * (mag * 25)
 
 	# Calcula el vector de velocidad angular
-	var ang_vv: Vector3 = Vector3(randi_range(-15, 15) / 10, randi_range(-5, 4) / 10, 0 ) * (mag * 8)
+	var ang_vv: Vector3 = Vector3(randi_range(-15, 15) / 10, randi_range(-5, 4) / 10, randi_range(-15, 15) / 10 ) * (mag * 8)
 
 	# Si hay una probabilidad de golpear, aumenta el vector de velocidad angular
 	if Globals.hit_chance(2):

@@ -15,7 +15,7 @@ func _launch_fireball():
 	var fireball = fireball_scene.instantiate()
 	var launch_direction = Vector3(0, 1, 0)  # Dirección hacia arriba
 	var launch_vector = launch_direction * launch_force
-	fireball.global_transform.origin = global_transform.origin  # Posición inicial en el volcán
+	fireball.global_transform.origin = $Volcano_Collisions/ref_skeleton/Skeleton3D.get_bone_pose_position(2)  # Posición inicial en el volcán
 	fireball.apply_impulse(Vector3.ZERO, launch_vector)  # Aplicar fuerza para lanzar la bola de fuego
 	add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
