@@ -42,6 +42,7 @@ var IsInLava = false
 @onready var splash_node = $splash
 @onready var dust_node = $Dust
 @onready var sand_node = $Sand
+@onready var snow_node = $Snow
 
 
 func _enter_tree():
@@ -77,6 +78,7 @@ func _ready():
 		splash_node.emitting = is_multiplayer_authority()
 		sand_node.emitting = is_multiplayer_authority()
 		dust_node.emitting = is_multiplayer_authority()
+		snow_node.emitting = is_multiplayer_authority()
 
 		if not is_multiplayer_authority():
 			return
@@ -85,6 +87,7 @@ func _ready():
 		sand_node.emitting = false
 		splash_node.emitting = false
 		dust_node.emitting = false
+		snow_node.emitting = false
 
 		setspawnpos()
 
