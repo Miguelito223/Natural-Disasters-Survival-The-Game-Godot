@@ -53,7 +53,7 @@ sub_emitter_amount_at_collision = 1
 
 [sub_resource type="Curve" id="Curve_vyn2q"]
 max_value = 0.5
-_data = [Vector2(0.490797, 0.314624), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.51227, 0.0858616), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_hmkji"]
@@ -75,6 +75,9 @@ emission_ring_inner_radius = 4.0
 gravity = Vector3(0, 0, 0)
 scale_max = 2.0
 color = Color(0, 0, 0.745098, 1)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_g5it5"]
 
@@ -198,6 +201,13 @@ script = ExtResource("1_btpoi")
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_xeewm")
+
+[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+size = Vector3(50, 0, 50)
+resolution = 3
+update_mode = 1
+follow_camera_enabled = true
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="."]
 mesh = SubResource("CapsuleMesh_ypag4")

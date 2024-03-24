@@ -97,6 +97,15 @@ func is_outdoor(ply):
 	
 	return hit_sky
 
+
+func is_inwater(ply):
+	if ply.is_in_group("player"):
+		return ply.IsInWater
+	
+func is_inlava(ply):
+	if ply.is_in_group("player"):
+		return ply.IsInLava
+
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(entity.global_transform.origin + Vector3(0, 10, 0), entity.global_transform.origin + Vector3(0, 10, 0) + Wind_Direction * 300)

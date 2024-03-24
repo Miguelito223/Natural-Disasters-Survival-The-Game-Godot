@@ -9,6 +9,7 @@ func _physics_process(delta):
 func _on_area_3d_body_entered(body:Node3D):
     # Ejemplo de reacción al colisionar con otro objeto
 	if body.is_in_group("player"):
+		body.IsInWater = true
 		body.damage(50)
 
 	if body.is_in_group("movable_objects") or body.is_in_group("player") :
@@ -20,3 +21,8 @@ func _on_area_3d_body_entered(body:Node3D):
 		var projected_direction = body_direction.project(relative_direction)
 		# Normalizar y aplicar la velocidad de movimiento
 		move_speed = projected_direction.normalized() * move_speed
+
+
+func _on_area_3d_body_exited(body:Node3D):
+	if body.is_in_group("player"):
+		body.IsInWater = false

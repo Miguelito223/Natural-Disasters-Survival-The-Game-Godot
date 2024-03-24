@@ -31,6 +31,8 @@ var body_bradiation = min_bdradiation
 var body_wind = 0
 
 var Outdoor = false
+var IsInWater = false
+var IsInLava = false
 
 
 
@@ -72,6 +74,7 @@ func _ready():
 		get_node("Pause menu").visible = is_multiplayer_authority()
 
 		rain_node.emitting = is_multiplayer_authority()
+		splash_node.emitting = is_multiplayer_authority()
 		sand_node.emitting = is_multiplayer_authority()
 		dust_node.emitting = is_multiplayer_authority()
 
@@ -80,6 +83,7 @@ func _ready():
 
 		rain_node.emitting = false
 		sand_node.emitting = false
+		splash_node.emitting = false
 		dust_node.emitting = false
 
 		setspawnpos()
@@ -94,6 +98,7 @@ func _ready():
 		get_node("Pause menu").visible = false
 
 		rain_node.emitting = false
+		splash_node.emitting = false
 		sand_node.emitting = false
 		dust_node.emitting = false
 
@@ -136,7 +141,7 @@ func _process(delta):
 			elif alpha_hot != 0:	
 				damage(alpha_hot + alpha_cold)
 		
-		if Globals.oxygen <= 20:
+		if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsInWater:
 			body_oxygen = clamp(body_oxygen - 5 * delta, min_oxygen, Max_oxygen)
 		else:
 			body_oxygen = clamp(body_oxygen + 5 * delta, min_oxygen, Max_oxygen)
@@ -148,7 +153,7 @@ func _process(delta):
 
 		
 
-		if Globals.bradiation >= 80 and Globals.is_outdoor(self):
+		if Globals.bradiation >= 80 and Globals.is_outdoor(self) or Outdoor:
 			body_bradiation = clamp(body_bradiation + 5 * delta, min_bdradiation, Max_bradiation)
 		else:
 			body_bradiation = clamp(body_bradiation - 5 * delta, min_bdradiation, Max_bradiation)
@@ -156,6 +161,8 @@ func _process(delta):
 		if body_bradiation >= 100:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
+
+		
 
 
 		if body_wind > 0 and body_wind < 50:
@@ -210,7 +217,7 @@ func _process(delta):
 
 		
 
-		if Globals.oxygen <= 20:
+		if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsInWater:
 			body_oxygen = clamp(body_oxygen - 5 * delta, min_oxygen, Max_oxygen)
 		else:
 			body_oxygen = clamp(body_oxygen + 5 * delta, min_oxygen, Max_oxygen)
@@ -219,10 +226,8 @@ func _process(delta):
 		if body_oxygen <= 0:
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
-
-		
-
-		if Globals.bradiation >= 80 and Globals.is_outdoor(self):
+ 
+		if Globals.bradiation >= 80 and Globals.is_outdoor(self) or Outdoor:
 			body_bradiation = clamp(body_bradiation + 5 * delta, min_bdradiation, Max_bradiation)
 		else:
 			body_bradiation = clamp(body_bradiation - 5 * delta, min_bdradiation, Max_bradiation)
