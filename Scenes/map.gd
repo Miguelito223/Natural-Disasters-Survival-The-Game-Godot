@@ -79,8 +79,6 @@ func generate_terrain():
 	texture.albedo_texture = image
 	terrain.texture_list.set_texture(texture.texture_id, texture)
 	terrain.name = "Terrain3D"
-
-	await get_tree().create_timer(2).timeout
 	
 	noise.frequency = 0.0005
 	noise.seed = noise_seed
