@@ -70,7 +70,7 @@ func convert_VectorToAngle(vector):
 
 func perform_trace_collision(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000, 1, [self])
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 600000, 1, [RigidBody3D, PhysicsBody3D])
 	var result = space_state.intersect_ray(ray)
 
 	if result:
@@ -79,7 +79,7 @@ func perform_trace_collision(ply, direction):
 	return result
 
 func perform_trace_position(ply, direction):
-	var ray = PhysicsRayQueryParameters3D.create( ply.global_position, ply.global_position + direction * 1000, 1, [self])
+	var ray = PhysicsRayQueryParameters3D.create( ply.global_position, ply.global_position + direction * 600000, 1, [Terrain3D])
 	var space_state = ply.get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(ray)
 
@@ -91,7 +91,7 @@ func perform_trace_position(ply, direction):
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [])
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [ply])
 	var result = space_state.intersect_ray(ray)
 	
 	if !result:
@@ -105,17 +105,16 @@ func is_outdoor(ply):
 	var hit_right = perform_trace_collision(ply, Vector3(-1, 0, 0))
 	var hit_forward = perform_trace_collision(ply, Vector3(0, 0, 1))
 	var hit_behind = perform_trace_collision(ply, Vector3(0, 0, -1))
-	var hit_below = perform_trace_collision(ply, Vector3(0, -1, 0))
 	var in_tunnel = (hit_left and hit_right) and not (hit_forward and hit_behind) or ((not hit_left and not hit_right) and (hit_forward or hit_behind))
 	var hit_sky = is_below_sky(ply)
 
 	if ply.is_in_group("player"):
-		if hit_sky and not in_tunnel and not hit_below:
+		if hit_sky and not in_tunnel:
 			ply.Outdoor = true
 		else:
 			ply.Outdoor = false
 		
-		return hit_sky and not in_tunnel and not hit_below
+		return hit_sky and not in_tunnel
 	else:
 		return hit_sky
 
@@ -131,7 +130,7 @@ func is_inlava(ply):
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var position = entity.global_position + Vector3(0, 10, 0)
-	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300, 1, [])
+	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300, 1, [entity])
 	var result = space_state.intersect_ray(ray)
 
 	if result:
