@@ -70,14 +70,14 @@ func convert_VectorToAngle(vector):
 
 func perform_trace(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + direction * 1000)
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000)
 	var result = space_state.intersect_ray(ray)
 	
 	return !result.has("collider")
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_transform.origin, ply.global_transform.origin + Vector3(0, 48000, 0))
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0))
 	var result = space_state.intersect_ray(ray)
 
 	return !result.has("collider")
@@ -86,9 +86,9 @@ func is_below_sky(ply):
 func is_outdoor(ply):
 	var hit_left = perform_trace(ply, Vector3(1, 0, 0))
 	var hit_right = perform_trace(ply, Vector3(-1, 0, 0))
-	var hit_forward = perform_trace(ply, Vector3(0, 1, 0))
-	var hit_behind = perform_trace(ply, Vector3(0, -1, 0))
-	var hit_below = perform_trace(ply, Vector3(0, 0, -1))
+	var hit_forward = perform_trace(ply, Vector3(0, 0, 1))
+	var hit_behind = perform_trace(ply, Vector3(0, 0, -1))
+	var hit_below = perform_trace(ply, Vector3(0, -1, 0))
 	var in_tunnel = (hit_left and hit_right) and not (hit_forward and hit_behind) or ((not hit_left and not hit_right) and (hit_forward or hit_behind))
 	var hit_sky = is_below_sky(ply)
 
@@ -108,7 +108,8 @@ func is_inlava(ply):
 
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(entity.global_transform.origin + Vector3(0, 10, 0), entity.global_transform.origin + Vector3(0, 10, 0) + Wind_Direction * 300)
+	var position = entity.global_position + Vector3(0, 10, 0)
+	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300)
 	var result = space_state.intersect_ray(ray)
 
 	return !result.has("collider")

@@ -91,7 +91,7 @@ func generate_terrain():
 	terrain.set_collision_enabled(true)
 
 func perform_trace(ply, direction):
-	var start_pos = ply.global_transform.origin
+	var start_pos = ply.global_position
 	var end_pos = start_pos + direction * 60000
 
 	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
@@ -100,7 +100,7 @@ func perform_trace(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(ray)
 
-	if result.size() > 0:
+	if result.has("position"):
 		return result.position
 	else:
 		return Vector3.ZERO
@@ -112,8 +112,8 @@ func wind(object):
 		var pos = object.global_position
 		var hit_left = perform_trace(object, Vector3(1, 0, 0))
 		var hit_right = perform_trace(object, Vector3(-1, 0, 0))
-		var hit_forward = perform_trace(object, Vector3(0, 1, 0))
-		var hit_behind = perform_trace(object, Vector3(0, -1, 0))
+		var hit_forward = perform_trace(object, Vector3(0, 0, 1))
+		var hit_behind = perform_trace(object, Vector3(0, 0, -1))
 		
 		# Calcular el área expuesta al viento
 		var area = (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_forward))) + (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_behind)))
