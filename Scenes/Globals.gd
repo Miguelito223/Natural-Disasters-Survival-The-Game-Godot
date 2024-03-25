@@ -77,7 +77,7 @@ func perform_trace_collision(ply, direction):
 
 func perform_trace_position(ply, direction):
 	var start_pos = ply.global_position
-	var end_pos = start_pos + direction * 60000
+	var end_pos = start_pos + direction * 1000
 
 	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 

@@ -34,15 +34,18 @@ func _process(delta):
 	var direction = (new_position - global_position).normalized()
 	translate(direction * movement_speed * delta)
 
-			
 
-func _on_area_3d_body_entered(body:Node3D):
-	if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
-		var direction = (body.global_position - global_position).normalized()
-		var force = direction * tornado_strength
-		body.apply_central_impulse(force)
-	elif body.is_in_group("player"):
-		var direction = (body.global_position - global_position).normalized()
-		var force = direction * tornado_strength
-		body.velocity = force
-		body.move_and_slide()
+func _physics_process(_delta):
+	for body in $Area3D.get_overlapping_bodies():
+		if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
+			var direction = (body.global_position - global_position).normalized()
+			var perpendicular_direction = Vector3(-direction.z, 0, direction.x)  # Dirección perpendicular al vector hacia el tornado
+			var force = perpendicular_direction * tornado_strength
+			body.apply_central_impulse(force)
+		elif body.is_in_group("player"):
+			var direction = (body.global_position - global_position).normalized()
+			var perpendicular_direction = Vector3(-direction.z, 0, direction.x)  # Dirección perpendicular al vector hacia el tornado
+			var force = perpendicular_direction * tornado_strength
+			body.velocity = force
+			body.move_and_slide()
+
