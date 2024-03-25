@@ -87,30 +87,17 @@ func generate_terrain():
 
 	terrain.set_collision_enabled(true)
 
-func perform_trace(ply, direction):
-	var start_pos = ply.global_position
-	var end_pos = start_pos + direction * 60000
 
-	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
-
-	# Realiza el raycast con la máscara personalizada
-	var space_state = ply.get_world_3d().direct_space_state
-	var result = space_state.intersect_ray(ray)
-
-	if result.has("position"):
-		return result.position
-	else:
-		return Vector3.ZERO
 
 func wind(object):
 	# Verificar si el objeto es un jugador
 	if object.is_in_group("player"):
 		var is_outdoor = Globals.is_outdoor(object)
 		var pos = object.global_position
-		var hit_left = perform_trace(object, Vector3(1, 0, 0))
-		var hit_right = perform_trace(object, Vector3(-1, 0, 0))
-		var hit_forward = perform_trace(object, Vector3(0, 0, 1))
-		var hit_behind = perform_trace(object, Vector3(0, 0, -1))
+		var hit_left = Globals.perform_trace_position(object, Vector3(1, 0, 0))
+		var hit_right = Globals.perform_trace_position(object, Vector3(-1, 0, 0))
+		var hit_forward = Globals.perform_trace_position(object, Vector3(0, 0, 1))
+		var hit_behind = Globals.perform_trace_position(object, Vector3(0, 0, -1))
 		
 		# Calcular el área expuesta al viento
 		var area = (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_forward))) + (0.5 * (hit_left.distance_to(hit_right) * pos.distance_to(hit_behind)))

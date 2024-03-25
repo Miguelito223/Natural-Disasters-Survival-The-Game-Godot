@@ -68,12 +68,27 @@ func convert_VectorToAngle(vector):
 	
 	return atan2(z,x)
 
-func perform_trace(ply, direction):
+func perform_trace_collision(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000)
 	var result = space_state.intersect_ray(ray)
 	
 	return result.has("collider")
+
+func perform_trace_position(ply, direction):
+	var start_pos = ply.global_position
+	var end_pos = start_pos + direction * 60000
+
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+
+	# Realiza el raycast con la máscara personalizada
+	var space_state = ply.get_world_3d().direct_space_state
+	var result = space_state.intersect_ray(ray)
+
+	if result.has("position"):
+		return result.position
+	else:
+		return Vector3.ZERO
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
@@ -84,16 +99,19 @@ func is_below_sky(ply):
 
 
 func is_outdoor(ply):
-	var hit_left = perform_trace(ply, Vector3(1, 0, 0))
-	var hit_right = perform_trace(ply, Vector3(-1, 0, 0))
-	var hit_forward = perform_trace(ply, Vector3(0, 0, 1))
-	var hit_behind = perform_trace(ply, Vector3(0, 0, -1))
-	var hit_below = perform_trace(ply, Vector3(0, -1, 0))
+	var hit_left = perform_trace_collision(ply, Vector3(1, 0, 0))
+	var hit_right = perform_trace_collision(ply, Vector3(-1, 0, 0))
+	var hit_forward = perform_trace_collision(ply, Vector3(0, 0, 1))
+	var hit_behind = perform_trace_collision(ply, Vector3(0, 0, -1))
+	var hit_below = perform_trace_collision(ply, Vector3(0, -1, 0))
 	var in_tunnel = (hit_left and hit_right) and not (hit_forward and hit_behind) or ((not hit_left and not hit_right) and (hit_forward or hit_behind))
 	var hit_sky = is_below_sky(ply)
 
 	if ply.is_in_group("player"):
-		ply.Outdoor = hit_sky
+		if hit_sky and not in_tunnel and not hit_below:
+			ply.Outdoor = true
+		else:
+			ply.Outdoor = false
 	
 	return hit_sky
 
