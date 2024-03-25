@@ -70,32 +70,34 @@ func convert_VectorToAngle(vector):
 
 func perform_trace_collision(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000)
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000, 1, [self])
 	var result = space_state.intersect_ray(ray)
-	
-	return result.has("collider")
+
+	if result:
+		print("is hitting")
+
+	return result
 
 func perform_trace_position(ply, direction):
-	var start_pos = ply.global_position
-	var end_pos = start_pos + direction * 1000
-
-	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
-
-	# Realiza el raycast con la máscara personalizada
+	var ray = PhysicsRayQueryParameters3D.create( ply.global_position, ply.global_position + direction * 1000, 1, [self])
 	var space_state = ply.get_world_3d().direct_space_state
 	var result = space_state.intersect_ray(ray)
 
-	if result.has("position"):
+	if result:
+		print("ray collision in: ", result.position)
 		return result.position
 	else:
 		return Vector3.ZERO
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0))
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [])
 	var result = space_state.intersect_ray(ray)
-
-	return !result.has("collider")
+	
+	if !result:
+		print("is hitting sky")
+	
+	return !result
 
 
 func is_outdoor(ply):
@@ -112,8 +114,10 @@ func is_outdoor(ply):
 			ply.Outdoor = true
 		else:
 			ply.Outdoor = false
-	
-	return hit_sky
+		
+		return hit_sky and not in_tunnel and not hit_below
+	else:
+		return hit_sky
 
 
 func is_inwater(ply):
@@ -127,10 +131,13 @@ func is_inlava(ply):
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var position = entity.global_position + Vector3(0, 10, 0)
-	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300)
+	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300, 1, [])
 	var result = space_state.intersect_ray(ray)
 
-	return result.has("collider")
+	if result:
+		print("The object is colliding is: ",  result.collider)
+
+	return result
 
 func calcule_bounding_radius(entity):
 	var mesh_instance = entity.get_node_or_null("MeshInstance") # Ajusta esto según la estructura de tu entidad
