@@ -342,11 +342,16 @@ grow_vertical = 2
 
 [node name="Menu" type="VBoxContainer" parent="Pause menu"]
 process_mode = 3
-offset_left = 496.0
-offset_top = 389.0
-offset_right = 803.0
-offset_bottom = 628.0
+offset_left = 508.0
+offset_top = 305.0
+offset_right = 815.0
+offset_bottom = 625.0
 scale = Vector2(3, 1.5)
+
+[node name="Return" type="Button" parent="Pause menu/Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Return"
 
 [node name="Settings" type="Button" parent="Pause menu/Menu"]
 process_mode = 3
@@ -551,24 +556,23 @@ offset_left = 16.0
 offset_top = -298.0
 offset_right = 316.0
 offset_bottom = 2.0
+joystick_mode = 1
 visibility_mode = 2
-action_up = ""
-action_down = ""
 
 [node name="pause" type="TouchScreenButton" parent="Mobile Buttons"]
 position = Vector2(37, 31)
 scale = Vector2(10, 9.032)
 texture_normal = ExtResource("15_beddy")
 action = "Pause"
-visibility_mode = 1
 
 [node name="jump" type="TouchScreenButton" parent="Mobile Buttons"]
 position = Vector2(1589, 841)
 scale = Vector2(10, 10)
 texture_normal = ExtResource("16_p2ihs")
-action = "ui_up"
+action = "ui_accept"
 visibility_mode = 1
 
+[connection signal="pressed" from="Pause menu/Menu/Return" to="Pause menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Reset Player" to="Pause menu" method="_on_reset_player_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Exit" to="Pause menu" method="_on_exit_pressed"]
