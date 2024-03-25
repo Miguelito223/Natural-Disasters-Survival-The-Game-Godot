@@ -132,8 +132,6 @@ func wind(object):
 		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
 
-		print(Globals.is_something_blocking_wind(object))
-
 		# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
 		if is_outdoor and not Globals.is_something_blocking_wind(object):
 			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()

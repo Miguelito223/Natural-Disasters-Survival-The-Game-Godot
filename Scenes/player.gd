@@ -3,10 +3,13 @@ extends CharacterBody3D
 var id = 1
 
 var SPEED = 0
+
 const SPEED_RUN = 10.0
 const SPEED_WALK = 5.0
 const JUMP_VELOCITY = 7
 const SENSIBILITY = 0.01
+
+var mass = randi_range(1,5)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 
@@ -21,7 +24,6 @@ var min_temp = 24
 var min_oxygen = 0
 var min_bdradiation = 0
 
-var mass = randi_range(60,75)
 
 var hearth = Max_Hearth
 
