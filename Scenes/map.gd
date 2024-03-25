@@ -142,11 +142,22 @@ func wind(object):
 		var is_outdoor = Globals.is_outdoor(object)
 
 		if is_outdoor and not Globals.is_something_blocking_wind(object):
+			var area = Globals.Area(object)
+			var mass = object.get_mass()
+
+			var force_mul_area = clamp((area / 680827), 0, 1) # bigger the area >> higher the f multiplier is
+			var friction_mul = clamp((mass / 50000), 0, 1) # lower the mass  >> lower frictional force 
+			var avrg_mul = (force_mul_area + friction_mul) / 2 
+			
 			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
-			var frictional_scalar = clamp(wind_vel.length(), 0, object.mass)
+			var frictional_scalar = clamp(wind_vel.length(), 0, mass)
 			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 			var wind_vel_new = (wind_vel + frictional_velocity) * -1
-			object.add_constant_central_force(wind_vel_new)
+			
+			var windvel_cap = wind_vel_new.length() - object.get_linear_velocity().length()
+
+			if windvel_cap > 0:
+				object.add_constant_central_force(wind_vel_new)
 
 # Llama a la función wind para cada objeto en la escena
 func _physics_process(_delta):

@@ -114,6 +114,26 @@ func is_something_blocking_wind(entity):
 
 	return result.has("collider")
 
+func calcule_bounding_radius(entity):
+	var mesh_instance = entity.get_node_or_null("MeshInstance") # Ajusta esto según la estructura de tu entidad
+	if mesh_instance != null:
+		var aabb = mesh_instance.get_transformed_aabb()
+		var size = aabb.size
+		var bounding_radius = size.length() / 2.0
+		return bounding_radius
+	else:
+		return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
+
+func Area(entity):
+	if entity.bounding_radius_area == null:
+		var bounding_radius = entity.calcule_bounding_radius()
+		var area = (2 * PI) * (bounding_radius * bounding_radius)
+
+		entity.bounding_radius_area = area
+		return area
+	else:
+		return entity.bounding_radius_area
+
 func get_frame_multiplier() -> float:
 	var frame_time: float = Engine.get_frames_per_second()
 	if frame_time == 0:
