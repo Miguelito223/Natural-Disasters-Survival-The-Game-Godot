@@ -565,6 +565,7 @@ position = Vector2(37, 31)
 scale = Vector2(10, 9.032)
 texture_normal = ExtResource("15_beddy")
 action = "Pause"
+visibility_mode = 1
 
 [node name="jump" type="TouchScreenButton" parent="Mobile Buttons"]
 position = Vector2(1589, 841)

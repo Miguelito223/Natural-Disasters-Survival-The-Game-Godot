@@ -73,7 +73,7 @@ func perform_trace(ply, direction):
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 1000)
 	var result = space_state.intersect_ray(ray)
 	
-	return !result.has("collider")
+	return result.has("collider")
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
@@ -112,7 +112,7 @@ func is_something_blocking_wind(entity):
 	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300)
 	var result = space_state.intersect_ray(ray)
 
-	return !result.has("collider")
+	return result.has("collider")
 
 func get_frame_multiplier() -> float:
 	var frame_time: float = Engine.get_frames_per_second()

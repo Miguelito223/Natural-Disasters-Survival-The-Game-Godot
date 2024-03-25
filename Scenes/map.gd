@@ -71,7 +71,7 @@ func generate_terrain():
 	terrain.storage = Terrain3DStorage.new()
 	terrain.texture_list = Terrain3DTextureList.new()
 	add_child(terrain, true)
-	terrain.material.world_background = Terrain3DMaterial.NOISE
+	terrain.material.world_background = Terrain3DMaterial.NONE
 	var texture = Terrain3DTexture.new()
 	var image = load("res://Textures/texture-grass-field.jpg")
 	texture.name = "Grass"
@@ -132,13 +132,17 @@ func wind(object):
 		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
 
+		print(Globals.is_something_blocking_wind(object))
+
 		# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
 		if is_outdoor and not Globals.is_something_blocking_wind(object):
 			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
 			
 			if delta_velocity.length() != 0:
-				object.velocity = (delta_velocity * 0.3)
+				object.set_velocity(delta_velocity * 0.3)
 				object.move_and_slide()
+
+
 	elif object.is_in_group("movable_objects"):
 		var is_outdoor = Globals.is_outdoor(object)
 
@@ -150,7 +154,7 @@ func wind(object):
 			object.linear_velocity = wind_vel_new 
 
 # Llama a la función wind para cada objeto en la escena
-func _physics_process(delta):
+func _physics_process(_delta):
 	for object in get_tree().get_nodes_in_group("wind_effected_objects"):
 		wind(object)
 
@@ -367,7 +371,7 @@ func is_blizzard():
 	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(40, 50)
 
-	while current_weather_and_disaster == "Sand Storm":
+	while current_weather_and_disaster == "blizzard":
 		if Globals.is_networking:
 			var player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 			if Globals.is_outdoor(player):

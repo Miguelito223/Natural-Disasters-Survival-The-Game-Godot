@@ -21,7 +21,7 @@ var min_temp = 24
 var min_oxygen = 0
 var min_bdradiation = 0
 
-var mass = 1
+var mass = randi_range(60,75)
 
 var hearth = Max_Hearth
 
