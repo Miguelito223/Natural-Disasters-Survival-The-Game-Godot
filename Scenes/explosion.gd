@@ -10,10 +10,14 @@ func _ready():
 	
 
 func _on_area_3d_body_entered(body:Node3D):
-	if body.is_in_group("movable_bodys"):
-		if body.is_in_group("player"):
-			body.damage(50)
-			
+	if body.is_in_group("player"):
+		var distance = (body.global_position - global_position).length()
+		var direction = (body.global_position - global_position).normalized()
+		var force = explosion_force * (1 - distance / explosion_radius)
+		body.velocity = direction * force
+		body.move_and_slide()
+
+	elif body.is_in_group("movable_bodys"):
 		var distance = (body.global_position - global_position).length()
 		var direction = (body.global_position - global_position).normalized()
 		var force = explosion_force * (1 - distance / explosion_radius)

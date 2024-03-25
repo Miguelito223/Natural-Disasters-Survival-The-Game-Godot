@@ -20,4 +20,5 @@ func _physics_process(delta):
 			var projected_direction = body_direction.project(relative_direction)
 			var force = projected_direction.normalized() * tsunami_strength
 			body.velocity = force
+			body.move_and_slide()
 
