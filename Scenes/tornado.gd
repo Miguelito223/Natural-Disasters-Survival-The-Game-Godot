@@ -6,7 +6,7 @@ var movement_radius = 50
 var ray_length = 1000
 var ground_height = 0
 
-var tornado_strength = 1000
+var tornado_strength = 100
 var radius = 10
 
 
