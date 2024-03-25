@@ -204,3 +204,7 @@ func _on_fullscreen_toggled(toggled_on:bool):
 
 func _on_reset_player_pressed():
 	get_parent().setspawnpos()
+
+
+func _on_return_pressed():
+	self.hide()
