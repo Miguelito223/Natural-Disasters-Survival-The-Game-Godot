@@ -78,17 +78,6 @@ func perform_trace_collision(ply, direction):
 
 	return result
 
-func perform_trace_position(ply, direction):
-	var ray = PhysicsRayQueryParameters3D.create( ply.global_position, ply.global_position + direction * 600000, 1, [Terrain3D])
-	var space_state = ply.get_world_3d().direct_space_state
-	var result = space_state.intersect_ray(ray)
-
-	if result:
-		print("ray collision in: ", result.position)
-		return result.position
-	else:
-		return Vector3.ZERO
-
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [ply])
@@ -98,6 +87,24 @@ func is_below_sky(ply):
 		print("is hitting sky")
 	
 	return !result
+
+func calculate_exposed_area(player):
+	var map_size = Vector2(2048, 2048)  # Tamaño del mapa en unidades
+	var cell_size = Vector2(64, 64)  # Tamaño de la celda en unidades
+	var exposed_cells = 0
+
+	for x in range(map_size.x / cell_size.x):
+		for z in range(map_size.y / cell_size.y):
+			var cell_center = Vector3(x * cell_size.x + cell_size.x / 2, player.global_position.y, z * cell_size.y + cell_size.y / 2)
+			var ray = PhysicsRayQueryParameters3D.create(player.global_position, cell_center, 1, [player])
+			var result = player.get_world_3d().direct_space_state.intersect_ray(ray)
+
+			if result.size() == 0:
+				exposed_cells += 1
+
+	var total_cells = (map_size.x / cell_size.x) * (map_size.y / cell_size.y)
+	var area_percentage = exposed_cells / total_cells
+	return clamp(area_percentage, 0, 1)
 
 
 func is_outdoor(ply):
