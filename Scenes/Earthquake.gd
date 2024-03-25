@@ -1,6 +1,5 @@
 extends Node3D
 
-var shake_nodes_strength = 1
 var magnitude = 8
 var magnitude_modifier = 0
 
@@ -36,7 +35,7 @@ func shake_nodes(node):
 	for child in node.get_children():
 		if child.is_in_group("player"): # Verifica si el nodo es un Spatial (objeto 3D)
 			if child.is_on_floor():
-				child.set_velocity(vec * 1.125)
+				child.velocity = vec * 1.125
 				child.move_and_slide()
 		elif child.is_in_group("movable_objects") and child.is_class("RigidBody3D"):
 			var mass = child.mass

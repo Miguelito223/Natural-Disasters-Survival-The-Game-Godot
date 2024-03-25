@@ -123,9 +123,10 @@ properties/11/replication_mode = 1
 [sub_resource type="SphereShape3D" id="SphereShape3D_gqegd"]
 radius = 1.0
 
-[node name="Meteor" type="RigidBody3D" groups=["movable_objects", "wind_effected_objects"]]
+[node name="Meteor" type="RigidBody3D"]
 collision_layer = 255
 collision_mask = 255
+linear_velocity = Vector3(0, -400, 0)
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

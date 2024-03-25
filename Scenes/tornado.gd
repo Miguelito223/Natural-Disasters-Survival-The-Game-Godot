@@ -13,7 +13,7 @@ var radius = 10
 @onready var ray_cast = $RayCast
 
 func _ready():
-	var ray_origin = global_transform.origin
+	var ray_origin = global_position
 	var ray_end = ray_origin + Vector3(0, -ray_length, 0)
 	ray_cast.target_position = Vector3(0, -ray_length, 0)
 	ray_cast.force_raycast_update()
@@ -22,7 +22,7 @@ func _ready():
 func _process(delta):
 	if ray_cast.is_colliding():
 		ground_height = ray_cast.get_collision_point().y
-		global_transform.origin.y = ground_height  # Mantener el tornado a la altura del suelo
+		global_position.y = ground_height  # Mantener el tornado a la altura del suelo
 	
 
 	# Genera una nueva posición aleatoria dentro del radio de movimiento
@@ -31,18 +31,18 @@ func _process(delta):
 								randi_range(-movement_radius, movement_radius))
 	
 	# Aplica movimiento hacia la nueva posición
-	var direction = (new_position - global_transform.origin).normalized()
+	var direction = (new_position - global_position).normalized()
 	translate(direction * movement_speed * delta)
 
 			
 
 func _on_area_3d_body_entered(body:Node3D):
 	if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
-		var direction = (body.global_transform.origin - global_transform.origin).normalized()
+		var direction = (body.global_position - global_position).normalized()
 		var force = direction * tornado_strength
 		body.apply_central_impulse(force)
 	elif body.is_in_group("player"):
-		var direction = (body.global_transform.origin - global_transform.origin).normalized()
+		var direction = (body.global_position - global_position).normalized()
 		var force = direction * tornado_strength
 		body.velocity = force
 		body.move_and_slide()

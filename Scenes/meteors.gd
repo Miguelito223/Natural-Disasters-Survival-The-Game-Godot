@@ -5,7 +5,7 @@ var explosion_scene = preload("res://Scenes/explosion.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	self.scale = Vector3(randi_range(1,50),randi_range(1,50),randi_range(1,50))
-	self.mass = randi_range(50,500)
+	self.mass = 1
 	self.gravity_scale = Globals.gravity
 	$CollisionShape3D.scale = self.scale
 

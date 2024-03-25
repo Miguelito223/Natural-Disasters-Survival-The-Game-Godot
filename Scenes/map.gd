@@ -4,9 +4,6 @@ var player_scene = preload("res://Scenes/player.tscn")
 
 var current_weather_and_disaster = "Sun"
 var current_weather_and_disaster_int = 0
-var shake_strength = 1
-var shake_duration = 2
-var shake_timer = 0
 
 var linghting_scene = preload("res://Scenes/thunder.tscn")
 var meteor_scene = preload("res://Scenes/meteors.tscn")
@@ -149,7 +146,7 @@ func wind(object):
 			var frictional_scalar = clamp(wind_vel.length(), 0, object.mass)
 			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 			var wind_vel_new = (wind_vel + frictional_velocity) * -1
-			object.linear_velocity = wind_vel_new 
+			object.add_constant_central_force(wind_vel_new)
 
 # Llama a la función wind para cada objeto en la escena
 func _physics_process(_delta):
