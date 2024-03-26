@@ -1,16 +1,18 @@
 extends CanvasLayer
 
 func _ready():
-    pass
+    self.visible = is_multiplayer_authority()
+
+    if not is_multiplayer_authority():
+        return
+
+    self.visible = false
 
 func _process(_delta):
     if Globals.is_networking:
         
-        self.visible = is_multiplayer_authority()
-        
         if not is_multiplayer_authority():
             return
-
 
         # Eliminar todos los hijos del VBoxContainer
         for child in $Panel/List.get_children():
