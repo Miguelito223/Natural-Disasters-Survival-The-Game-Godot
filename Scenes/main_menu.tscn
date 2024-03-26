@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dshrj55scr44d"]
+[gd_scene load_steps=3 format=3 uid="uid://dshrj55scr44d"]
 
 [ext_resource type="Script" path="res://Scenes/Main Menu.gd" id="1_r752f"]
+[ext_resource type="AudioStream" uid="uid://cjhfwfsyaih6q" path="res://Sounds/music/waiting-time-175800.mp3" id="2_0u7u3"]
 
 [node name="Main Menu" type="Control"]
 process_mode = 3
@@ -169,6 +170,8 @@ theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0u7u3")
+autoplay = true
 
 [connection signal="pressed" from="Menu/singleplayer" to="." method="_on_singleplayer_pressed"]
 [connection signal="pressed" from="Menu/multiplayer" to="." method="_on_play_pressed"]

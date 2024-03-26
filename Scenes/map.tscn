@@ -145,5 +145,8 @@ autoplay = "DNC"
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8u7l0")
 
+[node name="Music" type="AudioStreamPlayer" parent="."]
+autoplay = true
+
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

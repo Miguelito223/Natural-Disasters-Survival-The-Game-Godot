@@ -152,9 +152,6 @@ func is_something_blocking_wind(entity):
 	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300, 1, [entity])
 	var result = space_state.intersect_ray(ray)
 
-	if result:
-		print("The object is colliding is: ",  result.collider)
-
 	return result
 
 func calcule_bounding_radius(entity):

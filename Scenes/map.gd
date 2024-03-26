@@ -96,9 +96,6 @@ func generate_terrain(received_noise_seed, player_id):
 
 	terrain.set_collision_enabled(true)
 
-
-
-
 func player_join(id):
 	print("Joined player id: " + str(id))
 	var player = player_scene.instantiate()

@@ -135,14 +135,16 @@ func tab():
 	tab_state = !tab_state
 
 func pause():
-	if pause_state:
+	if !pause_state:
 		hide()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		get_tree().paused = false
+		if not Globals.is_networking:
+			get_tree().paused = false
 	else:
 		show()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		get_tree().paused = true
+		if not Globals.is_networking:
+			get_tree().paused = true
 
 	pause_state = !pause_state
 

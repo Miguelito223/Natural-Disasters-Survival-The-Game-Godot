@@ -55,6 +55,13 @@ func _ready():
 	$Settings/Volumen.value = Globals.volumen
 	$Settings/Time.value = Globals.timer
 
+func _process(_delta):
+	if self.visible:
+		await $Music.finished
+		$Music.play()
+	else:
+		$Music.stop()
+
 
 func _on_ip_text_changed(new_text:String):
 	Globals.ip = new_text
