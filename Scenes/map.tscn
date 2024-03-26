@@ -113,6 +113,18 @@ properties/8/replication_mode = 1
 properties/9/path = NodePath("Timer:one_shot")
 properties/9/spawn = true
 properties/9/replication_mode = 1
+properties/10/path = NodePath("AnimationPlayer:current_animation")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("AnimationPlayer:playback_default_blend_time")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("AnimationPlayer:speed_scale")
+properties/12/spawn = true
+properties/12/replication_mode = 1
+properties/13/path = NodePath("AnimationPlayer:movie_quit_on_finish")
+properties/13/spawn = true
+properties/13/replication_mode = 1
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
