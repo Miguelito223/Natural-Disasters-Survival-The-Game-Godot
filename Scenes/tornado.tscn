@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://tjhhsh3ck07n"]
+[gd_scene load_steps=13 format=3 uid="uid://tjhhsh3ck07n"]
 
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="1_inpw0"]
 [ext_resource type="Script" path="res://Scenes/tornado.gd" id="1_yllgf"]
+[ext_resource type="AudioStream" uid="uid://refulquucfr6" path="res://Sounds/disasters/environment/wind_shared/ef1_loop.wav" id="3_ldgnu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pk3x1"]
 transparency = 1
@@ -9,21 +10,24 @@ shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("1_inpw0")
 billboard_mode = 3
+billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdwko"]
 emission_shape = 1
-emission_sphere_radius = 1.0
+emission_sphere_radius = 5.0
 angle_max = 360.0
 direction = Vector3(0, 1, 0)
 spread = 0.0
 initial_velocity_min = 15.0
 initial_velocity_max = 15.0
 gravity = Vector3(0, 0, 0)
-tangential_accel_min = 10.0
-tangential_accel_max = 10.0
+tangential_accel_min = 50.0
+tangential_accel_max = 50.0
+scale_min = 10.0
+scale_max = 10.0
 color = Color(0.521569, 0.521569, 0.521569, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_w7cg0"]
@@ -35,17 +39,21 @@ vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 albedo_texture = ExtResource("1_inpw0")
 billboard_mode = 3
+billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i8b2v"]
+emission_shape_scale = Vector3(1, 0, 1)
 emission_shape = 1
-emission_sphere_radius = 1.0
+emission_sphere_radius = 10.0
 spread = 0.0
 gravity = Vector3(0, 0, 0)
-tangential_accel_min = 15.0
-tangential_accel_max = 15.0
+tangential_accel_min = 50.0
+tangential_accel_max = 50.0
+scale_min = 5.0
+scale_max = 5.0
 color = Color(0.309804, 0.196078, 0, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_lgd8c"]
@@ -53,7 +61,21 @@ color = Color(0.309804, 0.196078, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_peyem"]
 size = Vector3(30, 100, 30)
 
+[sub_resource type="FogMaterial" id="FogMaterial_csaxs"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_avyhx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Tornado" type="Node3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("1_yllgf")
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
@@ -78,5 +100,20 @@ draw_pass_1 = SubResource("QuadMesh_lgd8c")
 shape = SubResource("BoxShape3D_peyem")
 
 [node name="RayCast" type="RayCast3D" parent="."]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_ldgnu")
+volume_db = 80.0
+max_db = 6.0
+autoplay = true
+max_distance = 4096.0
+
+[node name="FogVolume" type="FogVolume" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 53.7059, 0)
+size = Vector3(41.6318, 15.8147, 42.2365)
+material = SubResource("FogMaterial_csaxs")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_avyhx")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

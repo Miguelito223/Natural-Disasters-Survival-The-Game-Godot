@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://Scenes/meteors.gd" id="1_hdxcr"]
 [ext_resource type="Texture2D" uid="uid://bbnl8dbjl2vg8" path="res://Textures/dark-cracked-concrete-wall.jpg" id="2_bo2bl"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ph7js"]
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_nfk2t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ptpq"]
@@ -86,46 +88,22 @@ color_ramp = SubResource("GradientTexture1D_ywdgh")
 properties/0/path = NodePath(".:mass")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Fire:emitting")
+properties/1/path = NodePath(".:scale")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("Fire/Smoke:emitting")
+properties/2/path = NodePath(".:position")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:scale")
+properties/3/path = NodePath(".:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:position")
-properties/4/spawn = true
-properties/4/replication_mode = 1
-properties/5/path = NodePath(".:rotation")
-properties/5/spawn = true
-properties/5/replication_mode = 1
-properties/6/path = NodePath("Fire:scale")
-properties/6/spawn = true
-properties/6/replication_mode = 1
-properties/7/path = NodePath("Fire:rotation")
-properties/7/spawn = true
-properties/7/replication_mode = 1
-properties/8/path = NodePath("Fire:position")
-properties/8/spawn = true
-properties/8/replication_mode = 1
-properties/9/path = NodePath("Fire/Smoke:position")
-properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath("Fire/Smoke:rotation")
-properties/10/spawn = true
-properties/10/replication_mode = 1
-properties/11/path = NodePath("Fire/Smoke:scale")
-properties/11/spawn = true
-properties/11/replication_mode = 1
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_gqegd"]
-radius = 1.0
 
 [node name="Meteor" type="RigidBody3D"]
 collision_layer = 255
 collision_mask = 255
+physics_material_override = SubResource("PhysicsMaterial_ph7js")
+max_contacts_reported = 50
+contact_monitor = true
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -156,12 +134,4 @@ draw_pass_1 = SubResource("SphereMesh_hqrhf")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2w7a8")
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_layer = 255
-collision_mask = 255
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_gqegd")
-
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
