@@ -70,7 +70,7 @@ func convert_VectorToAngle(vector):
 
 func perform_trace_collision(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 600000, 1, [RigidBody3D, PhysicsBody3D])
+	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 60000, 1, [RigidBody3D, PhysicsBody3D])
 	var result = space_state.intersect_ray(ray)
 
 	if result:
