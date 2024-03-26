@@ -73,18 +73,12 @@ func perform_trace_collision(ply, direction):
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 60000, 1, [RigidBody3D, PhysicsBody3D])
 	var result = space_state.intersect_ray(ray)
 
-	if result:
-		print("is hitting")
-
 	return result
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [ply])
 	var result = space_state.intersect_ray(ray)
-	
-	if !result:
-		print("is hitting sky")
 	
 	return !result
 

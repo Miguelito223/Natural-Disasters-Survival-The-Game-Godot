@@ -34,7 +34,6 @@ func _ready():
 		$Timer.wait_time = Globals.timer
 		$Timer.start()
 		generate_seed()
-		receive_seeds(noise_seed)
 	else:
 
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
@@ -43,25 +42,33 @@ func _ready():
 		get_tree().get_multiplayer().connected_to_server.connect(server_connected)
 		get_tree().get_multiplayer().connection_failed.connect(server_fail)
 
-		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
-			player_join(1)
-
 		if get_tree().get_multiplayer().is_server():
 			generate_seed()
-			Globals.synchronize_timer(Globals.timer)
+
+		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
+			player_join(1)
+		
+
+		
+
 
 
 func generate_seed():
-	noise_seed = randi()
+	if not Globals.is_networking:
+		noise_seed = randi()
+		receive_seeds(noise_seed, 1)
+	else:
+		if get_tree().get_multiplayer().is_server():
+			noise_seed = randi()
 
 @rpc("call_local", "any_peer")
-func receive_seeds(received_noise_seed):
-	print("recibiendo semillas...")
+func receive_seeds(received_noise_seed, player_id):
+	print("Recibiendo semillas del jugador ", player_id)
 	noise_seed = received_noise_seed
-	generate_terrain()
+	generate_terrain(received_noise_seed, player_id)
 
-func generate_terrain():
-	print("Generating world...")
+func generate_terrain(received_noise_seed, player_id):
+	print("Generating terrain for player ", player_id )
 
 	var terrain = Terrain3D.new()
 	terrain.set_collision_enabled(false)
@@ -78,16 +85,66 @@ func generate_terrain():
 	terrain.name = "Terrain3D"
 	
 	noise.frequency = 0.0005
-	noise.seed = noise_seed
+	noise.seed = received_noise_seed
 	var img = Image.create(2048, 2048, false, Image.FORMAT_RF)
 	for x in 2048:
 		for y in 2048:
-			img.set_pixel(x,y, Color(noise.get_noise_2d(x,y) * 0.5, 0., 0., 1.))
-	terrain.storage.import_images([img,null,null],  Vector3(0,0,0), 0.0, 300.)
+			img.set_pixel(x, y, Color(noise.get_noise_2d(x, y) * 0.5, 0., 0., 1.))
+	terrain.storage.import_images([img, null, null], Vector3(0, 0, 0), 0.0, 300.)
 
 	terrain.set_collision_enabled(true)
 
 
+
+
+func player_join(id):
+	print("Joined player id: " + str(id))
+	var player = player_scene.instantiate()
+	player.id = id
+	player.name = str(id)
+	Globals.players_conected_array.append(player)
+	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	add_child(player,true)
+
+	if get_tree().get_multiplayer().is_server():
+		receive_seeds.rpc_id(id, noise_seed, id)
+	else:
+		print("Not the server!!")
+
+func player_disconect(id):
+	print("Disconected player id: " + str(id))
+	var player = get_node(str(id))
+	if is_instance_valid(player):
+		Globals.players_conected_array.erase(player)
+		Globals.players_conected_int = Globals.players_conected_array.size() - 1
+		player.queue_free()
+
+func server_disconect():
+	Globals.Temperature_target = Globals.Temperature_original
+	Globals.Humidity_target = Globals.Humidity_original
+	Globals.pressure_target = Globals.pressure_original
+	Globals.Wind_Direction_target = Globals.Wind_Direction_original
+	Globals.Wind_speed_target = Globals.Wind_speed_original
+	Globals.players_conected_array.clear()
+	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	self.queue_free()
+	get_parent().get_node("Main Menu").show()
+
+
+func server_fail():
+	Globals.Temperature_target = Globals.Temperature_original
+	Globals.Humidity_target = Globals.Humidity_original
+	Globals.pressure_target = Globals.pressure_original
+	Globals.Wind_Direction_target = Globals.Wind_Direction_original
+	Globals.Wind_speed_target = Globals.Wind_speed_original
+	Globals.players_conected_array.clear()
+	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	self.queue_free()
+	get_parent().get_node("Main Menu").show()
+
+
+func server_connected():
+	print("connected to server :)")
 
 func wind(object):
 	# Verificar si el objeto es un jugador
@@ -827,48 +884,4 @@ func is_storm():
 		await get_tree().create_timer(0.5).timeout
 
 
-	
 
-
-
-func player_join(id):
-	print("Joined player id: " + str(id))
-	var player = player_scene.instantiate()
-	player.id = id
-	player.name = str(id)
-	Globals.players_conected_array.append(player)
-	Globals.players_conected_int = Globals.players_conected_array.size() - 1
-	add_child(player,true)
-
-	await get_tree().create_timer(1).timeout
-
-	if get_tree().get_multiplayer().is_server():
-		receive_seeds.rpc(noise_seed)
-		Globals.synchronize_timer(Globals.timer)
-
-func player_disconect(id):
-	print("Disconected player id: " + str(id))
-	var player = get_node(str(id))
-	if is_instance_valid(player):
-		Globals.players_conected_array.erase(player)
-		Globals.players_conected_int = Globals.players_conected_array.size() - 1
-		player.queue_free()
-
-func server_disconect():
-	Globals.Temperature_target = Globals.Temperature_original
-	Globals.Humidity_target = Globals.Humidity_original
-	Globals.pressure_target = Globals.pressure_original
-	Globals.Wind_Direction_target = Globals.Wind_Direction_original
-	Globals.Wind_speed_target = Globals.Wind_speed_original
-	Globals.players_conected_array.clear()
-	Globals.players_conected_int = Globals.players_conected_array.size() - 1
-	self.queue_free()
-	get_parent().get_node("Main Menu").show()
-
-
-func server_fail():
-	get_parent().get_node("Main Menu").show()
-
-
-func server_connected():
-	print("connected to server :)")
