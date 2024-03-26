@@ -3,6 +3,7 @@ extends Node
 #Network
 var ip = "127.0.0.1"
 var port = 25565
+var points = 0
 var is_networking = false
 var username = "Michael2911"
 var players_conected_array = []

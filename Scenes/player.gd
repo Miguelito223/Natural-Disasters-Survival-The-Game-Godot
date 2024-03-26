@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 var id = 1
 var username = Globals.username
+var points = Globals.points
 
 var SPEED = 0
 
