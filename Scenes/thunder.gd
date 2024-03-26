@@ -16,12 +16,13 @@ func _ready():
 	$AudioStreamPlayer3D.play()
 	
 	# Reproducir el efecto visual del rayo
-	$spark.emitting = true
 	$spark.one_shot = true
-	$spark/light.emitting = true
 	$spark/light.one_shot = true
-	$spark/light/star.emitting = true
 	$spark/light/star.one_shot = true
+	$spark.emitting = true
+	$spark/light.emitting = true
+	$spark/light/star.emitting = true
+	
 
 func _on_spark_finished():
 	self.queue_free()
