@@ -47,6 +47,8 @@ func _ready():
 
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			player_join(1)
+		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
+			Globals.synchronize_timer(Globals.timer)
 		
 
 		
