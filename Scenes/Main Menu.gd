@@ -119,9 +119,9 @@ func _on_username_text_changed(new_text:String):
 
 func _on_h_slider_2_value_changed(value:float):
 	Globals.timer = value
-	if get_parent().get_node("Map/Timer") == null:
+	if Globals.map == null:
 		return
-	get_parent().get_node("Map/Timer").wait_time = value
+	Globals.synchronize_timer(value)
 	Data.save_file()
 
 
@@ -148,8 +148,8 @@ func _on_fullscreen_toggled(toggled_on:bool):
 
 
 func _on_singleplayer_pressed():
-	var map = Globals.map_scene.instantiate()
-	get_parent().add_child(map)
+	Globals.map = Globals.map_scene.instantiate()
+	get_parent().add_child(Globals.map)
 	self.hide()
 	var player = Globals.player_scene.instantiate()
-	map.add_child(player, true)
+	Globals.map.add_child(player, true)

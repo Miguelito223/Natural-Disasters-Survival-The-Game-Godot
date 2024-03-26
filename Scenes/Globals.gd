@@ -50,7 +50,7 @@ var Wind_speed_original: float = 0
 var seconds = Time.get_unix_time_from_system()
 
 @onready var main = get_tree().root.get_node("Main")
-@onready var map = get_tree().root.get_node("Main/Map")
+@onready var map 
 var map_scene = preload("res://Scenes/map.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
@@ -124,6 +124,24 @@ func is_outdoor(ply):
 		return hit_sky and not in_tunnel
 	else:
 		return hit_sky
+
+@rpc("call_local", "any_peer")
+func set_timer(timer_value: float) -> void:
+	map.timer.wait_time = timer_value
+	map.timer.start()
+
+# Función para sincronizar el temporizador entre los jugadores
+func synchronize_timer(timer_value: float):
+	if Globals.is_networking:
+		if get_tree().get_multiplayer().is_server():
+			# Configurar el temporizador en el servidor
+			map.timer.wait_time = timer_value
+			map.timer.start()
+
+			set_timer.rpc(timer_value)
+	else:
+		map.timer.wait_time = timer_value
+		map.timer.start()	
 
 
 func is_inwater(ply):
@@ -270,7 +288,7 @@ func hostwithport(port):
 			is_networking = true
 			UPNP_setup()
 			main.get_node("Main Menu").hide()
-			var map = map_scene.instantiate()
+			map = map_scene.instantiate()
 			main.add_child(map)
 	else:
 		print("Fatal Error in server")

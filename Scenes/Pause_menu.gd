@@ -162,10 +162,10 @@ func _on_time_value_changed(value:float):
 	if not Globals.is_networking:
 		Globals.timer = value
 
-		if get_parent().get_parent().get_node("Timer") == null:
+		if Globals.map == null:
 			return
 
-		get_parent().get_parent().get_node("Timer").wait_time = value
+		Globals.synchronize_timer(value)
 		Data.save_file()
 	else:
 		if not get_tree().get_multiplayer().is_server():
@@ -173,10 +173,10 @@ func _on_time_value_changed(value:float):
 		
 		Globals.timer = value
 
-		if get_parent().get_parent().get_node("Timer") == null:
+		if Globals.map == null:
 			return
 
-		get_parent().get_parent().get_node("Timer").wait_time = value
+		Globals.synchronize_timer(value)
 		Data.save_file()
 
 func _on_volumen_value_changed(value:float):

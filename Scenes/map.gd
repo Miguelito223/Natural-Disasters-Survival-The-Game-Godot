@@ -15,6 +15,8 @@ var earthquake_scene = preload("res://Scenes/earthquake.tscn")
 var noise = FastNoiseLite.new()
 var noise_seed
 
+@onready var timer = $Timer
+
 func _exit_tree():
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
@@ -46,9 +48,7 @@ func _ready():
 
 		if get_tree().get_multiplayer().is_server():
 			generate_seed()
-
-		$Timer.wait_time = Globals.timer
-		$Timer.start()
+			Globals.synchronize_timer(Globals.timer)
 
 
 func generate_seed():
@@ -145,14 +145,15 @@ func _physics_process(_delta):
 	for object in get_tree().get_nodes_in_group("wind_effected_objects"):
 		wind(object)
 
-
 func _on_timer_timeout():
 	sync_weather_and_disaster()
 
+
 func sync_weather_and_disaster():
 	if Globals.is_networking:
-		var random_weather_and_disaster = randi_range(0,10)
-		set_weather_and_disaster.rpc(random_weather_and_disaster)
+		if get_tree().get_multiplayer().is_server():
+			var random_weather_and_disaster = randi_range(0,10)
+			set_weather_and_disaster.rpc(random_weather_and_disaster)
 	else:
 		var random_weather_and_disaster = randi_range(0,12)
 		set_weather_and_disaster(random_weather_and_disaster)		
@@ -843,6 +844,7 @@ func player_join(id):
 
 	if get_tree().get_multiplayer().is_server():
 		receive_seeds.rpc(noise_seed)
+		Globals.synchronize_timer(Globals.timer)
 
 func player_disconect(id):
 	print("Disconected player id: " + str(id))
