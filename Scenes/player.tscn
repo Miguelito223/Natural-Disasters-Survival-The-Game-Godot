@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=38 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
 [ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
+[ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
@@ -331,6 +332,7 @@ replication_config = SubResource("SceneReplicationConfig_8gfme")
 
 [node name="Pause menu" type="CanvasLayer" parent="."]
 process_mode = 3
+visible = false
 script = ExtResource("2_vj7s0")
 
 [node name="Panel" type="Panel" parent="Pause menu"]
@@ -436,6 +438,22 @@ process_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Back"
+
+[node name="Players List Menu" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("8_u7k75")
+
+[node name="Panel" type="Panel" parent="Players List Menu"]
+offset_left = 738.0
+offset_top = 288.0
+offset_right = 778.0
+offset_bottom = 328.0
+scale = Vector2(9.75896, 11.5355)
+
+[node name="List" type="VBoxContainer" parent="Players List Menu/Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Hud" type="CanvasLayer" parent="."]
 process_mode = 3

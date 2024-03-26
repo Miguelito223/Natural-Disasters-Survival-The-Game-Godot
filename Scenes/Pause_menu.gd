@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 var pause_state = false
-var tab_state = false
+var mouse_action_state = false
 
 var resolution = {
 	"2400x1080 ": Vector2i(2400, 1080 ),
@@ -126,13 +126,13 @@ func _on_back_pressed():
 
 
 
-func tab():
-	if tab_state:
+func mouse_action():
+	if mouse_action_state:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-	tab_state = !tab_state
+	mouse_action_state = !mouse_action_state
 
 func pause():
 	if !pause_state:
@@ -153,8 +153,8 @@ func _process(_delta):
 		return
 
 
-	if Input.is_action_just_pressed("Tab"):
-		tab()
+	if Input.is_action_just_pressed("Mouse Action"):
+		mouse_action()
 
 	if Input.is_action_just_pressed("Pause"):
 		pause()

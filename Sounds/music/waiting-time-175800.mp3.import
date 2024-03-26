@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/waiting-time-175800.mp3-cac91b8dcb638685df427
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

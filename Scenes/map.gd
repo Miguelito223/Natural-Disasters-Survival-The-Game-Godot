@@ -102,6 +102,7 @@ func player_join(id):
 	player.id = id
 	player.name = str(id)
 	Globals.players_conected_array.append(player)
+	Globals.players_conected_list[id] = player
 	Globals.players_conected_int = Globals.players_conected_array.size() - 1
 	add_child(player,true)
 
@@ -116,6 +117,7 @@ func player_disconect(id):
 	var player = get_node(str(id))
 	if is_instance_valid(player):
 		Globals.players_conected_array.erase(player)
+		Globals.players_conected_list.erase(id)
 		Globals.players_conected_int = Globals.players_conected_array.size() - 1
 		player.queue_free()
 
