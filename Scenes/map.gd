@@ -108,6 +108,7 @@ func player_join(id):
 
 	if get_tree().get_multiplayer().is_server():
 		receive_seeds.rpc_id(id, noise_seed, id)
+		Globals.synchronize_timer(Globals.timer)
 	else:
 		print("Not the server!!")
 
