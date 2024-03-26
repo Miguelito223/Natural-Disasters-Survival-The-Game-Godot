@@ -162,7 +162,7 @@ func wind(object):
 		object.body_wind = local_wind
 		
 		# Calcular la velocidad del viento y la fricción
-		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5) ** 2) * local_wind, 0, local_wind) / 2.9225))) * Globals.Wind_Direction
+		var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5) ** 2) * local_wind, 0, local_wind) / 2.9225))) * Globals.vec2_to_vec3(Globals.Wind_Direction)
 		var frictional_scalar = clamp(wind_vel.length(), -400, 400)
 		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
@@ -187,7 +187,7 @@ func wind(object):
 			var friction_mul = clamp((mass / 50000), 0, 1) # lower the mass  >> lower frictional force 
 			var avrg_mul = (force_mul_area + friction_mul) / 2 
 			
-			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.Wind_Direction
+			var wind_vel = Globals.convert_MetoSU(Globals.convert_KMPHtoMe(Globals.Wind_speed / 2.9225)) * Globals.vec2_to_vec3(Globals.Wind_Direction)
 			var frictional_scalar = clamp(wind_vel.length(), 0, mass)
 			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
 			var wind_vel_new = (wind_vel + frictional_velocity) * -1
@@ -284,7 +284,7 @@ func is_tsunami():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	while current_weather_and_disaster == "Tsunami":
@@ -318,7 +318,7 @@ func is_linghting_storm():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
 
@@ -382,7 +382,7 @@ func is_meteor_shower():
 	Globals.pressure_target = randi_range(10000,10020)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 	
 	while current_weather_and_disaster == "Meteor shower":
@@ -413,7 +413,7 @@ func is_blizzard():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(8000,9020)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(40, 50)
 
 	while current_weather_and_disaster == "blizzard":
@@ -459,7 +459,7 @@ func is_sandstorm():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(30, 50)
 
 	while current_weather_and_disaster == "Sand Storm":
@@ -504,7 +504,7 @@ func is_volcano():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 0
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 50)
 
 	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
@@ -585,7 +585,7 @@ func is_tornado():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 30)
 
 	while current_weather_and_disaster == "Tornado":
@@ -654,7 +654,7 @@ func is_acid_rain():
 	Globals.bradiation_target = 100
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	while current_weather_and_disaster == "Acid rain":
@@ -700,7 +700,7 @@ func is_earthquake():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	var earquake = earthquake_scene.instantiate()
@@ -741,7 +741,7 @@ func is_sun():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	while current_weather_and_disaster == "Sun":
@@ -768,7 +768,7 @@ func is_cloud():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(9000,10000)
-	Globals.Wind_Direction_target = Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target =  randi_range(0, 10)
 
 	while current_weather_and_disaster == "Cloud":
@@ -797,7 +797,7 @@ func is_raining():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(9000,9020)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 20)
 	
 	while current_weather_and_disaster == "Raining":
@@ -844,7 +844,7 @@ func is_storm():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
 	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector3(randi_range(-1,1),0,randi_range(-1,1))
+	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(30, 60)
 
 	while current_weather_and_disaster == "Storm":

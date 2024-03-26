@@ -24,7 +24,7 @@ var pressure: float = 10000
 var oxygen: float  = 100
 var bradiation: float = 0
 var Humidity: float = 25
-var Wind_Direction: Vector3 = Vector3(1,0,0)
+var Wind_Direction: Vector2 = Vector2(1,0)
 var Wind_speed: float = 0
 var is_raining: bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -35,7 +35,7 @@ var pressure_target: float = 10000
 var oxygen_target: float = 100
 var bradiation_target: float = 0
 var Humidity_target: float = 25
-var Wind_Direction_target: Vector3 = Vector3(1,0,0)
+var Wind_Direction_target: Vector2 = Vector2(1,0)
 var Wind_speed_target: float = 0
 
 #Globals Weather original
@@ -44,7 +44,7 @@ var pressure_original: float = 10000
 var oxygen_original: float = 100
 var bradiation_original: float = 0
 var Humidity_original: float = 25
-var Wind_Direction_original: Vector3 = Vector3(1,0,0)
+var Wind_Direction_original: Vector2 = Vector2(1,0)
 var Wind_speed_original: float = 0
 
 var seconds = Time.get_unix_time_from_system()
@@ -64,9 +64,8 @@ func convert_KMPHtoMe(kmph):
 func convert_VectorToAngle(vector):
 	var x = vector.x
 	var y = vector.y
-	var z = vector.z
 	
-	return atan2(z,x)
+	return atan2(y,x)
 
 func perform_trace_collision(ply, direction):
 	var space_state = ply.get_world_3d().direct_space_state
@@ -146,10 +145,14 @@ func is_inlava(ply):
 	if ply.is_in_group("player"):
 		return ply.IsInLava
 
+
+func vec2_to_vec3(vector):
+	return Vector3(vector.x, 0, vector.y)
+
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var position = entity.global_position + Vector3(0, 10, 0)
-	var ray = PhysicsRayQueryParameters3D.create(position, position + Wind_Direction * 300, 1, [entity])
+	var ray = PhysicsRayQueryParameters3D.create(position, position + vec2_to_vec3(Wind_Direction) * 300, 1, [entity])
 	var result = space_state.intersect_ray(ray)
 
 	return result
@@ -227,7 +230,7 @@ func sync_wind_speed(new_value):
 func sync_Wind_Direction(new_value):
 	Wind_Direction = new_value
 
-func _process(delta):
+func _process(_delta):
 	if not is_networking:
 		Temperature = clamp(Temperature, -275.5, 275.5)
 		Humidity = clamp(Humidity, 0, 100)
