@@ -335,7 +335,7 @@ func is_tsunami():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
-		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 025)
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 		await get_tree().create_timer(0.5).timeout
