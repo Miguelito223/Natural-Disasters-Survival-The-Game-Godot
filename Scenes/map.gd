@@ -24,7 +24,7 @@ func _exit_tree():
 	Globals.pressure_target = Globals.pressure_original
 	Globals.Wind_Direction_target = Globals.Wind_Direction_original
 	Globals.Wind_speed_target = Globals.Wind_speed_original
-	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
 # Called when the node enters the scene tree for the first time.
@@ -300,9 +300,9 @@ func is_tsunami():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
-		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 		await get_tree().create_timer(0.5).timeout
 
 	while current_weather_and_disaster != "Tsunami":
@@ -332,13 +332,15 @@ func is_linghting_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 			else:
 				player.rain_node.emitting = false
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -348,6 +350,7 @@ func is_linghting_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -355,6 +358,7 @@ func is_linghting_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
@@ -398,8 +402,9 @@ func is_meteor_shower():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
-		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
 
 		var meteor = meteor_scene.instantiate()
@@ -425,13 +430,15 @@ func is_blizzard():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 			else:
 				player.rain_node.emitting = false
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -441,6 +448,7 @@ func is_blizzard():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = true
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
 			else:
@@ -448,6 +456,7 @@ func is_blizzard():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 				
@@ -472,6 +481,7 @@ func is_sandstorm():
 				player.sand_node.emitting = player.is_multiplayer_authority()
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
 			else:
@@ -479,6 +489,7 @@ func is_sandstorm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -488,6 +499,7 @@ func is_sandstorm():
 				player.sand_node.emitting = true
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
 			else:
@@ -495,6 +507,7 @@ func is_sandstorm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 			
@@ -530,6 +543,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = player.is_multiplayer_authority()
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			else:
@@ -537,6 +551,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -546,6 +561,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = true
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			else:
@@ -553,6 +569,7 @@ func is_volcano():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 			
@@ -598,6 +615,7 @@ func is_tornado():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -605,6 +623,7 @@ func is_tornado():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -614,6 +633,7 @@ func is_tornado():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -621,6 +641,7 @@ func is_tornado():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
@@ -667,6 +688,7 @@ func is_acid_rain():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 			else:
@@ -674,6 +696,7 @@ func is_acid_rain():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)			
 		else:
@@ -683,6 +706,7 @@ func is_acid_rain():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
 			else:
@@ -690,6 +714,7 @@ func is_acid_rain():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)				
 
@@ -720,6 +745,7 @@ func is_earthquake():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
@@ -758,6 +784,7 @@ func is_sun():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			
@@ -773,21 +800,45 @@ func is_cloud():
 	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target =  randi_range(0, 10)
 
+
 	while current_weather_and_disaster == "Cloud":
-		var player
-
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
-			player = get_node("Player")
-
-		player.rain_node.emitting = false
-		player.sand_node.emitting = false
-		player.dust_node.emitting = false
-		player.snow_node.emitting = false
-		$WorldEnvironment.environment.volumetric_fog_enabled = true
-		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			
+			var player = get_node("Player")
+			if Globals.is_outdoor(player):
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+				$WorldEnvironment.environment.volumetric_fog_enabled = true
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			else:
+				player.rain_node.emitting = false
+				player.sand_node.emitting = false
+				player.dust_node.emitting = false
+				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
+				$WorldEnvironment.environment.volumetric_fog_enabled = false
+				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		
 		await get_tree().create_timer(0.5).timeout
 
 
@@ -810,6 +861,7 @@ func is_raining():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -817,6 +869,7 @@ func is_raining():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -826,6 +879,7 @@ func is_raining():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -833,6 +887,7 @@ func is_raining():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		
@@ -857,6 +912,7 @@ func is_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -864,6 +920,7 @@ func is_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 		else:
@@ -873,6 +930,7 @@ func is_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
 				$WorldEnvironment.environment.volumetric_fog_enabled = true
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 			else:
@@ -880,10 +938,8 @@ func is_storm():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
+				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 
 		await get_tree().create_timer(0.5).timeout
-
-
-

@@ -52,8 +52,10 @@ func _ready():
 	$Settings/fps.button_pressed = Globals.FPS
 	$Settings/vsync.button_pressed = Globals.vsync
 	$Settings/antialiasing.button_pressed = Globals.antialiasing
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Globals.volumen_music))
 	$Settings/Volumen.value = Globals.volumen
-	$"Settings/Volumen Music".value = Globals.volumen
+	$"Settings/Volumen Music".value = Globals.volumen_music
 	$Settings/Time.value = Globals.timer
 
 func _process(_delta):

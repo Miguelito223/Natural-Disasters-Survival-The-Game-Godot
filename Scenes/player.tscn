@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=42 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -11,9 +11,10 @@
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
-[ext_resource type="Shader" path="res://Scenes/UnderWater.gdshader" id="7_elp5l"]
+[ext_resource type="Shader" path="res://UnderWater.gdshader" id="7_787g2"]
 [ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
+[ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
@@ -249,13 +250,18 @@ properties/22/spawn = true
 properties/22/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tl0tp"]
-render_priority = 0
-shader = ExtResource("7_elp5l")
-shader_parameter/tint = null
-shader_parameter/wave_speed = 3.0
-shader_parameter/wave_freq = 10.0
-shader_parameter/wave_width = 1.0
-shader_parameter/blur = 2.0
+shader = ExtResource("7_787g2")
+shader_parameter/amplitude = 0.1
+shader_parameter/frequency = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/Shader_color = Color(0, 0, 1, 0.0862745)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ynsy4"]
+shader = ExtResource("8_txqea")
+shader_parameter/amplitude = 0.1
+shader_parameter/frequency = 1.0
+shader_parameter/speed = 1.0
+shader_parameter/Shader_color = Color(1, 0.6, 0, 0.360784)
 
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -346,7 +352,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)
 [node name="Camera3D" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0307612, 0.608149, -0.407722)
 current = true
-fov = 37.8493
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
 shadow_enabled = true
@@ -356,9 +361,9 @@ replication_config = SubResource("SceneReplicationConfig_8gfme")
 
 [node name="Underwater" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Underwater"]
+visible = false
 material = SubResource("ShaderMaterial_tl0tp")
 anchors_preset = 15
 anchor_right = 1.0
@@ -368,9 +373,9 @@ grow_vertical = 2
 
 [node name="UnderLava" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="UnderLava"]
+material = SubResource("ShaderMaterial_ynsy4")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

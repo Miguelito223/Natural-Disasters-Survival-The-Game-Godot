@@ -1,7 +1,7 @@
 extends GPUParticles3D
 
 var explosion_force = 1000
-var explosion_radius = 10
+@onready var explosion_radius = $Area3D/CollisionShape3D.shape.radius
 
 
 # Called when the node enters the scene tree for the first time.

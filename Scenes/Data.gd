@@ -10,7 +10,7 @@ func save_file():
 		"Antialasing": Globals.antialiasing,
 		"FPS": Globals.FPS,
 		"Volumen": Globals.volumen,
-		"Volumen Music": Globals.volumen_music,
+		"Volumen_Music": Globals.volumen_music,
 		"Timer": Globals.timer,
 		"Fullscreen": Globals.fullscreen,
 		"Resolution": Globals.resolution,
@@ -51,7 +51,7 @@ func load_file():
 		Globals.vsync = data.Vsync
 		Globals.antialiasing = data.Antialasing
 		Globals.volumen = data.Volumen
-		Globals.volumen_music = data["Volumen Music"]
+		Globals.volumen_music = data.Volumen_Music
 		Globals.fullscreen = data.Fullscreen
 		Globals.resolution = str_to_var("Vector2i" + data.Resolution)
 		Globals.timer = data.Timer

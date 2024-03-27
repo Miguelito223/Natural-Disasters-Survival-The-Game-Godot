@@ -51,7 +51,7 @@ func _ready():
 		$Settings/Fullscreen.button_pressed = Globals.fullscreen
 		$Settings/antialiasing.button_pressed = Globals.antialiasing
 		$Settings/Volumen.value = Globals.volumen
-		$"Settings/Volumen Music".value = Globals.volumen
+		$"Settings/Volumen Music".value = Globals.volumen_music
 		$Settings/Time.value = Globals.timer
 	else:
 		if not is_multiplayer_authority():
