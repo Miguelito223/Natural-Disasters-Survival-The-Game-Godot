@@ -51,11 +51,9 @@ spread = 5.0
 initial_velocity_min = 30.0
 initial_velocity_max = 30.0
 color = Color(0.933333, 1, 1, 1)
-collision_mode = 2
 collision_use_scale = true
 sub_emitter_mode = 3
-sub_emitter_amount_at_collision = 32
-sub_emitter_keep_velocity = true
+sub_emitter_amount_at_collision = 1
 
 [sub_resource type="Curve" id="Curve_vyn2q"]
 max_value = 0.5
@@ -84,11 +82,8 @@ emission_ring_height = 0.5
 emission_ring_radius = 50.0
 emission_ring_inner_radius = 4.0
 gravity = Vector3(0, 0, 0)
-scale_max = 2.0
 color = Color(0, 0, 0.745098, 1)
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.0
+collision_mode = 2
 collision_use_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_g5it5"]
@@ -284,9 +279,17 @@ shape = SubResource("CapsuleShape3D_xeewm")
 mesh = SubResource("CapsuleMesh_ypag4")
 material = SubResource("StandardMaterial3D_r4028")
 
+[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, 0)
+layers = 1048575
+size = Vector3(2048, 2048, 2048)
+update_mode = 1
+follow_camera_enabled = true
+
 [node name="Rain" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.7699, 0)
 material_override = SubResource("StandardMaterial3D_y4sl8")
+emitting = false
 amount = 1000
 sub_emitter = NodePath("../splash")
 lifetime = 2.0
@@ -297,16 +300,8 @@ trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
 draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
 
-[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, 0)
-layers = 1048575
-size = Vector3(2048, 2048, 2048)
-update_mode = 1
-follow_camera_enabled = true
-
 [node name="splash" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y17jh")
-emitting = false
 amount = 1000
 randomness = 1.0
 collision_base_size = 1.0
