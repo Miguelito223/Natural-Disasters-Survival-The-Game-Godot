@@ -177,7 +177,7 @@ func wind(object):
 				object.move_and_slide()
 
 
-	elif object.is_in_group("movable_objects"):
+	elif object.is_in_group("movable_objects") and object.is_class("RigidBody3D"):
 		var is_outdoor = Globals.is_outdoor(object)
 
 		if is_outdoor and not Globals.is_something_blocking_wind(object):
@@ -300,7 +300,7 @@ func is_tsunami():
 		player.sand_node.emitting = false
 		player.dust_node.emitting = false
 		player.snow_node.emitting = false
-		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
+		$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 025)
 		$WorldEnvironment.environment.volumetric_fog_enabled = false
 		$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 		await get_tree().create_timer(0.5).timeout
@@ -943,3 +943,8 @@ func is_storm():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 
 		await get_tree().create_timer(0.5).timeout
+
+
+func _on_area_3d_body_entered(body):
+	if body.is_in_group("player"):
+		body.damage(100)

@@ -2,13 +2,12 @@ extends Node3D
 
 var explosion_scene = preload("res://Scenes/explosion.tscn")
 var lol = [preload("res://Sounds/disasters/nature/closethunder01.mp3"), preload("res://Sounds/disasters/nature/closethunder02.mp3"), preload("res://Sounds/disasters/nature/closethunder03.mp3"), preload("res://Sounds/disasters/nature/closethunder04.mp3"), preload("res://Sounds/disasters/nature/closethunder05.mp3")]
-@onready var raycast = $RayCast3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Configurar la posición de la explosión en la posición del suelo
 	var explosion = explosion_scene.instantiate()
-	explosion.position = self.position
+	explosion.position = self.position 
 	get_parent().add_child(explosion)
 	
 	# Configurar el sonido del trueno
