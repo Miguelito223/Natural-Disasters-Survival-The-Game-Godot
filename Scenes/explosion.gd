@@ -1,6 +1,6 @@
 extends GPUParticles3D
 
-var explosion_force = 1000
+var explosion_force = 100
 @onready var explosion_radius = $Area3D/CollisionShape3D.shape.radius
 
 
