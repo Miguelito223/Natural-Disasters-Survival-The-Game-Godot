@@ -85,12 +85,9 @@ func generate_terrain(received_noise_seed, player_id):
 	terrain.texture_list.set_texture(texture.texture_id, texture)
 	terrain.name = "Terrain3D"
 	var noise = FastNoiseLite.new()
-	noise.frequency = 0.0005
+	noise.frequency = 0.001
 	noise.seed = received_noise_seed
-	var img = Image.create(4096, 4096, false, Image.FORMAT_RF)
-	for x in 4096:
-		for y in 4096:
-			img.set_pixel(x, y, Color(noise.get_noise_2d(x, y) * 0.5, 0., 0., 1.))
+	var img = noise.get_image(4096, 4096)
 	terrain.storage.import_images([img, null, null], Vector3(0, 0, 0), 0.0, 300.)
 
 	terrain.set_collision_enabled(true)
