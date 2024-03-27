@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=21 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
@@ -189,6 +189,9 @@ noise = SubResource("FastNoiseLite_hhy4h")
 density = 0.05
 density_texture = SubResource("NoiseTexture3D_bq76v")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
+size = Vector3(2048, 1, 2048)
+
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 
@@ -229,5 +232,11 @@ bus = &"Music"
 shape = 4
 material = SubResource("FogMaterial_w14ph")
 
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_rb6xg")
+
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

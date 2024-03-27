@@ -112,7 +112,9 @@ max_distance = 4096.0
 
 [node name="spark" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_jem84")
+emitting = false
 amount = 1
+one_shot = true
 explosiveness = 0.78
 visibility_aabb = AABB(-1000, -1000, -757.075, 2000, 2000, 1514.15)
 local_coords = true
@@ -121,25 +123,25 @@ draw_pass_1 = SubResource("QuadMesh_8jrdf")
 
 [node name="light" type="GPUParticles3D" parent="spark"]
 material_override = SubResource("StandardMaterial3D_ghvqt")
+emitting = false
 amount = 1
 lifetime = 1.5
+one_shot = true
 visibility_aabb = AABB(-10000, -10000, -10000, 20000, 20000, 20000)
 process_material = SubResource("ParticleProcessMaterial_1lfm6")
 draw_pass_1 = SubResource("QuadMesh_tdmw4")
 
 [node name="star" type="GPUParticles3D" parent="spark/light"]
 material_override = SubResource("StandardMaterial3D_e6wr2")
+emitting = false
 amount = 1
 lifetime = 1.5
+one_shot = true
 visibility_aabb = AABB(-500, -499.988, -500, 1000, 1000, 1000)
 process_material = SubResource("ParticleProcessMaterial_xpfg1")
 draw_pass_1 = SubResource("QuadMesh_q3mvv")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_go6sb")
-
-[node name="RayCast3D" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1438.72, 0)
-target_position = Vector3(0, -1000, 0)
 
 [connection signal="finished" from="spark" to="." method="_on_spark_finished"]
