@@ -38,21 +38,15 @@ color_ramp = SubResource("GradientTexture1D_q850k")
 [sub_resource type="SphereShape3D" id="SphereShape3D_up542"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_y34ue"]
-properties/0/path = NodePath(".:emitting")
+properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath(".:position")
+properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath(".:rotation")
+properties/2/path = NodePath(".:scale")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath(".:scale")
-properties/3/spawn = true
-properties/3/replication_mode = 1
-properties/4/path = NodePath("AudioStreamPlayer3D:playing")
-properties/4/spawn = true
-properties/4/replication_mode = 1
 
 [node name="Explosion" type="GPUParticles3D"]
 material_override = SubResource("StandardMaterial3D_qtdo2")
@@ -61,6 +55,7 @@ amount = 200
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
+visibility_aabb = AABB(-53.6682, -52.478, -52.2658, 106.726, 105.365, 102.854)
 process_material = SubResource("ParticleProcessMaterial_v0fus")
 draw_pass_1 = SubResource("SphereMesh_bjxpd")
 script = ExtResource("1_o7s6l")
