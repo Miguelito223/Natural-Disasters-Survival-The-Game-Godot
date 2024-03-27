@@ -32,6 +32,10 @@ radial_accel_min = 100.0
 radial_accel_max = 100.0
 scale_min = 0.5
 color_ramp = SubResource("GradientTexture1D_q850k")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_bjxpd"]
 

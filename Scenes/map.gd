@@ -87,9 +87,9 @@ func generate_terrain(received_noise_seed, player_id):
 	var noise = FastNoiseLite.new()
 	noise.frequency = 0.0005
 	noise.seed = received_noise_seed
-	var img = Image.create(2048, 2048, false, Image.FORMAT_RF)
-	for x in 2048:
-		for y in 2048:
+	var img = Image.create(4096, 4096, false, Image.FORMAT_RF)
+	for x in 4096:
+		for y in 4096:
 			img.set_pixel(x, y, Color(noise.get_noise_2d(x, y) * 0.5, 0., 0., 1.))
 	terrain.storage.import_images([img, null, null], Vector3(0, 0, 0), 0.0, 300.)
 
@@ -362,7 +362,7 @@ func is_linghting_storm():
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
 		var space_state = get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		var result = space_state.intersect_ray(ray)				
@@ -371,7 +371,7 @@ func is_linghting_storm():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+				lighting.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
 
 			add_child(lighting, true)
 
@@ -408,7 +408,7 @@ func is_meteor_shower():
 
 
 		var meteor = meteor_scene.instantiate()
-		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		meteor.position = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
 		add_child(meteor, true)
 
 		await get_tree().create_timer(0.5).timeout
@@ -522,7 +522,7 @@ func is_volcano():
 	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 50)
 
-	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+	var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)
@@ -531,7 +531,7 @@ func is_volcano():
 	if result.has("position"):
 		volcano.position = result.position
 	else:
-		volcano.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		volcano.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
 	
 	add_child(volcano, true)
 
@@ -586,7 +586,7 @@ func is_volcano():
 
 func is_tornado():
 
-	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+	var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)	
@@ -596,7 +596,7 @@ func is_tornado():
 	if result.has("position"):
 		tornado.position = result.position
 	else:
-		tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+		tornado.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
 	add_child(tornado, true)
 
 	Globals.Temperature_target =  randi_range(5,15)
@@ -646,7 +646,7 @@ func is_tornado():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
 
-		rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
+		rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
 		space_state = get_world_3d().direct_space_state
 		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		result = space_state.intersect_ray(ray)			
@@ -656,7 +656,7 @@ func is_tornado():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
+				lighting.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
 
 			add_child(lighting, true)
 

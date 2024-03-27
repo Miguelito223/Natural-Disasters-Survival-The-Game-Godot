@@ -47,6 +47,10 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.5
 scale_curve = SubResource("CurveTexture_rfffs")
 color_ramp = SubResource("GradientTexture1D_1cdtt")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
 sub_emitter_mode = 1
 sub_emitter_frequency = 4.0
 sub_emitter_keep_velocity = true
@@ -81,6 +85,10 @@ gravity = Vector3(0, 0, 0)
 scale_min = 0.1
 scale_max = 0.5
 color_ramp = SubResource("GradientTexture1D_ywdgh")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_hqrhf"]
 

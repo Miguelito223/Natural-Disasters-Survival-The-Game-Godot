@@ -85,7 +85,7 @@ func is_below_sky(ply):
 	return !result
 
 func calculate_exposed_area(player):
-	var map_size = Vector2(2048, 2048)  # Tamaño del mapa en unidades
+	var map_size = Vector2(4096, 4096)  # Tamaño del mapa en unidades
 	var cell_size = Vector2(64, 64)  # Tamaño de la celda en unidades
 	var exposed_cells = 0
 

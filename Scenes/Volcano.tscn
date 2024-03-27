@@ -34,6 +34,10 @@ initial_velocity_max = 119.37
 gravity = Vector3(0, 0, 0)
 scale_max = 15.0
 color_ramp = SubResource("GradientTexture1D_2pmkc")
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+collision_use_scale = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_otd4a"]
 

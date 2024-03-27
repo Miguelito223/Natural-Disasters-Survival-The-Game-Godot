@@ -9,17 +9,13 @@ func _physics_process(delta):
 
 	for body in $Area3D.get_overlapping_bodies():
 		if body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
-			var body_direction = body.global_transform.basis.y.normalized()  # Dirección del tsunami (por ejemplo, hacia arriba)
+			var body_direction = direction
 			var relative_direction = global_transform.origin - body.global_transform.origin
 			var projected_direction = body_direction.project(relative_direction)
 			var force = projected_direction.normalized() * tsunami_strength
-			body.apply_impulse(Vector3.ZERO, force)
+			body.apply_central_impulse(force)
 		elif body.is_in_group("player"):
-			var body_direction = body.global_transform.basis.y.normalized()  # Dirección del tsunami (por ejemplo, hacia arriba)
-			var relative_direction = global_transform.origin - body.global_transform.origin
-			var projected_direction = body_direction.project(relative_direction)
-			var force = projected_direction.normalized() * tsunami_strength
-			body.velocity = force
+			body.velocity = self.velocity
 			body.move_and_slide()
 
 

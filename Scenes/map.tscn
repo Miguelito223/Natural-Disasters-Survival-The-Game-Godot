@@ -190,7 +190,7 @@ density = 0.05
 density_texture = SubResource("NoiseTexture3D_bq76v")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
-size = Vector3(4096, 1, 4096)
+size = Vector3(8192, 0, 8192)
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
@@ -235,7 +235,7 @@ material = SubResource("FogMaterial_w14ph")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -537.108, 2048)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4096, -754.478, 4096)
 shape = SubResource("BoxShape3D_rb6xg")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
