@@ -186,6 +186,7 @@ metadata/_preview_in_3d_space_ = true
 noise = SubResource("FastNoiseLite_hhy4h")
 
 [sub_resource type="FogMaterial" id="FogMaterial_w14ph"]
+density = 0.05
 density_texture = SubResource("NoiseTexture3D_bq76v")
 
 [node name="Map" type="Node3D"]

@@ -6,7 +6,9 @@ var explosion_force = 1000
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	self.one_shot = true
 	self.emitting = true
+	
 	
 
 func _on_area_3d_body_entered(body:Node3D):

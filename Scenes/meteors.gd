@@ -17,7 +17,6 @@ func _on_body_entered(_body):
 	var explosion_node = explosion_scene.instantiate()
 	explosion_node.position = self.position
 	explosion_node.scale = body_scale
-	explosion_node.emitting = true
-	get_parent().add_child(explosion_node)
+	get_parent().add_child(explosion_node, true)
 	self.queue_free()
 
