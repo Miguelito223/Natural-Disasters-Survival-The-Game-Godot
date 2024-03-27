@@ -54,6 +54,7 @@ color = Color(0.933333, 1, 1, 1)
 collision_use_scale = true
 sub_emitter_mode = 3
 sub_emitter_amount_at_collision = 1
+sub_emitter_keep_velocity = true
 
 [sub_resource type="Curve" id="Curve_vyn2q"]
 max_value = 0.5
