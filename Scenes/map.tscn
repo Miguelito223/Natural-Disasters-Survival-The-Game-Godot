@@ -36,8 +36,8 @@ shader_parameter/mie = 0.005
 shader_parameter/mie_eccentricity = 0.8
 shader_parameter/mie_color = Color(0.63, 0.77, 0.92, 1)
 shader_parameter/turbidity = 10.0
-shader_parameter/sun_disk_scale = 5.0
-shader_parameter/ground_color = Color(0, 0, 0, 1)
+shader_parameter/sun_disk_scale = 1.0
+shader_parameter/ground_color = Color(1, 1, 1, 1)
 shader_parameter/exposure = 0.1
 shader_parameter/worlnoise = SubResource("NoiseTexture3D_owsst")
 shader_parameter/perlworlnoise = SubResource("NoiseTexture3D_m2yid")
@@ -240,7 +240,7 @@ material = SubResource("FogMaterial_w14ph")
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4096.07, -754.478, 4096)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]

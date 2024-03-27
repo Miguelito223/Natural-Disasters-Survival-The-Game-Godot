@@ -81,7 +81,7 @@ func receive_seeds(received_noise_seed, player_id):
 func generate_terrain(received_noise_seed, player_id):
 	print("Generating terrain for player ", player_id )
 	var terrain_data = HTerrainData.new()
-	terrain_data.resize(4096)
+	terrain_data.resize(2048)
 
 	noise.seed = received_noise_seed
 
@@ -125,8 +125,6 @@ func generate_terrain(received_noise_seed, player_id):
 	terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
 	terrain.set_data(terrain_data)
 	terrain.set_texture_set(texture_set)
-	terrain._chunk_size = 16
-	terrain.lod_scale = 3
 	add_child(terrain, true)
 
 	# No need to call this, but you may need to if you edit the terrain later on
@@ -399,7 +397,7 @@ func is_linghting_storm():
 				$WorldEnvironment.environment.volumetric_fog_enabled = false
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-		var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
+		var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		var space_state = get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		var result = space_state.intersect_ray(ray)				
@@ -408,7 +406,7 @@ func is_linghting_storm():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
+				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 
 			add_child(lighting, true)
 
@@ -445,7 +443,7 @@ func is_meteor_shower():
 
 
 		var meteor = meteor_scene.instantiate()
-		meteor.position = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
+		meteor.position = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		add_child(meteor, true)
 
 		await get_tree().create_timer(0.5).timeout
@@ -559,7 +557,7 @@ func is_volcano():
 	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
 	Globals.Wind_speed_target = randi_range(0, 50)
 
-	var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
+	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)
@@ -568,7 +566,7 @@ func is_volcano():
 	if result.has("position"):
 		volcano.position = result.position
 	else:
-		volcano.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
+		volcano.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 	
 	add_child(volcano, true)
 
@@ -623,7 +621,7 @@ func is_volcano():
 
 func is_tornado():
 
-	var rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
+	var rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)	
@@ -633,7 +631,7 @@ func is_tornado():
 	if result.has("position"):
 		tornado.position = result.position
 	else:
-		tornado.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
+		tornado.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 	add_child(tornado, true)
 
 	Globals.Temperature_target =  randi_range(5,15)
@@ -683,7 +681,7 @@ func is_tornado():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
 
 
-		rand_pos = Vector3(randi_range(0,4096),1000,randi_range(0,4096))
+		rand_pos = Vector3(randi_range(0,2048),1000,randi_range(0,2048))
 		space_state = get_world_3d().direct_space_state
 		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		result = space_state.intersect_ray(ray)			
@@ -693,7 +691,7 @@ func is_tornado():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,4096),0,randi_range(0,4096))
+				lighting.position = Vector3(randi_range(0,2048),0,randi_range(0,2048))
 
 			add_child(lighting, true)
 
