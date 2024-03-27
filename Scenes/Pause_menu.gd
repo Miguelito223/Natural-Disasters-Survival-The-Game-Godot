@@ -51,6 +51,7 @@ func _ready():
 		$Settings/Fullscreen.button_pressed = Globals.fullscreen
 		$Settings/antialiasing.button_pressed = Globals.antialiasing
 		$Settings/Volumen.value = Globals.volumen
+		$"Settings/Volumen Music".value = Globals.volumen
 		$Settings/Time.value = Globals.timer
 	else:
 		if not is_multiplayer_authority():
@@ -210,3 +211,8 @@ func _on_reset_player_pressed():
 
 func _on_return_pressed():
 	self.hide()
+
+func _on_volumen_music_value_changed(value):
+	Globals.volumen_music = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(value))
+	Data.save_file()

@@ -16,6 +16,7 @@ var vsync = false
 var FPS = false
 var antialiasing = false
 var volumen = 1
+var volumen_music = 1
 var timer = 60
 var fullscreen = false
 var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())

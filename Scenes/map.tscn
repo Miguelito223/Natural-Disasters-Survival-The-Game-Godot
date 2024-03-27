@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=20 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
@@ -45,7 +45,6 @@ sky_material = SubResource("ShaderMaterial_ihtyg")
 [sub_resource type="Environment" id="Environment_cfhfe"]
 background_mode = 2
 sky = SubResource("Sky_lk1p6")
-adjustment_enabled = true
 
 [sub_resource type="Animation" id="Animation_y7xl6"]
 resource_name = "DNC"
@@ -180,6 +179,15 @@ properties/22/path = NodePath("AnimationPlayer:libraries")
 properties/22/spawn = true
 properties/22/replication_mode = 1
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_bq76v"]
+noise = SubResource("FastNoiseLite_hhy4h")
+
+[sub_resource type="FogMaterial" id="FogMaterial_w14ph"]
+density_texture = SubResource("NoiseTexture3D_bq76v")
+
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 
@@ -214,6 +222,11 @@ replication_config = SubResource("SceneReplicationConfig_8u7l0")
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_dy54i")
 autoplay = true
+bus = &"Music"
+
+[node name="FogVolume" type="FogVolume" parent="."]
+shape = 4
+material = SubResource("FogMaterial_w14ph")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -22,3 +22,13 @@ func _physics_process(delta):
 			body.velocity = force
 			body.move_and_slide()
 
+
+
+func _on_area_3d_body_entered(body:Node3D):
+	if body.is_in_group("player"):
+		body.IsInWater = true
+
+
+func _on_area_3d_body_exited(body:Node3D):
+	if body.is_in_group("player"):
+		body.IsInWater = false

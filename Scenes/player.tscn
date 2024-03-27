@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=40 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
+[ext_resource type="Shader" path="res://Scenes/UnderWater.gdshader" id="7_elp5l"]
 [ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
@@ -222,22 +223,44 @@ properties/13/replication_mode = 1
 properties/14/path = NodePath(".:mass")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath("Rain:emitting")
+properties/15/path = NodePath(".:body_wind")
 properties/15/spawn = true
 properties/15/replication_mode = 1
-properties/16/path = NodePath("Rain:position")
+properties/16/path = NodePath(".:body_bradiation")
 properties/16/spawn = true
 properties/16/replication_mode = 1
-properties/17/path = NodePath("Rain:rotation")
+properties/17/path = NodePath(".:Outdoor")
 properties/17/spawn = true
 properties/17/replication_mode = 1
-properties/18/path = NodePath("Rain:scale")
+properties/18/path = NodePath(".:IsInWater")
 properties/18/spawn = true
 properties/18/replication_mode = 1
+properties/19/path = NodePath(".:IsInLava")
+properties/19/spawn = true
+properties/19/replication_mode = 1
+properties/20/path = NodePath(".:username")
+properties/20/spawn = true
+properties/20/replication_mode = 1
+properties/21/path = NodePath(".:id")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath(".:points")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tl0tp"]
+render_priority = 0
+shader = ExtResource("7_elp5l")
+shader_parameter/tint = null
+shader_parameter/wave_speed = 3.0
+shader_parameter/wave_freq = 10.0
+shader_parameter/wave_width = 1.0
+shader_parameter/blur = 2.0
 
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_btpoi")
+metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_xeewm")
@@ -323,12 +346,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)
 [node name="Camera3D" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0307612, 0.608149, -0.407722)
 current = true
+fov = 37.8493
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
 shadow_enabled = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8gfme")
+
+[node name="Underwater" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Underwater"]
+material = SubResource("ShaderMaterial_tl0tp")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UnderLava" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="UnderLava"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Pause menu" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -420,6 +467,16 @@ theme_override_font_sizes/font_size = 30
 text = "Volumen:"
 
 [node name="Volumen" type="HSlider" parent="Pause menu/Settings"]
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+
+[node name="Volumen Music Label2" type="Label" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Music Volumen:"
+
+[node name="Volumen Music" type="HSlider" parent="Pause menu/Settings"]
 layout_mode = 2
 max_value = 1.0
 step = 0.001
@@ -602,6 +659,7 @@ visibility_mode = 1
 [connection signal="toggled" from="Pause menu/Settings/Fullscreen" to="Pause menu" method="_on_fullscreen_toggled"]
 [connection signal="item_selected" from="Pause menu/Settings/resolutions" to="Pause menu" method="_on_resolutions_item_selected"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen" to="Pause menu" method="_on_volumen_value_changed"]
+[connection signal="value_changed" from="Pause menu/Settings/Volumen Music" to="Pause menu" method="_on_volumen_music_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]
 [connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]

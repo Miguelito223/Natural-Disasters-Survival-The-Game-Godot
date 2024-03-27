@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://tjhhsh3ck07n"]
+[gd_scene load_steps=12 format=3 uid="uid://tjhhsh3ck07n"]
 
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="1_inpw0"]
 [ext_resource type="Script" path="res://Scenes/tornado.gd" id="1_yllgf"]
@@ -61,8 +61,6 @@ color = Color(0.309804, 0.196078, 0, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_peyem"]
 size = Vector3(30, 100, 30)
 
-[sub_resource type="FogMaterial" id="FogMaterial_csaxs"]
-
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_avyhx"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -107,11 +105,6 @@ volume_db = 80.0
 max_db = 6.0
 autoplay = true
 max_distance = 4096.0
-
-[node name="FogVolume" type="FogVolume" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 53.7059, 0)
-size = Vector3(41.6318, 15.8147, 42.2365)
-material = SubResource("FogMaterial_csaxs")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_avyhx")

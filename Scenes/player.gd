@@ -1,8 +1,8 @@
 extends CharacterBody3D
 
-var id = 1
-var username = Globals.username
-var points = Globals.points
+@export var id = 1
+@export var username = Globals.username
+@export var points = Globals.points
 
 var SPEED = 0
 
@@ -11,7 +11,7 @@ const SPEED_WALK = 5.0
 const JUMP_VELOCITY = 7
 const SENSIBILITY = 0.01
 
-var mass = randi_range(1,5)
+@export var mass = randi_range(1,5)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 
@@ -27,16 +27,16 @@ var min_oxygen = 0
 var min_bdradiation = 0
 
 
-var hearth = Max_Hearth
+@export var hearth = Max_Hearth
 
-var body_temperature = 37
-var body_oxygen = Max_oxygen
-var body_bradiation = min_bdradiation
-var body_wind = 0
+@export var body_temperature = 37
+@export var body_oxygen = Max_oxygen
+@export var body_bradiation = min_bdradiation
+@export var body_wind = 0
 
-var Outdoor = false
-var IsInWater = false
-var IsInLava = false
+@export var Outdoor = false
+@export var IsInWater = false
+@export var IsInLava = false
 
 
 
@@ -169,8 +169,8 @@ func _process(delta):
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
-		
-
+		$Underwater.visible = IsInWater
+		$UnderLava.visible = IsInLava	
 
 		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:

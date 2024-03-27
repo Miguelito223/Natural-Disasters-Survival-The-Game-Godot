@@ -53,6 +53,7 @@ func _ready():
 	$Settings/vsync.button_pressed = Globals.vsync
 	$Settings/antialiasing.button_pressed = Globals.antialiasing
 	$Settings/Volumen.value = Globals.volumen
+	$"Settings/Volumen Music".value = Globals.volumen
 	$Settings/Time.value = Globals.timer
 
 func _process(_delta):
@@ -160,3 +161,9 @@ func _on_singleplayer_pressed():
 	self.hide()
 	var player = Globals.player_scene.instantiate()
 	Globals.map.add_child(player, true)
+
+
+func _on_volumen_music_value_changed(value):
+	Globals.volumen_music = value
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(value))
+	Data.save_file()
