@@ -1,8 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=22 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_ftxso"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
+frequency = 0.001
+fractal_weighted_strength = 1.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rl2uy"]
 
@@ -194,6 +198,7 @@ size = Vector3(1e+06, 0, 1e+06)
 
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
+noise = SubResource("FastNoiseLite_lao53")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")

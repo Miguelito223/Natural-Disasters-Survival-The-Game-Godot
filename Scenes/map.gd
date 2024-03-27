@@ -12,7 +12,17 @@ var tsunami_scene = preload("res://Scenes/tsunami.tscn")
 var volcano_scene = preload("res://Scenes/Volcano.tscn")
 var earthquake_scene = preload("res://Scenes/earthquake.tscn")
 
+const HTerrain = preload("res://addons/zylann.hterrain/hterrain.gd")
+const HTerrainData = preload("res://addons/zylann.hterrain/hterrain_data.gd")
+const HTerrainTextureSet = preload("res://addons/zylann.hterrain/hterrain_texture_set.gd")
+
+@export var noise: FastNoiseLite
 var noise_seed
+var noise_multiplier = 50.0
+
+# You may want to change paths to your own textures
+var grass_texture = load("res://Textures/texture-grass-field.jpg")
+
 
 @onready var timer = $Timer
 
@@ -70,27 +80,57 @@ func receive_seeds(received_noise_seed, player_id):
 
 func generate_terrain(received_noise_seed, player_id):
 	print("Generating terrain for player ", player_id )
+	var terrain_data = HTerrainData.new()
+	terrain_data.resize(4096)
 
-	var terrain = Terrain3D.new()
-	terrain.set_collision_enabled(false)
-	terrain.storage = Terrain3DStorage.new()
-	terrain.texture_list = Terrain3DTextureList.new()
-	add_child(terrain, true)
-	terrain.material.world_background = Terrain3DMaterial.NONE
-	var texture = Terrain3DTexture.new()
-	var image = load("res://Textures/texture-grass-field.jpg")
-	texture.name = "Grass"
-	texture.texture_id = 0
-	texture.albedo_texture = image
-	terrain.texture_list.set_texture(texture.texture_id, texture)
-	terrain.name = "Terrain3D"
-	var noise = FastNoiseLite.new()
-	noise.frequency = 0.001
 	noise.seed = received_noise_seed
-	var img = noise.get_image(4096, 4096)
-	terrain.storage.import_images([img, null, null], Vector3(0, 0, 0), 0.0, 300.)
 
-	terrain.set_collision_enabled(true)
+	var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
+	var normalmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_NORMAL)
+	var splatmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_SPLAT)
+
+	
+	for z in heightmap.get_height():
+		for x in heightmap.get_width():
+			# Generate height
+			var h = noise_multiplier * noise.get_noise_2d(x, z)
+
+			# Getting normal by generating extra heights directly from noise,
+			# so map borders won't have seams in case you stitch them
+			var h_right = noise_multiplier * noise.get_noise_2d(x + 0.1, z)
+			var h_forward = noise_multiplier * noise.get_noise_2d(x, z + 0.1)
+			var normal = Vector3(h - h_right, 0.1, h_forward - h).normalized()
+
+			# Generate texture amounts
+			var splat = splatmap.get_pixel(x, z)
+
+			heightmap.set_pixel(x, z, Color(h, 0, 0))
+			normalmap.set_pixel(x, z, HTerrainData.encode_normal(normal))
+			splatmap.set_pixel(x, z, splat)
+
+	# Commit modifications so they get uploaded to the graphics card
+	var modified_region = Rect2(Vector2(), heightmap.get_size())
+	terrain_data.notify_region_change(modified_region, HTerrainData.CHANNEL_HEIGHT)
+	terrain_data.notify_region_change(modified_region, HTerrainData.CHANNEL_NORMAL)
+	terrain_data.notify_region_change(modified_region, HTerrainData.CHANNEL_SPLAT)
+
+	# Create texture set
+	# NOTE: usually this is not made from script, it can be built with editor tools
+	var texture_set = HTerrainTextureSet.new()
+	texture_set.set_mode(HTerrainTextureSet.MODE_TEXTURES)
+	texture_set.insert_slot(-1)
+	texture_set.set_texture(0, HTerrainTextureSet.TYPE_ALBEDO_BUMP, grass_texture)
+	# Create terrain node
+	var terrain = HTerrain.new()
+	terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
+	terrain.set_data(terrain_data)
+	terrain.set_texture_set(texture_set)
+	terrain._chunk_size = 16
+	terrain.lod_scale = 3
+	add_child(terrain, true)
+
+	# No need to call this, but you may need to if you edit the terrain later on
+	#terrain.update_collider()
 
 func player_join(id):
 	print("Joined player id: " + str(id))
@@ -945,3 +985,5 @@ func is_storm():
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("player"):
 		body.damage(100)
+
+
