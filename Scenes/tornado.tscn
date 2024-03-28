@@ -103,7 +103,6 @@ shape = SubResource("BoxShape3D_peyem")
 stream = ExtResource("3_ldgnu")
 volume_db = 80.0
 autoplay = true
-stream_paused = true
 max_distance = 1000.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]

@@ -6,9 +6,9 @@ var launch_interval = 5  # Intervalo de lanzamiento en segundos
 var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
 
-func _process(_delta):
-	await get_tree().create_timer(launch_interval).timeout
+func _ready():
 	_launch_fireball()
+
 
 func _launch_fireball():
 	# Instanciar una nueva bola de fuego y lanzarla
@@ -19,4 +19,5 @@ func _launch_fireball():
 	fireball.apply_impulse($Volcano_Collisions/ref_skeleton/Skeleton3D.get_bone_pose_position(2), launch_direction * launch_force)  # Aplicar fuerza para lanzar la bola de fuego
 	add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
-
+	await get_tree().create_timer(launch_interval).timeout
+	_launch_fireball()
