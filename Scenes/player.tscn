@@ -368,7 +368,7 @@ replication_config = SubResource("SceneReplicationConfig_8gfme")
 
 [node name="Underwater" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
+layer = 0
 
 [node name="ColorRect" type="ColorRect" parent="Underwater"]
 material = SubResource("ShaderMaterial_tl0tp")
@@ -380,7 +380,7 @@ grow_vertical = 2
 
 [node name="UnderLava" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
+layer = 0
 
 [node name="ColorRect" type="ColorRect" parent="UnderLava"]
 material = SubResource("ShaderMaterial_ynsy4")

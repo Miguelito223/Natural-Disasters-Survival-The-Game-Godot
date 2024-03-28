@@ -11,7 +11,7 @@ const SPEED_WALK = 5.0
 const JUMP_VELOCITY = 7
 const SENSIBILITY = 0.01
 
-@export var mass = randi_range(1,5)
+@export var mass = 1
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 

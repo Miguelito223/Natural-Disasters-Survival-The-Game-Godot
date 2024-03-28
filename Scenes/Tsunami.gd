@@ -23,6 +23,7 @@ func _physics_process(delta):
 func _on_area_3d_body_entered(body:Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = true
+		body.damage(5)
 
 
 func _on_area_3d_body_exited(body:Node3D):
