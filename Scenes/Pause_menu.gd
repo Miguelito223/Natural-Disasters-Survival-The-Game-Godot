@@ -215,7 +215,13 @@ func _on_reset_player_pressed():
 
 
 func _on_return_pressed():
-	self.hide()
+	if not Globals.is_networking:
+		get_tree().paused = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		self.hide()
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		self.hide()	
 
 func _on_volumen_music_value_changed(value):
 	Globals.volumen_music = value

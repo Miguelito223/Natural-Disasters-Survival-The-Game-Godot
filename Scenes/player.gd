@@ -169,10 +169,8 @@ func _process(delta):
 		
 		Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
 		
-		if Globals.is_raining:
-			$"Rain sound".play()
-		else:
-			$"Rain sound".stop()
+		if not $"Rain sound".playing:
+			$"Rain sound".playing = Globals.is_raining
 
 		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:
@@ -252,10 +250,8 @@ func _process(delta):
 
 		Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
 
-		if Globals.is_raining:
-			$"Rain sound".play()
-		else:
-			$"Rain sound".stop()
+		if not $"Rain sound".playing:
+			$"Rain sound".playing = Globals.is_raining
 
 		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:

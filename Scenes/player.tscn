@@ -276,13 +276,6 @@ shader_parameter/Shader_color = Color(1, 0.6, 0, 0.360784)
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_btpoi")
-id = null
-mass = null
-body_temperature = null
-body_wind = null
-Outdoor = null
-IsInWater = null
-IsInLava = null
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
@@ -602,6 +595,7 @@ scale = Vector2(9.75896, 11.5355)
 mouse_filter = 2
 
 [node name="List" type="VBoxContainer" parent="Players List Menu/Panel"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
