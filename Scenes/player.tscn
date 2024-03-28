@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
 [ext_resource type="AudioStream" uid="uid://cwlgb5p4ow3tr" path="res://Sounds/disasters/nature/wind_weak.wav" id="2_fjmn6"]
-[ext_resource type="Texture2D" uid="uid://srk0pveigh2u" path="res://Sprites/kenney_particle_pack/slash_01.png" id="2_uyiao"]
 [ext_resource type="Script" path="res://Scenes/Pause_menu.gd" id="2_vj7s0"]
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="3_kstye"]
 [ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
@@ -51,10 +50,10 @@ spread = 5.0
 initial_velocity_min = 30.0
 initial_velocity_max = 30.0
 color = Color(0.933333, 1, 1, 1)
+collision_mode = 2
 collision_use_scale = true
 sub_emitter_mode = 3
-sub_emitter_amount_at_collision = 1
-sub_emitter_keep_velocity = true
+sub_emitter_amount_at_collision = 15
 
 [sub_resource type="Curve" id="Curve_vyn2q"]
 max_value = 0.5
@@ -66,10 +65,10 @@ curve = SubResource("Curve_vyn2q")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y17jh"]
 transparency = 1
+cull_mode = 2
 shading_mode = 0
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
-albedo_texture = ExtResource("2_uyiao")
 billboard_mode = 3
 billboard_keep_scale = true
 particles_anim_h_frames = 1
@@ -77,19 +76,19 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_584xw"]
-emission_shape = 6
-emission_ring_axis = Vector3(0, 1, 0)
-emission_ring_height = 0.5
-emission_ring_radius = 50.0
-emission_ring_inner_radius = 4.0
-gravity = Vector3(0, 0, 0)
-color = Color(0, 0, 0.745098, 1)
-collision_mode = 1
-collision_friction = 0.0
-collision_bounce = 0.0
-collision_use_scale = true
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 20.0
+color = Color(0.933333, 1, 1, 1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_g5it5"]
+[sub_resource type="Curve" id="Curve_favg1"]
+_data = [Vector2(0.441176, 0.164835), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_jbecr"]
+sections = 2
+section_length = 0.1
+curve = SubResource("Curve_favg1")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yas20"]
 transparency = 1
@@ -286,18 +285,17 @@ material = SubResource("StandardMaterial3D_r4028")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, 0)
 layers = 1048575
 size = Vector3(2048, 2048, 2048)
+resolution = 5
 update_mode = 1
 follow_camera_enabled = true
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.7699, 0)
 material_override = SubResource("StandardMaterial3D_y4sl8")
-emitting = false
 amount = 1000
 sub_emitter = NodePath("../splash")
 lifetime = 2.0
 randomness = 0.44
-collision_base_size = 1.0
 visibility_aabb = AABB(-52.5862, -81.0138, -52.5908, 106.035, 82.2355, 103.329)
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_2km3b")
@@ -306,11 +304,12 @@ draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
 [node name="splash" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y17jh")
 amount = 1000
+lifetime = 0.3
 randomness = 1.0
-collision_base_size = 1.0
 visibility_aabb = AABB(-50.7625, -30.6958, -50.0889, 101.258, 61.3925, 100.798)
+trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_584xw")
-draw_pass_1 = SubResource("QuadMesh_g5it5")
+draw_pass_1 = SubResource("RibbonTrailMesh_jbecr")
 
 [node name="Dust" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.77, 0)
@@ -319,7 +318,6 @@ emitting = false
 amount = 1000
 lifetime = 5.0
 randomness = 1.0
-collision_base_size = 1.0
 visibility_aabb = AABB(-83.9725, -83.9735, -85.2592, 173.056, 95.2556, 170.528)
 process_material = SubResource("ParticleProcessMaterial_d0h3l")
 draw_pass_1 = SubResource("RibbonTrailMesh_jh2bo")
@@ -331,7 +329,6 @@ emitting = false
 amount = 1000
 lifetime = 5.0
 randomness = 1.0
-collision_base_size = 1.0
 visibility_aabb = AABB(-78.1474, -96.5119, -96.2781, 143.764, 97.7222, 180.52)
 process_material = SubResource("ParticleProcessMaterial_5dllp")
 draw_pass_1 = SubResource("QuadMesh_r5teo")
@@ -343,7 +340,6 @@ emitting = false
 amount = 1000
 lifetime = 5.0
 randomness = 1.0
-collision_base_size = 1.0
 visibility_aabb = AABB(-64.6803, -75.4599, -81.5125, 137.636, 80.7026, 156.326)
 process_material = SubResource("ParticleProcessMaterial_4yba3")
 draw_pass_1 = SubResource("QuadMesh_44xct")
