@@ -84,21 +84,20 @@ func is_below_sky(ply):
 	
 	return !result
 
-func calculate_exposed_area(player):
-	var map_size = Vector2(2048, 2048)  # Tamaño del mapa en unidades
+func calculate_exposed_area(player, range):
 	var cell_size = Vector2(64, 64)  # Tamaño de la celda en unidades
 	var exposed_cells = 0
 
-	for x in range(map_size.x / cell_size.x):
-		for z in range(map_size.y / cell_size.y):
+	for x in range(-range, range):
+		for z in range(-range, range):
 			var cell_center = Vector3(x * cell_size.x + cell_size.x / 2, player.global_position.y, z * cell_size.y + cell_size.y / 2)
 			var ray = PhysicsRayQueryParameters3D.create(player.global_position, cell_center, 1, [player])
 			var result = player.get_world_3d().direct_space_state.intersect_ray(ray)
 
-			if result.size() == 0:
+			if result.is_empty():
 				exposed_cells += 1
 
-	var total_cells = (map_size.x / cell_size.x) * (map_size.y / cell_size.y)
+	var total_cells = (range * 2) * (range * 2)  # Área total del rango cuadrado
 	var area_percentage = exposed_cells / total_cells
 	return clamp(area_percentage, 0, 1)
 
@@ -238,7 +237,7 @@ func _process(_delta):
 		Temperature = clamp(Temperature, -275.5, 275.5)
 		Humidity = clamp(Humidity, 0, 100)
 		bradiation = clamp(bradiation, 0, 100)
-		pressure = clamp(pressure , 0, INF)
+		pressure = clamp(pressure , 0, 100000)
 		oxygen = clamp(oxygen, 0, 100)
 
 		Temperature = lerp(Temperature, Temperature_target, 0.005)
@@ -256,7 +255,7 @@ func _process(_delta):
 		Temperature = clamp(Temperature, -275.5, 275.5)
 		Humidity = clamp(Humidity, 0, 100)
 		bradiation = clamp(bradiation, 0, 100)
-		pressure = clamp(pressure , 0, INF)
+		pressure = clamp(pressure , 0, 100000)
 		oxygen = clamp(oxygen, 0, 100)
 
 		Temperature = lerp(Temperature, Temperature_target, 0.005)
