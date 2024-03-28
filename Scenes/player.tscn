@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=46 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
+[ext_resource type="AudioStream" uid="uid://bcbahjxisvk4u" path="res://Sounds/disasters/nature/rain-light.wav" id="6_dfbmn"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
 [ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
 [ext_resource type="Shader" path="res://UnderWater.gdshader" id="7_787g2"]
@@ -275,6 +276,13 @@ shader_parameter/Shader_color = Color(1, 0.6, 0, 0.360784)
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("1_btpoi")
+id = null
+mass = null
+body_temperature = null
+body_wind = null
+Outdoor = null
+IsInWater = null
+IsInLava = null
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
@@ -306,8 +314,11 @@ draw_pass_1 = SubResource("RibbonTrailMesh_hmkji")
 
 [node name="splash" type="GPUParticles3D" parent="."]
 material_override = SubResource("StandardMaterial3D_y17jh")
+emitting = false
 amount = 1000
 lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
 randomness = 1.0
 visibility_aabb = AABB(-50.7625, -30.6958, -50.0889, 101.258, 61.3925, 100.798)
 trail_lifetime = 0.5
@@ -355,6 +366,9 @@ stream = ExtResource("2_8ny0w")
 
 [node name="Wind Extreme sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_qip45")
+
+[node name="Rain sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_dfbmn")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.171436)

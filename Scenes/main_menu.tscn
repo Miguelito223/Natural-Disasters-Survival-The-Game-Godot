@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dshrj55scr44d"]
+[gd_scene load_steps=5 format=3 uid="uid://dshrj55scr44d"]
 
 [ext_resource type="Script" path="res://Scenes/Main Menu.gd" id="1_r752f"]
 [ext_resource type="AudioStream" uid="uid://cjhfwfsyaih6q" path="res://Sounds/music/waiting-time-175800.mp3" id="2_0u7u3"]
 [ext_resource type="Theme" uid="uid://d2rqbtn68sval" path="res://pause_and_menu_theme.tres" id="2_8ye2w"]
+[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="3_wgml2"]
 
 [node name="Main Menu" type="Control"]
 process_mode = 3
@@ -22,6 +23,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_8ye2w")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 54.0
+offset_right = 926.0
+offset_bottom = 123.0
+scale = Vector2(2, 2)
+theme = ExtResource("2_8ye2w")
+text = "Natural Disaster The Game"
+
+[node name="Disasters" type="Sprite2D" parent="Title"]
+position = Vector2(697, 33)
+scale = Vector2(4.00438, 4.34087)
+texture = ExtResource("3_wgml2")
 
 [node name="Menu" type="VBoxContainer" parent="."]
 layout_mode = 0

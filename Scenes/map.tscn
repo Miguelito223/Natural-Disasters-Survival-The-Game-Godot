@@ -6,7 +6,6 @@
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
-fractal_weighted_strength = 1.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_rl2uy"]
 

@@ -166,6 +166,13 @@ func _process(delta):
 
 		$Underwater.visible = IsInWater
 		$UnderLava.visible = IsInLava	
+		
+		Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
+		
+		if Globals.is_raining:
+			$"Rain sound".play()
+		else:
+			$"Rain sound".stop()
 
 		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:
@@ -240,6 +247,15 @@ func _process(delta):
 			if randi_range(1,25) == 25:
 				damage(randi_range(1,30))
 
+		$Underwater.visible = IsInWater
+		$UnderLava.visible = IsInLava
+
+		Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
+
+		if Globals.is_raining:
+			$"Rain sound".play()
+		else:
+			$"Rain sound".stop()
 
 		if body_wind > 0 and body_wind < 50:
 			if not $"Wind sound".playing:
