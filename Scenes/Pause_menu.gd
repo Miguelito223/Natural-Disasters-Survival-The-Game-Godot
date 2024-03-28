@@ -39,6 +39,7 @@ func addresolutions():
 func _ready():
 
 	if not Globals.is_networking:
+		self.hide()
 		$Menu.show()
 		$Settings.hide()
 
@@ -54,8 +55,12 @@ func _ready():
 		$"Settings/Volumen Music".value = Globals.volumen_music
 		$Settings/Time.value = Globals.timer
 	else:
+
 		if not is_multiplayer_authority():
+			self.hide()
 			return
+
+		self.hide()
 
 		$Menu.show()
 		$Settings.hide()
@@ -206,7 +211,7 @@ func _on_fullscreen_toggled(toggled_on:bool):
 	Data.save_file()
 
 func _on_reset_player_pressed():
-	get_parent().setspawnpos()
+	get_parent()._reset_player()
 
 
 func _on_return_pressed():

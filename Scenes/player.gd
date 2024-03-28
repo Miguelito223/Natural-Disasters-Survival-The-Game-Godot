@@ -47,6 +47,7 @@ var min_bdradiation = 0
 @onready var dust_node = $Dust
 @onready var sand_node = $Sand
 @onready var snow_node = $Snow
+@onready var pause_menu_node = get_node("Pause menu")
 
 
 func _enter_tree():
@@ -64,20 +65,17 @@ func damage(value):
 func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
-		hearth = Max_Hearth
-		body_temperature = 37
-		body_oxygen = Max_oxygen
-		body_bradiation = min_bdradiation
 		print("you death")
-		setspawnpos()
+		
+		if not Globals.is_networking:
+			get_tree().paused = true
+		
+		$"Death Menu".show()
 		
 
 func _ready():
 	if Globals.is_networking:
-		$Head/Camera3D.current = is_multiplayer_authority()
-
-		get_node("Pause menu").visible = is_multiplayer_authority()
-
+		camera_node.current = is_multiplayer_authority()
 		rain_node.emitting = is_multiplayer_authority()
 		splash_node.emitting = is_multiplayer_authority()
 		sand_node.emitting = is_multiplayer_authority()
@@ -93,23 +91,18 @@ func _ready():
 		dust_node.emitting = false
 		snow_node.emitting = false
 
-		setspawnpos()
-
-		get_node("Pause menu").visible = false
+		_reset_player()
 
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 
-		$Head/Camera3D.current = true 
-
-		get_node("Pause menu").visible = false
-
+		camera_node.current = true 
 		rain_node.emitting = false
 		splash_node.emitting = false
 		sand_node.emitting = false
 		dust_node.emitting = false
 
-		setspawnpos()
+		_reset_player()
 
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)		
 
@@ -357,8 +350,11 @@ func _unhandled_input(event):
 			camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-40), deg_to_rad(60))		
 
 
-func setspawnpos():
-
+func _reset_player():
+	hearth = Max_Hearth
+	body_temperature = 37
+	body_oxygen = Max_oxygen
+	body_bradiation = min_bdradiation
 	var rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))

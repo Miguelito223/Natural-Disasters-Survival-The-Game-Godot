@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=43 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
+[ext_resource type="Script" path="res://Scenes/Death Menu.gd" id="9_jd7ok"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
@@ -369,6 +370,7 @@ replication_config = SubResource("SceneReplicationConfig_8gfme")
 [node name="Underwater" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 0
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Underwater"]
 material = SubResource("ShaderMaterial_tl0tp")
@@ -377,10 +379,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="UnderLava" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 0
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="UnderLava"]
 material = SubResource("ShaderMaterial_ynsy4")
@@ -389,10 +393,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Pause menu" type="CanvasLayer" parent="."]
 process_mode = 3
-visible = false
+layer = 2
 script = ExtResource("2_vj7s0")
 
 [node name="Panel" type="Panel" parent="Pause menu"]
@@ -509,6 +514,39 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
+[node name="Death Menu" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 2
+script = ExtResource("9_jd7ok")
+
+[node name="Panel" type="Panel" parent="Death Menu"]
+self_modulate = Color(1, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(47.9002, 27.0257)
+
+[node name="Buttons" type="VBoxContainer" parent="Death Menu"]
+offset_left = 474.0
+offset_top = 330.0
+offset_right = 781.0
+offset_bottom = 488.0
+scale = Vector2(3, 3)
+
+[node name="Return" type="Button" parent="Death Menu/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Return
+"
+
+[node name="Exit" type="Button" parent="Death Menu/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Exit
+"
+
 [node name="Players List Menu" type="CanvasLayer" parent="."]
 process_mode = 3
 script = ExtResource("8_u7k75")
@@ -519,6 +557,7 @@ offset_top = 288.0
 offset_right = 778.0
 offset_bottom = 328.0
 scale = Vector2(9.75896, 11.5355)
+mouse_filter = 2
 
 [node name="List" type="VBoxContainer" parent="Players List Menu/Panel"]
 layout_mode = 0
@@ -544,6 +583,7 @@ offset_top = 865.0
 offset_right = 45.0
 offset_bottom = 905.0
 scale = Vector2(8.35709, 5.28957)
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="Hud"]
 process_mode = 3
@@ -568,6 +608,7 @@ offset_top = 894.0
 offset_right = 248.0
 offset_bottom = 934.0
 scale = Vector2(2.92153, 3.89434)
+mouse_filter = 2
 
 [node name="Heart" type="Sprite2D" parent="Hud"]
 process_mode = 3
@@ -590,6 +631,7 @@ offset_top = 1.0
 offset_right = 754.0
 offset_bottom = 41.0
 scale = Vector2(9.91709, 5.28957)
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="Warning Hud"]
 process_mode = 3
@@ -606,6 +648,7 @@ offset_top = 27.0
 offset_right = 1021.0
 offset_bottom = 67.0
 scale = Vector2(2.92153, 3.89434)
+mouse_filter = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
 position = Vector2(1042, 102)
@@ -621,6 +664,7 @@ process_mode = 3
 offset_top = 606.0
 offset_right = 284.0
 offset_bottom = 770.0
+mouse_filter = 2
 editable = false
 
 [node name="LineEdit" type="LineEdit" parent="Chat"]
@@ -675,4 +719,6 @@ visibility_mode = 1
 [connection signal="value_changed" from="Pause menu/Settings/Volumen Music" to="Pause menu" method="_on_volumen_music_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]
 [connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]
+[connection signal="pressed" from="Death Menu/Buttons/Return" to="Death Menu" method="_on_return_pressed"]
+[connection signal="pressed" from="Death Menu/Buttons/Exit" to="Death Menu" method="_on_exit_pressed"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]
