@@ -69,6 +69,8 @@ func setlife(value):
 		
 		if not Globals.is_networking:
 			get_tree().paused = true
+
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		$"Death Menu".show()
 		

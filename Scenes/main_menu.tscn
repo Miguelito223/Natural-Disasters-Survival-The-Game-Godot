@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dshrj55scr44d"]
+[gd_scene load_steps=4 format=3 uid="uid://dshrj55scr44d"]
 
 [ext_resource type="Script" path="res://Scenes/Main Menu.gd" id="1_r752f"]
 [ext_resource type="AudioStream" uid="uid://cjhfwfsyaih6q" path="res://Sounds/music/waiting-time-175800.mp3" id="2_0u7u3"]
+[ext_resource type="Theme" uid="uid://d2rqbtn68sval" path="res://pause_and_menu_theme.tres" id="2_8ye2w"]
 
 [node name="Main Menu" type="Control"]
 process_mode = 3
@@ -20,6 +21,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_8ye2w")
 
 [node name="Menu" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -28,24 +30,29 @@ offset_top = 312.0
 offset_right = 815.0
 offset_bottom = 632.0
 scale = Vector2(3, 1.5)
+theme = ExtResource("2_8ye2w")
 
 [node name="singleplayer" type="Button" parent="Menu"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Singleplayer"
 
 [node name="multiplayer" type="Button" parent="Menu"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Multiplayer"
 
 [node name="Settings" type="Button" parent="Menu"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Settings"
 
 [node name="Exit" type="Button" parent="Menu"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Exit"
 
@@ -57,54 +64,65 @@ offset_top = 194.0
 offset_right = 843.0
 offset_bottom = 606.0
 scale = Vector2(3, 1.5)
+theme = ExtResource("2_8ye2w")
 
 [node name="username label" type="Label" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Username:"
 
 [node name="username" type="LineEdit" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "Michael2911"
 
 [node name="Ip label" type="Label" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "IP:"
 
 [node name="ip" type="LineEdit" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "127.0.0.1"
 
 [node name="port label" type="Label" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Port:"
 
 [node name="port" type="LineEdit" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "25565"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 alignment = 1
 
 [node name="join" type="Button" parent="Multiplayer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Join"
 
 [node name="host" type="Button" parent="Multiplayer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "host
 "
 
 [node name="Back" type="Button" parent="Multiplayer"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
@@ -115,67 +133,81 @@ offset_top = 230.0
 offset_right = 777.0
 offset_bottom = 698.0
 scale = Vector2(3, 1.5)
+theme = ExtResource("2_8ye2w")
 
 [node name="fps" type="CheckButton" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "FPS:"
 
 [node name="vsync" type="CheckButton" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Vsync:"
 
 [node name="antialiasing" type="CheckButton" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing:"
 
 [node name="Fullscreen" type="CheckButton" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen:"
 
 [node name="Resolutions Label" type="Label" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Resolution:"
 
 [node name="resolutions" type="OptionButton" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 
 [node name="Volumen Label" type="Label" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Volumen:"
 
 [node name="Volumen" type="HSlider" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 max_value = 1.0
 step = 0.001
 
 [node name="Volumen Music Label2" type="Label" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Music Volumen:"
 
 [node name="Volumen Music" type="HSlider" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 max_value = 1.0
 step = 0.001
 
 [node name="TIme label" type="Label" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Time disaster/weather:"
 
 [node name="Time" type="HSlider" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 max_value = 3600.0
 
 [node name="Back" type="Button" parent="Settings"]
 layout_mode = 2
+theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 

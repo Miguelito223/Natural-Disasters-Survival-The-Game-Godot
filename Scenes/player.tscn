@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=45 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -15,7 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
+[ext_resource type="Theme" uid="uid://d2rqbtn68sval" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scenes/Death Menu.gd" id="9_jd7ok"]
+[ext_resource type="Theme" uid="uid://6jofxtsod0ng" path="res://Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
@@ -407,6 +409,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_6lvyl")
 
 [node name="Menu" type="VBoxContainer" parent="Pause menu"]
 process_mode = 3
@@ -415,26 +418,31 @@ offset_top = 305.0
 offset_right = 815.0
 offset_bottom = 625.0
 scale = Vector2(3, 1.5)
+theme = ExtResource("9_6lvyl")
 
 [node name="Return" type="Button" parent="Pause menu/Menu"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 50
 text = "Return"
 
 [node name="Settings" type="Button" parent="Pause menu/Menu"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 50
 text = "Settings"
 
 [node name="Reset Player" type="Button" parent="Pause menu/Menu"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 50
 text = "Reset Player"
 
 [node name="Exit" type="Button" parent="Pause menu/Menu"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 50
 text = "Exit"
 
@@ -446,104 +454,124 @@ offset_top = 229.0
 offset_right = 766.0
 offset_bottom = 742.0
 scale = Vector2(3, 1.5)
+theme = ExtResource("9_6lvyl")
 
 [node name="fps" type="CheckButton" parent="Pause menu/Settings"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "FPS:"
 
 [node name="vsync" type="CheckButton" parent="Pause menu/Settings"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Vsync:"
 
 [node name="antialiasing" type="CheckButton" parent="Pause menu/Settings"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing:"
 
 [node name="Fullscreen" type="CheckButton" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen:"
 
 [node name="Resolutions Label" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Resolution:"
 
 [node name="resolutions" type="OptionButton" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 
 [node name="Volumen Label" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Volumen:"
 
 [node name="Volumen" type="HSlider" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 max_value = 1.0
 step = 0.001
 
 [node name="Volumen Music Label2" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Music Volumen:"
 
 [node name="Volumen Music" type="HSlider" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 max_value = 1.0
 step = 0.001
 
 [node name="TIme label" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Time disaster/weather:"
 
 [node name="Time" type="HSlider" parent="Pause menu/Settings"]
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 max_value = 3600.0
 
 [node name="Back" type="Button" parent="Pause menu/Settings"]
 process_mode = 3
 layout_mode = 2
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Death Menu" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 2
+visible = false
 script = ExtResource("9_jd7ok")
 
 [node name="Panel" type="Panel" parent="Death Menu"]
-self_modulate = Color(1, 0, 0, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2937.0
+offset_top = -2681.0
+offset_right = -2937.0
+offset_bottom = -2681.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(47.9002, 27.0257)
+theme = ExtResource("11_twqia")
 
 [node name="Buttons" type="VBoxContainer" parent="Death Menu"]
-offset_left = 474.0
-offset_top = 330.0
-offset_right = 781.0
-offset_bottom = 488.0
+offset_left = 510.0
+offset_top = 391.0
+offset_right = 817.0
+offset_bottom = 479.0
 scale = Vector2(3, 3)
+theme = ExtResource("11_twqia")
 
 [node name="Return" type="Button" parent="Death Menu/Buttons"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("11_twqia")
 text = "Return
 "
 
 [node name="Exit" type="Button" parent="Death Menu/Buttons"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
+theme = ExtResource("11_twqia")
 text = "Exit
 "
 
@@ -560,7 +588,6 @@ scale = Vector2(9.75896, 11.5355)
 mouse_filter = 2
 
 [node name="List" type="VBoxContainer" parent="Players List Menu/Panel"]
-layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 

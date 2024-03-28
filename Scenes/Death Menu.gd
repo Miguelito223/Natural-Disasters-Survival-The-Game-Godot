@@ -1,7 +1,6 @@
 extends CanvasLayer
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	self.hide()
 
 func _on_return_pressed():
