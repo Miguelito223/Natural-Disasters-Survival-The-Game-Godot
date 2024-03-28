@@ -2,13 +2,12 @@ extends Node3D
 
 # Variables para configurar el lanzamiento de bolas de fuego
 var fireball_scene = preload("res://Scenes/meteors.tscn")  # Escena de la bola de fuego
-var launch_interval = 2  # Intervalo de lanzamiento en segundos
+var launch_interval = 5  # Intervalo de lanzamiento en segundos
 var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
 
-func _ready():
-	# Llamar a la función _launch_fireball() cada 'launch_interval' segundos
-	set_process(true)
+func _process(_delta):
+	await get_tree().create_timer(launch_interval).timeout
 	_launch_fireball()
 
 func _launch_fireball():
@@ -20,7 +19,4 @@ func _launch_fireball():
 	fireball.apply_impulse($Volcano_Collisions/ref_skeleton/Skeleton3D.get_bone_pose_position(2), launch_direction * launch_force)  # Aplicar fuerza para lanzar la bola de fuego
 	add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
-	# Llamar nuevamente a la función _launch_fireball() después de 'launch_interval' segundos
-	await get_tree().create_timer(launch_interval).timeout
-	_launch_fireball()
 
