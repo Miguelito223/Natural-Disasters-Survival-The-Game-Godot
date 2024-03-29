@@ -110,8 +110,8 @@ properties/3/replication_mode = 1
 collision_layer = 255
 collision_mask = 255
 physics_material_override = SubResource("PhysicsMaterial_ph7js")
-max_contacts_reported = 50
 contact_monitor = true
+max_contacts_reported = 50
 script = ExtResource("1_hdxcr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

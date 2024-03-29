@@ -46,7 +46,7 @@ float hash(vec3 p) {
 	return fract(p.x * p.y * p.z * (p.x + p.y + p.z));
 }
 
-// Utility function that maps a value from one range to another. 
+// Utility function that maps a value from one range to another.
 float remap(float originalValue,  float originalMin,  float originalMax,  float newMin,  float newMax) {
 	return newMin + (((originalValue - originalMin) / (originalMax - originalMin)) * (newMax - newMin));
 }
@@ -107,8 +107,8 @@ vec3 atmosphere(vec3 eye_dir) {
 	return color;
 }
 
-float GetHeightFractionForPoint(float inPosition) { 
-	float height_fraction = (inPosition -  sky_b_radius) / (sky_t_radius - sky_b_radius); 
+float GetHeightFractionForPoint(float inPosition) {
+	float height_fraction = (inPosition -  sky_b_radius) / (sky_t_radius - sky_b_radius);
 	return clamp(height_fraction, 0.0, 1.0);
 }
 
@@ -181,11 +181,11 @@ vec4 march(vec3 pos,  vec3 end, vec3 dir, int depth) {
 	vec3 atmosphere_sun = atmosphere(LIGHT0_DIRECTION) * LIGHT0_ENERGY * ss * 0.1;
 	vec3 atmosphere_ambient = atmosphere(normalize(vec3(1.0, 1.0, 0.0)));
 	vec3 atmosphere_ground = atmosphere(normalize(vec3(1.0, -1.0, 0.0)));
-	
+
 	const float weather_scale = 0.00006;
 	float time = TIME * 0.001 + 0.005 * _time_offset;
 	vec2 weather_pos = time * normalize(wind_direction) * wind_speed;
-	
+
 	for (int i = 0; i < depth; i++) {
 		p += dir * ss;
 		vec3 weather_sample = texture(weathermap, p.xz * weather_scale + 0.5 + weather_pos).xyz;
@@ -207,14 +207,14 @@ vec4 march(vec3 pos,  vec3 end, vec3 dir, int depth) {
 				lt = density(lp, lweather, float(j));
 				cd += lt;
 			}
-			
+
 			// Take a single distant sample
 			lp = p + ldir * 18.0 * lss;
 			lheight_fraction = GetHeightFractionForPoint(length(lp));
 			vec3 lweather = texture(weathermap, lp.xz * weather_scale + 0.5).xyz;
 			lt = pow(density(lp, lweather, 5.0), (1.0 - lheight_fraction) * 0.8 + 0.5);
 			cd += lt;
-			
+
 			// captures the direct lighting from the sun
 			float beers = exp(-_density * cd * lss);
 			float beers2 = exp(-_density * cd * lss * 0.25) * 0.7;
@@ -249,7 +249,7 @@ void sky() {
 	} else {
 		col = vec4(atmosphere(dir), 1.0);
 	}
-	
+
 	// Draw to quarter res buffer for reflections
 	// Draw to half res buffer for main sky
 	if (AT_QUARTER_RES_PASS && AT_CUBEMAP_PASS) {

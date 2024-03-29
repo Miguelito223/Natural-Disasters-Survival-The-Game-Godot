@@ -361,41 +361,27 @@ func is_linghting_storm():
 
 	while current_weather_and_disaster == "Linghting storm":
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = player.is_multiplayer_authority()
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = true
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+			player = get_node("Player")
+
+
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = player.is_multiplayer_authority() or true
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 
 		var rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
 		var space_state = get_world_3d().direct_space_state
@@ -458,42 +444,29 @@ func is_blizzard():
 	Globals.Wind_speed_target = randi_range(40, 50)
 
 	while current_weather_and_disaster == "blizzard":
+		var player
+
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = true
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			player = get_node("Player")
+		
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 				
 			
 		await get_tree().create_timer(0.5).timeout	
@@ -509,42 +482,29 @@ func is_sandstorm():
 	Globals.Wind_speed_target = randi_range(30, 50)
 
 	while current_weather_and_disaster == "Sand Storm":
+		var player
+
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = player.is_multiplayer_authority()
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = true
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			player = get_node("Player")
+		
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = false
+			player.sand_node.emitting = player.is_multiplayer_authority() or true
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 0.647059, 0)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 			
 		await get_tree().create_timer(0.5).timeout
 
@@ -571,42 +531,30 @@ func is_volcano():
 	add_child(volcano, true)
 
 	while current_weather_and_disaster == "Volcano":
+		var player
+
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = player.is_multiplayer_authority()
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = true
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			player = get_node("Player")
+
+
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = player.is_multiplayer_authority() or true
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 			
 		await get_tree().create_timer(0.5).timeout
 
@@ -643,42 +591,31 @@ func is_tornado():
 	Globals.Wind_speed_target = randi_range(0, 30)
 
 	while current_weather_and_disaster == "Tornado":
+		var player
+
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting =  player.is_multiplayer_authority()
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = true
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)	
+			player = get_node("Player")
+
+	
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = player.is_multiplayer_authority() or true
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+
 
 
 		rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
@@ -716,42 +653,30 @@ func is_acid_rain():
 	Globals.Wind_speed_target = randi_range(0, 10)
 
 	while current_weather_and_disaster == "Acid rain":
+		var player
+
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = player.is_multiplayer_authority()
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)			
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = true
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)				
+			player = get_node("Player")
+
+
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = player.is_multiplayer_authority() or true
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(0,1,0)						
 
 		await get_tree().create_timer(0.5).timeout
 	
@@ -837,42 +762,29 @@ func is_cloud():
 
 
 	while current_weather_and_disaster == "Cloud":
+		var player
+		
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = get_node("Player")
+		
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)			
 		
 		await get_tree().create_timer(0.5).timeout
 
@@ -889,43 +801,30 @@ func is_raining():
 	Globals.Wind_speed_target = randi_range(0, 20)
 	
 	while current_weather_and_disaster == "Raining":
-		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = player.is_multiplayer_authority()
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
-		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = true
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+		var player
 		
+		if Globals.is_networking:
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+		else:
+			player = get_node("Player")
+		
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = player.is_multiplayer_authority() or true
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+
 		await get_tree().create_timer(0.5).timeout
 
 
@@ -940,43 +839,30 @@ func is_storm():
 	Globals.Wind_speed_target = randi_range(30, 60)
 
 	while current_weather_and_disaster == "Storm":
+		var player
+		
 		if Globals.is_networking:
-			var player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = player.is_multiplayer_authority()
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
-			var player = get_node("Player")
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = true
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
-
+			player = get_node("Player")
+		
+		if Globals.is_outdoor(player):
+			player.rain_node.emitting = player.is_multiplayer_authority()
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority()
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+		else:
+			player.rain_node.emitting = false
+			player.sand_node.emitting = false
+			player.dust_node.emitting = false
+			player.snow_node.emitting = false
+			$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+			$WorldEnvironment.environment.volumetric_fog_enabled = false
+			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
+	
 		await get_tree().create_timer(0.5).timeout
 
 
