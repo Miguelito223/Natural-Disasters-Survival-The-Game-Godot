@@ -315,13 +315,13 @@ func is_tsunami():
 	tsunami.position = Vector3(0,0,0)
 	add_child(tsunami, true)
 
-	Globals.Temperature_target = randi_range(20,31)
-	Globals.Humidity_target = randi_range(0,20)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 10)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Tsunami":
 		var player
@@ -349,17 +349,18 @@ func is_tsunami():
 
 func is_linghting_storm():
 
-	Globals.Temperature_target = randi_range(5,15)
-	Globals.Humidity_target = randi_range(30,40)
+	Globals.Temperature_target = randf_range(5,15)
+	Globals.Humidity_target = randf_range(30,40)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 30)
+	Globals.pressure_target = randf_range(8000,9000)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 30)
 
 
 
 	while current_weather_and_disaster == "Linghting storm":
+		var player 
 		if Globals.is_networking:
 			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
@@ -383,7 +384,7 @@ func is_linghting_storm():
 			$WorldEnvironment.environment.volumetric_fog_enabled = false
 			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 
-		var rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
+		var rand_pos = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 		var space_state = get_world_3d().direct_space_state
 		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		var result = space_state.intersect_ray(ray)				
@@ -392,7 +393,7 @@ func is_linghting_storm():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,4097),0,randi_range(0,4097))
+				lighting.position = Vector3(randf_range(0,4097),0,randf_range(0,4097))
 
 			add_child(lighting, true)
 
@@ -403,13 +404,13 @@ func is_linghting_storm():
 
 
 func is_meteor_shower():
-	Globals.Temperature_target = randi_range(20,31)
-	Globals.Humidity_target = randi_range(0,20)
-	Globals.pressure_target = randi_range(10000,10020)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
+	Globals.pressure_target = randf_range(10000,10020)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 10)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 	
 	while current_weather_and_disaster == "Meteor shower":
 		var player
@@ -429,19 +430,19 @@ func is_meteor_shower():
 
 
 		var meteor = meteor_scene.instantiate()
-		meteor.position = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
+		meteor.position = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 		add_child(meteor, true)
 
 		await get_tree().create_timer(0.5).timeout
 
 func is_blizzard():
-	Globals.Temperature_target =  randi_range(-20,-35)
-	Globals.Humidity_target = randi_range(20,30)
+	Globals.Temperature_target =  randf_range(-20,-35)
+	Globals.Humidity_target = randf_range(20,30)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(8000,9020)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(40, 50)
+	Globals.pressure_target = randf_range(8000,9020)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(40, 50)
 
 	while current_weather_and_disaster == "blizzard":
 		var player
@@ -473,13 +474,13 @@ func is_blizzard():
 
 
 func is_sandstorm():
-	Globals.Temperature_target =  randi_range(30,35)
-	Globals.Humidity_target = randi_range(0,5)
+	Globals.Temperature_target =  randf_range(30,35)
+	Globals.Humidity_target = randf_range(0,5)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(30, 50)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(30, 50)
 
 	while current_weather_and_disaster == "Sand Storm":
 		var player
@@ -509,15 +510,15 @@ func is_sandstorm():
 		await get_tree().create_timer(0.5).timeout
 
 func is_volcano():
-	Globals.Temperature_target =  randi_range(30,40)
-	Globals.Humidity_target = randi_range(0,10)
+	Globals.Temperature_target =  randf_range(30,40)
+	Globals.Humidity_target = randf_range(0,10)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 0
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 50)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 50)
 
-	var rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
+	var rand_pos = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)
@@ -526,7 +527,7 @@ func is_volcano():
 	if result.has("position"):
 		volcano.position = result.position
 	else:
-		volcano.position = Vector3(randi_range(0,4097),0,randi_range(0,4097))
+		volcano.position = Vector3(randf_range(0,4097),0,randf_range(0,4097))
 	
 	add_child(volcano, true)
 
@@ -569,7 +570,7 @@ func is_volcano():
 
 func is_tornado():
 
-	var rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
+	var rand_pos = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 	var space_state = get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)	
@@ -579,16 +580,16 @@ func is_tornado():
 	if result.has("position"):
 		tornado.position = result.position
 	else:
-		tornado.position = Vector3(randi_range(0,4097),0,randi_range(0,4097))
+		tornado.position = Vector3(randf_range(0,4097),0,randf_range(0,4097))
 	add_child(tornado, true)
 
-	Globals.Temperature_target =  randi_range(5,15)
-	Globals.Humidity_target = randi_range(30,40)
+	Globals.Temperature_target =  randf_range(5,15)
+	Globals.Humidity_target = randf_range(30,40)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 30)
+	Globals.pressure_target = randf_range(8000,9000)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 30)
 
 	while current_weather_and_disaster == "Tornado":
 		var player
@@ -618,7 +619,7 @@ func is_tornado():
 
 
 
-		rand_pos = Vector3(randi_range(0,4097),1000,randi_range(0,4097))
+		rand_pos = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 		space_state = get_world_3d().direct_space_state
 		ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 		result = space_state.intersect_ray(ray)			
@@ -628,7 +629,7 @@ func is_tornado():
 			if result.has("position"):
 				lighting.position = result.position
 			else:
-				lighting.position = Vector3(randi_range(0,4097),0,randi_range(0,4097))
+				lighting.position = Vector3(randf_range(0,4097),0,randf_range(0,4097))
 
 			add_child(lighting, true)
 
@@ -644,13 +645,13 @@ func is_tornado():
 
 
 func is_acid_rain():
-	Globals.Temperature_target = randi_range(20,31)
-	Globals.Humidity_target = randi_range(0,20)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
 	Globals.bradiation_target = 100
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 10)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Acid rain":
 		var player
@@ -682,13 +683,13 @@ func is_acid_rain():
 	
 
 func is_earthquake():
-	Globals.Temperature_target = randi_range(20,31)
-	Globals.Humidity_target = randi_range(0,20)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 10)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 
 	var earquake = earthquake_scene.instantiate()
 	add_child(earquake,true)
@@ -724,13 +725,13 @@ func is_earthquake():
 
 
 func is_sun():
-	Globals.Temperature_target = randi_range(20,31)
-	Globals.Humidity_target = randi_range(0,20)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(10000,10020)
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 10)
+	Globals.pressure_target = randf_range(10000,10020)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Sun":
 		var player
@@ -752,13 +753,13 @@ func is_sun():
 
 
 func is_cloud():
-	Globals.Temperature_target =  randi_range(20,25)
-	Globals.Humidity_target = randi_range(10,30)
+	Globals.Temperature_target =  randf_range(20,25)
+	Globals.Humidity_target = randf_range(10,30)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(9000,10000)
-	Globals.Wind_Direction_target = Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target =  randi_range(0, 10)
+	Globals.pressure_target = randf_range(9000,10000)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target =  randf_range(0, 10)
 
 
 	while current_weather_and_disaster == "Cloud":
@@ -792,13 +793,13 @@ func is_cloud():
 
 func is_raining():
 
-	Globals.Temperature_target =   randi_range(10,20)
-	Globals.Humidity_target =  randi_range(20,40)
+	Globals.Temperature_target =   randf_range(10,20)
+	Globals.Humidity_target =  randf_range(20,40)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(9000,9020)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(0, 20)
+	Globals.pressure_target = randf_range(9000,9020)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 20)
 	
 	while current_weather_and_disaster == "Raining":
 		var player
@@ -830,13 +831,13 @@ func is_raining():
 
 
 func is_storm():
-	Globals.Temperature_target =  randi_range(5,15)
-	Globals.Humidity_target = randi_range(30,40)
+	Globals.Temperature_target =  randf_range(5,15)
+	Globals.Humidity_target = randf_range(30,40)
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 100
-	Globals.pressure_target = randi_range(8000,9000)
-	Globals.Wind_Direction_target =  Vector2(randi_range(-1,1),randi_range(-1,1))
-	Globals.Wind_speed_target = randi_range(30, 60)
+	Globals.pressure_target = randf_range(8000,9000)
+	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(30, 60)
 
 	while current_weather_and_disaster == "Storm":
 		var player
