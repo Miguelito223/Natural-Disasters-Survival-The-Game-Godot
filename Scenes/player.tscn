@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
-[ext_resource type="Theme" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scenes/Death Menu.gd" id="9_jd7ok"]
 [ext_resource type="Theme" path="res://Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
@@ -459,7 +459,7 @@ shader_parameter/speed = 1.0
 shader_parameter/Shader_color = Color(1, 0.6, 0, 0.360784)
 
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 script = ExtResource("1_btpoi")
 metadata/_edit_horizontal_guides_ = [-952.0]
 
@@ -513,7 +513,7 @@ bones/4/parent = 3
 bones/4/rest = Transform3D(1, -0.000138256, 1.37828e-07, 0.000138199, 0.999618, 0.027635, -3.95847e-06, -0.027635, 0.999618, -9.57567e-16, 0.766354, -1.89175e-07)
 bones/4/enabled = true
 bones/4/position = Vector3(-9.57567e-16, 0.766354, -1.89175e-07)
-bones/4/rotation = Quaternion(0.622397, -0.214109, 0.196826, 0.726663)
+bones/4/rotation = Quaternion(0.621213, 0.218494, -0.200836, 0.725272)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "brazo_inferior.d"
 bones/5/parent = 4
@@ -534,7 +534,7 @@ bones/7/parent = 6
 bones/7/rest = Transform3D(1, 3.95424e-18, -3.52114e-20, -3.95424e-18, 0.999841, -0.0178084, -3.52128e-20, 0.0178084, 0.999841, 7.45058e-09, 0.721442, 1.3411e-07)
 bones/7/enabled = true
 bones/7/position = Vector3(7.45058e-09, 0.721442, 1.3411e-07)
-bones/7/rotation = Quaternion(-0.612607, -0.21933, -0.194947, 0.733896)
+bones/7/rotation = Quaternion(-0.572073, 0.336797, 0.299355, 0.685337)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "brazo_inferior.i"
 bones/8/parent = 7
@@ -562,14 +562,14 @@ bones/11/parent = 10
 bones/11/rest = Transform3D(-0.999974, -0.00436537, 0.00581706, -0.00592073, 0.0241228, -0.999691, 0.0042237, -0.999699, -0.024148, 9.8194e-10, 0.384886, -2.87218e-09)
 bones/11/enabled = true
 bones/11/position = Vector3(9.8194e-10, 0.384886, -2.87218e-09)
-bones/11/rotation = Quaternion(-0.139335, 0.701273, -0.686476, -0.132487)
+bones/11/rotation = Quaternion(0.133579, 0.703553, -0.684825, 0.134853)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/name = "pierna_inferior.d"
 bones/12/parent = 11
 bones/12/rest = Transform3D(0.999643, -0.0189994, -0.01878, 0.0187942, 0.999762, -0.0110474, 0.0189855, 0.0106905, 0.999763, -6.98492e-09, 2.12904, -9.54606e-09)
 bones/12/enabled = true
 bones/12/position = Vector3(-6.98492e-09, 2.12904, -9.54606e-09)
-bones/12/rotation = Quaternion(0.0049758, -0.00965055, -0.0768757, 0.996982)
+bones/12/rotation = Quaternion(0.00543503, -0.00944236, 0.00944938, 0.999896)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/name = "cadera.i"
 bones/13/parent = 0
@@ -583,14 +583,14 @@ bones/14/parent = 13
 bones/14/rest = Transform3D(0.998807, -0.0246589, -0.0421602, 0.0422196, 0.00189155, 0.999107, -0.0245572, -0.999694, 0.0029304, -3.51332e-09, 0.327296, -2.42107e-09)
 bones/14/enabled = true
 bones/14/position = Vector3(-3.51332e-09, 0.327296, -2.42107e-09)
-bones/14/rotation = Quaternion(-0.694766, 0.111639, 0.13986, 0.696618)
+bones/14/rotation = Quaternion(-0.691263, -0.159459, -0.135302, 0.69168)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "pierna_inferior.i"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.998071, 0.0449051, 0.0428617, -0.0432015, 0.99827, -0.0398786, -0.0445783, 0.03795, 0.998285, 0, 2.16872, -1.80444e-08)
 bones/15/enabled = true
 bones/15/position = Vector3(0, 2.16872, -1.80444e-08)
-bones/15/rotation = Quaternion(0.0195285, 0.0209959, -0.13685, 0.990177)
+bones/15/rotation = Quaternion(0.0195114, 0.021937, -0.00934479, 0.999525)
 bones/15/scale = Vector3(1, 1, 1)
 
 [node name="Brazos" type="MeshInstance3D" parent="Mi personaje/Esqueleto/Skeleton3D"]

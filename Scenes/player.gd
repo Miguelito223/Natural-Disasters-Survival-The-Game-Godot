@@ -218,21 +218,24 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (head_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
+	var direction = (head_node.transform.basis  * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 		else:
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
 			velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 7.0)
+			mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
+		mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 
 
 	if velocity.x > 0 or velocity.z > 0:
-		animationplayer_node.play()
+		animationplayer_node.play("EsqueletoAction")
 	else:
 		animationplayer_node.stop()
 
@@ -255,10 +258,7 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		head_node.rotate_y(-event.relative.x * SENSIBILITY)
 		camera_node.rotate_x(-event.relative.y * SENSIBILITY)
-		mi_personaje_node.rotate_x(-event.relative.y * SENSIBILITY)
 		camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-		mi_personaje_node.rotation.x = clamp(mi_personaje_node.rotation.x, deg_to_rad(-40), deg_to_rad(60))
-
 
 func _reset_player():
 	hearth = Max_Hearth
