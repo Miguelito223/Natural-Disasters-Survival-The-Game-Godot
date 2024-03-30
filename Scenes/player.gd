@@ -53,6 +53,7 @@ var min_bdradiation = 0
 @onready var snow_node = $Snow
 @onready var pause_menu_node = $"Pause menu"
 @onready var animationplayer_node = $"Mi personaje/AnimationPlayer"
+@onready var animation_tree_node = $AnimationTree
 @onready var mi_personaje_node = $"Mi personaje"
 
 
@@ -208,6 +209,10 @@ func _physics_process(delta):
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+	elif Input.is_action_pressed("ui_accept") and not is_on_floor():
+		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+	else:
+		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
 
 	if Input.is_action_just_pressed("ui_accept") and IsInWater:
 		velocity.y += JUMP_VELOCITY
@@ -227,16 +232,17 @@ func _physics_process(delta):
 			velocity.z = direction.z * SPEED
 		else:
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
-			velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 7.0)
+			velocity.z = lerp(velocity.z,  direction.z * SPEED, delta * 7.0)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
 
-
-	if velocity.x > 0 or velocity.z > 0 or velocity.x < 0 or velocity.z < 0:
-		animationplayer_node.play("EsqueletoAction")
+	animation_tree_node.set("parameters/is_on_floor/transition_request", is_on_floor())
+	
+	if input_dir.x != 0 or input_dir.y != 0:
+		animation_tree_node.set("parameters/movement/transition_request", "walk")
 	else:
-		animationplayer_node.stop()
+		animation_tree_node.set("parameters/movement/transition_request", "idle")
 	
 	move_and_slide()
 
