@@ -52,8 +52,8 @@ var min_bdradiation = 0
 @onready var sand_node = $Sand
 @onready var snow_node = $Snow
 @onready var pause_menu_node = get_node("Pause menu")
-@onready var animationplayer_node = $"Mi personaje/Esqueleto/AnimationPlayer"
-@onready var mi_personaje_node = $"Mi personaje/Esqueleto/AnimationPlayer"
+@onready var animationplayer_node = $"Mi personaje/AnimationPlayer"
+@onready var mi_personaje_node = $"Mi personaje"
 
 
 func _enter_tree():
@@ -218,7 +218,7 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (head_node.transform.basis * mi_personaje_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
+	var direction = (head_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * SPEED
