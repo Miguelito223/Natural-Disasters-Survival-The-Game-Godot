@@ -18,7 +18,7 @@
 [ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scenes/Death Menu.gd" id="9_jd7ok"]
-[ext_resource type="Theme" path="res://Death_Screen_theme.tres" id="11_twqia"]
+[ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
@@ -470,6 +470,7 @@ shape = SubResource("BoxShape3D_2qft6")
 [node name="Mi personaje" type="Node3D" parent="."]
 
 [node name="Esqueleto" type="Node3D" parent="Mi personaje"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="Skeleton3D" type="Skeleton3D" parent="Mi personaje/Esqueleto"]
 bones/0/name = "clumna1"
@@ -598,7 +599,7 @@ mesh = SubResource("ArrayMesh_0g7m5")
 skin = SubResource("Skin_3biv8")
 
 [node name="Camera3D" type="Camera3D" parent="Mi personaje"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.842, 3.204, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0325384, 3.204, -2.57097)
 current = true
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Mi personaje/Camera3D"]
@@ -610,7 +611,7 @@ libraries = {
 }
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.35376, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
 layers = 1048575
 size = Vector3(2048, 2048, 2048)
 resolution = 5
