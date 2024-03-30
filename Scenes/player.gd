@@ -10,6 +10,7 @@ const SPEED_RUN = 15.0
 const SPEED_WALK = 5.0
 const JUMP_VELOCITY = 7.0
 const SENSIBILITY = 0.01
+const LERP_VAL =  .15
 
 const bob_freq = 2.0
 const bob_am = 0.08
@@ -44,16 +45,17 @@ var min_bdradiation = 0
 
 
 
-@onready var head_node =  self.get_node("Head")
-@onready var camera_node =  self.get_node("Head/Camera3D")
+@onready var camera_node = $"Mi personaje/Camera3D"
 @onready var rain_node = $Rain
 @onready var splash_node = $splash
 @onready var dust_node = $Dust
 @onready var sand_node = $Sand
 @onready var snow_node = $Snow
-@onready var pause_menu_node = get_node("Pause menu")
+@onready var pause_menu_node = $"Pause menu"
 @onready var animationplayer_node = $"Mi personaje/AnimationPlayer"
 @onready var mi_personaje_node = $"Mi personaje"
+
+
 
 
 func _enter_tree():
@@ -218,36 +220,26 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (head_node.transform.basis  * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
+	var direction = (mi_personaje_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
-			mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 		else:
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
 			velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 7.0)
-			mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 	else:
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
-		mi_personaje_node.rotation.y = lerp_angle(mi_personaje_node.rotation.y, atan2(-velocity.x, -velocity.z), 0.005)
 
 
-	if velocity.x > 0 or velocity.z > 0:
+	if velocity.x > 0 or velocity.z > 0 or velocity.x < 0 or velocity.z < 0:
 		animationplayer_node.play("EsqueletoAction")
 	else:
 		animationplayer_node.stop()
-
-	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera_node.transform.origin = _headhob(t_bob)
 	
 	move_and_slide()
 
-func _headhob(time):
-	var pos = Vector3.ZERO
-	pos.y = sin(time*bob_freq) * bob_am
-	return pos
 
 
 func _unhandled_input(event):
@@ -256,9 +248,11 @@ func _unhandled_input(event):
 			return
 
 	if event is InputEventMouseMotion:
-		head_node.rotate_y(-event.relative.x * SENSIBILITY)
+		mi_personaje_node.rotate_y(-event.relative.x * SENSIBILITY)
 		camera_node.rotate_x(-event.relative.y * SENSIBILITY)
-		camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+
+
 
 func _reset_player():
 	hearth = Max_Hearth

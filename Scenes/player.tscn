@@ -24,7 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2qft6"]
-size = Vector3(0.379028, 2.52252, 0.481873)
+size = Vector3(0.379028, 2.59024, 0.481873)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pq26y"]
 resource_name = "Brazos"
@@ -464,16 +464,8 @@ script = ExtResource("1_btpoi")
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="Collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(10.3719, 0, 0, 0, 3.42988, 0, 0, 0, 7.58116, 0, 0, 0)
+transform = Transform3D(10.3719, 0, 0, 0, 3.42988, 0, 0, 0, 7.58116, 0, 0.116133, 0)
 shape = SubResource("BoxShape3D_2qft6")
-
-[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1.35376, 0)
-layers = 1048575
-size = Vector3(2048, 2048, 2048)
-resolution = 5
-update_mode = 1
-follow_camera_enabled = true
 
 [node name="Mi personaje" type="Node3D" parent="."]
 
@@ -513,7 +505,7 @@ bones/4/parent = 3
 bones/4/rest = Transform3D(1, -0.000138256, 1.37828e-07, 0.000138199, 0.999618, 0.027635, -3.95847e-06, -0.027635, 0.999618, -9.57567e-16, 0.766354, -1.89175e-07)
 bones/4/enabled = true
 bones/4/position = Vector3(-9.57567e-16, 0.766354, -1.89175e-07)
-bones/4/rotation = Quaternion(0.621213, 0.218494, -0.200836, 0.725272)
+bones/4/rotation = Quaternion(0.650518, -4.49166e-05, 5.25467e-05, 0.759491)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "brazo_inferior.d"
 bones/5/parent = 4
@@ -534,7 +526,7 @@ bones/7/parent = 6
 bones/7/rest = Transform3D(1, 3.95424e-18, -3.52114e-20, -3.95424e-18, 0.999841, -0.0178084, -3.52128e-20, 0.0178084, 0.999841, 7.45058e-09, 0.721442, 1.3411e-07)
 bones/7/enabled = true
 bones/7/position = Vector3(7.45058e-09, 0.721442, 1.3411e-07)
-bones/7/rotation = Quaternion(-0.572073, 0.336797, 0.299355, 0.685337)
+bones/7/rotation = Quaternion(-0.640818, 3.18371e-18, -1.47699e-18, 0.767693)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "brazo_inferior.i"
 bones/8/parent = 7
@@ -562,7 +554,7 @@ bones/11/parent = 10
 bones/11/rest = Transform3D(-0.999974, -0.00436537, 0.00581706, -0.00592073, 0.0241228, -0.999691, 0.0042237, -0.999699, -0.024148, 9.8194e-10, 0.384886, -2.87218e-09)
 bones/11/enabled = true
 bones/11/position = Vector3(9.8194e-10, 0.384886, -2.87218e-09)
-bones/11/rotation = Quaternion(0.133579, 0.703553, -0.684825, 0.134853)
+bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/name = "pierna_inferior.d"
 bones/12/parent = 11
@@ -583,14 +575,14 @@ bones/14/parent = 13
 bones/14/rest = Transform3D(0.998807, -0.0246589, -0.0421602, 0.0422196, 0.00189155, 0.999107, -0.0245572, -0.999694, 0.0029304, -3.51332e-09, 0.327296, -2.42107e-09)
 bones/14/enabled = true
 bones/14/position = Vector3(-3.51332e-09, 0.327296, -2.42107e-09)
-bones/14/rotation = Quaternion(-0.691263, -0.159459, -0.135302, 0.69168)
+bones/14/rotation = Quaternion(-0.706042, -0.00621797, 0.0236237, 0.707748)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "pierna_inferior.i"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.998071, 0.0449051, 0.0428617, -0.0432015, 0.99827, -0.0398786, -0.0445783, 0.03795, 0.998285, 0, 2.16872, -1.80444e-08)
 bones/15/enabled = true
 bones/15/position = Vector3(0, 2.16872, -1.80444e-08)
-bones/15/rotation = Quaternion(0.0195114, 0.021937, -0.00934479, 0.999525)
+bones/15/rotation = Quaternion(0.0195114, 0.021937, -0.0093448, 0.999525)
 bones/15/scale = Vector3(1, 1, 1)
 
 [node name="Brazos" type="MeshInstance3D" parent="Mi personaje/Esqueleto/Skeleton3D"]
@@ -605,10 +597,25 @@ skin = SubResource("Skin_3biv8")
 mesh = SubResource("ArrayMesh_0g7m5")
 skin = SubResource("Skin_3biv8")
 
+[node name="Camera3D" type="Camera3D" parent="Mi personaje"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.842, 3.204, 0)
+current = true
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Mi personaje/Camera3D"]
+shadow_enabled = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Mi personaje"]
 libraries = {
 "": SubResource("AnimationLibrary_au5ux")
 }
+
+[node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.35376, -1)
+layers = 1048575
+size = Vector3(2048, 2048, 2048)
+resolution = 5
+update_mode = 1
+follow_camera_enabled = true
 
 [node name="Rain" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 32.7699, 0)
@@ -679,16 +686,6 @@ stream = ExtResource("4_qip45")
 
 [node name="Rain sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_dfbmn")
-
-[node name="Head" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.28909, 2.70415, -0.027971)
-
-[node name="Camera3D" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0307612, 0.608149, -0.407722)
-current = true
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Head/Camera3D"]
-shadow_enabled = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8gfme")
