@@ -38,45 +38,32 @@ func addresolutions():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-	if not Globals.is_networking:
-		self.hide()
-		$Menu.show()
-		$Settings.hide()
-
-		addresolutions()
-		DisplayServer.window_set_size(Globals.resolution)
-		get_viewport().set_size(Globals.resolution)
-
-		$Settings/fps.button_pressed = Globals.FPS
-		$Settings/vsync.button_pressed = Globals.vsync
-		$Settings/Fullscreen.button_pressed = Globals.fullscreen
-		$Settings/antialiasing.button_pressed = Globals.antialiasing
-		$Settings/Volumen.value = Globals.volumen
-		$"Settings/Volumen Music".value = Globals.volumen_music
-		$Settings/Time.value = Globals.timer
-	else:
-
+	if Globals.is_networking:
 		if not is_multiplayer_authority():
 			self.hide()
 			return
 
-		self.hide()
 
-		$Menu.show()
-		$Settings.hide()
+	self.hide()
+	$Menu.show()
+	$Settings.hide()
 
-		addresolutions()
-		DisplayServer.window_set_size(Globals.resolution)
-		get_viewport().set_size(Globals.resolution)
+	addresolutions()
+	DisplayServer.window_set_size(Globals.resolution)
+	get_viewport().set_size(Globals.resolution)
 
-		$Settings/fps.button_pressed = Globals.FPS
-		$Settings/vsync.button_pressed = Globals.vsync
-		$Settings/Fullscreen.button_pressed = Globals.fullscreen
-		$Settings/antialiasing.button_pressed = Globals.antialiasing
-		$Settings/Volumen.value = Globals.volumen
+	$Settings/fps.button_pressed = Globals.FPS
+	$Settings/vsync.button_pressed = Globals.vsync
+	$Settings/Fullscreen.button_pressed = Globals.fullscreen
+	$Settings/antialiasing.button_pressed = Globals.antialiasing
+	$Settings/Volumen.value = Globals.volumen
+	$"Settings/Volumen Music".value = Globals.volumen_music
+	$Settings/Time.value = Globals.timer
 
-		if get_tree().get_multiplayer().is_server():
-			$Settings/Time.value = Globals.timer
+
+
+
+
 
 
 func _on_ip_text_changed(new_text:String):

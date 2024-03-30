@@ -56,6 +56,8 @@ func _ready():
 
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			player_join(1)
+			Globals.synchronize_timer(Globals.timer)
+			
 		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			Globals.synchronize_timer(Globals.timer)
 		
@@ -361,6 +363,7 @@ func is_linghting_storm():
 
 	while current_weather_and_disaster == "Linghting storm":
 		var player 
+		
 		if Globals.is_networking:
 			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
 		else:
