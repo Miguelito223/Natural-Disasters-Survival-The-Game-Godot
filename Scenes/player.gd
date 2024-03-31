@@ -74,7 +74,7 @@ func damage(value):
 func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
-		print("you death")
+		print("you death :O")
 		
 		if not Globals.is_networking:
 			get_tree().paused = true
@@ -85,6 +85,7 @@ func setlife(value):
 		
 
 func _ready():
+
 	if Globals.is_networking:
 		if not is_multiplayer_authority():
 			camera_node.current = is_multiplayer_authority()
@@ -95,11 +96,14 @@ func _ready():
 			snow_node.emitting = is_multiplayer_authority()
 			return
 
+
 	rain_node.emitting = false
 	sand_node.emitting = false
 	splash_node.emitting = false
 	dust_node.emitting = false
 	snow_node.emitting = false
+
+	print("Im the player id: " + str(id))
 
 	_reset_player()
 
@@ -261,6 +265,12 @@ func _unhandled_input(event):
 
 
 func _reset_player():
+	if Globals.is_networking:
+		if not is_multiplayer_authority():
+			return
+
+	print("Resetting player :(")
+
 	hearth = Max_Hearth
 	body_temperature = 37
 	body_oxygen = Max_oxygen
@@ -274,4 +284,6 @@ func _reset_player():
 		position = result.position + Vector3(0,5,0)
 	else:
 		position = rand_pos
+
+	print("Finish Resetting player :D")
 

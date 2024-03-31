@@ -74,7 +74,7 @@ func generate_seed():
 			noise_seed = randi()
 
 @rpc("call_local", "any_peer")
-func receive_seeds(received_noise_seed, player_id):
+func receive_seeds(player_id, received_noise_seed):
 	print("Recibiendo semillas del jugador ", player_id)
 	noise_seed = received_noise_seed
 	generate_terrain(received_noise_seed, player_id)
@@ -91,8 +91,8 @@ func generate_terrain(received_noise_seed, player_id):
 	var splatmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_SPLAT)
 
 	
-	for z in heightmap.get_height():
-		for x in heightmap.get_width():
+	for z in range(heightmap.get_height()):
+		for x in range(heightmap.get_width()):
 			# Generate height
 			var h = noise_multiplier * noise.get_noise_2d(x, z)
 
@@ -144,7 +144,7 @@ func player_join(peer_id):
 	Globals.map = self
 
 	if get_tree().get_multiplayer().is_server():
-		receive_seeds.rpc_id(peer_id, noise_seed, peer_id)
+		receive_seeds.rpc_id(peer_id, noise_seed)
 		Globals.synchronize_timer(Globals.timer)
 	else:
 		print("Not the server!!")
