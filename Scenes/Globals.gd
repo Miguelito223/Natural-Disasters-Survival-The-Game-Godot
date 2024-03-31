@@ -53,7 +53,9 @@ var Wind_speed_original: float = 0
 var seconds = Time.get_unix_time_from_system()
 
 @onready var main = get_tree().root.get_node("Main")
-var map 
+@onready var main_menu = get_tree().root.get_node("Main/Main Menu")
+@onready var map = get_tree().root.get_node("Main/map")
+
 var map_scene = preload("res://Scenes/map.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
@@ -274,7 +276,7 @@ func _process(_delta):
 		oxygen = lerp(oxygen, oxygen_target, 0.005)
 		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
 		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
-
+		
 		sync_temp.rpc(Temperature)
 		sync_humidity.rpc(Humidity)
 		sync_wind_speed.rpc(Wind_speed)
@@ -305,9 +307,41 @@ func joinwithip(ip_str, port_int):
 		if not get_tree().get_multiplayer().is_server():
 			is_networking = true
 			main.get_node("Main Menu").hide()
+			get_tree().get_multiplayer().connection_failed.connect(server_fail)
+			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
+			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
 	else:
 		print("Fatal Error in client")
 
+func server_fail():
+	print("client disconected: failed to load")
+	Temperature_target = Temperature_original
+	Humidity_target = Humidity_original
+	pressure_target = pressure_original
+	Wind_Direction_target = Wind_Direction_original
+	Wind_speed_target = Wind_speed_original
+	players_conected_array.clear()
+	players_conected_int = players_conected_array.size()
+	if is_instance_valid(map):
+		map.queue_free()
+	main_menu.show()
+	
+func server_disconect():
+	print("client disconected")
+	Temperature_target = Temperature_original
+	Humidity_target = Humidity_original
+	pressure_target = pressure_original
+	Wind_Direction_target = Wind_Direction_original
+	Wind_speed_target = Wind_speed_original
+	players_conected_array.clear()
+	players_conected_int = players_conected_array.size()
+	if is_instance_valid(map):
+		map.queue_free()
+	main_menu.show()
+
+
+func server_connected():
+	print("connected to server :)")
 
 func UPNP_setup():
 	var upnp = UPNP.new()

@@ -37,6 +37,12 @@ func _exit_tree():
 	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
+	get_tree().get_multiplayer().peer_connected.disconnect(player_join)
+	get_tree().get_multiplayer().peer_disconnected.disconnect(player_disconect)
+	get_tree().get_multiplayer().server_disconnected.disconnect(Globals.server_disconect)
+	get_tree().get_multiplayer().connected_to_server.disconnect(Globals.server_connected)
+	get_tree().get_multiplayer().connection_failed.disconnect(Globals.server_fail)
+
 func _enter_tree():
 	Globals.map = self
 
@@ -51,10 +57,6 @@ func _ready():
 
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
 		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
-		get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
-		get_tree().get_multiplayer().connected_to_server.connect(server_connected)
-		get_tree().get_multiplayer().connection_failed.connect(server_fail)
-
 
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()	
@@ -80,14 +82,13 @@ func generate_seed():
 func receive_seeds(received_noise_seed):
 	print("Recibiendo semillas del jugador")
 	noise_seed = received_noise_seed
-	generate_terrain(received_noise_seed)
+	noise.seed = noise_seed
+	generate_terrain()
 
-func generate_terrain(received_noise_seed):
+func generate_terrain():
 	print("Generating terrain for player")
 	var terrain_data = HTerrainData.new()
 	terrain_data.resize(4097)
-
-	noise.seed = received_noise_seed
 
 	var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
 	var normalmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_NORMAL)
@@ -141,12 +142,12 @@ func player_join(peer_id):
 	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
 	Globals.players_conected_list[peer_id] = player
-	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	Globals.players_conected_int = Globals.players_conected_array.size()
 	add_child(player, true)
 
 	if get_tree().get_multiplayer().is_server():
 		print("syncring map and timer")
-		receive_seeds.rpc_id(peer_id, self.noise_seed)
+		self.receive_seeds.rpc_id(peer_id, self.noise_seed)
 		Globals.synchronize_timer(Globals.timer)
 		print("finish :D")
 
@@ -154,39 +155,11 @@ func player_disconect(peer_id):
 	print("Disconected player id: " + str(peer_id))
 	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
+		print("the instance is valid")
 		Globals.players_conected_array.erase(player)
 		Globals.players_conected_list.erase(peer_id)
-		Globals.players_conected_int = Globals.players_conected_array.size() - 1
+		Globals.players_conected_int = Globals.players_conected_array.size()
 		player.queue_free()
-
-func server_disconect():
-	print("client disconected")
-	Globals.Temperature_target = Globals.Temperature_original
-	Globals.Humidity_target = Globals.Humidity_original
-	Globals.pressure_target = Globals.pressure_original
-	Globals.Wind_Direction_target = Globals.Wind_Direction_original
-	Globals.Wind_speed_target = Globals.Wind_speed_original
-	Globals.players_conected_array.clear()
-	Globals.players_conected_int = Globals.players_conected_array.size()
-	self.queue_free()
-	get_parent().get_node("Main Menu").show()
-
-
-func server_fail():
-	print("client disconected: failed to load")
-	Globals.Temperature_target = Globals.Temperature_original
-	Globals.Humidity_target = Globals.Humidity_original
-	Globals.pressure_target = Globals.pressure_original
-	Globals.Wind_Direction_target = Globals.Wind_Direction_original
-	Globals.Wind_speed_target = Globals.Wind_speed_original
-	Globals.players_conected_array.clear()
-	Globals.players_conected_int = Globals.players_conected_array.size()
-	self.queue_free()
-	get_parent().get_node("Main Menu").show()
-
-
-func server_connected():
-	print("connected to server :)")
 
 func wind(object):
 	# Verificar si el objeto es un jugador
@@ -872,10 +845,5 @@ func is_storm():
 			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 	
 		await get_tree().create_timer(0.5).timeout
-
-
-func _on_area_3d_body_entered(body):
-	if body.is_in_group("player"):
-		body.damage(100)
 
 

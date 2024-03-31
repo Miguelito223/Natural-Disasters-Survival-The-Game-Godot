@@ -45,16 +45,16 @@ var min_bdradiation = 0
 
 
 
-@onready var camera_node = $"Mi personaje/Camera3D"
+@onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
 @onready var splash_node = $splash
 @onready var dust_node = $Dust
 @onready var sand_node = $Sand
 @onready var snow_node = $Snow
 @onready var pause_menu_node = $"Pause menu"
-@onready var animationplayer_node = $"Mi personaje/AnimationPlayer"
+@onready var animationplayer_node = $"Model/AnimationPlayer"
 @onready var animation_tree_node = $AnimationTree
-@onready var mi_personaje_node = $"Mi personaje"
+@onready var mi_personaje_node = $"Model"
 
 
 
@@ -87,13 +87,14 @@ func setlife(value):
 func _ready():
 
 	if Globals.is_networking:
+		camera_node.current = is_multiplayer_authority()
+		rain_node.emitting = is_multiplayer_authority()
+		splash_node.emitting = is_multiplayer_authority()
+		sand_node.emitting = is_multiplayer_authority()
+		dust_node.emitting = is_multiplayer_authority()
+		snow_node.emitting = is_multiplayer_authority()
+		
 		if not is_multiplayer_authority():
-			camera_node.current = is_multiplayer_authority()
-			rain_node.emitting = is_multiplayer_authority()
-			splash_node.emitting = is_multiplayer_authority()
-			sand_node.emitting = is_multiplayer_authority()
-			dust_node.emitting = is_multiplayer_authority()
-			snow_node.emitting = is_multiplayer_authority()
 			return
 
 
