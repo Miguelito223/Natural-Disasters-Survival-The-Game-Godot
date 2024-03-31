@@ -122,14 +122,19 @@ func is_outdoor(ply):
 
 @rpc("call_local", "any_peer")
 func set_timer(timer_value: float) -> void:
+	if map == null:
+		return
+
 	map.timer.wait_time = timer_value
 	map.timer.start()
 
 # Función para sincronizar el temporizador entre los jugadores
 func synchronize_timer(timer_value: float):
+	if map == null:
+		return
+
 	if Globals.is_networking:
 		if get_tree().get_multiplayer().is_server():
-			# Configurar el temporizador en el servidor
 			map.timer.wait_time = timer_value
 			map.timer.start()
 

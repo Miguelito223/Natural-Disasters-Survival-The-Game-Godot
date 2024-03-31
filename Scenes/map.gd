@@ -21,7 +21,7 @@ var noise_seed
 var noise_multiplier = 50.0
 
 # You may want to change paths to your own textures
-var grass_texture = load("res://Textures/texture-grass-field.jpg")
+var grass_texture = preload("res://Textures/texture-grass-field.jpg")
 
 
 @onready var timer = $Timer
@@ -56,7 +56,6 @@ func _ready():
 
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			player_join(1)
-			Globals.synchronize_timer(Globals.timer)
 			
 		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			Globals.synchronize_timer(Globals.timer)
@@ -130,30 +129,32 @@ func generate_terrain(received_noise_seed, player_id):
 	add_child(terrain, true)
 
 	# No need to call this, but you may need to if you edit the terrain later on
-	#terrain.update_collider()
+	terrain.update_collider()
 
-func player_join(id):
-	print("Joined player id: " + str(id))
+func player_join(peer_id):
+	print("Joined player id: " + str(peer_id))
 	var player = player_scene.instantiate()
-	player.id = id
-	player.name = str(id)
+	player.id = peer_id
+	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
-	Globals.players_conected_list[id] = player
+	Globals.players_conected_list[peer_id] = player
 	Globals.players_conected_int = Globals.players_conected_array.size() - 1
-	add_child(player,true)
+	add_child(player, true)
+
+	Globals.map = self
 
 	if get_tree().get_multiplayer().is_server():
-		receive_seeds.rpc_id(id, noise_seed, id)
+		receive_seeds.rpc_id(peer_id, noise_seed, peer_id)
 		Globals.synchronize_timer(Globals.timer)
 	else:
 		print("Not the server!!")
 
-func player_disconect(id):
-	print("Disconected player id: " + str(id))
-	var player = get_node(str(id))
+func player_disconect(peer_id):
+	print("Disconected player id: " + str(peer_id))
+	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
 		Globals.players_conected_array.erase(player)
-		Globals.players_conected_list.erase(id)
+		Globals.players_conected_list.erase(peer_id)
 		Globals.players_conected_int = Globals.players_conected_array.size() - 1
 		player.queue_free()
 
@@ -164,7 +165,7 @@ func server_disconect():
 	Globals.Wind_Direction_target = Globals.Wind_Direction_original
 	Globals.Wind_speed_target = Globals.Wind_speed_original
 	Globals.players_conected_array.clear()
-	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	Globals.players_conected_int = Globals.players_conected_array.size()
 	self.queue_free()
 	get_parent().get_node("Main Menu").show()
 
@@ -176,7 +177,7 @@ func server_fail():
 	Globals.Wind_Direction_target = Globals.Wind_Direction_original
 	Globals.Wind_speed_target = Globals.Wind_speed_original
 	Globals.players_conected_array.clear()
-	Globals.players_conected_int = Globals.players_conected_array.size() - 1
+	Globals.players_conected_int = Globals.players_conected_array.size()
 	self.queue_free()
 	get_parent().get_node("Main Menu").show()
 
