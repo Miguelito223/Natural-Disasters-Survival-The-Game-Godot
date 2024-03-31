@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://lfe4qxjmk5cu"
-path.s3tc="res://.godot/imported/map_slot1_albedo_bump.png-fb33be32761277963d09b7dea189ebcc.s3tc.ctex"
-path.etc2="res://.godot/imported/map_slot1_albedo_bump.png-fb33be32761277963d09b7dea189ebcc.etc2.ctex"
+path.s3tc="res://.godot/imported/map_slot1_albedo_bump.png-996540f2219685337003948a1aa89904.s3tc.ctex"
+path.etc2="res://.godot/imported/map_slot1_albedo_bump.png-996540f2219685337003948a1aa89904.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Scenes/map_slot1_albedo_bump.png"
-dest_files=["res://.godot/imported/map_slot1_albedo_bump.png-fb33be32761277963d09b7dea189ebcc.s3tc.ctex", "res://.godot/imported/map_slot1_albedo_bump.png-fb33be32761277963d09b7dea189ebcc.etc2.ctex"]
+source_file="res://Textures/map_slot1_albedo_bump.png"
+dest_files=["res://.godot/imported/map_slot1_albedo_bump.png-996540f2219685337003948a1aa89904.s3tc.ctex", "res://.godot/imported/map_slot1_albedo_bump.png-996540f2219685337003948a1aa89904.etc2.ctex"]
 
 [params]
 

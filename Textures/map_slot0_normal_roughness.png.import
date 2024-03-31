@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5gohyshyxfqq"
-path.s3tc="res://.godot/imported/map_slot0_normal_roughness.png-5e1faf3c1bb6e443f14a6e5d8001c737.s3tc.ctex"
-path.etc2="res://.godot/imported/map_slot0_normal_roughness.png-5e1faf3c1bb6e443f14a6e5d8001c737.etc2.ctex"
+path.s3tc="res://.godot/imported/map_slot0_normal_roughness.png-6501347d3a0f93c934b124b6b8d53700.s3tc.ctex"
+path.etc2="res://.godot/imported/map_slot0_normal_roughness.png-6501347d3a0f93c934b124b6b8d53700.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Scenes/map_slot0_normal_roughness.png"
-dest_files=["res://.godot/imported/map_slot0_normal_roughness.png-5e1faf3c1bb6e443f14a6e5d8001c737.s3tc.ctex", "res://.godot/imported/map_slot0_normal_roughness.png-5e1faf3c1bb6e443f14a6e5d8001c737.etc2.ctex"]
+source_file="res://Textures/map_slot0_normal_roughness.png"
+dest_files=["res://.godot/imported/map_slot0_normal_roughness.png-6501347d3a0f93c934b124b6b8d53700.s3tc.ctex", "res://.godot/imported/map_slot0_normal_roughness.png-6501347d3a0f93c934b124b6b8d53700.etc2.ctex"]
 
 [params]
 
