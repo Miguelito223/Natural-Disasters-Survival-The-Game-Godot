@@ -9,7 +9,7 @@ var username = "Michael2911"
 var players_conected_array = []
 var players_conected_list = {}
 var players_conected_int = 0
-var Enet: ENetMultiplayerPeer
+var Enet = ENetMultiplayerPeer.new()
 
 #Globals Settings
 var vsync = false
@@ -285,7 +285,6 @@ func _process(_delta):
 		
 
 func hostwithport(port_int):
-	Enet = ENetMultiplayerPeer.new()
 	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
@@ -300,7 +299,6 @@ func hostwithport(port_int):
 
 
 func joinwithip(ip_str, port_int):
-	Enet = ENetMultiplayerPeer.new()
 	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
