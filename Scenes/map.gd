@@ -37,8 +37,12 @@ func _exit_tree():
 	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-# Called when the node enters the scene tree for the first time.
+func _enter_tree():
+	Globals.map = self
+
 func _ready():
+	Globals.map = self
+
 	if not Globals.is_networking:
 		$Timer.wait_time = Globals.timer
 		$Timer.start()
@@ -51,13 +55,12 @@ func _ready():
 		get_tree().get_multiplayer().connected_to_server.connect(server_connected)
 		get_tree().get_multiplayer().connection_failed.connect(server_fail)
 
-		if get_tree().get_multiplayer().is_server():
-			generate_seed()
 
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
-			player_join(1)
-			
+			generate_seed()	
+			player_join(1)	
 		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
+			generate_seed()
 			Globals.synchronize_timer(Globals.timer)
 		
 
@@ -141,11 +144,9 @@ func player_join(peer_id):
 	Globals.players_conected_int = Globals.players_conected_array.size() - 1
 	add_child(player, true)
 
-	Globals.map = self
-
 	if get_tree().get_multiplayer().is_server():
 		print("syncring map and timer")
-		receive_seeds.rpc_id(peer_id, noise_seed)
+		receive_seeds.rpc_id(peer_id, self.noise_seed)
 		Globals.synchronize_timer(Globals.timer)
 		print("finish :D")
 
@@ -159,6 +160,7 @@ func player_disconect(peer_id):
 		player.queue_free()
 
 func server_disconect():
+	print("client disconected")
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
 	Globals.pressure_target = Globals.pressure_original
@@ -171,6 +173,7 @@ func server_disconect():
 
 
 func server_fail():
+	print("client disconected: failed to load")
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
 	Globals.pressure_target = Globals.pressure_original

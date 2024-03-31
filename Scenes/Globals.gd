@@ -53,7 +53,7 @@ var Wind_speed_original: float = 0
 var seconds = Time.get_unix_time_from_system()
 
 @onready var main = get_tree().root.get_node("Main")
-@onready var map 
+var map 
 var map_scene = preload("res://Scenes/map.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
