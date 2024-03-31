@@ -20,7 +20,7 @@ const HTerrainTextureSet = preload("res://addons/zylann.hterrain/hterrain_textur
 var noise_seed
 var noise_multiplier = 50.0
 
-var terrain_data_2
+var terrain_data
 
 # You may want to change paths to your own textures
 var grass_texture = preload("res://Textures/texture-grass-field.jpg")
@@ -75,7 +75,7 @@ func _ready():
 func generate_seed():
 	if not Globals.is_networking:
 		noise_seed = randi()
-		receive_seeds(noise_seed, terrain_data_2)
+		receive_seeds(noise_seed, terrain_data)
 	else:
 		if get_tree().get_multiplayer().is_server():
 			noise_seed = randi()
@@ -88,11 +88,10 @@ func receive_seeds(received_noise_seed, data):
 	generate_terrain(data)
 
 
-@rpc("any_peer", "call_local")
 func generate_terrain(data=null):
 	print("Generating terrain for player")
 	if data == null:
-		var terrain_data = HTerrainData.new()
+		terrain_data = HTerrainData.new()
 		terrain_data.resize(4097)
 
 		var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
@@ -140,13 +139,23 @@ func generate_terrain(data=null):
 		# No need to call this, but you may need to if you edit the terrain later on
 		terrain.update_collider()
 
-		#set data
-		data = terrain
-		terrain_data_2 = terrain
-	else:
-		add_child(data, true)
-	
 
+	else:
+		terrain_data = instance_from_id(data.object_id)
+
+		# Create texture set
+		# NOTE: usually this is not made from script, it can be built with editor tools
+		var texture_set = HTerrainTextureSet.new()
+		texture_set.set_mode(HTerrainTextureSet.MODE_TEXTURES)
+		texture_set.insert_slot(-1)
+		texture_set.set_texture(0, HTerrainTextureSet.TYPE_ALBEDO_BUMP, grass_texture)
+		# Create terrain node
+		var terrain = HTerrain.new()
+		terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
+		terrain.set_data(terrain_data)
+		terrain.set_texture_set(texture_set)
+		add_child(terrain, true)
+	
 func player_join(peer_id):
 	print("Joined player id: " + str(peer_id))
 	var player = player_scene.instantiate()
@@ -159,7 +168,7 @@ func player_join(peer_id):
 
 	if get_tree().get_multiplayer().is_server():
 		print("syncring map and timer")
-		self.receive_seeds.rpc_id(peer_id, self.noise_seed, terrain_data_2)
+		self.receive_seeds.rpc_id(peer_id, self.noise_seed, self.terrain_data)
 		Globals.synchronize_timer(Globals.timer)
 		print("finish :D")
 
