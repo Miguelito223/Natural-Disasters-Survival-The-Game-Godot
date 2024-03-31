@@ -67,7 +67,7 @@ func _exit_tree():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
-@rpc("call_local", "any_peer")
+@rpc("any_peer", "call_local")
 func damage(value):
 	setlife(hearth - value)
 

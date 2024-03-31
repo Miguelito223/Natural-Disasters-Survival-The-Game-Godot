@@ -68,19 +68,19 @@ func _ready():
 func generate_seed():
 	if not Globals.is_networking:
 		noise_seed = randi()
-		receive_seeds(noise_seed, 1)
+		receive_seeds(noise_seed)
 	else:
 		if get_tree().get_multiplayer().is_server():
 			noise_seed = randi()
 
-@rpc("call_local", "any_peer")
-func receive_seeds(player_id, received_noise_seed):
-	print("Recibiendo semillas del jugador ", player_id)
+@rpc("any_peer", "call_local")
+func receive_seeds(received_noise_seed):
+	print("Recibiendo semillas del jugador")
 	noise_seed = received_noise_seed
-	generate_terrain(received_noise_seed, player_id)
+	generate_terrain(received_noise_seed)
 
-func generate_terrain(received_noise_seed, player_id):
-	print("Generating terrain for player ", player_id )
+func generate_terrain(received_noise_seed):
+	print("Generating terrain for player")
 	var terrain_data = HTerrainData.new()
 	terrain_data.resize(4097)
 
@@ -144,10 +144,10 @@ func player_join(peer_id):
 	Globals.map = self
 
 	if get_tree().get_multiplayer().is_server():
+		print("syncring map and timer")
 		receive_seeds.rpc_id(peer_id, noise_seed)
 		Globals.synchronize_timer(Globals.timer)
-	else:
-		print("Not the server!!")
+		print("finish :D")
 
 func player_disconect(peer_id):
 	print("Disconected player id: " + str(peer_id))

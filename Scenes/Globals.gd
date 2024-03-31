@@ -120,10 +120,12 @@ func is_outdoor(ply):
 	else:
 		return hit_sky
 
-@rpc("call_local", "any_peer")
+@rpc("any_peer", "call_local")
 func set_timer(timer_value: float) -> void:
 	if map == null:
 		return
+
+	print("syncring timer")
 
 	map.timer.wait_time = timer_value
 	map.timer.start()
@@ -132,6 +134,8 @@ func set_timer(timer_value: float) -> void:
 func synchronize_timer(timer_value: float):
 	if map == null:
 		return
+
+	print("syncring timer")
 
 	if Globals.is_networking:
 		if get_tree().get_multiplayer().is_server():
@@ -280,9 +284,9 @@ func _process(_delta):
 		sync_bradiation.rpc(bradiation)
 		
 
-func hostwithport(port):
+func hostwithport(port_int):
 	Enet = ENetMultiplayerPeer.new()
-	var error = Enet.create_server(port)
+	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
 		if get_tree().get_multiplayer().is_server():
@@ -295,9 +299,9 @@ func hostwithport(port):
 		print("Fatal Error in server")
 
 
-func joinwithip(ip, port):
+func joinwithip(ip_str, port_int):
 	Enet = ENetMultiplayerPeer.new()
-	var error = Enet.create_client(ip, port)
+	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
 		if not get_tree().get_multiplayer().is_server():
