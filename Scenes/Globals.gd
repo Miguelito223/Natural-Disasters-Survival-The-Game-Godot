@@ -277,13 +277,13 @@ func _process(_delta):
 		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
 		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
 		
-		sync_temp.rpc(Temperature)
-		sync_humidity.rpc(Humidity)
-		sync_wind_speed.rpc(Wind_speed)
-		sync_Wind_Direction.rpc(Wind_Direction)
-		sync_pressure.rpc(pressure)
-		sync_oxygen.rpc(oxygen)
-		sync_bradiation.rpc(bradiation)
+		#sync_temp.rpc(Temperature)
+		#sync_humidity.rpc(Humidity)
+		#sync_wind_speed.rpc(Wind_speed)
+		#sync_Wind_Direction.rpc(Wind_Direction)
+		#sync_pressure.rpc(pressure)
+		#sync_oxygen.rpc(oxygen)
+		#sync_bradiation.rpc(bradiation)
 		
 
 func hostwithport(port_int):

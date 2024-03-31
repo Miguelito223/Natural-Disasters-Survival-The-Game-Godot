@@ -139,48 +139,6 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath("Timer:autostart")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath("Timer:one_shot")
-properties/9/spawn = true
-properties/9/replication_mode = 1
-properties/10/path = NodePath("AnimationPlayer:current_animation")
-properties/10/spawn = true
-properties/10/replication_mode = 1
-properties/11/path = NodePath("AnimationPlayer:playback_default_blend_time")
-properties/11/spawn = true
-properties/11/replication_mode = 1
-properties/12/path = NodePath("AnimationPlayer:speed_scale")
-properties/12/spawn = true
-properties/12/replication_mode = 1
-properties/13/path = NodePath("AnimationPlayer:movie_quit_on_finish")
-properties/13/spawn = true
-properties/13/replication_mode = 1
-properties/14/path = NodePath("AnimationPlayer:active")
-properties/14/spawn = true
-properties/14/replication_mode = 1
-properties/15/path = NodePath("AnimationPlayer:deterministic")
-properties/15/spawn = true
-properties/15/replication_mode = 1
-properties/16/path = NodePath("AnimationPlayer:reset_on_save")
-properties/16/spawn = true
-properties/16/replication_mode = 1
-properties/17/path = NodePath("AnimationPlayer:root_node")
-properties/17/spawn = true
-properties/17/replication_mode = 1
-properties/18/path = NodePath("AnimationPlayer:root_motion_track")
-properties/18/spawn = true
-properties/18/replication_mode = 1
-properties/19/path = NodePath("AnimationPlayer:audio_max_polyphony")
-properties/19/spawn = true
-properties/19/replication_mode = 1
-properties/20/path = NodePath("AnimationPlayer:callback_mode_process")
-properties/20/spawn = true
-properties/20/replication_mode = 1
-properties/21/path = NodePath("AnimationPlayer:callback_mode_method")
-properties/21/spawn = true
-properties/21/replication_mode = 1
-properties/22/path = NodePath("AnimationPlayer:libraries")
-properties/22/spawn = true
-properties/22/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
@@ -202,7 +160,6 @@ noise = SubResource("FastNoiseLite_lao53")
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
 spawn_path = NodePath("..")
-spawn_limit = 4
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cfhfe")
