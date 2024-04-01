@@ -1,8 +1,15 @@
-[gd_scene load_steps=22 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=30 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_ftxso"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="4_sip6n"]
+[ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="5_cgkcm"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="6_oymhx"]
+[ext_resource type="Texture2D" uid="uid://b6oe3tvt0q3vh" path="res://slot0_albedo_bump.png" id="7_1bquu"]
+[ext_resource type="Texture2D" uid="uid://njslpli2ulyn" path="res://slot1_albedo_bump.png" id="8_tga5u"]
+[ext_resource type="Texture2D" uid="uid://dnpmuycipx8d" path="res://slot0_normal_roughness.png" id="9_epmxy"]
+[ext_resource type="Texture2D" uid="uid://i7ox5do7c5ij" path="res://slot1_normal_roughness.png" id="10_jgwxu"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
@@ -156,6 +163,11 @@ density_texture = SubResource("NoiseTexture3D_bq76v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
 size = Vector3(1e+06, 0, 1e+06)
 
+[sub_resource type="Resource" id="Resource_la8ul"]
+script = ExtResource("6_oymhx")
+mode = 0
+textures = [[ExtResource("7_1bquu"), ExtResource("8_tga5u")], [ExtResource("9_epmxy"), ExtResource("10_jgwxu")]]
+
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 noise = SubResource("FastNoiseLite_lao53")
@@ -202,6 +214,25 @@ material = SubResource("FogMaterial_w14ph")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("4_sip6n")
+centered = true
+_terrain_data = ExtResource("5_cgkcm")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_la8ul")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = null
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
