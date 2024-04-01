@@ -20,6 +20,11 @@ const HTerrainTextureSet = preload("res://addons/zylann.hterrain/hterrain_textur
 var noise_seed
 var noise_multiplier = 50.0
 
+var view_distance = 10000
+var player_node
+var player_position = Vector3.ZERO
+var previous_player_position = Vector3.ZERO
+
 # You may want to change paths to your own textures
 var grass_texture = preload("res://Textures/texture-grass-field.jpg")
 
@@ -58,9 +63,6 @@ func _ready():
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
 		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
 
-		for id in get_tree().get_multiplayer().get_peers():
-			player_join(bytes_to_var_with_objects)
-
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()	
 			player_join(1)	
@@ -68,11 +70,6 @@ func _ready():
 			generate_seed()
 			Globals.synchronize_timer(Globals.timer)
 		
-
-		
-
-
-
 func generate_seed():
 	if not Globals.is_networking:
 		noise_seed = randi()
@@ -80,40 +77,70 @@ func generate_seed():
 	else:
 		if get_tree().get_multiplayer().is_server():
 			noise_seed = randi()
+		
+func generate_new_terrain(terrain_position):
+	var region_to_generate = AABB(player_position - Vector3(view_distance, 0, view_distance) / 2, 
+									player_position + Vector3(view_distance, 0, view_distance) / 2)
+
+	# Redondear las dimensiones al entero más cercano
+	var int_region_size = region_to_generate.size
+
+	# Usar int_region_size donde necesites un tamaño entero
+	generate_terrain_for_region(int_region_size.length(), terrain_position)
+
+
+func _process(_delta):
+	if Globals.is_networking:		  
+		player_node = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+	else:
+		player_node = get_node("Player")
+
+	if is_instance_valid(player_node):
+		player_position = player_node.position 
+
+		if player_has_moved_enough(player_position):
+			generate_new_terrain(player_position)
+
+		previous_player_position = player_position
+
+func player_has_moved_enough(current_position):
+	var distance_threshold = 0.1  # Ajusta este valor según sea necesario
+	return current_position.distance_to(previous_player_position) > distance_threshold
+
 
 @rpc("any_peer", "call_local")
 func receive_seeds(received_noise_seed):
 	print("Recibiendo semillas del jugador")
 	noise_seed = received_noise_seed
 	noise.seed = noise_seed
-	generate_terrain()
+	generate_new_terrain(Vector3.ZERO)
 
 
-func generate_terrain():
+func generate_terrain_for_region(region, terrain_position):
 	print("Generating terrain for player")
 
 	var terrain_data = HTerrainData.new()
-	terrain_data.resize(4097)
+	terrain_data.resize(region)
 
 	var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
 	var normalmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_NORMAL)
 	var splatmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_SPLAT)
 
-	
-	for z in heightmap.get_height():
-		for x in heightmap.get_width():
-			# Generate height
+	# Iterar sobre cada punto del mundo
+	for z in range(heightmap.get_height()):
+		for x in range(heightmap.get_width()):
+			# Generar altura
 			var h = noise_multiplier * noise.get_noise_2d(x, z)
 
-			# Getting normal by generating extra heights directly from noise,
-			# so map borders won't have seams in case you stitch them
+			# Obtener la normal
 			var h_right = noise_multiplier * noise.get_noise_2d(x + 0.1, z)
 			var h_forward = noise_multiplier * noise.get_noise_2d(x, z + 0.1)
 			var normal = Vector3(h - h_right, 0.1, h_forward - h).normalized()
 
-			# Generate texture amounts
+			# Generar cantidades de textura
 			var splat = splatmap.get_pixel(x, z)
 
+			# Almacenar los resultados en la imagen temporal
 			heightmap.set_pixel(x, z, Color(h, 0, 0))
 			normalmap.set_pixel(x, z, HTerrainData.encode_normal(normal))
 			splatmap.set_pixel(x, z, splat)
@@ -135,10 +162,11 @@ func generate_terrain():
 	terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
 	terrain.set_data(terrain_data)
 	terrain.set_texture_set(texture_set)
+	terrain.position = terrain_position
 	add_child(terrain, true)
 
 	# No need to call this, but you may need to if you edit the terrain later on
-	#terrain.update_collider()
+	terrain.update_collider()
 
 
 	
@@ -313,7 +341,7 @@ func is_tsunami():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -346,10 +374,10 @@ func is_linghting_storm():
 
 
 	while current_weather_and_disaster == "Linghting storm":
-		var player 
+		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -403,7 +431,7 @@ func is_meteor_shower():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -432,10 +460,11 @@ func is_blizzard():
 	Globals.Wind_speed_target = randf_range(40, 50)
 
 	while current_weather_and_disaster == "blizzard":
+		
 		var player
 
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -473,7 +502,7 @@ func is_sandstorm():
 		var player
 
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -522,7 +551,7 @@ func is_volcano():
 		var player
 
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -582,7 +611,7 @@ func is_tornado():
 		var player
 
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -644,7 +673,7 @@ func is_acid_rain():
 		var player
 
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -685,7 +714,7 @@ func is_earthquake():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -724,7 +753,7 @@ func is_sun():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -753,7 +782,7 @@ func is_cloud():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -792,7 +821,7 @@ func is_raining():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -830,7 +859,7 @@ func is_storm():
 		var player
 		
 		if Globals.is_networking:
-			player = Globals.players_conected_list[get_tree().get_multiplayer().get_unique_id()] 
+			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
 		else:
 			player = get_node("Player")
 		

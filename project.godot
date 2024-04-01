@@ -127,7 +127,7 @@ Pause={
 [network]
 
 limits/tcp/connect_timeout_seconds=60
-limits/packet_peer_stream/max_buffer_po2=64
+limits/packet_peer_stream/max_buffer_po2=1000
 
 [rendering]
 

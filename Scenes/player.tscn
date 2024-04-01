@@ -23,8 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_2qft6"]
-size = Vector3(6, 12.0733, 6)
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
+radius = 2.773
+height = 8.954
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2vat"]
 resource_name = "Brazos"
@@ -533,7 +534,7 @@ input_1/auto_advance = true
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rc5yr"]
-graph_offset = Vector2(42.6807, 282.536)
+graph_offset = Vector2(-71.6048, -27.3381)
 nodes/Fall/node = SubResource("AnimationNodeAnimation_yuegk")
 nodes/Fall/position = Vector2(20, 200)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_bga0f")
@@ -773,6 +774,39 @@ properties/19/replication_mode = 1
 properties/20/path = NodePath("Model/Camera3D:scale")
 properties/20/spawn = true
 properties/20/replication_mode = 1
+properties/21/path = NodePath("Model/AnimationPlayer:current_animation")
+properties/21/spawn = true
+properties/21/replication_mode = 1
+properties/22/path = NodePath("AnimationTree:parameters/movement/current_state")
+properties/22/spawn = true
+properties/22/replication_mode = 1
+properties/23/path = NodePath("AnimationTree:parameters/is_on_floor/current_state")
+properties/23/spawn = true
+properties/23/replication_mode = 1
+properties/24/path = NodePath("AnimationTree:parameters/is_jumping/current_state")
+properties/24/spawn = true
+properties/24/replication_mode = 1
+properties/25/path = NodePath("Model/AnimationPlayer:speed_scale")
+properties/25/spawn = true
+properties/25/replication_mode = 1
+properties/26/path = NodePath("Model/AnimationPlayer:playback_default_blend_time")
+properties/26/spawn = true
+properties/26/replication_mode = 1
+properties/27/path = NodePath("Model/AnimationPlayer:movie_quit_on_finish")
+properties/27/spawn = true
+properties/27/replication_mode = 1
+properties/28/path = NodePath("Model/AnimationPlayer:active")
+properties/28/spawn = true
+properties/28/replication_mode = 1
+properties/29/path = NodePath("AnimationTree:parameters/movement/transition_request")
+properties/29/spawn = true
+properties/29/replication_mode = 1
+properties/30/path = NodePath("AnimationTree:parameters/is_on_floor/transition_request")
+properties/30/spawn = true
+properties/30/replication_mode = 1
+properties/31/path = NodePath("AnimationTree:parameters/is_jumping/transition_request")
+properties/31/spawn = true
+properties/31/replication_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tl0tp"]
 shader = ExtResource("7_787g2")
@@ -791,11 +825,17 @@ shader_parameter/Shader_color = Color(1, 0.6, 0, 0.360784)
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 script = ExtResource("1_btpoi")
+id = null
+mass = null
+body_temperature = null
+body_wind = null
+Outdoor = null
+IsInWater = null
+IsInLava = null
 metadata/_edit_horizontal_guides_ = [-952.0]
 
-[node name="Collision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0444336, 1.43087, -0.0485147)
-shape = SubResource("BoxShape3D_2qft6")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_1y4s5")
 
 [node name="Model" type="Node3D" parent="."]
 
@@ -807,7 +847,7 @@ bones/0/name = "clumna1"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.76085, 0)
 bones/0/enabled = true
-bones/0/position = Vector3(0, -0.972925, 0)
+bones/0/position = Vector3(0, -0.780401, 0)
 bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "columna2"
@@ -815,7 +855,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.739323, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.739323, 0)
-bones/1/rotation = Quaternion(0, 0, 0.039755, 0.999209)
+bones/1/rotation = Quaternion(0, 0, 0.039755, 0.99921)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "clumna3"
 bones/2/parent = 1
@@ -836,14 +876,14 @@ bones/4/parent = 3
 bones/4/rest = Transform3D(1, -0.000138256, 1.37828e-07, 0.000138199, 0.999618, 0.027635, -3.95847e-06, -0.027635, 0.999618, -9.57567e-16, 0.766354, -1.89175e-07)
 bones/4/enabled = true
 bones/4/position = Vector3(-9.57567e-16, 0.766354, -1.89175e-07)
-bones/4/rotation = Quaternion(0.603548, 0.0246164, -0.0226048, 0.796625)
+bones/4/rotation = Quaternion(0.650514, 0.00264575, -0.00242081, 0.759486)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "brazo_inferior.d"
 bones/5/parent = 4
 bones/5/rest = Transform3D(1, 0.000138255, 4.05459e-07, -0.000138256, 0.999992, 0.00392959, 1.37829e-07, -0.00392959, 0.999992, -1.62986e-08, 1.20484, 1.62264e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(-1.62986e-08, 1.20484, 1.62264e-08)
-bones/5/rotation = Quaternion(0.0894765, -0.00836899, 0.0144281, 0.995849)
+bones/5/rotation = Quaternion(0.0896872, -0.0112672, 0.113707, 0.989394)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "hombro.i"
 bones/6/parent = 2
@@ -857,14 +897,14 @@ bones/7/parent = 6
 bones/7/rest = Transform3D(1, 3.95424e-18, -3.52114e-20, -3.95424e-18, 0.999841, -0.0178084, -3.52128e-20, 0.0178084, 0.999841, 7.45058e-09, 0.721442, 1.3411e-07)
 bones/7/enabled = true
 bones/7/position = Vector3(7.45058e-09, 0.721442, 1.3411e-07)
-bones/7/rotation = Quaternion(-0.640816, 0.00204825, 0.00182055, 0.76769)
+bones/7/rotation = Quaternion(-0.640083, -0.0357906, -0.0318118, 0.766812)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "brazo_inferior.i"
 bones/8/parent = 7
 bones/8/rest = Transform3D(1, 1.198e-18, -3.2317e-21, -1.198e-18, 0.999985, -0.00539527, -3.2319e-21, 0.00539527, 0.999985, 1.38778e-17, 1.35351, 6.70552e-08)
 bones/8/enabled = true
 bones/8/position = Vector3(1.38778e-17, 1.35351, 6.70552e-08)
-bones/8/rotation = Quaternion(0.00268004, 0.00643729, 0.039812, 0.999183)
+bones/8/rotation = Quaternion(0.00254096, 0.0350491, 0.22751, 0.973141)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "cuello"
 bones/9/parent = 2
@@ -885,14 +925,14 @@ bones/11/parent = 10
 bones/11/rest = Transform3D(-0.999974, -0.00436537, 0.00581706, -0.00592073, 0.0241228, -0.999691, 0.0042237, -0.999699, -0.024148, 9.8194e-10, 0.384886, -2.87218e-09)
 bones/11/enabled = true
 bones/11/position = Vector3(9.8194e-10, 0.384886, -2.87218e-09)
-bones/11/rotation = Quaternion(0.0400146, 0.710629, -0.698339, 0.0756807)
+bones/11/rotation = Quaternion(0.216908, 0.673045, -0.664877, 0.240625)
 bones/11/scale = Vector3(1, 1, 1)
 bones/12/name = "pierna_inferior.d"
 bones/12/parent = 11
 bones/12/rest = Transform3D(0.999643, -0.0189994, -0.01878, 0.0187942, 0.999762, -0.0110474, 0.0189855, 0.0106905, 0.999763, -6.98492e-09, 2.12904, -9.54606e-09)
 bones/12/enabled = true
 bones/12/position = Vector3(-6.98492e-09, 2.12904, -9.54606e-09)
-bones/12/rotation = Quaternion(-0.00459039, 0.0208303, -0.103295, 0.994422)
+bones/12/rotation = Quaternion(-0.00718631, 0.0147297, -0.320678, 0.947047)
 bones/12/scale = Vector3(1, 1, 1)
 bones/13/name = "cadera.i"
 bones/13/parent = 0
@@ -906,14 +946,14 @@ bones/14/parent = 13
 bones/14/rest = Transform3D(0.998807, -0.0246589, -0.0421602, 0.0422196, 0.00189155, 0.999107, -0.0245572, -0.999694, 0.0029304, -3.51332e-09, 0.327296, -2.42107e-09)
 bones/14/enabled = true
 bones/14/position = Vector3(-3.51332e-09, 0.327296, -2.42107e-09)
-bones/14/rotation = Quaternion(-0.7017, 0.0601747, 0.0920217, 0.703937)
+bones/14/rotation = Quaternion(-0.699192, -0.114972, -0.0890096, 0.699992)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/name = "pierna_inferior.i"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.998071, 0.0449051, 0.0428617, -0.0432015, 0.99827, -0.0398786, -0.0445783, 0.03795, 0.998285, 0, 2.16872, -1.80444e-08)
 bones/15/enabled = true
 bones/15/position = Vector3(0, 2.16872, -1.80444e-08)
-bones/15/rotation = Quaternion(0.0238956, 0.0333604, -0.0875469, 0.995315)
+bones/15/rotation = Quaternion(0.0236729, 0.0275257, -0.249469, 0.967702)
 bones/15/scale = Vector3(1, 1, 1)
 
 [node name="Brazos" type="MeshInstance3D" parent="Model/Esqueleto/Skeleton3D"]
