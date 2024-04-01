@@ -75,15 +75,13 @@ func generate_seed():
 
 @rpc("any_peer", "call_local")
 func receive_seeds(received_noise_seed):
-	print("Recibiendo semillas del jugador")
+	print("Recived seeds :D")
 	noise_seed = received_noise_seed
 	noise.seed = noise_seed
 	generate_terrain()
 
 
 func generate_terrain():
-	print("Generating terrain for player")
-
 	var terrain_data = HTerrainData.new()
 	terrain_data.resize(4097)
 
@@ -132,7 +130,7 @@ func generate_terrain():
 	# No need to call this, but you may need to if you edit the terrain later on
 	terrain.update_collider()
 
-
+	return terrain
 	
 func player_join(peer_id):
 	print("Joined player id: " + str(peer_id))
@@ -146,7 +144,7 @@ func player_join(peer_id):
 
 	if get_tree().get_multiplayer().is_server():
 		print("syncring map and timer")
-		self.receive_seeds.rpc_id(peer_id, self.noise_seed)
+		receive_seeds.rpc_id(peer_id, noise_seed)
 		Globals.synchronize_timer(Globals.timer)
 		print("finish :D")
 

@@ -290,12 +290,18 @@ func hostwithport(port_int):
 	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
+		get_tree().get_multiplayer().allow_object_decoding = true
+		get_tree().get_multiplayer().max_sync_packet_size = 100000
 		if get_tree().get_multiplayer().is_server():
 			is_networking = true
 			UPNP_setup()
 			main.get_node("Main Menu").hide()
 			map = map_scene.instantiate()
 			main.add_child(map)
+		else:
+			get_tree().get_multiplayer().connection_failed.connect(server_fail)
+			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
+			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
 	else:
 		print("Fatal Error in server")
 
@@ -304,6 +310,8 @@ func joinwithip(ip_str, port_int):
 	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
+		get_tree().get_multiplayer().allow_object_decoding = true
+		get_tree().get_multiplayer().max_sync_packet_size = 100000
 		if not get_tree().get_multiplayer().is_server():
 			is_networking = true
 			main.get_node("Main Menu").hide()

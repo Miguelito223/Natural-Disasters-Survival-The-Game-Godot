@@ -139,6 +139,9 @@ properties/7/replication_mode = 1
 properties/8/path = NodePath("Timer:autostart")
 properties/8/spawn = true
 properties/8/replication_mode = 1
+properties/9/path = NodePath("Timer:one_shot")
+properties/9/spawn = true
+properties/9/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
@@ -182,7 +185,7 @@ libraries = {
 }
 autoplay = "DNC"
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="MapSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8u7l0")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
