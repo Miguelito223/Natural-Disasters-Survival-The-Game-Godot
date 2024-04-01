@@ -20,11 +20,6 @@ const HTerrainTextureSet = preload("res://addons/zylann.hterrain/hterrain_textur
 var noise_seed
 var noise_multiplier = 50.0
 
-var view_distance = 10000
-var player_node
-var player_position = Vector3.ZERO
-var previous_player_position = Vector3.ZERO
-
 # You may want to change paths to your own textures
 var grass_texture = preload("res://Textures/texture-grass-field.jpg")
 
@@ -77,50 +72,20 @@ func generate_seed():
 	else:
 		if get_tree().get_multiplayer().is_server():
 			noise_seed = randi()
-		
-func generate_new_terrain(terrain_position):
-	var region_to_generate = AABB(player_position - Vector3(view_distance, 0, view_distance) / 2, 
-									player_position + Vector3(view_distance, 0, view_distance) / 2)
-
-	# Redondear las dimensiones al entero más cercano
-	var int_region_size = region_to_generate.size
-
-	# Usar int_region_size donde necesites un tamaño entero
-	generate_terrain_for_region(int_region_size.length(), terrain_position)
-
-
-func _process(_delta):
-	if Globals.is_networking:		  
-		player_node = get_node(str(get_tree().get_multiplayer().get_unique_id()))
-	else:
-		player_node = get_node("Player")
-
-	if is_instance_valid(player_node):
-		player_position = player_node.position 
-
-		if player_has_moved_enough(player_position):
-			generate_new_terrain(player_position)
-
-		previous_player_position = player_position
-
-func player_has_moved_enough(current_position):
-	var distance_threshold = 0.1  # Ajusta este valor según sea necesario
-	return current_position.distance_to(previous_player_position) > distance_threshold
-
 
 @rpc("any_peer", "call_local")
 func receive_seeds(received_noise_seed):
 	print("Recibiendo semillas del jugador")
 	noise_seed = received_noise_seed
 	noise.seed = noise_seed
-	generate_new_terrain(Vector3.ZERO)
+	generate_terrain()
 
 
-func generate_terrain_for_region(region, terrain_position):
+func generate_terrain():
 	print("Generating terrain for player")
 
 	var terrain_data = HTerrainData.new()
-	terrain_data.resize(region)
+	terrain_data.resize(4097)
 
 	var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
 	var normalmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_NORMAL)
@@ -162,7 +127,6 @@ func generate_terrain_for_region(region, terrain_position):
 	terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
 	terrain.set_data(terrain_data)
 	terrain.set_texture_set(texture_set)
-	terrain.position = terrain_position
 	add_child(terrain, true)
 
 	# No need to call this, but you may need to if you edit the terrain later on
