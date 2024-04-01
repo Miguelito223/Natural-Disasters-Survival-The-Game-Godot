@@ -56,6 +56,11 @@ sky_material = SubResource("ShaderMaterial_ihtyg")
 background_mode = 2
 sky = SubResource("Sky_lk1p6")
 
+[sub_resource type="Resource" id="Resource_la8ul"]
+script = ExtResource("6_oymhx")
+mode = 0
+textures = [[ExtResource("7_1bquu"), ExtResource("8_tga5u")], [ExtResource("9_epmxy"), ExtResource("10_jgwxu")]]
+
 [sub_resource type="Animation" id="Animation_y7xl6"]
 resource_name = "DNC"
 length = 900.0
@@ -163,11 +168,6 @@ density_texture = SubResource("NoiseTexture3D_bq76v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
 size = Vector3(1e+06, 0, 1e+06)
 
-[sub_resource type="Resource" id="Resource_la8ul"]
-script = ExtResource("6_oymhx")
-mode = 0
-textures = [[ExtResource("7_1bquu"), ExtResource("8_tga5u")], [ExtResource("9_epmxy"), ExtResource("10_jgwxu")]]
-
 [node name="Map" type="Node3D"]
 script = ExtResource("1_cimji")
 noise = SubResource("FastNoiseLite_lao53")
@@ -190,6 +190,24 @@ shadow_enabled = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("4_sip6n")
+_terrain_data = ExtResource("5_cgkcm")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_la8ul")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -214,25 +232,6 @@ material = SubResource("FogMaterial_w14ph")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
-
-[node name="HTerrain" type="Node3D" parent="."]
-script = ExtResource("4_sip6n")
-centered = true
-_terrain_data = ExtResource("5_cgkcm")
-chunk_size = 32
-collision_enabled = true
-collision_layer = 1
-collision_mask = 1
-shader_type = "Classic4Lite"
-custom_shader = null
-custom_globalmap_shader = null
-texture_set = SubResource("Resource_la8ul")
-render_layers = 1
-cast_shadow = 1
-shader_params/u_ground_uv_scale = 20
-shader_params/u_depth_blending = true
-shader_params/u_triplanar = false
-shader_params/u_tile_reduction = null
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
