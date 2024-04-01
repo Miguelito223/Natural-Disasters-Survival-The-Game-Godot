@@ -215,6 +215,5 @@ material = SubResource("FogMaterial_w14ph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
-[connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

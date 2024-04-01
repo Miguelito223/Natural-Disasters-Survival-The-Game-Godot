@@ -26,6 +26,9 @@ var rock_texture = preload("res://Textures/dark-cracked-concrete-wall.jpg")
 
 
 @onready var timer = $Timer
+var started = false
+
+
 
 func _exit_tree():
 	Globals.Temperature_target = Globals.Temperature_original
@@ -51,6 +54,7 @@ func _ready():
 	Globals.map = self
 
 	if not Globals.is_networking:
+		generate_seed()
 		Globals.sync_timer(Globals.timer)
 	else:
 
@@ -72,14 +76,10 @@ func generate_seed():
 			noise_seed = randi()	
 
 @rpc("any_peer", "call_local")
-func _recive_seed(seed):
+func _recive_seed(seed_random):
 	#generate seed
-	noise_seed = seed
-	noise.seed = seed
-
-	#Await 1 seconds
-	await get_tree().create_timer(1).timeout
-
+	noise_seed = seed_random
+	noise.seed = seed_random
 	#generate world
 	generate_world()
 
@@ -123,6 +123,10 @@ func generate_world():
 			normalmap.set_pixel(x, z, HTerrainData.encode_normal(normal))
 			splatmap.set_pixel(x, z, splat)
 
+			print(x, z)
+
+	
+
 	# Commit modifications so they get uploaded to the graphics card
 	var modified_region = Rect2(Vector2(), heightmap.get_size())
 	terrain_data.notify_region_change(modified_region, HTerrainData.CHANNEL_HEIGHT)
@@ -156,26 +160,36 @@ func player_join(peer_id):
 	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
 	Globals.players_conected_list[peer_id] = player
-	Globals.players_conected_int = Globals.players_conected_array.size()
 	add_child(player, true)
 
 	if get_tree().get_multiplayer().is_server():
-		if peer_id in Globals.players_conected_list:
-			print("syncring timer and map")
-			Globals.sync_timer.rpc_id(peer_id, Globals.timer)
-			_recive_seed.rpc_id(peer_id, noise_seed)
-			print("finish :D")
+		print("syncring timer and map")
+		_recive_seed.rpc_id(peer_id, noise_seed)
+		if Globals.players_conected_int > 2 and started == false:
+			Globals.sync_timer.rpc(Globals.timer)
+			set_started.rpc(true)
+		elif Globals.players_conected_int < 2 and started == true:
+			Globals.sync_timer.rpc(60)
+			set_started.rpc(false)
+		print("finish :D")
 
 func player_disconect(peer_id):
-	print("Disconected player id: " + str(peer_id))
-	await get_tree().create_timer(5).timeout
 	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
-		print("the instance is valid")
+		print("Disconected player id: " + str(peer_id))
 		Globals.players_conected_array.erase(player)
 		Globals.players_conected_list.erase(peer_id)
-		Globals.players_conected_int = Globals.players_conected_array.size()
+		if Globals.players_conected_int > 2 and started == false:
+			Globals.sync_timer.rpc(Globals.timer)
+			set_started.rpc(true)
+		elif Globals.players_conected_int < 2 and started == true:
+			Globals.sync_timer.rpc(60)
+			set_started.rpc(false)
 		player.queue_free()
+
+@rpc("any_peer","call_local")
+func set_started(started_bool):
+	started = started_bool
 
 func wind(object):
 	# Verificar si el objeto es un jugador
@@ -233,12 +247,19 @@ func _physics_process(_delta):
 	for object in get_tree().get_nodes_in_group("wind_effected_objects"):
 		wind(object)
 
+
 func _on_timer_timeout():
-	if Globals.is_networking:
-		if get_tree().get_multiplayer().is_server():
-			Globals.sync_timer.rpc(Globals.timer)
+	if started:
+		if Globals.is_networking:
+			if get_tree().get_multiplayer().is_server():
+				Globals.sync_timer.rpc(Globals.timer)
+		else:
+			Globals.sync_timer(Globals.timer)
 	
-	sync_weather_and_disaster()
+		sync_weather_and_disaster()
+	else:
+		if Globals.is_networking:
+			get_tree().get_multiplayer().multiplayer_peer.close()
 
 
 func sync_weather_and_disaster():
@@ -866,5 +887,3 @@ func is_storm():
 			$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 	
 		await get_tree().create_timer(0.5).timeout
-
-

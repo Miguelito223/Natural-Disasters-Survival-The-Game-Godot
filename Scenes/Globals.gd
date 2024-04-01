@@ -4,12 +4,12 @@ extends Node
 var ip = "127.0.0.1"
 var port = 25565
 var points = 0
-var is_networking = false
 var username = "Michael2911"
 var players_conected_array = []
 var players_conected_list = {}
-var players_conected_int = 0
-var Enet = ENetMultiplayerPeer.new()
+var players_conected_int = players_conected_list.size()
+var Enet: ENetMultiplayerPeer
+@onready var is_networking = get_tree().get_multiplayer().multiplayer_peer == Enet
 
 #Globals Settings
 var vsync = false
@@ -58,6 +58,8 @@ var seconds = Time.get_unix_time_from_system()
 
 var map_scene = preload("res://Scenes/map.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
+
+	
 
 
 func convert_MetoSU(metres):
@@ -122,16 +124,6 @@ func is_outdoor(ply):
 	else:
 		return hit_sky
 
-@rpc("any_peer", "call_local")
-func sync_timer(timer_int: int) -> void:
-	if map == null:
-		return
-
-	print("syncring timer...")
-
-	map.timer.start(timer_int)
-	await map.timer.timeout
-
 func is_inwater(ply):
 	if ply.is_in_group("player"):
 		return ply.IsInWater
@@ -184,7 +176,7 @@ func get_physics_multiplier() -> float:
 	return (200.0 / 3.0) / physics_interval
 
 func hit_chance(chance: int) -> bool:
-	if Globals.is_networking:
+	if is_networking:
 		if get_tree().get_multiplayer().is_server():
 			# En el servidor
 			return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
@@ -195,7 +187,15 @@ func hit_chance(chance: int) -> bool:
 		return randf() < (clamp(chance * get_physics_multiplier(), 0, 100) / 100)
 	
 
+@rpc("any_peer", "call_local")
+func sync_timer(timer_int: int) -> void:
+	if map == null:
+		return
 
+	print("syncring timer...")
+	map.timer.stop()
+	map.timer.wait_time = timer_int
+	map.timer.start()
 
 @rpc("any_peer", "call_local")
 func sync_temp(new_value):
@@ -227,6 +227,7 @@ func sync_Wind_Direction(new_value):
 
 
 func _process(_delta):
+	is_networking = get_tree().get_multiplayer().multiplayer_peer == Enet
 	if not is_networking:
 		Temperature = clamp(Temperature, -275.5, 275.5)
 		Humidity = clamp(Humidity, 0, 100)
@@ -270,13 +271,13 @@ func _process(_delta):
 		
 
 func hostwithport(port_int):
+	Enet = ENetMultiplayerPeer.new()
 	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
 		get_tree().get_multiplayer().allow_object_decoding = true
 		get_tree().get_multiplayer().max_sync_packet_size = 100000
 		if get_tree().get_multiplayer().is_server():
-			is_networking = true
 			UPNP_setup()
 			main.get_node("Main Menu").hide()
 			map = map_scene.instantiate()
@@ -289,13 +290,13 @@ func hostwithport(port_int):
 
 
 func joinwithip(ip_str, port_int):
+	Enet = ENetMultiplayerPeer.new()
 	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
 		get_tree().get_multiplayer().allow_object_decoding = true
 		get_tree().get_multiplayer().max_sync_packet_size = 100000
 		if not get_tree().get_multiplayer().is_server():
-			is_networking = true
 			main.get_node("Main Menu").hide()
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
