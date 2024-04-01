@@ -51,7 +51,7 @@ func _ready():
 	Globals.map = self
 
 	if not Globals.is_networking:
-		Globals.synchronize_timer(Globals.timer)
+		Globals.sync_timer(Globals.timer)
 	else:
 
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
@@ -62,7 +62,6 @@ func _ready():
 			player_join(1)	
 		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()
-			Globals.synchronize_timer(Globals.timer)
 
 func generate_seed():
 	if not Globals.is_networking:
@@ -149,7 +148,13 @@ func generate_world():
 	# No need to call this, but you may need to if you edit the terrain later on
 	terrain.update_collider()
 
-	
+func _process(_delta: float) -> void:
+	if Globals.is_networking:
+		if get_tree().get_multiplayer().is_server():
+			Globals.sync_timer.rpc(Globals.timer)
+			await timer.timeout
+
+
 func player_join(peer_id):
 	print("Joined player id: " + str(peer_id))
 	var player = player_scene.instantiate()
@@ -163,7 +168,7 @@ func player_join(peer_id):
 	if get_tree().get_multiplayer().is_server():
 		if peer_id in Globals.players_conected_list:
 			print("syncring timer and map")
-			Globals.synchronize_timer(Globals.timer)
+			Globals.sync_timer.rpc_id(peer_id, Globals.timer)
 			_recive_seed.rpc_id(peer_id, noise_seed)
 			print("finish :D")
 
@@ -235,6 +240,10 @@ func _physics_process(_delta):
 		wind(object)
 
 func _on_timer_timeout():
+	if Globals.is_networking:
+		if get_tree().get_multiplayer().is_server():
+			Globals.sync_timer.rpc(Globals.timer)
+	
 	sync_weather_and_disaster()
 
 

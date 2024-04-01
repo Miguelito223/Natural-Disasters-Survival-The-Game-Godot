@@ -153,27 +153,20 @@ func _process(_delta):
 		pause()
 
 
-func _on_time_value_changed(value:float):
+func _on_time_value_changed(value):
 	if not Globals.is_networking:
 		Globals.timer = value
-
-		if Globals.map == null:
-			return
-
-		Globals.synchronize_timer(value)
 		Data.save_file()
+		Globals.sync_timer(value)
+		
 	else:
 		if not get_tree().get_multiplayer().is_server():
 			return
 		
 		Globals.timer = value
-
-		if Globals.map == null:
-			return
-
-		Globals.synchronize_timer(value)
 		Data.save_file()
-
+		Globals.sync_timer.rpc(value)
+		
 func _on_volumen_value_changed(value:float):
 	Globals.volumen = value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))

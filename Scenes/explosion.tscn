@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://doi73cvnxims6"]
+[gd_scene load_steps=10 format=3 uid="uid://doi73cvnxims6"]
 
 [ext_resource type="Script" path="res://Scenes/explosion.gd" id="1_o7s6l"]
-[ext_resource type="Script" path="res://Scenes/Area3D.gd" id="1_pkc1d"]
 [ext_resource type="AudioStream" uid="uid://51sjjqi43ypi" path="res://Sounds/disasters/atmospheric/explosion_light9.mp3" id="3_i7oed"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qtdo2"]
@@ -65,7 +64,6 @@ draw_pass_1 = SubResource("SphereMesh_bjxpd")
 script = ExtResource("1_o7s6l")
 
 [node name="Area3D" type="Area3D" parent="."]
-script = ExtResource("1_pkc1d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)

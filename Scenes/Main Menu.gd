@@ -127,11 +127,11 @@ func _on_username_text_changed(new_text:String):
 	Data.save_file()
 
 
-func _on_h_slider_2_value_changed(value:float):
+func _on_h_slider_2_value_changed(value):
 	Globals.timer = value
 	if Globals.map == null:
 		return
-	Globals.synchronize_timer(value)
+	Globals.sync_timer(value)
 	Data.save_file()
 
 

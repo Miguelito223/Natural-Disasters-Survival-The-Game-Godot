@@ -123,32 +123,14 @@ func is_outdoor(ply):
 		return hit_sky
 
 @rpc("any_peer", "call_local")
-func set_timer(timer_value: float) -> void:
+func sync_timer(timer_int: int) -> void:
 	if map == null:
 		return
 
-	print("syncring timer")
+	print("syncring timer...")
 
-	map.timer.wait_time = timer_value
-	map.timer.start()
-
-# Función para sincronizar el temporizador entre los jugadores
-func synchronize_timer(timer_value: float):
-	if map == null:
-		return
-
-	print("syncring timer")
-
-	if Globals.is_networking:
-		if get_tree().get_multiplayer().is_server():
-			map.timer.wait_time = timer_value
-			map.timer.start()
-
-			set_timer.rpc(timer_value)
-	else:
-		map.timer.wait_time = timer_value
-		map.timer.start()	
-
+	map.timer.start(timer_int)
+	await map.timer.timeout
 
 func is_inwater(ply):
 	if ply.is_in_group("player"):
@@ -242,6 +224,7 @@ func sync_wind_speed(new_value):
 @rpc("any_peer", "call_local")
 func sync_Wind_Direction(new_value):
 	Wind_Direction = new_value
+
 
 func _process(_delta):
 	if not is_networking:
