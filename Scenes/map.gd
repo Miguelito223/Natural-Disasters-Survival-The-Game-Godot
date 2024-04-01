@@ -77,7 +77,7 @@ func _recive_seed(seed):
 	noise_seed = seed
 	noise.seed = seed
 
-	#Await 5 seconds
+	#Await 1 seconds
 	await get_tree().create_timer(1).timeout
 
 	#generate world
@@ -147,12 +147,6 @@ func generate_world():
 
 	# No need to call this, but you may need to if you edit the terrain later on
 	terrain.update_collider()
-
-func _process(_delta: float) -> void:
-	if Globals.is_networking:
-		if get_tree().get_multiplayer().is_server():
-			Globals.sync_timer.rpc(Globals.timer)
-			await timer.timeout
 
 
 func player_join(peer_id):
