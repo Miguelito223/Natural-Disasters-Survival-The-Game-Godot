@@ -298,7 +298,6 @@ func hostwithport(port_int):
 			main.get_node("Main Menu").hide()
 			map = map_scene.instantiate()
 			main.add_child(map)
-		else:
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
 			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
