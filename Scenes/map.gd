@@ -162,6 +162,7 @@ func player_join(peer_id):
 	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
 	Globals.players_conected_list[peer_id] = player
+	Globals.players_conected_int = Globals.players_conected_array.size()
 	
 	
 	Globals.Enet_host = Globals.Enet.host
@@ -175,7 +176,7 @@ func player_join(peer_id):
 	if get_tree().get_multiplayer().is_server():
 		print("syncring timer and map")
 		_recive_seed.rpc_id(peer_id, noise_seed)
-		if Globals.players_conected_int > 2 and started == false:
+		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
 			set_started.rpc(true)
 		elif Globals.players_conected_int < 2 and started == true:
@@ -200,6 +201,7 @@ func player_disconect(peer_id):
 		print("Disconected player id: " + str(peer_id))
 		Globals.players_conected_array.erase(player)
 		Globals.players_conected_list.erase(peer_id)
+		Globals.players_conected_int = Globals.players_conected_array.size()
 		player.queue_free()
 
 		if get_tree().get_multiplayer().is_server():
