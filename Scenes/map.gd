@@ -295,7 +295,7 @@ func _on_timer_timeout():
 func sync_weather_and_disaster():
 	if Globals.is_networking:
 		if get_tree().get_multiplayer().is_server():
-			var random_weather_and_disaster = randi_range(0,10)
+			var random_weather_and_disaster = randi_range(0,12)
 			set_weather_and_disaster.rpc(random_weather_and_disaster)
 	else:
 		var random_weather_and_disaster = randi_range(0,12)
