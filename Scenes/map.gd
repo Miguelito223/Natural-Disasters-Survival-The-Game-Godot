@@ -57,7 +57,6 @@ func _ready():
 		generate_seed()
 		Globals.sync_timer(Globals.timer)
 	else:
-
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
 		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
 
@@ -66,6 +65,8 @@ func _ready():
 			player_join(1)	
 		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()
+
+		
 
 func generate_seed():
 	if not Globals.is_networking:
@@ -77,11 +78,10 @@ func generate_seed():
 
 @rpc("any_peer", "call_local")
 func _recive_seed(seed_random):
+	print("generaing terrain and getting seed")
 	#generate seed
 	noise_seed = seed_random
 	noise.seed = seed_random
-
-	await get_tree().create_timer(1).timeout
 	#generate world
 	generate_world()
 
@@ -147,7 +147,7 @@ func generate_world():
 	terrain.set_shader_type(HTerrain.SHADER_CLASSIC4_LITE)
 	terrain.set_data(terrain_data)
 	terrain.set_texture_set(texture_set)
-	add_child(terrain)
+	add_child(terrain, true)
 
 	# No need to call this, but you may need to if you edit the terrain later on
 	#terrain.update_collider()
@@ -165,8 +165,6 @@ func player_join(peer_id):
 	Globals.Enet_peers = Globals.Enet.host.get_peers()
 	add_child(player, true)
 
-
-
 	if get_tree().get_multiplayer().is_server():
 		print("syncring timer and map")
 		_recive_seed.rpc_id(peer_id, noise_seed)
@@ -177,6 +175,7 @@ func player_join(peer_id):
 			Globals.sync_timer.rpc(60)
 			set_started.rpc(false)
 		print("finish :D")
+	
 
 
 		

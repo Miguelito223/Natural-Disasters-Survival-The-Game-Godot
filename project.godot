@@ -34,7 +34,7 @@ window/handheld/orientation=4
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/GPTIntegration/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [importer_defaults]
 

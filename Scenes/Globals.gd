@@ -9,10 +9,11 @@ var players_conected_array = []
 var players_conected_list = {}
 var players_conected_int = players_conected_list.size()
 var Enet: ENetMultiplayerPeer
+var Offline: OfflineMultiplayerPeer
 var Enet_host
 var Enet_peer
 var Enet_peers
-@onready var is_networking = get_tree().get_multiplayer().has_multiplayer_peer()
+var is_networking = false
 
 #Globals Settings
 var vsync = false
@@ -230,11 +231,6 @@ func sync_Wind_Direction(new_value):
 
 
 func _process(_delta):
-		
-	
-	
-	is_networking = get_tree().get_multiplayer().has_multiplayer_peer()
-	
 	
 	if not is_networking:
 		Temperature = clamp(Temperature, -275.5, 275.5)
@@ -287,6 +283,7 @@ func hostwithport(port_int):
 		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 		Enet_peers = Enet.host.get_peers()
 		if get_tree().get_multiplayer().is_server():
+			is_networking = true
 			UPNP_setup()
 			main.get_node("Main Menu").hide()
 			map = map_scene.instantiate()
@@ -308,6 +305,7 @@ func joinwithip(ip_str, port_int):
 		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 		Enet_peers = Enet.host.get_peers()
 		if not get_tree().get_multiplayer().is_server():
+			is_networking = true
 			main.get_node("Main Menu").hide()
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
@@ -317,6 +315,7 @@ func joinwithip(ip_str, port_int):
 
 func server_fail():
 	print("client disconected: failed to load")
+	is_networking = false
 	Temperature_target = Temperature_original
 	Humidity_target = Humidity_original
 	pressure_target = pressure_original
@@ -324,13 +323,14 @@ func server_fail():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
-	get_tree().get_multiplayer().multiplayer_peer = null
+	get_tree().get_multiplayer().multiplayer_peer = Offline
 	if is_instance_valid(map):
 		map.queue_free()
 	main_menu.show()
 	
 func server_disconect():
 	print("client disconected")
+	is_networking = false
 	Temperature_target = Temperature_original
 	Humidity_target = Humidity_original
 	pressure_target = pressure_original
@@ -338,7 +338,7 @@ func server_disconect():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
-	get_tree().get_multiplayer().multiplayer_peer = null
+	get_tree().get_multiplayer().multiplayer_peer = Offline
 	if is_instance_valid(map):
 		map.queue_free()
 	main_menu.show()
@@ -346,6 +346,12 @@ func server_disconect():
 
 func server_connected():
 	print("connected to server :)")
+	is_networking = true
+	Enet_host = Enet.host
+	Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
+	Enet_peers = Enet.host.get_peers()
+	for id in Globals.Enet_peers:
+		id.set_timeout(600000,300000,600000)
 
 func UPNP_setup():
 	var upnp = UPNP.new()
@@ -370,8 +376,7 @@ func UPNP_setup():
 		return
 
 func _ready():
-	get_tree().get_multiplayer().multiplayer_peer = null
-
+	Offline = OfflineMultiplayerPeer.new()
 
 	if OS.has_feature("dedicated_server") or "s" in OS.get_cmdline_user_args() or "server" in OS.get_cmdline_user_args():
 		var args = OS.get_cmdline_user_args()
