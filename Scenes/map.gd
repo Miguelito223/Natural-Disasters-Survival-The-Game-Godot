@@ -174,7 +174,7 @@ func player_join(peer_id):
 	add_child(player, true)
 
 	if get_tree().get_multiplayer().is_server():
-		print("syncring timer and map")
+		print("syncring timer and map and weather/disaseters")
 		_recive_seed.rpc_id(peer_id, noise_seed)
 		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
@@ -185,8 +185,7 @@ func player_join(peer_id):
 		else:
 			Globals.sync_timer.rpc(60)
 			set_started.rpc(false)
-
-
+		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
 		print("finish :D")
 	
 
