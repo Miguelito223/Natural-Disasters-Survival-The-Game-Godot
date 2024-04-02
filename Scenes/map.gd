@@ -60,6 +60,9 @@ func _ready():
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
 		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
 
+		for id in Globals.Enet_peers:
+			id.set_timeout(600000,300000,600000)
+
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()
 			player_join(1)	
@@ -71,6 +74,7 @@ func _ready():
 func generate_seed():
 	if not Globals.is_networking:
 		noise_seed = randi()
+		started = true
 		_recive_seed(noise_seed)
 	else:
 		if get_tree().get_multiplayer().is_server():
@@ -188,15 +192,15 @@ func player_disconect(peer_id):
 		Globals.players_conected_list.erase(peer_id)
 		player.queue_free()
 
-	if get_tree().get_multiplayer().is_server():
-		print("syncring timer")
-		if Globals.players_conected_int > 2 and started == false:
-			Globals.sync_timer.rpc(Globals.timer)
-			set_started.rpc(true)
-		elif Globals.players_conected_int < 2 and started == true:
-			Globals.sync_timer.rpc(60)
-			set_started.rpc(false)
-		print("finish :D")
+		if get_tree().get_multiplayer().is_server():
+			print("syncring timer")
+			if Globals.players_conected_int > 2 and started == false:
+				Globals.sync_timer.rpc(Globals.timer)
+				set_started.rpc(true)
+			elif Globals.players_conected_int < 2 and started == true:
+				Globals.sync_timer.rpc(60)
+				set_started.rpc(false)
+			print("finish :D")
 
 
 @rpc("any_peer","call_local")
