@@ -60,9 +60,6 @@ func _ready():
 		get_tree().get_multiplayer().peer_connected.connect(player_join)
 		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
 
-		for id in Globals.Enet_peers:
-			id.set_timeout(600000,300000,600000)
-
 		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
 			generate_seed()
 			player_join(1)	
@@ -86,6 +83,9 @@ func _recive_seed(seed_random):
 	#generate seed
 	noise_seed = seed_random
 	noise.seed = seed_random
+	
+	await get_tree().create_timer(1).timeout
+
 	#generate world
 	generate_world()
 
@@ -128,6 +128,9 @@ func generate_world():
 			heightmap.set_pixel(x, z, Color(h, 0, 0))
 			normalmap.set_pixel(x, z, HTerrainData.encode_normal(normal))
 			splatmap.set_pixel(x, z, splat)
+			
+
+		
 
 	
 
@@ -178,6 +181,11 @@ func player_join(peer_id):
 		elif Globals.players_conected_int < 2 and started == true:
 			Globals.sync_timer.rpc(60)
 			set_started.rpc(false)
+		else:
+			Globals.sync_timer.rpc(60)
+			set_started.rpc(false)
+
+
 		print("finish :D")
 	
 
@@ -187,6 +195,8 @@ func player_join(peer_id):
 func player_disconect(peer_id):
 	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
+		await get_tree().create_timer(5).timeout
+		
 		print("Disconected player id: " + str(peer_id))
 		Globals.players_conected_array.erase(player)
 		Globals.players_conected_list.erase(peer_id)
@@ -198,6 +208,9 @@ func player_disconect(peer_id):
 				Globals.sync_timer.rpc(Globals.timer)
 				set_started.rpc(true)
 			elif Globals.players_conected_int < 2 and started == true:
+				Globals.sync_timer.rpc(60)
+				set_started.rpc(false)
+			else:
 				Globals.sync_timer.rpc(60)
 				set_started.rpc(false)
 			print("finish :D")
