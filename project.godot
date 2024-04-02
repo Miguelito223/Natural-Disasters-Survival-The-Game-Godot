@@ -19,6 +19,8 @@ config/icon="res://Icons/disasters.png"
 
 Globals="*res://Scenes/Globals.gd"
 Data="*res://Scenes/Data.gd"
+LoadScene="*res://Scenes/LoadScene.gd"
+UnloadScene="*res://Scenes/UnloadScene.gd"
 
 [debug]
 

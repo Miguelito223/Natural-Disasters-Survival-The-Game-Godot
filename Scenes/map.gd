@@ -47,9 +47,6 @@ func _exit_tree():
 	get_tree().get_multiplayer().connected_to_server.disconnect(Globals.server_connected)
 	get_tree().get_multiplayer().connection_failed.disconnect(Globals.server_fail)
 
-func _enter_tree():
-	Globals.map = self
-
 func _ready():
 	Globals.map = self
 
@@ -83,8 +80,6 @@ func _recive_seed(seed_random):
 	#generate seed
 	noise_seed = seed_random
 	noise.seed = seed_random
-	
-	await get_tree().create_timer(1).timeout
 
 	#generate world
 	generate_world()
@@ -167,9 +162,14 @@ func player_join(peer_id):
 	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
 	Globals.players_conected_list[peer_id] = player
+	
+	
 	Globals.Enet_host = Globals.Enet.host
 	Globals.Enet_peer = Globals.Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 	Globals.Enet_peers = Globals.Enet.host.get_peers()
+	for id in Globals.Enet_peers:
+		id.set_timeout(100000,300000,600000)
+
 	add_child(player, true)
 
 	if get_tree().get_multiplayer().is_server():

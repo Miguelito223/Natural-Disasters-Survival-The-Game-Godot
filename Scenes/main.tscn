@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b5vb6ecxpf7g6"]
+[gd_scene load_steps=2 format=3 uid="uid://b5vb6ecxpf7g6"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_kp8fp"]
-[ext_resource type="PackedScene" uid="uid://dshrj55scr44d" path="res://Scenes/main_menu.tscn" id="1_wlo3y"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_kp8fp")
@@ -10,7 +9,5 @@ script = ExtResource("1_kp8fp")
 _spawnable_scenes = PackedStringArray("res://Scenes/map.tscn")
 spawn_path = NodePath("..")
 spawn_limit = 1
-
-[node name="Main Menu" parent="." instance=ExtResource("1_wlo3y")]
 
 [connection signal="spawned" from="MapSpawner" to="." method="_on_map_spawner_spawned"]

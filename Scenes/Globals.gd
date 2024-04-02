@@ -56,10 +56,11 @@ var Wind_speed_original: float = 0
 
 var seconds = Time.get_unix_time_from_system()
 
-@onready var main = get_tree().root.get_node("Main")
-@onready var main_menu = get_tree().root.get_node("Main/Main Menu")
-@onready var map = get_tree().root.get_node("Main/map")
+var main
+var main_menu
+var map
 
+var main_scene = preload("res://Scenes/main.tscn")
 var map_scene = preload("res://Scenes/map.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
@@ -279,15 +280,21 @@ func hostwithport(port_int):
 	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
+		
 		Enet_host = Enet.host
 		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 		Enet_peers = Enet.host.get_peers()
+		
+		
+		for id in Enet_peers:
+			id.set_timeout(100000,300000,600000)
+		
+		
 		if get_tree().get_multiplayer().is_server():
 			is_networking = true
 			UPNP_setup()
-			main.get_node("Main Menu").hide()
-			map = map_scene.instantiate()
-			main.add_child(map)
+			main_menu.hide()
+			LoadScene.load_scene(null, "map")
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
 			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
@@ -301,12 +308,19 @@ func joinwithip(ip_str, port_int):
 	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
+		
+		
 		Enet_host = Enet.host
 		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 		Enet_peers = Enet.host.get_peers()
+		for id in Enet_peers:
+			id.set_timeout(100000,300000,600000)
+
+
 		if not get_tree().get_multiplayer().is_server():
 			is_networking = true
-			main.get_node("Main Menu").hide()
+			main_menu.hide()
+			LoadScene.load_scene(null, "res://Scenes/main.tscn")
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
 			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
@@ -324,8 +338,7 @@ func server_fail():
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
 	get_tree().get_multiplayer().multiplayer_peer = Offline
-	if is_instance_valid(map):
-		map.queue_free()
+	LoadScene.load_scene(map, "res://Scenes/main.tscn")
 	main_menu.show()
 	
 func server_disconect():
@@ -339,19 +352,20 @@ func server_disconect():
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
 	get_tree().get_multiplayer().multiplayer_peer = Offline
-	if is_instance_valid(map):
-		map.queue_free()
+	LoadScene.load_scene(map, "res://Scenes/main.tscn")
 	main_menu.show()
 
 
 func server_connected():
 	print("connected to server :)")
 	is_networking = true
+	
 	Enet_host = Enet.host
 	Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
 	Enet_peers = Enet.host.get_peers()
-	for id in Globals.Enet_peers:
-		id.set_timeout(600000,300000,600000)
+
+	for id in Enet_peers:
+		id.set_timeout(100000,300000,600000)
 
 func UPNP_setup():
 	var upnp = UPNP.new()

@@ -35,7 +35,8 @@ func addresolutions():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
+	Globals.main_menu = self
+	
 	$Menu.show()
 	$Multiplayer.hide()
 	$Settings.hide()
