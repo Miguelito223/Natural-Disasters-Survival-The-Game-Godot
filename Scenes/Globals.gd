@@ -367,6 +367,10 @@ func server_connected():
 	for id in Enet_peers:
 		id.set_timeout(100000,300000,600000)
 
+	for id in get_tree().get_multiplayer().get_peers():
+		Globals.players_conected_array.append(id)
+		Globals.players_conected_int = Globals.players_conected_array.size()
+
 func UPNP_setup():
 	var upnp = UPNP.new()
 
