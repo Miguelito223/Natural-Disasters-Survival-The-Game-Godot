@@ -86,7 +86,7 @@ func _on_settings_pressed():
 
 func _on_exit_pressed():
 	if Globals.is_networking:
-		get_tree().get_multiplayer().multiplayer_peer.close()
+		multiplayer.multiplayer_peer.close()
 	else:
 		get_parent().get_parent().get_parent().get_node("Main Menu").show()
 		get_parent().get_parent().queue_free()
@@ -159,7 +159,7 @@ func _on_time_value_changed(value):
 		Globals.sync_timer(value)
 		
 	else:
-		if not get_tree().get_multiplayer().is_server():
+		if not multiplayer.is_server():
 			return
 
 		if not Globals.map.started:

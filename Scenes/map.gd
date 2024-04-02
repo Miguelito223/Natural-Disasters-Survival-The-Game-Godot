@@ -41,11 +41,11 @@ func _exit_tree():
 	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
 
-	get_tree().get_multiplayer().peer_connected.disconnect(player_join)
-	get_tree().get_multiplayer().peer_disconnected.disconnect(player_disconect)
-	get_tree().get_multiplayer().server_disconnected.disconnect(Globals.server_disconect)
-	get_tree().get_multiplayer().connected_to_server.disconnect(Globals.server_connected)
-	get_tree().get_multiplayer().connection_failed.disconnect(Globals.server_fail)
+	multiplayer.peer_connected.disconnect(player_join)
+	multiplayer.peer_disconnected.disconnect(player_disconect)
+	multiplayer.server_disconnected.disconnect(Globals.server_disconect)
+	multiplayer.connected_to_server.disconnect(Globals.server_connected)
+	multiplayer.connection_failed.disconnect(Globals.server_fail)
 
 func _ready():
 	Globals.map = self
@@ -54,13 +54,13 @@ func _ready():
 		generate_seed()
 		Globals.sync_timer(Globals.timer)
 	else:
-		get_tree().get_multiplayer().peer_connected.connect(player_join)
-		get_tree().get_multiplayer().peer_disconnected.connect(player_disconect)
+		multiplayer.peer_connected.connect(player_join)
+		multiplayer.peer_disconnected.connect(player_disconect)
 
-		if not OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
+		if not OS.has_feature("dedicated_server") and multiplayer.is_server():
 			generate_seed()
 			player_join(1)	
-		elif OS.has_feature("dedicated_server") and get_tree().get_multiplayer().is_server():
+		elif OS.has_feature("dedicated_server") and multiplayer.is_server():
 			generate_seed()
 
 		
@@ -71,7 +71,7 @@ func generate_seed():
 		started = true
 		_recive_seed(noise_seed)
 	else:
-		if get_tree().get_multiplayer().is_server():
+		if multiplayer.is_server():
 			noise_seed = randi()	
 
 @rpc("any_peer", "call_local")
@@ -160,21 +160,11 @@ func player_join(peer_id):
 	var player = player_scene.instantiate()
 	player.id = peer_id
 	player.name = str(peer_id)
-	Globals.players_conected_array.append(player)
-	Globals.players_conected_list[peer_id] = player
-	Globals.players_conected_int = Globals.players_conected_array.size()
-	
-	
-	Globals.Enet_host = Globals.Enet.host
-	Globals.Enet_peer = Globals.Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
-	Globals.Enet_peers = Globals.Enet.host.get_peers()
-	for id in Globals.Enet_peers:
-		id.set_timeout(100000,300000,600000)
-
 	add_child(player, true)
 
-	if get_tree().get_multiplayer().is_server():
-		print("syncring timer and map and weather/disaseters")
+	if multiplayer.is_server():
+		print("syncring timer, map, player_list and weather/disaseters")
+		Globals.sync_player_list.rpc(peer_id, player)
 		_recive_seed.rpc_id(peer_id, noise_seed)
 		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
@@ -187,6 +177,9 @@ func player_join(peer_id):
 			set_started.rpc(false)
 		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
 		print("finish :D")
+
+	
+	Globals.Enet_host_peer = Globals.Enet.get_peer(1)
 	
 
 
@@ -203,8 +196,9 @@ func player_disconect(peer_id):
 		Globals.players_conected_int = Globals.players_conected_array.size()
 		player.queue_free()
 
-		if get_tree().get_multiplayer().is_server():
-			print("syncring timer")
+		if multiplayer.is_server():
+			print("syncring timer and player list")
+			Globals.sync_player_list.rpc(peer_id, player)
 			if Globals.players_conected_int > 2 and started == false:
 				Globals.sync_timer.rpc(Globals.timer)
 				set_started.rpc(true)
@@ -281,7 +275,7 @@ func _physics_process(_delta):
 func _on_timer_timeout():
 	if started:
 		if Globals.is_networking:
-			if get_tree().get_multiplayer().is_server():
+			if multiplayer.is_server():
 				Globals.sync_timer.rpc(Globals.timer)
 		else:
 			Globals.sync_timer(Globals.timer)
@@ -289,12 +283,12 @@ func _on_timer_timeout():
 		sync_weather_and_disaster()
 	else:
 		if Globals.is_networking:
-			get_tree().get_multiplayer().multiplayer_peer.close()
+			multiplayer.multiplayer_peer.close()
 
 
 func sync_weather_and_disaster():
 	if Globals.is_networking:
-		if get_tree().get_multiplayer().is_server():
+		if multiplayer.is_server():
 			var random_weather_and_disaster = randi_range(0,12)
 			set_weather_and_disaster.rpc(random_weather_and_disaster)
 	else:
@@ -377,7 +371,7 @@ func is_tsunami():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -416,7 +410,7 @@ func is_linghting_storm():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -470,7 +464,7 @@ func is_meteor_shower():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -504,7 +498,7 @@ func is_blizzard():
 		var player
 
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -543,7 +537,7 @@ func is_sandstorm():
 		var player
 
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -593,7 +587,7 @@ func is_volcano():
 		var player
 
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -653,7 +647,7 @@ func is_tornado():
 		var player
 
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -715,7 +709,7 @@ func is_acid_rain():
 		var player
 
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -756,7 +750,7 @@ func is_earthquake():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -796,7 +790,7 @@ func is_sun():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -826,7 +820,7 @@ func is_cloud():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -866,7 +860,7 @@ func is_raining():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 		
@@ -905,7 +899,7 @@ func is_storm():
 		var player
 		
 		if Globals.is_networking:
-			player = get_node(str(get_tree().get_multiplayer().get_unique_id()))
+			player = get_node(str(multiplayer.get_unique_id()))
 		else:
 			player = get_node("Player")
 
@@ -928,3 +922,7 @@ func is_storm():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 	
 		await get_tree().create_timer(0.5).timeout
+
+
+func _on_player_spawner_spawned(_node:Node) -> void:
+	Globals.Enet_peer = Globals.Enet.get_peer(1)
