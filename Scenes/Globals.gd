@@ -12,7 +12,7 @@ var Enet: ENetMultiplayerPeer
 var Offline: OfflineMultiplayerPeer
 var Enet_host: ENetConnection
 var Enet_host_peer: ENetPacketPeer
-var Enet_peers: Array
+var Enet_peers
 var is_networking = false
 
 #Globals Settings
@@ -288,8 +288,8 @@ func hostwithport(port_int):
 		multiplayer.multiplayer_peer = Enet
 		multiplayer.allow_object_decoding = true
 		Enet_host = Enet.host
-		Enet_peers = Enet.host.get_peers()
-
+		Enet_peers = Enet_peers.get_peers()
+		Enet_host_peer = Enet.get_peer(1)
 		if multiplayer.is_server():
 			is_networking = true
 			UPNP_setup()
@@ -311,8 +311,8 @@ func joinwithip(ip_str, port_int):
 		multiplayer.multiplayer_peer = Enet
 		multiplayer.allow_object_decoding = true
 		Enet_host = Enet.host
-		Enet_peers = Enet.host.get_peers()
-
+		Enet_peers = Enet_peers.get_peers()
+		Enet_host_peer = Enet.get_peer(1)
 		if not multiplayer.is_server():
 			is_networking = true
 			main_menu.hide()

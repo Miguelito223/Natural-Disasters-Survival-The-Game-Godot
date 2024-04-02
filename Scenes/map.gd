@@ -179,7 +179,7 @@ func player_join(peer_id):
 		print("finish :D")
 
 	
-	Globals.Enet_host_peer = Globals.Enet.get_peer(1)
+	
 	
 
 
@@ -925,4 +925,4 @@ func is_storm():
 
 
 func _on_player_spawner_spawned(_node:Node) -> void:
-	Globals.Enet_peer = Globals.Enet.get_peer(1)
+	print("Player spawner, id:", _node.id)
