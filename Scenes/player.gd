@@ -18,7 +18,6 @@ var t_bob = 0.0
 
 @export var mass = 1
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 
 var Max_Hearth = 100
 var Max_temp = 44

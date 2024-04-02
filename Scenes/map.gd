@@ -80,6 +80,8 @@ func _recive_seed(seed_random):
 	#generate seed
 	noise_seed = seed_random
 	noise.seed = seed_random
+
+	await get_tree().create_timer(1).timeout
 	#generate world
 	generate_world()
 
@@ -123,8 +125,6 @@ func generate_world():
 			normalmap.set_pixel(x, z, HTerrainData.encode_normal(normal))
 			splatmap.set_pixel(x, z, splat)
 
-			print(x, z)
-
 	
 
 	# Commit modifications so they get uploaded to the graphics card
@@ -150,7 +150,7 @@ func generate_world():
 	add_child(terrain)
 
 	# No need to call this, but you may need to if you edit the terrain later on
-	terrain.update_collider()
+	#terrain.update_collider()
 
 
 func player_join(peer_id):
@@ -160,7 +160,12 @@ func player_join(peer_id):
 	player.name = str(peer_id)
 	Globals.players_conected_array.append(player)
 	Globals.players_conected_list[peer_id] = player
+	Globals.Enet_host = Globals.Enet.host
+	Globals.Enet_peer = Globals.Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
+	Globals.Enet_peers = Globals.Enet.host.get_peers()
 	add_child(player, true)
+
+
 
 	if get_tree().get_multiplayer().is_server():
 		print("syncring timer and map")
@@ -173,19 +178,27 @@ func player_join(peer_id):
 			set_started.rpc(false)
 		print("finish :D")
 
+
+		
+
 func player_disconect(peer_id):
 	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
 		print("Disconected player id: " + str(peer_id))
 		Globals.players_conected_array.erase(player)
 		Globals.players_conected_list.erase(peer_id)
+		player.queue_free()
+
+	if get_tree().get_multiplayer().is_server():
+		print("syncring timer")
 		if Globals.players_conected_int > 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
 			set_started.rpc(true)
 		elif Globals.players_conected_int < 2 and started == true:
 			Globals.sync_timer.rpc(60)
 			set_started.rpc(false)
-		player.queue_free()
+		print("finish :D")
+
 
 @rpc("any_peer","call_local")
 func set_started(started_bool):

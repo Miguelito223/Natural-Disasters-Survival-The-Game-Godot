@@ -9,7 +9,10 @@ var players_conected_array = []
 var players_conected_list = {}
 var players_conected_int = players_conected_list.size()
 var Enet: ENetMultiplayerPeer
-@onready var is_networking = get_tree().get_multiplayer().multiplayer_peer == Enet
+var Enet_host
+var Enet_peer
+var Enet_peers
+@onready var is_networking = get_tree().get_multiplayer().has_multiplayer_peer()
 
 #Globals Settings
 var vsync = false
@@ -227,7 +230,12 @@ func sync_Wind_Direction(new_value):
 
 
 func _process(_delta):
-	is_networking = get_tree().get_multiplayer().multiplayer_peer == Enet
+		
+	
+	
+	is_networking = get_tree().get_multiplayer().has_multiplayer_peer()
+	
+	
 	if not is_networking:
 		Temperature = clamp(Temperature, -275.5, 275.5)
 		Humidity = clamp(Humidity, 0, 100)
@@ -275,8 +283,9 @@ func hostwithport(port_int):
 	var error = Enet.create_server(port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
-		get_tree().get_multiplayer().allow_object_decoding = true
-		get_tree().get_multiplayer().max_sync_packet_size = 100000
+		Enet_host = Enet.host
+		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
+		Enet_peers = Enet.host.get_peers()
 		if get_tree().get_multiplayer().is_server():
 			UPNP_setup()
 			main.get_node("Main Menu").hide()
@@ -285,6 +294,7 @@ func hostwithport(port_int):
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
 			get_tree().get_multiplayer().server_disconnected.connect(server_disconect)
 			get_tree().get_multiplayer().connected_to_server.connect(server_connected)
+			
 	else:
 		print("Fatal Error in server")
 
@@ -294,8 +304,9 @@ func joinwithip(ip_str, port_int):
 	var error = Enet.create_client(ip_str, port_int)
 	if error == OK:
 		get_tree().get_multiplayer().multiplayer_peer = Enet
-		get_tree().get_multiplayer().allow_object_decoding = true
-		get_tree().get_multiplayer().max_sync_packet_size = 100000
+		Enet_host = Enet.host
+		Enet_peer = Enet.get_peer(get_tree().get_multiplayer().get_unique_id())
+		Enet_peers = Enet.host.get_peers()
 		if not get_tree().get_multiplayer().is_server():
 			main.get_node("Main Menu").hide()
 			get_tree().get_multiplayer().connection_failed.connect(server_fail)
@@ -313,6 +324,7 @@ func server_fail():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
+	get_tree().get_multiplayer().multiplayer_peer = null
 	if is_instance_valid(map):
 		map.queue_free()
 	main_menu.show()
@@ -326,6 +338,7 @@ func server_disconect():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
+	get_tree().get_multiplayer().multiplayer_peer = null
 	if is_instance_valid(map):
 		map.queue_free()
 	main_menu.show()
@@ -357,6 +370,8 @@ func UPNP_setup():
 		return
 
 func _ready():
+	get_tree().get_multiplayer().multiplayer_peer = null
+
 
 	if OS.has_feature("dedicated_server") or "s" in OS.get_cmdline_user_args() or "server" in OS.get_cmdline_user_args():
 		var args = OS.get_cmdline_user_args()
