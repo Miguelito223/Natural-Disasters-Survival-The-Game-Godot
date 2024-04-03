@@ -40,12 +40,13 @@ func _exit_tree():
 	Globals.Wind_speed_target = Globals.Wind_speed_original
 	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
 	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
-
-	multiplayer.peer_connected.disconnect(player_join)
-	multiplayer.peer_disconnected.disconnect(player_disconect)
-	multiplayer.server_disconnected.disconnect(Globals.server_disconect)
-	multiplayer.connected_to_server.disconnect(Globals.server_connected)
-	multiplayer.connection_failed.disconnect(Globals.server_fail)
+	
+	if Globals.is_networking:
+		multiplayer.peer_connected.disconnect(player_join)
+		multiplayer.peer_disconnected.disconnect(player_disconect)
+		multiplayer.server_disconnected.disconnect(Globals.server_disconect)
+		multiplayer.connected_to_server.disconnect(Globals.server_connected)
+		multiplayer.connection_failed.disconnect(Globals.server_fail)
 
 func _ready():
 	Globals.map = self
