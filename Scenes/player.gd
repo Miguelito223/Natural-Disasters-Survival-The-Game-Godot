@@ -74,6 +74,8 @@ func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
 		print("you death :O")
+
+		Globals.points -= 1
 		
 		if not Globals.is_networking:
 			get_tree().paused = true
