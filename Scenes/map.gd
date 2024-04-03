@@ -167,8 +167,8 @@ func player_join(peer_id):
 
 	if multiplayer.is_server():
 		print("syncring timer, map, player_list and weather/disaseters")
-		Globals.add_player_to_list.rpc(peer_id, player)
 		_recive_seed.rpc_id(peer_id, noise_seed)
+		Globals.add_player_to_list.rpc(peer_id, player)
 		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
 			set_started.rpc(true)
@@ -198,7 +198,6 @@ func player_disconect(peer_id):
 		if multiplayer.is_server():
 			print("syncring timer and player list")
 			Globals.remove_player_to_list.rpc(peer_id, player)
-			Globals.sync_player_list.rpc(peer_id, player)
 			if Globals.players_conected_int > 2 and started == false:
 				Globals.sync_timer.rpc(Globals.timer)
 				set_started.rpc(true)
