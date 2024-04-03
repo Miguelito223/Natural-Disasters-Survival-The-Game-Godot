@@ -120,12 +120,12 @@ func is_outdoor(ply):
 	var hit_sky = is_below_sky(ply)
 
 	if ply.is_in_group("player"):
-		if hit_sky and not in_tunnel:
+		if hit_sky:
 			ply.Outdoor = true
 		else:
 			ply.Outdoor = false
 		
-		return hit_sky and not in_tunnel
+		return hit_sky
 	else:
 		return hit_sky
 
