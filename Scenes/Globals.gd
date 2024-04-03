@@ -348,7 +348,7 @@ func server_fail():
 	players_conected_int = players_conected_array.size()
 	Enet = null
 	multiplayer.multiplayer_peer = Offline
-	LoadScene.load_scene(map, "res://Scenes/main.tscn")
+	UnloadScene.unload_scene(map)
 	main_menu.show()
 	
 func server_disconect():
@@ -363,7 +363,7 @@ func server_disconect():
 	players_conected_int = players_conected_array.size()
 	Enet = null
 	multiplayer.multiplayer_peer = Offline
-	LoadScene.load_scene(map, "res://Scenes/main.tscn")
+	UnloadScene.unload_scene(map)
 	main_menu.show()
 
 
