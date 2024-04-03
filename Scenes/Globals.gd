@@ -214,6 +214,11 @@ func remove_player_to_list(id, player):
 	players_conected_list.erase(id)
 	players_conected_int = players_conected_array.size()
 
+
+@rpc("any_peer", "call_local")
+func sync_points(new_value):
+	points = new_value
+
 @rpc("any_peer", "call_local")
 func sync_temp(new_value):
 	Temperature = new_value
@@ -251,6 +256,7 @@ func _process(_delta):
 		bradiation = clamp(bradiation, 0, 100)
 		pressure = clamp(pressure , 0, 100000)
 		oxygen = clamp(oxygen, 0, 100)
+		points = clamp(points, 0, 5000)
 
 		Temperature = lerp(Temperature, Temperature_target, 0.005)
 		Humidity = lerp(Humidity, Humidity_target, 0.005)
@@ -269,6 +275,7 @@ func _process(_delta):
 		bradiation = clamp(bradiation, 0, 100)
 		pressure = clamp(pressure , 0, 100000)
 		oxygen = clamp(oxygen, 0, 100)
+		points = clamp(points, 0, 5000)
 
 		Temperature = lerp(Temperature, Temperature_target, 0.005)
 		Humidity = lerp(Humidity, Humidity_target, 0.005)
@@ -285,6 +292,7 @@ func _process(_delta):
 		sync_pressure.rpc(pressure)
 		sync_oxygen.rpc(oxygen)
 		sync_bradiation.rpc(bradiation)
+		sync_points.rpc(points)
 		
 
 func hostwithport(port_int):
