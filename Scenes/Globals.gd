@@ -11,7 +11,7 @@ var players_conected_int = players_conected_list.size()
 var Enet: ENetMultiplayerPeer
 var Offline: OfflineMultiplayerPeer
 var Enet_host: ENetConnection
-var Enet_host_peer: ENetPacketPeer
+var Enet_local_peer: ENetPacketPeer
 var Enet_peers
 var is_networking = false
 
@@ -203,9 +203,15 @@ func sync_timer(timer_int: int) -> void:
 	map.timer.start()
 
 @rpc("any_peer", "call_local")
-func sync_player_list(id, player):
+func add_player_to_list(id, player):
 	players_conected_array.append(player)
 	players_conected_list[id] = player
+	players_conected_int = players_conected_array.size()
+
+@rpc("any_peer", "call_local")
+func remove_player_to_list(id, player):
+	players_conected_array.erase(player)
+	players_conected_list.erase(id)
 	players_conected_int = players_conected_array.size()
 
 @rpc("any_peer", "call_local")
@@ -288,8 +294,7 @@ func hostwithport(port_int):
 		multiplayer.multiplayer_peer = Enet
 		multiplayer.allow_object_decoding = true
 		Enet_host = Enet.host
-		Enet_peers = Enet_peers.get_peers()
-		Enet_host_peer = Enet.get_peer(1)
+		Enet_peers = Enet_host.get_peers()
 		if multiplayer.is_server():
 			is_networking = true
 			UPNP_setup()
@@ -311,8 +316,7 @@ func joinwithip(ip_str, port_int):
 		multiplayer.multiplayer_peer = Enet
 		multiplayer.allow_object_decoding = true
 		Enet_host = Enet.host
-		Enet_peers = Enet_peers.get_peers()
-		Enet_host_peer = Enet.get_peer(1)
+		Enet_peers = Enet_host.get_peers()
 		if not multiplayer.is_server():
 			is_networking = true
 			main_menu.hide()

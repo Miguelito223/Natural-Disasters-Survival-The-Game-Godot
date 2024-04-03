@@ -161,10 +161,13 @@ func player_join(peer_id):
 	player.id = peer_id
 	player.name = str(peer_id)
 	add_child(player, true)
+	Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
+	if Globals.Enet_local_peer != null:
+		Globals.Enet_local_peer.set_timeout(60000, 300000, 600000)
 
 	if multiplayer.is_server():
 		print("syncring timer, map, player_list and weather/disaseters")
-		Globals.sync_player_list.rpc(peer_id, player)
+		Globals.add_player_to_list.rpc(peer_id, player)
 		_recive_seed.rpc_id(peer_id, noise_seed)
 		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
@@ -178,7 +181,7 @@ func player_join(peer_id):
 		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
 		print("finish :D")
 
-	
+
 	
 	
 
@@ -189,15 +192,12 @@ func player_disconect(peer_id):
 	var player = get_node(str(peer_id))
 	if is_instance_valid(player):
 		await get_tree().create_timer(5).timeout
-		
 		print("Disconected player id: " + str(peer_id))
-		Globals.players_conected_array.erase(player)
-		Globals.players_conected_list.erase(peer_id)
-		Globals.players_conected_int = Globals.players_conected_array.size()
 		player.queue_free()
 
 		if multiplayer.is_server():
 			print("syncring timer and player list")
+			Globals.remove_player_to_list.rpc(peer_id, player)
 			Globals.sync_player_list.rpc(peer_id, player)
 			if Globals.players_conected_int > 2 and started == false:
 				Globals.sync_timer.rpc(Globals.timer)
@@ -390,7 +390,11 @@ func is_tsunami():
 	while current_weather_and_disaster != "Tsunami":
 		if is_instance_valid(tsunami):
 			tsunami.queue_free()
-		await get_tree().create_timer(0.5).timeout
+		
+		Globals.points += 1
+		
+		break
+
 
 
 
@@ -447,7 +451,11 @@ func is_linghting_storm():
 
 		await get_tree().create_timer(0.5).timeout
 
+	while current_weather_and_disaster != "Linghting storm":
 
+		Globals.points += 1
+		
+		break
 
 
 
@@ -483,6 +491,12 @@ func is_meteor_shower():
 		add_child(meteor, true)
 
 		await get_tree().create_timer(0.5).timeout
+
+	while current_weather_and_disaster != "Meteor shower":
+
+		Globals.points += 1
+		
+		break
 
 func is_blizzard():
 	Globals.Temperature_target =  randf_range(-20,-35)
@@ -522,6 +536,12 @@ func is_blizzard():
 				
 			
 		await get_tree().create_timer(0.5).timeout	
+	
+	while current_weather_and_disaster != "blizzard":
+
+		Globals.points += 1
+		
+		break
 
 
 func is_sandstorm():
@@ -560,6 +580,12 @@ func is_sandstorm():
 				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
 			
 		await get_tree().create_timer(0.5).timeout
+
+	while current_weather_and_disaster != "Sand Storm":
+
+		Globals.points += 1
+		
+		break
 
 func is_volcano():
 	Globals.Temperature_target =  randf_range(30,40)
@@ -615,7 +641,9 @@ func is_volcano():
 		if is_instance_valid(volcano):
 			volcano.queue_free()
 
-		await get_tree().create_timer(0.5).timeout
+		Globals.points += 1
+		
+		break
 
 	
 
@@ -691,7 +719,9 @@ func is_tornado():
 		if is_instance_valid(tornado):
 			tornado.queue_free()
 
-		await get_tree().create_timer(0.5).timeout
+		Globals.points += 1
+
+		break
 	
 
 
@@ -733,6 +763,11 @@ func is_acid_rain():
 
 		await get_tree().create_timer(0.5).timeout
 	
+	while current_weather_and_disaster != "Acid rain":
+
+		Globals.points += 1
+		
+		break
 
 func is_earthquake():
 	Globals.Temperature_target = randf_range(20,31)
@@ -768,10 +803,10 @@ func is_earthquake():
 	while current_weather_and_disaster != "Earthquake":
 		if is_instance_valid(earquake):
 			earquake.queue_free()
-
-		await get_tree().create_timer(0.5).timeout
-
 		
+		Globals.points += 1
+		
+		break
 
 
 
@@ -844,6 +879,12 @@ func is_cloud():
 		
 		await get_tree().create_timer(0.5).timeout
 
+	while current_weather_and_disaster != "Cloud":
+
+		Globals.points += 1
+		
+		break
+
 
 
 func is_raining():
@@ -884,7 +925,11 @@ func is_raining():
 
 		await get_tree().create_timer(0.5).timeout
 
+	while current_weather_and_disaster != "Raining":
 
+		Globals.points += 1
+		
+		break
 
 func is_storm():
 	Globals.Temperature_target =  randf_range(5,15)
@@ -923,6 +968,13 @@ func is_storm():
 	
 		await get_tree().create_timer(0.5).timeout
 
+	while current_weather_and_disaster != "Storm":
+
+		Globals.points += 1
+		
+		break
+
+
 
 func _on_player_spawner_spawned(_node:Node) -> void:
-	print("Player spawner, id:", _node.id)
+	print("Player spawner, id:",  _node.id)

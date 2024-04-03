@@ -196,7 +196,7 @@ func _process(delta):
 		$"Wind Morerate sound".stop()
 		$"Wind Extreme sound".stop()
 
-
+	points = Globals.points
 
 
 	
