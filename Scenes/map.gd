@@ -57,11 +57,17 @@ func _ready():
 		multiplayer.peer_connected.connect(player_join)
 		multiplayer.peer_disconnected.connect(player_disconect)
 
-		if not OS.has_feature("dedicated_server") and multiplayer.is_server():
-			generate_seed()
-			player_join(1)	
-		elif OS.has_feature("dedicated_server") and multiplayer.is_server():
-			generate_seed()
+		if multiplayer.is_server():
+			if OS.has_feature("dedicated_server") or "s" in OS.get_cmdline_user_args() or "server" in OS.get_cmdline_user_args():
+				generate_seed()
+			else:
+				generate_seed()
+
+				for id in multiplayer.get_peers():
+					player_join(id)
+
+				player_join(1)	
+				
 
 		
 
@@ -168,7 +174,6 @@ func player_join(peer_id):
 	if multiplayer.is_server():
 		print("syncring timer, map, player_list and weather/disaseters")
 		_recive_seed.rpc_id(peer_id, noise_seed)
-		Globals.add_player_to_list.rpc(peer_id, player)
 		if Globals.players_conected_int >= 2 and started == false:
 			Globals.sync_timer.rpc(Globals.timer)
 			set_started.rpc(true)
@@ -179,6 +184,7 @@ func player_join(peer_id):
 			Globals.sync_timer.rpc(60)
 			set_started.rpc(false)
 		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
+		Globals.add_player_to_list.rpc(peer_id, player)
 		print("finish :D")
 
 
@@ -194,10 +200,8 @@ func player_disconect(peer_id):
 		await get_tree().create_timer(5).timeout
 		print("Disconected player id: " + str(peer_id))
 		player.queue_free()
-
 		if multiplayer.is_server():
 			print("syncring timer and player list")
-			Globals.remove_player_to_list.rpc(peer_id, player)
 			if Globals.players_conected_int > 2 and started == false:
 				Globals.sync_timer.rpc(Globals.timer)
 				set_started.rpc(true)
@@ -207,7 +211,9 @@ func player_disconect(peer_id):
 			else:
 				Globals.sync_timer.rpc(60)
 				set_started.rpc(false)
+			Globals.remove_player_to_list.rpc(peer_id, player)
 			print("finish :D")
+			
 
 
 @rpc("any_peer","call_local")
