@@ -199,6 +199,7 @@ func _process(delta):
 		$"Wind Extreme sound".stop()
 
 	points = Globals.points
+	username = Globals.username
 
 
 	

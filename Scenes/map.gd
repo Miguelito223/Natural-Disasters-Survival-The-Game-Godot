@@ -166,7 +166,6 @@ func player_join(peer_id):
 	var player = player_scene.instantiate()
 	player.id = peer_id
 	player.name = str(peer_id)
-	player.username = Globals.username
 	add_child(player, true)
 	Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
 	if Globals.Enet_local_peer != null:
@@ -175,6 +174,11 @@ func player_join(peer_id):
 	if multiplayer.is_server():
 		print("syncring timer, map, player_list and weather/disasters in server")
 		_recive_seed.rpc_id(peer_id, noise_seed)
+
+		var player_host = get_node(str(multiplayer.get_unique_id()))
+		if player_host != null and player_host != player:
+			Globals.add_player_to_list.rpc_id(peer_id, multiplayer.get_unique_id(), player_host)
+
 		Globals.add_player_to_list.rpc(peer_id, player)
 
 
@@ -191,10 +195,6 @@ func player_join(peer_id):
 
 		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
 		
-
-		var player_host = get_node(str(multiplayer.get_unique_id()))
-		if player_host != null and player_host != player:
-			Globals.add_player_to_list.rpc_id(peer_id, multiplayer.get_unique_id(), player_host)
 		
 		print("finish :D")
 

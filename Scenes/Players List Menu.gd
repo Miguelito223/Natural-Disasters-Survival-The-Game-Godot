@@ -8,6 +8,7 @@ func _ready():
 			return
 
 
+
 	self.visible = false
 
 func _process(_delta):
@@ -15,6 +16,7 @@ func _process(_delta):
 		
 		if not is_multiplayer_authority():
 			return
+
 
 		# Eliminar todos los hijos del VBoxContainer
 		for child in $List.get_children():
