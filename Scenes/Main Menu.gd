@@ -159,11 +159,8 @@ func _on_fullscreen_toggled(toggled_on:bool):
 
 
 func _on_singleplayer_pressed():
-	Globals.map = Globals.map_scene.instantiate()
-	get_parent().add_child(Globals.map)
+	LoadScene.load_scene(null, "map")
 	self.hide()
-	var player = Globals.player_scene.instantiate()
-	Globals.map.add_child(player, true)
 
 
 func _on_volumen_music_value_changed(value):

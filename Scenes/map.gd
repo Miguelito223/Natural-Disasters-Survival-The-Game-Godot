@@ -52,6 +52,7 @@ func _ready():
 
 	if not Globals.is_networking:
 		generate_seed()
+		player_join(1)
 		Globals.sync_timer(Globals.timer)
 	else:
 		multiplayer.peer_connected.connect(player_join)
@@ -162,58 +163,28 @@ func generate_world():
 
 
 func player_join(peer_id):
-	print("Joined player id: " + str(peer_id))
-	var player = player_scene.instantiate()
-	player.id = peer_id
-	player.name = str(peer_id)
-	add_child(player, true)
-	Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
-	if Globals.Enet_local_peer != null:
-		Globals.Enet_local_peer.set_timeout(60000, 300000, 600000)
 
-	if multiplayer.is_server():
-		print("syncring timer, map, player_list and weather/disasters in server")
-		_recive_seed.rpc_id(peer_id, noise_seed)
+	if Globals.is_networking:
+		print("Joined player id: " + str(peer_id))
+		var player = player_scene.instantiate()
+		player.id = peer_id
+		player.name = str(peer_id)
+		add_child(player, true)
+		Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
+		if Globals.Enet_local_peer != null:
+			Globals.Enet_local_peer.set_timeout(60000, 300000, 600000)
 
-		var player_host = get_node(str(multiplayer.get_unique_id()))
-		if player_host != null and player_host != player:
-			Globals.add_player_to_list.rpc_id(peer_id, multiplayer.get_unique_id(), player_host)
-
-		Globals.add_player_to_list.rpc(peer_id, player)
-
-
-		if Globals.players_conected_int >= 2 and started == false:
-			Globals.sync_timer.rpc(Globals.timer)
-			set_started.rpc(true)
-		elif Globals.players_conected_int < 2 and started == true:
-			Globals.sync_timer.rpc(60)
-			set_started.rpc(false)
-		else:
-			Globals.sync_timer.rpc(60)
-			set_started.rpc(false)
-
-
-		set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
-		
-		
-		print("finish :D")
-
-
-	
-	
-
-
-		
-
-func player_disconect(peer_id):
-	var player = get_node(str(peer_id))
-	if is_instance_valid(player):
-		await get_tree().create_timer(5).timeout
-		print("Disconected player id: " + str(peer_id))
-		player.queue_free()
 		if multiplayer.is_server():
 			print("syncring timer, map, player_list and weather/disasters in server")
-			Globals.remove_player_to_list.rpc(peer_id, player)
+			_recive_seed.rpc_id(peer_id, noise_seed)
+
+			var player_host = get_node(str(multiplayer.get_unique_id()))
+			if player_host != null and player_host != player:
+				Globals.add_player_to_list.rpc_id(peer_id, multiplayer.get_unique_id(), player_host)
+
+			Globals.add_player_to_list.rpc(peer_id, player)
+
+
 			if Globals.players_conected_int >= 2 and started == false:
 				Globals.sync_timer.rpc(Globals.timer)
 				set_started.rpc(true)
@@ -223,7 +194,51 @@ func player_disconect(peer_id):
 			else:
 				Globals.sync_timer.rpc(60)
 				set_started.rpc(false)
-			print("finish :D")		
+
+
+			set_weather_and_disaster.rpc_id(peer_id, current_weather_and_disaster_int)
+			
+			
+			print("finish :D")
+	else:
+		print("Joined player id: " + str(peer_id))
+		var player = player_scene.instantiate()
+		player.id = peer_id
+		player.name = str(peer_id)
+		add_child(player, true)
+
+	
+	
+
+
+		
+
+func player_disconect(peer_id):
+	if Globals.is_networking:
+		var player = get_node(str(peer_id))
+		if is_instance_valid(player):
+			await get_tree().create_timer(5).timeout
+			print("Disconected player id: " + str(peer_id))
+			player.queue_free()
+			if multiplayer.is_server():
+				print("syncring timer, map, player_list and weather/disasters in server")
+				Globals.remove_player_to_list.rpc(peer_id, player)
+				if Globals.players_conected_int >= 2 and started == false:
+					Globals.sync_timer.rpc(Globals.timer)
+					set_started.rpc(true)
+				elif Globals.players_conected_int < 2 and started == true:
+					Globals.sync_timer.rpc(60)
+					set_started.rpc(false)
+				else:
+					Globals.sync_timer.rpc(60)
+					set_started.rpc(false)
+				print("finish :D")
+	else:
+		var player = get_node(str(peer_id))
+		if is_instance_valid(player):	
+			await get_tree().create_timer(5).timeout
+			print("Disconected player id: " + str(peer_id))
+			player.queue_free()
 			
 
 
