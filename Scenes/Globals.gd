@@ -267,32 +267,32 @@ func _process(_delta):
 		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
 	else:
 
-		if not multiplayer.is_server():
-			return
+		if multiplayer.is_server():
+			Temperature = clamp(Temperature, -275.5, 275.5)
+			Humidity = clamp(Humidity, 0, 100)
+			bradiation = clamp(bradiation, 0, 100)
+			pressure = clamp(pressure , 0, 100000)
+			oxygen = clamp(oxygen, 0, 100)
+			points = clamp(points, 0, 5000)
 
-		Temperature = clamp(Temperature, -275.5, 275.5)
-		Humidity = clamp(Humidity, 0, 100)
-		bradiation = clamp(bradiation, 0, 100)
-		pressure = clamp(pressure , 0, 100000)
-		oxygen = clamp(oxygen, 0, 100)
-		points = clamp(points, 0, 5000)
-
-		Temperature = lerp(Temperature, Temperature_target, 0.005)
-		Humidity = lerp(Humidity, Humidity_target, 0.005)
-		bradiation = lerp(bradiation, bradiation_target, 0.005)
-		pressure = lerp(pressure, pressure_target, 0.005)
-		oxygen = lerp(oxygen, oxygen_target, 0.005)
-		Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
-		Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
+			Temperature = lerp(Temperature, Temperature_target, 0.005)
+			Humidity = lerp(Humidity, Humidity_target, 0.005)
+			bradiation = lerp(bradiation, bradiation_target, 0.005)
+			pressure = lerp(pressure, pressure_target, 0.005)
+			oxygen = lerp(oxygen, oxygen_target, 0.005)
+			Wind_Direction = lerp(Wind_Direction, Wind_Direction_target, 0.005)
+			Wind_speed = lerp(Wind_speed, Wind_speed_target, 0.005)
+			
+			sync_temp.rpc(Temperature)
+			sync_humidity.rpc(Humidity)
+			sync_wind_speed.rpc(Wind_speed)
+			sync_Wind_Direction.rpc(Wind_Direction)
+			sync_pressure.rpc(pressure)
+			sync_oxygen.rpc(oxygen)
+			sync_bradiation.rpc(bradiation)
+			sync_points.rpc(points)
 		
-		sync_temp.rpc(Temperature)
-		sync_humidity.rpc(Humidity)
-		sync_wind_speed.rpc(Wind_speed)
-		sync_Wind_Direction.rpc(Wind_Direction)
-		sync_pressure.rpc(pressure)
-		sync_oxygen.rpc(oxygen)
-		sync_bradiation.rpc(bradiation)
-		sync_points.rpc(points)
+
 		
 
 func hostwithport(port_int):
