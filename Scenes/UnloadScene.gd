@@ -48,8 +48,8 @@ func _process(_delta):
 	var load_status = ResourceLoader.load_threaded_get_status(scene_path, progress)
 	match load_status:
 		0,2:
-			set_process(false)
 			print("failed to load")
+			set_process(false)
 			return
 		1:
 			emit_signal("progress_changed", progress[0])
