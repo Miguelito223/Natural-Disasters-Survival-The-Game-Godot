@@ -14,9 +14,7 @@ var scene_path: String
 var progress: Array = []
 
 var use_sub_theads: bool = false
-
-func _ready():
-	load_scene(null, "res://Scenes/main_menu.tscn")
+	
 
 func load_scene(current_scene, next_scene):
 	if next_scene != null:
@@ -52,7 +50,6 @@ func _process(_delta):
 	match load_status:
 		0,2:
 			print("failed to load")
-			set_process(false)
 			return
 		1:
 			emit_signal("progress_changed", progress[0])
