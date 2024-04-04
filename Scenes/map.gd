@@ -249,7 +249,7 @@ func set_started(started_bool):
 
 func wind(object):
 	# Verificar si el objeto es un jugador
-	if object.is_in_group("player"):
+	if object.is_in_group("1"):
 		var is_outdoor = Globals.is_outdoor(object)
 
 		# Calcular el área expuesta al viento
@@ -405,7 +405,7 @@ func is_tsunami():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 		
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -448,7 +448,7 @@ func is_linghting_storm():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -506,7 +506,7 @@ func is_meteor_shower():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -546,7 +546,7 @@ func is_blizzard():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -591,7 +591,7 @@ func is_sandstorm():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -647,7 +647,7 @@ func is_volcano():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -709,7 +709,7 @@ func is_tornado():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -773,7 +773,7 @@ func is_acid_rain():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -819,7 +819,7 @@ func is_earthquake():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -859,7 +859,7 @@ func is_sun():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -889,7 +889,7 @@ func is_cloud():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -935,7 +935,7 @@ func is_raining():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -978,7 +978,7 @@ func is_storm():
 		if Globals.is_networking:
 			player = get_node(str(multiplayer.get_unique_id()))
 		else:
-			player = get_node("Player")
+			player = get_node("1")
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
