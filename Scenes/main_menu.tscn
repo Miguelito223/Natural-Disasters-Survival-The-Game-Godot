@@ -16,6 +16,7 @@ grow_vertical = 2
 script = ExtResource("1_r752f")
 
 [node name="Panel" type="Panel" parent="."]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -25,6 +26,7 @@ grow_vertical = 2
 theme = ExtResource("2_8ye2w")
 
 [node name="Title" type="Label" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 272.0
 offset_top = 54.0
@@ -35,11 +37,13 @@ theme = ExtResource("2_8ye2w")
 text = "Natural Disaster The Game"
 
 [node name="Disasters" type="Sprite2D" parent="Title"]
+process_mode = 3
 position = Vector2(697, 33)
 scale = Vector2(4.00438, 4.34087)
 texture = ExtResource("3_wgml2")
 
 [node name="Menu" type="VBoxContainer" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 511.0
 offset_top = 312.0
@@ -49,30 +53,35 @@ scale = Vector2(3, 1.5)
 theme = ExtResource("2_8ye2w")
 
 [node name="singleplayer" type="Button" parent="Menu"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Singleplayer"
 
 [node name="multiplayer" type="Button" parent="Menu"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Multiplayer"
 
 [node name="Settings" type="Button" parent="Menu"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Settings"
 
 [node name="Exit" type="Button" parent="Menu"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 50
 text = "Exit"
 
 [node name="Multiplayer" type="VBoxContainer" parent="."]
+process_mode = 3
 visible = false
 layout_mode = 0
 offset_left = 651.0
@@ -83,53 +92,62 @@ scale = Vector2(3, 1.5)
 theme = ExtResource("2_8ye2w")
 
 [node name="username label" type="Label" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Username:"
 
 [node name="username" type="LineEdit" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "Michael2911"
 
 [node name="Ip label" type="Label" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "IP:"
 
 [node name="ip" type="LineEdit" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "127.0.0.1"
 
 [node name="port label" type="Label" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Port:"
 
 [node name="port" type="LineEdit" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "25565"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 alignment = 1
 
 [node name="join" type="Button" parent="Multiplayer/HBoxContainer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Join"
 
 [node name="host" type="Button" parent="Multiplayer/HBoxContainer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
@@ -137,12 +155,14 @@ text = "host
 "
 
 [node name="Back" type="Button" parent="Multiplayer"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Settings" type="VBoxContainer" parent="."]
+process_mode = 3
 layout_mode = 0
 offset_left = 442.0
 offset_top = 230.0
@@ -152,82 +172,96 @@ scale = Vector2(3, 1.5)
 theme = ExtResource("2_8ye2w")
 
 [node name="fps" type="CheckButton" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "FPS:"
 
 [node name="vsync" type="CheckButton" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Vsync:"
 
 [node name="antialiasing" type="CheckButton" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Antialiasing:"
 
 [node name="Fullscreen" type="CheckButton" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Fullscreen:"
 
 [node name="Resolutions Label" type="Label" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Resolution:"
 
 [node name="resolutions" type="OptionButton" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 
 [node name="Volumen Label" type="Label" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Volumen:"
 
 [node name="Volumen" type="HSlider" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 max_value = 1.0
 step = 0.001
 
 [node name="Volumen Music Label2" type="Label" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Music Volumen:"
 
 [node name="Volumen Music" type="HSlider" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 max_value = 1.0
 step = 0.001
 
 [node name="TIme label" type="Label" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Time disaster/weather:"
 
 [node name="Time" type="HSlider" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 max_value = 3600.0
 
 [node name="Back" type="Button" parent="Settings"]
+process_mode = 3
 layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+process_mode = 3
 stream = ExtResource("2_0u7u3")
 autoplay = true
 bus = &"Music"

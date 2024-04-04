@@ -10,9 +10,14 @@ var scene
 var scene_path: String
 var progress: Array = []
 
-var use_sub_theads: bool = false
+var use_sub_theads: bool = true
+
+func _ready() -> void:
+	process_mode = PROCESS_MODE_ALWAYS
+	set_process(false)
 
 func unload_scene(current_scene):
+	set_process(false)
 	if current_scene != null:
 		scene_path = current_scene.scene_file_path
 		scene = current_scene
@@ -24,18 +29,16 @@ func unload_scene(current_scene):
 	self.unload_done.connect(unloading_screen_scene.fade_out_loading_screen)
 
 	await Signal(unloading_screen_scene, "safe_to_load")
-	
+
 	if current_scene != null:
 		current_scene.queue_free()
-		
-	start_load()
 
+	print(scene_path)
 
-func start_load():
 	var loader_next_scene = ResourceLoader.load_threaded_request(scene_path, "", use_sub_theads)
 	if loader_next_scene == OK:
+		print("is ok")
 		set_process(true)
-
 
 func _process(_delta):
 	var load_status = ResourceLoader.load_threaded_get_status(scene_path, progress)
@@ -49,10 +52,10 @@ func _process(_delta):
 			set_process(false)
 			return
 		1:
+			print("progressin")
 			emit_signal("progress_changed", progress[0])
 		3:
 			print("Completed")
-
 			emit_signal("progress_changed", 1.0)
 			emit_signal("unload_done")
 

@@ -88,6 +88,12 @@ func _on_exit_pressed():
 	if Globals.is_networking:
 		multiplayer.multiplayer_peer.close()
 	else:
+		get_tree().paused = false
+		Globals.Temperature_target = Globals.Temperature_original
+		Globals.Humidity_target = Globals.Humidity_original
+		Globals.pressure_target = Globals.pressure_original
+		Globals.Wind_Direction_target = Globals.Wind_Direction_original
+		Globals.Wind_speed_target = Globals.Wind_speed_original
 		UnloadScene.unload_scene(Globals.map)
 		Globals.main_menu.show()
 		

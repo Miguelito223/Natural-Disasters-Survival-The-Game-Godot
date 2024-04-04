@@ -14,9 +14,13 @@ var scene_path: String
 var progress: Array = []
 
 var use_sub_theads: bool = false
-	
+
+func _ready() -> void:
+	process_mode = PROCESS_MODE_ALWAYS
+	set_process(false)	
 
 func load_scene(current_scene, next_scene):
+	set_process(false)
 	if next_scene != null:
 		scene_path = next_scene
 
@@ -31,10 +35,6 @@ func load_scene(current_scene, next_scene):
 	if current_scene != null:
 		current_scene.queue_free()
 
-	start_load()
-
-
-func start_load():
 	if GAME_SCENE.has(scene_path):
 		scene_path = GAME_SCENE[scene_path]
 	else:
@@ -42,6 +42,7 @@ func start_load():
 	
 	var loader_next_scene = ResourceLoader.load_threaded_request(scene_path, "", use_sub_theads)
 	if loader_next_scene == OK:
+		print("is ok")
 		set_process(true)
 
 
