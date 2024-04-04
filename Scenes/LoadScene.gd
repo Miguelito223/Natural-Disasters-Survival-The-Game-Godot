@@ -23,7 +23,7 @@ func load_scene(current_scene, next_scene):
 		scene_path = next_scene
 
 	var loading_screen_intance = loading_screen.instantiate()
-	get_tree().get_root().get_node("Main").add_child(loading_screen_intance)
+	Globals.main.add_child(loading_screen_intance)
 	
 	self.progress_changed.connect(loading_screen_intance.update_progress_bar)
 	self.load_done.connect(loading_screen_intance.fade_out_loading_screen)
@@ -51,8 +51,8 @@ func _process(_delta):
 	var load_status = ResourceLoader.load_threaded_get_status(scene_path, progress)
 	match load_status:
 		0,2:
-			set_process(false)
 			print("failed to load")
+			set_process(false)
 			return
 		1:
 			emit_signal("progress_changed", progress[0])

@@ -10,6 +10,7 @@ const GAME_SCENE ={
 var unloading_screen_path: String = "res://Scenes/loading_screen.tscn"
 var unloading_screen = load(unloading_screen_path)
 var unloader_resource: PackedScene
+var scene
 var scene_path: String
 var progress: Array = []
 
@@ -17,10 +18,13 @@ var use_sub_theads: bool = false
 
 func unload_scene(current_scene):
 	if current_scene != null:
-		scene_path = current_scene.get_path()
+		scene_path = current_scene.scene_file_path
+		scene = current_scene
+
+	print(scene_path)
 
 	var unloading_screen_scene = unloading_screen.instantiate()
-	get_tree().get_root().get_node("Main").add_child(unloading_screen_scene)
+	Globals.main.add_child(unloading_screen_scene)
 	
 	self.progress_changed.connect(unloading_screen_scene.update_progress_bar)
 	self.unload_done.connect(unloading_screen_scene.fade_out_loading_screen)
