@@ -10,7 +10,7 @@ var scene
 var scene_path: String
 var progress: Array = []
 
-var use_sub_theads: bool = true
+var use_sub_theads: bool = false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
