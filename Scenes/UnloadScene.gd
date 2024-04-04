@@ -17,7 +17,6 @@ func unload_scene(current_scene):
 		scene_path = current_scene.scene_file_path
 		scene = current_scene
 		
-
 	var unloading_screen_scene = unloading_screen.instantiate()
 	Globals.main.add_child(unloading_screen_scene)
 	
@@ -41,7 +40,11 @@ func start_load():
 func _process(_delta):
 	var load_status = ResourceLoader.load_threaded_get_status(scene_path, progress)
 	match load_status:
-		0,2:
+		0:
+			print("failed to load: invalid resource")
+			set_process(false)
+			return
+		2:
 			print("failed to load")
 			set_process(false)
 			return
