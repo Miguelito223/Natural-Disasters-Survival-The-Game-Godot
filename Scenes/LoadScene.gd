@@ -50,6 +50,7 @@ func _process(_delta):
 	match load_status:
 		0,2:
 			print("failed to load")
+			set_process(false)
 			return
 		1:
 			emit_signal("progress_changed", progress[0])

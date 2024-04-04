@@ -16,6 +16,7 @@ func unload_scene(current_scene):
 	if current_scene != null:
 		scene_path = current_scene.scene_file_path
 		scene = current_scene
+		
 
 	var unloading_screen_scene = unloading_screen.instantiate()
 	Globals.main.add_child(unloading_screen_scene)
@@ -24,10 +25,10 @@ func unload_scene(current_scene):
 	self.unload_done.connect(unloading_screen_scene.fade_out_loading_screen)
 
 	await Signal(unloading_screen_scene, "safe_to_load")
-
+	
 	if current_scene != null:
 		current_scene.queue_free()
-
+		
 	start_load()
 
 
@@ -42,10 +43,13 @@ func _process(_delta):
 	match load_status:
 		0,2:
 			print("failed to load")
+			set_process(false)
 			return
 		1:
 			emit_signal("progress_changed", progress[0])
 		3:
+			print("Completed")
+
 			emit_signal("progress_changed", 1.0)
 			emit_signal("unload_done")
 
