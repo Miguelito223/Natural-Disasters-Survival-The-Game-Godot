@@ -224,6 +224,9 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_accept") and IsInWater:
 		velocity.y += JUMP_VELOCITY
 
+	if Input.is_action_just_pressed("Flashligh"):
+		$Model/Camera3D/SpotLight3D.visible = !$Model/Camera3D/SpotLight3D.visible
+
 	if Input.is_action_pressed("Spring"):
 		SPEED = SPEED_RUN
 	else:
