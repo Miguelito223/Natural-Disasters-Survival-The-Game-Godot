@@ -14,10 +14,9 @@ var use_sub_theads: bool = true
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
-	set_process(false)
 
 func unload_scene(current_scene):
-	set_process(false)
+
 	if current_scene != null:
 		scene_path = current_scene.scene_file_path
 		scene = current_scene
@@ -32,8 +31,6 @@ func unload_scene(current_scene):
 
 	if current_scene != null:
 		current_scene.queue_free()
-
-	print(scene_path)
 
 	var loader_next_scene = ResourceLoader.load_threaded_request(scene_path, "", use_sub_theads)
 	if loader_next_scene == OK:

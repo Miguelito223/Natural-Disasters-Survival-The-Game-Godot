@@ -17,10 +17,9 @@ var use_sub_theads: bool = false
 
 func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
-	set_process(false)	
 
 func load_scene(current_scene, next_scene):
-	set_process(false)
+
 	if next_scene != null:
 		scene_path = next_scene
 
@@ -60,14 +59,14 @@ func _process(_delta):
 		1:
 			emit_signal("progress_changed", progress[0])
 		3:
+			print("Completed")
 			
 			if scene_path == "res://Scenes/main.tscn":
 				pass
 			else:
 				var new_scene = ResourceLoader.load_threaded_get(scene_path).instantiate()
 				get_tree().get_root().get_node("Main").add_child(new_scene)
-
-
+			
 			emit_signal("progress_changed", 1.0)
 			emit_signal("load_done")
 
