@@ -15,9 +15,6 @@ var progress: Array = []
 
 var use_sub_theads: bool = false
 
-func _ready() -> void:
-	process_mode = PROCESS_MODE_ALWAYS
-
 func load_scene(current_scene, next_scene):
 
 	if next_scene != null:
@@ -65,7 +62,8 @@ func _process(_delta):
 				pass
 			else:
 				var new_scene = ResourceLoader.load_threaded_get(scene_path).instantiate()
-				get_tree().get_root().get_node("Main").add_child(new_scene)
+				if is_instance_valid(new_scene):
+					Globals.main.add_child(new_scene)
 			
 			emit_signal("progress_changed", 1.0)
 			emit_signal("load_done")

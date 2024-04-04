@@ -12,9 +12,6 @@ var progress: Array = []
 
 var use_sub_theads: bool = false
 
-func _ready() -> void:
-	process_mode = PROCESS_MODE_ALWAYS
-
 func unload_scene(current_scene):
 
 	if current_scene != null:
