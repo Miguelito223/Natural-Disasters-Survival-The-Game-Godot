@@ -6,8 +6,8 @@ extends CharacterBody3D
 
 var SPEED = 0
 
-const SPEED_RUN = 15.0
-const SPEED_WALK = 5.0
+const SPEED_RUN = 25.0
+const SPEED_WALK = 15.0
 const JUMP_VELOCITY = 7.0
 const SENSIBILITY = 0.01
 const LERP_VAL =  .15
@@ -23,6 +23,8 @@ var Max_Hearth = 100
 var Max_temp = 44
 var Max_oxygen = 100
 var Max_bradiation = 100
+
+var fall_strength = 0
 
 
 var min_Hearth = 0
@@ -212,10 +214,16 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= Globals.gravity * mass * delta 
+		fall_strength = velocity.y
+	else:
+		if fall_strength <= -90:
+			damage(50)
+
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	elif Input.is_action_pressed("ui_accept") and not is_on_floor():
 		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	else:
