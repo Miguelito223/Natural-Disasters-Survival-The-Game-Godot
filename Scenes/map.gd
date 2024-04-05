@@ -170,7 +170,6 @@ func player_join(peer_id):
 		var player = player_scene.instantiate()
 		player.id = peer_id
 		player.name = str(peer_id)
-		player._reset_player()
 
 		Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
 		if Globals.Enet_local_peer != null:
@@ -203,13 +202,16 @@ func player_join(peer_id):
 			print("finish :D")
 
 		add_child(player, true)
+		
+		player._reset_player()
 	else:
 		print("Joined player id: " + str(peer_id))
 		var player = player_scene.instantiate()
 		player.id = peer_id
 		player.name = str(peer_id)
-		player._reset_player()
 		add_child(player, true)
+
+		player._reset_player()
 
 	
 	
@@ -1014,3 +1016,8 @@ func is_storm():
 func _on_player_spawner_spawned(_node:Node) -> void:
 	print("Player spawner, id:",  _node.id)
 	_node._reset_player()
+
+func _on_area_3d_body_entered(body:Node3D) -> void:
+	if body.is_in_group("player"):
+		body.damage(100)
+

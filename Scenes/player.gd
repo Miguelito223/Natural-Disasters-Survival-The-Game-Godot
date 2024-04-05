@@ -290,7 +290,7 @@ func _reset_player():
 	body_oxygen = Max_oxygen
 	body_bradiation = min_bdradiation
 	var rand_pos = Vector3(randi_range(0,2049),1000,randi_range(0,2049))
-	var space_state = get_world_3d().direct_space_state
+	var space_state = self.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
 	var result = space_state.intersect_ray(ray)
 		
