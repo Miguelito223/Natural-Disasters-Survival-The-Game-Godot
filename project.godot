@@ -13,7 +13,11 @@ config_version=5
 config/name="Natural Disasters Survival The Game"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+boot_splash/bg_color=Color(0.848339, 0.510673, 5.77569e-07, 1)
+boot_splash/image="res://icon.png"
+boot_splash/use_filter=false
 config/icon="res://Icons/disasters.png"
+boot_splash/minimum_display_time=5
 
 [autoload]
 

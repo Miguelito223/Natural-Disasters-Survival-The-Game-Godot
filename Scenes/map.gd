@@ -23,6 +23,8 @@ var noise_multiplier = 50.0
 # You may want to change paths to your own textures
 var grass_texture = preload("res://Textures/texture-grass-field.jpg")
 var rock_texture = preload("res://Textures/dark-cracked-concrete-wall.jpg")
+var snow_texture = preload("res://Textures/snow.png")
+var sand_texture = preload("res://Textures/sand.png")
 
 
 @onready var timer = $Timer
@@ -544,6 +546,22 @@ func is_blizzard():
 	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
 	Globals.Wind_speed_target = randf_range(40, 50)
 
+	for i in 5000:
+		var Snow_Decal = Decal.new()
+		Snow_Decal.texture_albedo = snow_texture
+		var rand_pos = Vector3(randf_range(0,2049),1000,randf_range(0,2049))
+		var space_state = get_world_3d().direct_space_state
+		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+		var result = space_state.intersect_ray(ray)	
+		if result.has("position"):
+			Snow_Decal.position = result.position
+		else:
+			Snow_Decal.position = Vector3(randf_range(0,2049),0,randf_range(0,2049))
+		var randon_num = randi_range(1,256)
+		Snow_Decal.size = Vector3(randon_num,0,randon_num)
+		add_child(Snow_Decal, true)
+
+
 	while current_weather_and_disaster == "blizzard":
 		
 		var player
@@ -589,6 +607,21 @@ func is_sandstorm():
 	Globals.pressure_target = randf_range(10000,10020)
 	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
 	Globals.Wind_speed_target = randf_range(30, 50)
+
+	for i in 5000:
+		var Sand_Decal = Decal.new()
+		Sand_Decal.texture_albedo = sand_texture
+		var rand_pos = Vector3(randf_range(0,2049),1000,randf_range(0,2049))
+		var space_state = get_world_3d().direct_space_state
+		var ray = PhysicsRayQueryParameters3D.create(rand_pos, rand_pos - Vector3(0,10000,0))
+		var result = space_state.intersect_ray(ray)	
+		if result.has("position"):
+			Sand_Decal.position = result.position
+		else:
+			Sand_Decal.position = Vector3(randf_range(0,2049),0,randf_range(0,2049))
+		var randon_num = randi_range(1,256)
+		Sand_Decal.size = Vector3(randon_num,0,randon_num)
+		add_child(Sand_Decal, true)
 
 	while current_weather_and_disaster == "Sand Storm":
 		var player
