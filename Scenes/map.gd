@@ -558,7 +558,7 @@ func is_blizzard():
 		else:
 			Snow_Decal.position = Vector3(randf_range(0,2049),0,randf_range(0,2049))
 		var randon_num = randi_range(1,256)
-		Snow_Decal.size = Vector3(randon_num,0,randon_num)
+		Snow_Decal.size = Vector3(randon_num,1,randon_num)
 		add_child(Snow_Decal, true)
 
 
@@ -620,7 +620,7 @@ func is_sandstorm():
 		else:
 			Sand_Decal.position = Vector3(randf_range(0,2049),0,randf_range(0,2049))
 		var randon_num = randi_range(1,256)
-		Sand_Decal.size = Vector3(randon_num,0,randon_num)
+		Sand_Decal.size = Vector3(randon_num,1,randon_num)
 		add_child(Sand_Decal, true)
 
 	while current_weather_and_disaster == "Sand Storm":
