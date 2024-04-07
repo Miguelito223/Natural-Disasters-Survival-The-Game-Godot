@@ -15943,6 +15943,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_p1hqf")
 
 [node name="Breakable hause" type="Node3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 
 [node name="Baseboard" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_ytbn0")
