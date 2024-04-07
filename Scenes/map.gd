@@ -172,10 +172,13 @@ func player_join(peer_id):
 		var player = player_scene.instantiate()
 		player.id = peer_id
 		player.name = str(peer_id)
-
-		Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
-		if Globals.Enet_local_peer != null:
-			Globals.Enet_local_peer.set_timeout(60000, 300000, 600000)
+		
+		if OS.get_name() == "Web":
+			Globals.Websocket_local_peer = Globals.Websocket.get_peer(peer_id)
+		else:
+			Globals.Enet_local_peer = Globals.Enet.get_peer(peer_id)
+			if Globals.Enet_local_peer != null:
+				Globals.Enet_local_peer.set_timeout(60000, 300000, 600000)
 
 		if multiplayer.is_server():
 			print("syncring timer, map, player_list and weather/disasters in server")
