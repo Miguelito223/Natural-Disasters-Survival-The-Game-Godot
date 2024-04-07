@@ -168,19 +168,19 @@ properties/12/replication_mode = 1
 properties/13/path = NodePath("AnimationPlayer:movie_quit_on_finish")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath(".:position")
+properties/14/path = NodePath("FogVolume:shape")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath(".:rotation")
+properties/15/path = NodePath("FogVolume:layers")
 properties/15/spawn = true
 properties/15/replication_mode = 1
-properties/16/path = NodePath(".:scale")
+properties/16/path = NodePath("HTerrain:position")
 properties/16/spawn = true
 properties/16/replication_mode = 1
-properties/17/path = NodePath("FogVolume:shape")
+properties/17/path = NodePath("HTerrain:rotation")
 properties/17/spawn = true
 properties/17/replication_mode = 1
-properties/18/path = NodePath("FogVolume:layers")
+properties/18/path = NodePath("HTerrain:scale")
 properties/18/spawn = true
 properties/18/replication_mode = 1
 
@@ -263,13 +263,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
 [node name="Breakable Hause" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 436.581, 8.00928, 370.949)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 436.581, 19.1183, 370.949)
 
 [node name="Breakable Hause2" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207.126, 12.8753, 709.85)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207.126, 23.9843, 709.85)
+
+[node name="Breakable Hause4" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 965.412, 15.7565, 557.525)
 
 [node name="Breakable Hause3" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 410.687, 4.52155, 824.552)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 410.687, 15.6305, 824.552)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
