@@ -151,6 +151,7 @@ func player_disconect(peer_id):
 					set_started.rpc(false)
 				elif Globals.players_conected_int >= 2 and started == true:
 					Globals.sync_timer.rpc(Globals.timer)
+					set_started.rpc(true)
 				else:
 					Globals.sync_timer.rpc(60)
 					set_started.rpc(false)
@@ -172,7 +173,7 @@ func set_started(started_bool):
 
 func wind(object):
 	# Verificar si el objeto es un jugador
-	if object.is_in_group("1"):
+	if object.is_in_group("player"):
 		var is_outdoor = Globals.is_outdoor(object)
 
 		# Calcular el área expuesta al viento

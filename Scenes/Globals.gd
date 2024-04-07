@@ -163,7 +163,7 @@ func calcule_bounding_radius(entity):
 
 func Area(entity):
 	if entity.bounding_radius_area == null:
-		var bounding_radius = entity.calcule_bounding_radius()
+		var bounding_radius = calcule_bounding_radius(entity)
 		var area = (2 * PI) * (bounding_radius * bounding_radius)
 
 		entity.bounding_radius_area = area
