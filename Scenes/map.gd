@@ -55,6 +55,7 @@ func _ready():
 
 	if not Globals.is_networking:
 		player_join(1)
+		started = true
 		Globals.sync_timer(Globals.timer)
 	else:
 		multiplayer.peer_connected.connect(player_join)

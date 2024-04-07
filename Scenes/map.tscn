@@ -183,9 +183,6 @@ properties/17/replication_mode = 1
 properties/18/path = NodePath("FogVolume:layers")
 properties/18/spawn = true
 properties/18/replication_mode = 1
-properties/19/path = NodePath("LightmapGI:quality")
-properties/19/spawn = true
-properties/19/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
