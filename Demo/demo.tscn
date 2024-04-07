@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=3 uid="uid://srgwfiygxv8u"]
+
+[ext_resource type="Script" path="res://Demo/demo.gd" id="1_xvv5r"]
+[ext_resource type="PackedScene" uid="uid://lvjbkkflsjsv" path="res://Demo/destructible_cube.tscn" id="2_ytie2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yig7p"]
+size = Vector3(20, 0.5, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dirmc"]
+data = PackedVector3Array(-10, 0.25, 10, 10, 0.25, 10, -10, -0.25, 10, 10, 0.25, 10, 10, -0.25, 10, -10, -0.25, 10, 10, 0.25, -10, -10, 0.25, -10, 10, -0.25, -10, -10, 0.25, -10, -10, -0.25, -10, 10, -0.25, -10, 10, 0.25, 10, 10, 0.25, -10, 10, -0.25, 10, 10, 0.25, -10, 10, -0.25, -10, 10, -0.25, 10, -10, 0.25, -10, -10, 0.25, 10, -10, -0.25, -10, -10, 0.25, 10, -10, -0.25, 10, -10, -0.25, -10, 10, 0.25, 10, -10, 0.25, 10, 10, 0.25, -10, -10, 0.25, 10, -10, 0.25, -10, 10, 0.25, -10, -10, -0.25, 10, 10, -0.25, 10, -10, -0.25, -10, 10, -0.25, 10, 10, -0.25, -10, -10, -0.25, -10)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_d8soj"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_mukl1"]
+sky_material = SubResource("ProceduralSkyMaterial_d8soj")
+
+[sub_resource type="Environment" id="Environment_hh15e"]
+background_mode = 2
+sky = SubResource("Sky_mukl1")
+tonemap_mode = 2
+
+[node name="Demo" type="Node3D"]
+script = ExtResource("1_xvv5r")
+
+[node name="Shards" type="Node3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.37198, 0)
+mesh = SubResource("BoxMesh_yig7p")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_dirmc")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.680694, 0.293844, -0.671052, 0, 0.916027, 0.401116, 0.732567, -0.273037, 0.623535, -5.55537, 6.27569, 9.19105)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hh15e")
+
+[node name="DestroyButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -84.5
+offset_top = -97.0
+offset_right = 84.5
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Destroy"
+
+[node name="DestructibleCube" parent="." instance=ExtResource("2_ytie2")]
+transform = Transform3D(1.79387, -0.884327, 0, 0.884327, 1.79387, 0, 0, 0, 2, -2.23467, 0.520294, 0)
+
+[connection signal="pressed" from="DestroyButton" to="." method="_on_destroy_button_pressed"]

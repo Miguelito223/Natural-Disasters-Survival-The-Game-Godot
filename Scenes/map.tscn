@@ -1,8 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=31 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scenes/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_ftxso"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_kvy81"]
+[ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="4_sb5yn"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_g0ne1"]
+[ext_resource type="Texture2D" uid="uid://co3l5n6ahjvrl" path="res://slot0_albedo_bump.png" id="6_8jm77"]
+[ext_resource type="Texture2D" uid="uid://diaiwvm7l2cr" path="res://slot1_albedo_bump.png" id="7_t8l8t"]
+[ext_resource type="Texture2D" uid="uid://i5u8vemqarug" path="res://slot0_normal_roughness.png" id="8_gopco"]
+[ext_resource type="Texture2D" uid="uid://cd6f2317lg0fh" path="res://slot1_normal_roughness.png" id="9_w2el2"]
+[ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_e1biu"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
@@ -48,6 +56,12 @@ sky_material = SubResource("ShaderMaterial_ihtyg")
 [sub_resource type="Environment" id="Environment_cfhfe"]
 background_mode = 2
 sky = SubResource("Sky_lk1p6")
+sdfgi_enabled = true
+
+[sub_resource type="Resource" id="Resource_xvsuy"]
+script = ExtResource("5_g0ne1")
+mode = 0
+textures = [[ExtResource("6_8jm77"), ExtResource("7_t8l8t")], [ExtResource("8_gopco"), ExtResource("9_w2el2")]]
 
 [sub_resource type="Animation" id="Animation_y7xl6"]
 resource_name = "DNC"
@@ -154,6 +168,24 @@ properties/12/replication_mode = 1
 properties/13/path = NodePath("AnimationPlayer:movie_quit_on_finish")
 properties/13/spawn = true
 properties/13/replication_mode = 1
+properties/14/path = NodePath(".:position")
+properties/14/spawn = true
+properties/14/replication_mode = 1
+properties/15/path = NodePath(".:rotation")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath(".:scale")
+properties/16/spawn = true
+properties/16/replication_mode = 1
+properties/17/path = NodePath("FogVolume:shape")
+properties/17/spawn = true
+properties/17/replication_mode = 1
+properties/18/path = NodePath("FogVolume:layers")
+properties/18/spawn = true
+properties/18/replication_mode = 1
+properties/19/path = NodePath("LightmapGI:quality")
+properties/19/spawn = true
+properties/19/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
@@ -188,6 +220,24 @@ light_color = Color(0.686275, 0.686275, 0.686275, 1)
 light_energy = 0.2
 shadow_enabled = true
 
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("3_kvy81")
+_terrain_data = ExtResource("4_sb5yn")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_xvsuy")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
 
@@ -214,6 +264,15 @@ material = SubResource("FogMaterial_w14ph")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
+
+[node name="Breakable Hause" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 436.581, 3.6939, 370.949)
+
+[node name="Breakable Hause2" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207.126, 12.8753, 709.85)
+
+[node name="Breakable Hause3" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 410.34, 4.69883, 824.446)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

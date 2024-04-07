@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://cexof5tlc7l1i"]
+
+[ext_resource type="Material" uid="uid://b4ygu62iepx6e" path="res://cube/marble.tres" id="1_j03bl"]
+[ext_resource type="Script" path="res://addons/destruction/destruction.gd" id="2_gffgg"]
+[ext_resource type="PackedScene" uid="uid://celvn43a7xgcb" path="res://cube/cube_fragments.glb" id="3_c1ox2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h5eed"]
+size = Vector3(2, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uo2w7"]
+size = Vector3(2, 2, 2)
+
+[node name="DestructibleCube" type="RigidBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_j03bl")
+mesh = SubResource("BoxMesh_h5eed")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_uo2w7")
+
+[node name="Destruction" type="Node" parent="."]
+script = ExtResource("2_gffgg")
+fragmented = ExtResource("3_c1ox2")
