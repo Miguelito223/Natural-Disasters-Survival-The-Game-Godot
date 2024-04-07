@@ -14,7 +14,7 @@ var use_sub_theads: bool = false
 
 func unload_scene(current_scene):
 
-	if current_scene != null:
+	if current_scene != null and is_instance_valid(current_scene):
 		scene_path = current_scene.scene_file_path
 		scene = current_scene
 		
@@ -26,7 +26,7 @@ func unload_scene(current_scene):
 
 	await Signal(unloading_screen_scene, "safe_to_load")
 
-	if current_scene != null:
+	if current_scene != null and is_instance_valid(current_scene):
 		current_scene.queue_free()
 
 	var loader_next_scene = ResourceLoader.load_threaded_request(scene_path, "", use_sub_theads)
