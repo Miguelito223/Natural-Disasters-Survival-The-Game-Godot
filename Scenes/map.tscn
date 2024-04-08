@@ -213,9 +213,14 @@ transform = Transform3D(1, 0, 0, 0, 1, -4.46638e-06, 0, 4.46638e-06, 1, 0, 0, 0)
 shadow_enabled = true
 
 [node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 light_color = Color(0.686275, 0.686275, 0.686275, 1)
 light_energy = 0.2
 shadow_enabled = true
+
+[node name="Spawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, 9.85441, 166.884)
+gizmo_extents = 2.9
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("3_kvy81")
@@ -262,17 +267,23 @@ material = SubResource("FogMaterial_w14ph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
-[node name="Breakable Hause" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 436.581, 19.1183, 370.949)
+[node name="hause" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.902, 5.20256, 189.181)
 
-[node name="Breakable Hause2" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 207.126, 23.9843, 709.85)
+[node name="hause3" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.4343, 9.94463, 190.884)
 
-[node name="Breakable Hause4" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 965.412, 15.7565, 557.525)
+[node name="hause6" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.502, 11.9095, 165.986)
 
-[node name="Breakable Hause3" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 410.687, 15.6305, 824.552)
+[node name="hause5" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.433, 9.94463, 190.884)
+
+[node name="hause4" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.914, 9.26171, 148.308)
+
+[node name="hause2" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.6548, 11.2849, 157.2)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

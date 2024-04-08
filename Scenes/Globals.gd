@@ -381,7 +381,6 @@ func server_fail():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
-	Enet = null
 	multiplayer.multiplayer_peer = Offline
 	UnloadScene.unload_scene(map)
 	main_menu.show()
@@ -396,7 +395,6 @@ func server_disconect():
 	Wind_speed_target = Wind_speed_original
 	players_conected_array.clear()
 	players_conected_int = players_conected_array.size()
-	Enet = null
 	multiplayer.multiplayer_peer = Offline
 	UnloadScene.unload_scene(map)
 	main_menu.show()
