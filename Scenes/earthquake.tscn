@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://w8budjn2m22a"]
 
-[ext_resource type="Script" path="res://Scenes/Earthquake.gd" id="1_we2cb"]
+[ext_resource type="Script" path="res://Scripts/Earthquake.gd" id="1_we2cb"]
 [ext_resource type="AudioStream" uid="uid://cfaw4q0rp0hnu" path="res://Sounds/disasters/nature/earthquake.wav" id="2_ye3he"]
 
 [node name="Earthquake" type="Node3D"]

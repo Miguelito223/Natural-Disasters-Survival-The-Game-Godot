@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://d3gkmhq5kjhrj"]
 
-[ext_resource type="Script" path="res://Scenes/Tsunami.gd" id="1_v7drw"]
+[ext_resource type="Script" path="res://Scripts/Tsunami.gd" id="1_v7drw"]
 [ext_resource type="Shader" path="res://tsunami.gdshader" id="2_nl4w6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1y2fb"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://tjhhsh3ck07n"]
 
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="1_inpw0"]
-[ext_resource type="Script" path="res://Scenes/tornado.gd" id="1_yllgf"]
+[ext_resource type="Script" path="res://Scripts/tornado.gd" id="1_yllgf"]
 [ext_resource type="AudioStream" uid="uid://refulquucfr6" path="res://Sounds/disasters/environment/wind_shared/ef1_loop.wav" id="3_ldgnu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pk3x1"]

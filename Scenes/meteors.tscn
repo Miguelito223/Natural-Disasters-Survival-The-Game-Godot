@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://c6xgmy3mkckea"]
 
-[ext_resource type="Script" path="res://Scenes/meteors.gd" id="1_hdxcr"]
+[ext_resource type="Script" path="res://Scripts/meteors.gd" id="1_hdxcr"]
 [ext_resource type="Texture2D" uid="uid://bbnl8dbjl2vg8" path="res://Textures/dark-cracked-concrete-wall.jpg" id="2_bo2bl"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ph7js"]

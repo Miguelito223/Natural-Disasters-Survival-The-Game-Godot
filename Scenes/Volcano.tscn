@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://qf81iinh5hke"]
 
-[ext_resource type="Script" path="res://Scenes/Volcano.gd" id="1_m5bkw"]
+[ext_resource type="Script" path="res://Scripts/Volcano.gd" id="1_m5bkw"]
 [ext_resource type="Texture2D" uid="uid://ci2jq2evmgdk0" path="res://Materials/Models/Volcano/lava_anim.png" id="2_13yay"]
 [ext_resource type="Texture2D" uid="uid://cyodh2xlwto56" path="res://Materials/Models/Volcano/base_volcano_big_filler.png" id="3_1v2ci"]
 [ext_resource type="Texture2D" uid="uid://cu4yxjvvcuoyo" path="res://Materials/Models/Volcano/crater_volcano.png" id="4_04b5e"]

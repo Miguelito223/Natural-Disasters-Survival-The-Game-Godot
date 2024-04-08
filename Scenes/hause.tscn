@@ -1,8 +1,10 @@
-[gd_scene load_steps=33 format=3 uid="uid://cm35toy86s52l"]
+[gd_scene load_steps=35 format=3 uid="uid://cm35toy86s52l"]
 
 [ext_resource type="Script" path="res://addons/destruction/destruction.gd" id="1_kia18"]
-[ext_resource type="Script" path="res://Scenes/hause.gd" id="1_spk2i"]
+[ext_resource type="Script" path="res://Scripts/hause.gd" id="1_spk2i"]
 [ext_resource type="PackedScene" uid="uid://bxi02esjkbgma" path="res://Scenes/Breakable hause.tscn" id="3_kqll8"]
+[ext_resource type="PackedScene" uid="uid://cbcqa28us8n1e" path="res://Scenes/interactuable.tscn" id="4_cni77"]
+[ext_resource type="AudioStream" uid="uid://c4r72cwbqtbdx" path="res://Sounds/Door Open.mp3" id="5_4v6fu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5eghw"]
 
@@ -420,18 +422,32 @@ mesh = SubResource("ArrayMesh_nln61")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_jaolu")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.0388831, 0.0230942, -0.034605)
+shape = SubResource("BoxShape3D_7n1g8")
+
 [node name="Destruction" type="Node" parent="." node_paths=PackedStringArray("shard_container")]
 script = ExtResource("1_kia18")
 fragmented = ExtResource("3_kqll8")
 shard_container = NodePath("")
-collision_layer = 4294967295
-collision_mask = 4294967295
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -0.335471, 0.0230942, -0.034605)
-shape = SubResource("BoxShape3D_7n1g8")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_7ervx")
 
+[node name="Interactable" parent="." instance=ExtResource("4_cni77")]
+
+[node name="CollisionShape3D" parent="Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.192688, -4.2666, 8.12948)
+
+[node name="Open_door_sound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200944, -4.20768, 8.18454)
+stream = ExtResource("5_4v6fu")
+
+[node name="Close_door_sound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.200944, -4.20768, 8.18454)
+stream = ExtResource("5_4v6fu")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
+
+[editable path="Interactable"]

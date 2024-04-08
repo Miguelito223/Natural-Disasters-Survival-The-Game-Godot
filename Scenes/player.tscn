@@ -1,27 +1,28 @@
-[gd_scene load_steps=65 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=66 format=3 uid="uid://c51w31cirngs7"]
 
-[ext_resource type="Script" path="res://Scenes/player.gd" id="1_btpoi"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
 [ext_resource type="AudioStream" uid="uid://cwlgb5p4ow3tr" path="res://Sounds/disasters/nature/wind_weak.wav" id="2_fjmn6"]
-[ext_resource type="Script" path="res://Scenes/Pause_menu.gd" id="2_vj7s0"]
+[ext_resource type="Script" path="res://Scripts/Pause_menu.gd" id="2_vj7s0"]
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="3_kstye"]
-[ext_resource type="Script" path="res://Scenes/Hud.gd" id="3_pgssk"]
+[ext_resource type="Script" path="res://Scripts/Hud.gd" id="3_pgssk"]
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://bcbahjxisvk4u" path="res://Sounds/disasters/nature/rain-light.wav" id="6_dfbmn"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
-[ext_resource type="Script" path="res://Scenes/Chat.gd" id="6_wgonp"]
+[ext_resource type="Script" path="res://Scripts/Chat.gd" id="6_wgonp"]
 [ext_resource type="Shader" path="res://UnderWater.gdshader" id="7_787g2"]
-[ext_resource type="Script" path="res://Scenes/Warning Hud.gd" id="7_k0mbh"]
+[ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="7_k0mbh"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
-[ext_resource type="Script" path="res://Scenes/Players List Menu.gd" id="8_u7k75"]
+[ext_resource type="Script" path="res://Scripts/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
-[ext_resource type="Script" path="res://Scenes/Death Menu.gd" id="9_jd7ok"]
+[ext_resource type="Script" path="res://Scripts/Death Menu.gd" id="9_jd7ok"]
 [ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
+[ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 radius = 2.773
@@ -872,14 +873,14 @@ bones/4/parent = 3
 bones/4/rest = Transform3D(1, -0.000138256, 1.37828e-07, 0.000138199, 0.999618, 0.027635, -3.95847e-06, -0.027635, 0.999618, -9.57567e-16, 0.766354, -1.89175e-07)
 bones/4/enabled = true
 bones/4/position = Vector3(-9.57567e-16, 0.766354, -1.89175e-07)
-bones/4/rotation = Quaternion(0.642233, -4.43433e-05, 5.3036e-05, 0.76651)
+bones/4/rotation = Quaternion(0.546095, -3.7693e-05, 5.79187e-05, 0.837724)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/name = "brazo_inferior.d"
 bones/5/parent = 4
 bones/5/rest = Transform3D(1, 0.000138255, 4.05459e-07, -0.000138256, 0.999992, 0.00392959, 1.37829e-07, -0.00392959, 0.999992, -1.62986e-08, 1.20484, 1.62264e-08)
 bones/5/enabled = true
 bones/5/position = Vector3(-1.62986e-08, 1.20484, 1.62264e-08)
-bones/5/rotation = Quaternion(0.0490608, -3.4603e-06, -6.90412e-05, 0.998796)
+bones/5/rotation = Quaternion(0.211565, -1.46924e-05, -6.75485e-05, 0.977364)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/name = "hombro.i"
 bones/6/parent = 2
@@ -893,14 +894,14 @@ bones/7/parent = 6
 bones/7/rest = Transform3D(1, 3.95424e-18, -3.52114e-20, -3.95424e-18, 0.999841, -0.0178084, -3.52128e-20, 0.0178084, 0.999841, 7.45058e-09, 0.721442, 1.3411e-07)
 bones/7/enabled = true
 bones/7/position = Vector3(7.45058e-09, 0.721442, 1.3411e-07)
-bones/7/rotation = Quaternion(-0.596451, 3.04327e-18, -1.54772e-18, 0.80265)
+bones/7/rotation = Quaternion(-0.519822, 2.11188e-18, -1.66325e-18, 0.854275)
 bones/7/scale = Vector3(1, 1, 1)
 bones/8/name = "brazo_inferior.i"
 bones/8/parent = 7
 bones/8/rest = Transform3D(1, 1.198e-18, -3.2317e-21, -1.198e-18, 0.999985, -0.00539527, -3.2319e-21, 0.00539527, 0.999985, 1.38778e-17, 1.35351, 6.70552e-08)
 bones/8/enabled = true
 bones/8/position = Vector3(1.38778e-17, 1.35351, 6.70552e-08)
-bones/8/rotation = Quaternion(-0.055505, 0.000421204, 0.000516087, 0.998458)
+bones/8/rotation = Quaternion(-0.242819, 0.00177632, 0.00217645, 0.970068)
 bones/8/scale = Vector3(1, 1, 1)
 bones/9/name = "cuello"
 bones/9/parent = 2
@@ -1461,6 +1462,12 @@ texture_normal = ExtResource("16_p2ihs")
 action = "ui_accept"
 visibility_mode = 1
 
+[node name="PlayerInteractor" parent="." node_paths=PackedStringArray("player") instance=ExtResource("23_d7wpg")]
+player = NodePath("..")
+
+[node name="CollisionShape3D" parent="PlayerInteractor" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.292587, 0.506348, 4.78026)
+
 [connection signal="pressed" from="Pause menu/Menu/Return" to="Pause menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Reset Player" to="Pause menu" method="_on_reset_player_pressed"]
@@ -1477,3 +1484,5 @@ visibility_mode = 1
 [connection signal="pressed" from="Death Menu/Buttons/Return" to="Death Menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Death Menu/Buttons/Exit" to="Death Menu" method="_on_exit_pressed"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]
+
+[editable path="PlayerInteractor"]
