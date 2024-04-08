@@ -19,15 +19,16 @@ func _on_body_entered(body:Node) -> void:
 			$Destruction.destroy(0)
 
 func open_door():
-	door.rotation.y = lerp(door.rotation.y, 145, 0.5)
+	door.rotation.y = lerp_angle(door.rotation.y, deg_to_rad(145), 0.5)
 	door_open = true
 
 func close_door():
-	door.rotation.y = lerp(door.rotation.y, 0, 0.5)
+	door.rotation.y = lerp_angle(door.rotation.y, deg_to_rad(0), 0.5)
 	door_open = false
 
 
-func _on_interactable_interacted(interactable:Interactable) -> void:
+func _on_interactable_interacted(_interactable:Interactable) -> void:
+	print("Recibe Signal")
 	if not door_open:
 		open_door()
 	else:
