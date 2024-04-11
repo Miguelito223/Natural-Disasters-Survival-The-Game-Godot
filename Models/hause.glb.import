@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/hause.glb-0c36b6dedd2baa4501d94cded42c2094.sc
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="Node3D"
+nodes/root_name="Hause"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false
@@ -32,8 +32,37 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "nodes": {
-"PATH:Room/Door_Group/CTRL_Hole": {
-"import/skip_import": true
+"PATH:Room": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Baseboard": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Door_Group/DoorFrame": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Door_Group/DoorFrame/Door": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Door_Group/DoorFrame/Door/Handle_Back": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Door_Group/DoorFrame/Door/Handle_Front": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Suelo": {
+"generate/physics": true,
+"physics/body_type": 1
+},
+"PATH:Room/Techo": {
+"generate/physics": true,
+"physics/body_type": 1
 }
 }
 }

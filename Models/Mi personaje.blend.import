@@ -7230,15 +7230,8 @@ _subresources={
 }
 },
 "nodes": {
-"PATH:Esqueleto/Skeleton3D/Brazos": {
-"generate/physics": true
-},
 "PATH:Esqueleto/Skeleton3D/Cuerpo": {
-"generate/physics": true,
 "physics/physics_material_override": null
-},
-"PATH:Esqueleto/Skeleton3D/Piernas": {
-"generate/physics": true
 }
 }
 }

@@ -13,8 +13,8 @@ dest_files=["res://.godot/imported/hause.blend-c07ffdb76f0e2e58a4353b0ed3f6152f.
 
 [params]
 
-nodes/root_type=""
-nodes/root_name=""
+nodes/root_type="RigidBody3D"
+nodes/root_name="Hause"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 nodes/import_as_skeleton_bones=false

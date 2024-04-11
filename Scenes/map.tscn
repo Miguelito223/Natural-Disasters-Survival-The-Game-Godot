@@ -266,26 +266,8 @@ material = SubResource("FogMaterial_w14ph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
-[node name="hause" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 142.902, 5.20256, 189.181)
-
-[node name="hause3" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.4343, 9.94463, 190.884)
-
-[node name="hause6" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 132.502, 11.9095, 165.986)
-
-[node name="hause5" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.433, 9.94463, 190.884)
-
-[node name="hause7" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 134.39, 29.7602, 172.939)
-
-[node name="hause4" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 121.914, 9.26171, 148.308)
-
-[node name="hause2" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.6548, 11.2849, 157.2)
+[node name="Hause" parent="." instance=ExtResource("11_e1biu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.162, 0, 202.992)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

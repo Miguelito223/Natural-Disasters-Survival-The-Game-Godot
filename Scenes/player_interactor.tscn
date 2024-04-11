@@ -1,14 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://djlaofq84cdh6"]
 
 [ext_resource type="Script" path="res://Scripts/player_interactor.gd" id="1_86kn8"]
+[ext_resource type="PackedScene" uid="uid://cxijh68cq6s5p" path="res://Scenes/interactor.tscn" id="1_g4o13"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_jjoo6"]
-size = Vector3(9.40158, 9.68066, 9.84402)
-
-[node name="PlayerInteractor" type="Area3D"]
-collision_layer = 0
-collision_mask = 2
+[node name="Playerinteractor" instance=ExtResource("1_g4o13")]
 script = ExtResource("1_86kn8")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("BoxShape3D_jjoo6")

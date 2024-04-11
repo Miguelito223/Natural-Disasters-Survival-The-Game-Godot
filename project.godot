@@ -137,7 +137,7 @@ Interact={
 
 [layer_names]
 
-3d_physics/layer_2="Interact"
+3d_physics/layer_2="interactable"
 
 [network]
 
