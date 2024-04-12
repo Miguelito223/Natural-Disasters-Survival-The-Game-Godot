@@ -217,10 +217,6 @@ light_color = Color(0.686275, 0.686275, 0.686275, 1)
 light_energy = 0.2
 shadow_enabled = true
 
-[node name="Spawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.399, 9.85441, 166.884)
-gizmo_extents = 2.9
-
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("3_kvy81")
 _terrain_data = ExtResource("4_sb5yn")
@@ -266,8 +262,12 @@ material = SubResource("FogMaterial_w14ph")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
+[node name="Spawn" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 127.955, 9.32904, 170.081)
+gizmo_extents = 2.9
+
 [node name="Hause" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 119.162, 0, 202.992)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 108.724, -4.62622, 185.869)
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
