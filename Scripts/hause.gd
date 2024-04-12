@@ -3,8 +3,6 @@ extends Node3D
 var bounding_radius_area = null
 @onready var door = $Room/Door_Group/DoorFrame/Door
 @onready var door_collisions = $DoorCollision
-@onready var manillar_collisions = $ManillarCollision
-@onready var manillar2_collisions = $ManillarCollision2
 @onready var room = $Room
 @onready var Techo = $Room/Techo
 @onready var Suelo = $Room/Suelo
@@ -17,15 +15,11 @@ var door_open = false
 func open_door():
 	door.rotation.y = deg_to_rad(145)
 	door_collisions.rotation.y = deg_to_rad(145)
-	manillar_collisions.y = deg_to_rad(145)
-	manillar2_collisions.y = deg_to_rad(145)
 	door_open = true
 
 func close_door():
 	door.rotation.y = deg_to_rad(0)
 	door_collisions.rotation.y = deg_to_rad(0)
-	manillar_collisions.y = deg_to_rad(0)
-	manillar2_collisions.y = deg_to_rad(0)
 	door_open = false
 
 
