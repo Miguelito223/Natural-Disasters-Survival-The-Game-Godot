@@ -166,8 +166,6 @@ func player_disconect(peer_id):
 			print("Disconected player id: " + str(peer_id))
 			player.queue_free()
 			
-
-
 @rpc("any_peer","call_local")
 func set_started(started_bool):
 	started = started_bool
@@ -225,7 +223,7 @@ func wind(object):
 
 # Llama a la función wind para cada objeto en la escena
 func _physics_process(_delta):
-	for object in get_tree().get_nodes_in_group("wind_effected_objects"):
+	for object in self.get_children():
 		wind(object)
 
 

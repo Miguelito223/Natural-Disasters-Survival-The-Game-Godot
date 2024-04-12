@@ -354,7 +354,7 @@ properties/6/path = NodePath("Destruction:fade_delay")
 properties/6/spawn = true
 properties/6/replication_mode = 1
 
-[node name="Hause" instance=ExtResource("1_m7w7y")]
+[node name="Hause" groups=["movable_objects", "wind_effected_objects"] instance=ExtResource("1_m7w7y")]
 contact_monitor = true
 max_contacts_reported = 50
 script = ExtResource("1_spk2i")

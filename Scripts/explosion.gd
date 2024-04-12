@@ -20,7 +20,7 @@ func _on_area_3d_body_entered(body:Node3D):
 		body.damage(100)
 		body.move_and_slide()
 
-	elif body.is_in_group("movable_bodys") and body.is_class("RigidBody3D"):
+	elif body.is_in_group("movable_objects") and body.is_class("RigidBody3D"):
 		var distance = (body.global_position - global_position).length()
 		var direction = (body.global_position - global_position).normalized()
 		var force = explosion_force * (1 - distance / explosion_radius)

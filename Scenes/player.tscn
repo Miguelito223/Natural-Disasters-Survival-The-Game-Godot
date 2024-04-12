@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=57 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
+[ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 radius = 2.773
@@ -378,25 +379,25 @@ shape = SubResource("CapsuleShape3D_1y4s5")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/1/rotation = Quaternion(0, 0, 0.0163083, 0.999867)
-bones/2/rotation = Quaternion(0, 0, 0.0111656, 0.999938)
-bones/4/rotation = Quaternion(0.630307, 0.231349, -0.175856, 0.719906)
+bones/1/rotation = Quaternion(0, 0, 0.158997, 0.987279)
+bones/2/rotation = Quaternion(0, 0, 0.108829, 0.99406)
+bones/4/rotation = Quaternion(0.651045, 0.042199, -0.0320616, 0.757187)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(-0.0026906, -0.0479663, 0.247483, 0.967701)
+bones/5/rotation = Quaternion(0.0709861, -0.0231965, 0.342664, 0.936485)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.603029, -0.252874, -0.224761, 0.722422)
+bones/7/rotation = Quaternion(-0.639588, -0.0462903, -0.0411442, 0.766219)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.00239845, 0.0531961, 0.346606, 0.936498)
+bones/8/rotation = Quaternion(0.00245774, 0.0463196, 0.301472, 0.952346)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
-bones/11/rotation = Quaternion(-0.00259327, 0.715593, -0.698511, 0.00153911)
+bones/11/rotation = Quaternion(-0.00240143, 0.715593, -0.698511, 0.0017292)
 bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(0.00443761, -0.00995446, -0.169795, 0.985419)
+bones/12/rotation = Quaternion(0.00402676, -0.0100636, -0.235582, 0.971794)
 bones/12/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.706042, -0.00621797, 0.0236237, 0.707748)
-bones/15/rotation = Quaternion(0.0185358, 0.0205956, -0.203205, 0.978744)
+bones/15/rotation = Quaternion(0.0172555, 0.0189678, -0.352094, 0.935613)
 
 [node name="Brazos" parent="Model/Esqueleto/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_1yjo3")
@@ -895,6 +896,13 @@ position = Vector2(37, 31)
 scale = Vector2(10, 9.032)
 texture_normal = ExtResource("15_beddy")
 action = "Pause"
+visibility_mode = 1
+
+[node name="Interactuar" type="TouchScreenButton" parent="Mobile Buttons"]
+position = Vector2(1584, 650)
+scale = Vector2(10, 9.032)
+texture_normal = ExtResource("24_ys47s")
+action = "Interact"
 visibility_mode = 1
 
 [node name="jump" type="TouchScreenButton" parent="Mobile Buttons"]
