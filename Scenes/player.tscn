@@ -27,8 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
-radius = 2.773
-height = 8.954
+margin = 2.71
+radius = 2.53595
+height = 8.6221
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1yjo3"]
 albedo_color = Color(0, 0.0166669, 1, 1)
@@ -76,7 +77,7 @@ input_1/auto_advance = true
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rc5yr"]
-graph_offset = Vector2(-144.662, -38.5395)
+graph_offset = Vector2(-37.1612, -12.2547)
 nodes/Fall/node = SubResource("AnimationNodeAnimation_yuegk")
 nodes/Fall/position = Vector2(20, 200)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_bga0f")
@@ -371,6 +372,7 @@ username = "Michael2911"
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.657647, -0.663326)
 shape = SubResource("CapsuleShape3D_1y4s5")
 
 [node name="Model" parent="." instance=ExtResource("2_bu6xy")]
@@ -379,25 +381,22 @@ shape = SubResource("CapsuleShape3D_1y4s5")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/1/rotation = Quaternion(0, 0, 0.158997, 0.987279)
-bones/2/rotation = Quaternion(0, 0, 0.108829, 0.99406)
-bones/4/rotation = Quaternion(0.651045, 0.042199, -0.0320616, 0.757187)
+bones/4/rotation = Quaternion(0.437108, -3.01539e-05, 6.22378e-05, 0.899409)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.0709861, -0.0231965, 0.342664, 0.936485)
+bones/5/rotation = Quaternion(0.376926, -2.61199e-05, -6.40032e-05, 0.926244)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.639588, -0.0462903, -0.0411442, 0.766219)
+bones/7/rotation = Quaternion(-0.435213, 2.73706e-18, -1.7435e-18, 0.900328)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.00245774, 0.0463196, 0.301472, 0.952346)
+bones/8/rotation = Quaternion(-0.43222, 0.00314575, 0.00385437, 0.901755)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
-bones/11/rotation = Quaternion(-0.00240143, 0.715593, -0.698511, 0.0017292)
+bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
 bones/11/scale = Vector3(1, 1, 1)
-bones/12/rotation = Quaternion(0.00402676, -0.0100636, -0.235582, 0.971794)
+bones/12/rotation = Quaternion(0.00543503, -0.00944236, 0.00944938, 0.999896)
 bones/12/scale = Vector3(1, 1, 1)
-bones/14/rotation = Quaternion(-0.706042, -0.00621797, 0.0236237, 0.707748)
-bones/15/rotation = Quaternion(0.0172555, 0.0189678, -0.352094, 0.935613)
+bones/14/rotation = Quaternion(-0.706043, -0.00621798, 0.0236237, 0.707748)
 
 [node name="Brazos" parent="Model/Esqueleto/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_1yjo3")
@@ -429,9 +428,9 @@ shape = SubResource("BoxShape3D_yhbuw")
 root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
-parameters/is_jumping/current_state = "true"
+parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
-parameters/is_jumping/current_index = 0
+parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0

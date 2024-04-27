@@ -353,6 +353,24 @@ properties/5/replication_mode = 1
 properties/6/path = NodePath("Destruction:fade_delay")
 properties/6/spawn = true
 properties/6/replication_mode = 1
+properties/7/path = NodePath("Room/Door_Group/DoorFrame/Door:position")
+properties/7/spawn = true
+properties/7/replication_mode = 1
+properties/8/path = NodePath("Room/Door_Group/DoorFrame/Door:rotation")
+properties/8/spawn = true
+properties/8/replication_mode = 1
+properties/9/path = NodePath("Room/Door_Group/DoorFrame/Door:scale")
+properties/9/spawn = true
+properties/9/replication_mode = 1
+properties/10/path = NodePath("DoorCollision:position")
+properties/10/spawn = true
+properties/10/replication_mode = 1
+properties/11/path = NodePath("DoorCollision:rotation")
+properties/11/spawn = true
+properties/11/replication_mode = 1
+properties/12/path = NodePath("DoorCollision:scale")
+properties/12/spawn = true
+properties/12/replication_mode = 1
 
 [node name="Hause" groups=["movable_objects", "wind_effected_objects"] instance=ExtResource("1_m7w7y")]
 contact_monitor = true
