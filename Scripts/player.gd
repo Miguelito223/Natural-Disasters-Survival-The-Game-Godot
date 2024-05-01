@@ -56,6 +56,7 @@ var min_bdradiation = 0
 @onready var animationplayer_node = $"Model/AnimationPlayer"
 @onready var animation_tree_node = $AnimationTree
 @onready var mi_personaje_node = $"Model"
+@onready var label = $Name
 
 
 
@@ -202,6 +203,7 @@ func _process(delta):
 
 	points = Globals.points
 	username = Globals.username
+	label.text = Globals.username
 
 
 	
