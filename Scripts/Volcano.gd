@@ -21,3 +21,7 @@ func _launch_fireball():
 
 	await get_tree().create_timer(launch_interval).timeout
 	_launch_fireball()
+
+func _on_area_3d_body_entered(body:Node3D) -> void:
+	if body.is_in_group("player"):
+		body.damage(100)
