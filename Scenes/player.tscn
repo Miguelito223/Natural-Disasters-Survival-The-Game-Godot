@@ -385,8 +385,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.657647, -0.663326)
 shape = SubResource("CapsuleShape3D_1y4s5")
 
 [node name="Name" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.53514, -0.773658)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.535, -0.790326)
 billboard = 1
+text = "MIchael"
 font_size = 182
 
 [node name="Model" parent="." instance=ExtResource("2_bu6xy")]
@@ -395,15 +396,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.669878, -4.6256e-05, 5.13717e-05, 0.742471)
+bones/4/rotation = Quaternion(0.548671, -3.78712e-05, 5.78021e-05, 0.836038)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(-0.000223468, -5.3467e-08, -6.91278e-05, 1)
+bones/5/rotation = Quaternion(0.207403, -1.44047e-05, -6.76104e-05, 0.978256)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.619101, 3.08035e-18, -1.51315e-18, 0.785311)
+bones/7/rotation = Quaternion(-0.521843, 2.11577e-18, -1.66078e-18, 0.853041)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.000719601, 1.43159e-05, 1.75408e-05, 1)
+bones/8/rotation = Quaternion(-0.238012, 0.00174155, 0.00213385, 0.971258)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)

@@ -9,4 +9,10 @@ func msg_rpc(username, data):
 	$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 
 func _on_button_pressed():
-	msg_rpc.rpc(Globals.username, $LineEdit.text)
+	if Globals.is_networking:
+		if not is_multiplayer_authority():
+			return
+
+		msg_rpc.rpc(Globals.username, $LineEdit.text)
+	else:
+		msg_rpc(Globals.username, $LineEdit.text)
