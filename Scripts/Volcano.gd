@@ -7,7 +7,7 @@ var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
 var LavaLevel  = 230
 
-@onready var skeleton = $path_to_your_skeleton/Skeleton3D
+@onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 
 func _ready():
 	set_lava_level(LavaLevel)
