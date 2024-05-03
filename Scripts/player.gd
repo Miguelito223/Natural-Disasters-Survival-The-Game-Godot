@@ -86,7 +86,14 @@ func setlife(value):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		$"Death Menu".show()
-		
+
+func sneeze():
+	$"Model/Camera3D/sneeze audio".play()
+	$"Model/Camera3D/sneeze".emmiting = true
+
+func vomit():	
+	$"Model/Camera3D/vomit audio".play()
+	$"Model/Camera3D/vomit".emmiting = true
 
 func _ready():
 
@@ -149,6 +156,12 @@ func _process(delta):
 			damage(alpha_hot + alpha_cold)	
 		elif alpha_hot != 0:	
 			damage(alpha_hot + alpha_cold)
+
+	if body_temperature > 39 and randi() % 400 == 0:
+		vomit()
+
+	if body_temperature < 35 and randi() % 400 == 0:
+		sneeze()
 	
 	if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsInWater:
 		body_oxygen = clamp(body_oxygen - 5 * delta, min_oxygen, Max_oxygen)
@@ -173,6 +186,9 @@ func _process(delta):
 
 	$Underwater.visible = IsInWater
 	$UnderLava.visible = IsInLava	
+
+	if IsInLava:
+		damage(5)
 	
 	Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
 	if Globals.is_raining:

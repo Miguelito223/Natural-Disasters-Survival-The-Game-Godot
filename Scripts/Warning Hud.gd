@@ -1,6 +1,12 @@
 extends CanvasLayer
 
+func _ready() -> void:
+	if Globals.is_networking:
+		if not is_multiplayer_authority():
+			self.visible = is_multiplayer_authority()
+			return
 
+	self.visible = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

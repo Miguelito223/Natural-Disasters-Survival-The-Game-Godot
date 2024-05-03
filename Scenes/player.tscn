@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=63 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/Pause_menu.gd" id="2_vj7s0"]
 [ext_resource type="Texture2D" uid="uid://bevx5iyc2q82h" path="res://Sprites/kenney_particle_pack/smoke_01.png" id="3_kstye"]
 [ext_resource type="Script" path="res://Scripts/Hud.gd" id="3_pgssk"]
+[ext_resource type="AudioStream" uid="uid://djwg2fx6tlsvk" path="res://Sounds/disasters/player/vomit.wav" id="4_13lgf"]
 [ext_resource type="Texture2D" uid="uid://gwwhay61ha7p" path="res://Sprites/heart.png" id="4_ni53t"]
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://bcbahjxisvk4u" path="res://Sounds/disasters/nature/rain-light.wav" id="6_dfbmn"]
@@ -36,6 +37,42 @@ albedo_color = Color(0, 0.0166669, 1, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yhbuw"]
 size = Vector3(15.9786, 10.0938, 23.871)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sqcq3"]
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, 0, -1)
+spread = 5.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_min = 0.5
+scale_max = 0.5
+color = Color(0, 0.521937, 0.022933, 1)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vrkgd"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_w7uj4"]
+material = SubResource("StandardMaterial3D_vrkgd")
+
+[sub_resource type="Skin" id="Skin_ocasw"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tex6u"]
+direction = Vector3(0, 0, -1)
+spread = 10.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+scale_min = 0.5
+scale_max = 0.5
+color = Color(0.0666666, 1, 0, 1)
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yuegk"]
 animation = &"Fall"
@@ -77,7 +114,7 @@ input_1/auto_advance = true
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rc5yr"]
-graph_offset = Vector2(-37.1612, -12.2547)
+graph_offset = Vector2(-384.134, -42.0217)
 nodes/Fall/node = SubResource("AnimationNodeAnimation_yuegk")
 nodes/Fall/position = Vector2(20, 200)
 nodes/Idle/node = SubResource("AnimationNodeAnimation_bga0f")
@@ -395,15 +432,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.591003, -4.07997e-05, 5.57688e-05, 0.80667)
+bones/4/rotation = Quaternion(0.667379, -4.60832e-05, 5.15273e-05, 0.744718)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.137461, -9.57067e-06, -6.84621e-05, 0.990507)
+bones/5/rotation = Quaternion(0.00427626, -3.64523e-07, -6.91269e-05, 0.999991)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.555276, 2.17916e-18, -1.61797e-18, 0.831666)
+bones/7/rotation = Quaternion(-0.61704, 3.07705e-18, -1.51638e-18, 0.786932)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.157214, 0.0011571, 0.00141775, 0.987563)
+bones/8/rotation = Quaternion(-0.00439635, 5.13419e-05, 6.29073e-05, 0.99999)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -437,6 +474,37 @@ player = NodePath("../../..")
 [node name="CollisionShape3D" parent="Model/Camera3D/PlayerInteractor" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.244984, 0.712891, -12.378)
 shape = SubResource("BoxShape3D_yhbuw")
+
+[node name="Vomit" type="GPUParticles3D" parent="Model/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0572308, -0.00763845, 0.797553)
+emitting = false
+amount = 100
+one_shot = true
+randomness = 1.0
+visibility_aabb = AABB(-1.60644, -72.8083, -42.3354, 80.5687, 120.525, 66.5287)
+process_material = SubResource("ParticleProcessMaterial_sqcq3")
+draw_pass_1 = SubResource("SphereMesh_w7uj4")
+draw_skin = SubResource("Skin_ocasw")
+
+[node name="Sneeze" type="GPUParticles3D" parent="Model/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0123857, 0.444866, 0.814341)
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+visibility_aabb = AABB(-1.60644, -72.8083, -42.3354, 80.5687, 120.525, 66.5287)
+process_material = SubResource("ParticleProcessMaterial_tex6u")
+draw_pass_1 = SubResource("SphereMesh_w7uj4")
+draw_skin = SubResource("Skin_ocasw")
+
+[node name="sneeze audio" type="AudioStreamPlayer3D" parent="Model/Camera3D"]
+stream = ExtResource("4_13lgf")
+max_distance = 10.0
+
+[node name="vomit audio" type="AudioStreamPlayer3D" parent="Model/Camera3D"]
+stream = ExtResource("4_13lgf")
+max_distance = 10.0
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../Model")
@@ -754,6 +822,7 @@ text = "Exit
 
 [node name="Players List Menu" type="CanvasLayer" parent="."]
 process_mode = 3
+visible = false
 script = ExtResource("8_u7k75")
 
 [node name="Panel" type="Panel" parent="Players List Menu"]

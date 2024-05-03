@@ -309,6 +309,60 @@ func set_weather_and_disaster(weather_and_disaster_index):
 			current_weather_and_disaster_int = 12
 			is_blizzard()
 
+		"Sun":
+			current_weather_and_disaster = "Sun"
+			current_weather_and_disaster_int = 0
+			is_sun()	
+
+		"Cloud":
+			current_weather_and_disaster = "Cloud"
+			current_weather_and_disaster_int = 0
+			is_cloud()	
+		"Raining":
+			current_weather_and_disaster = "Raining"
+			current_weather_and_disaster_int = 0
+			is_raining()
+		"Storm":
+			current_weather_and_disaster = "Storm"
+			current_weather_and_disaster_int = 0
+			is_storm()
+		"Linghting storm":
+			current_weather_and_disaster = "Linghting storm"
+			current_weather_and_disaster_int = 0
+			is_linghting_storm()		
+		"Tsunami":
+			current_weather_and_disaster = "Tsunami"
+			current_weather_and_disaster_int = 5
+			is_tsunami()
+		"Meteor shower":
+			current_weather_and_disaster = "Meteor shower"
+			current_weather_and_disaster_int = 6
+		"Volcano":
+			current_weather_and_disaster = "Volcano"
+			current_weather_and_disaster_int = 7
+			is_volcano()
+		"Tornado":
+			current_weather_and_disaster = "Tornado"
+			current_weather_and_disaster_int = 8
+			is_tornado()
+		"Acid rain":
+			current_weather_and_disaster = "Acid rain"
+			current_weather_and_disaster_int = 9
+			is_acid_rain()
+		"Earthquake":
+			current_weather_and_disaster = "Earthquake"
+			current_weather_and_disaster_int = 10
+			is_earthquake()
+
+		"Sand Storm":
+			current_weather_and_disaster = "Sand Storm"
+			current_weather_and_disaster_int = 11
+			is_sandstorm()
+		"blizzard":
+			current_weather_and_disaster = "blizzard"
+			current_weather_and_disaster_int = 12
+			is_blizzard()
+
 func is_tsunami():
 	var tsunami = tsunami_scene.instantiate()
 	tsunami.position = Vector3(0,0,0)
