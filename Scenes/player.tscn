@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=64 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -12,10 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://bcbahjxisvk4u" path="res://Sounds/disasters/nature/rain-light.wav" id="6_dfbmn"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
-[ext_resource type="Script" path="res://Scripts/Chat.gd" id="6_wgonp"]
 [ext_resource type="Shader" path="res://UnderWater.gdshader" id="7_787g2"]
-[ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="7_k0mbh"]
-[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="8_5jfek"]
 [ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scripts/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
@@ -24,8 +21,12 @@
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
+[ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
+[ext_resource type="Script" path="res://Scripts/Chat.gd" id="25_jnqb0"]
+[ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="26_bdi0g"]
+[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="27_328la"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 margin = 2.71
@@ -414,7 +415,6 @@ shader_parameter/Shader_color = null
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 script = ExtResource("1_btpoi")
-username = "Michael2911"
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -432,15 +432,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.667379, -4.60832e-05, 5.15273e-05, 0.744718)
+bones/4/rotation = Quaternion(0.603267, -4.16474e-05, 5.51842e-05, 0.797539)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.00427626, -3.64523e-07, -6.91269e-05, 0.999991)
+bones/5/rotation = Quaternion(0.116666, -8.13332e-06, -6.86477e-05, 0.993171)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.61704, 3.07705e-18, -1.51638e-18, 0.786932)
+bones/7/rotation = Quaternion(-0.565054, 2.9892e-18, -1.59245e-18, 0.825054)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.00439635, 5.13419e-05, 6.29073e-05, 0.99999)
+bones/8/rotation = Quaternion(-0.133225, 0.000983549, 0.00120511, 0.991085)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -901,69 +901,8 @@ texture = ExtResource("4_ni53t")
 process_mode = 3
 stream = ExtResource("6_vn0ni")
 
-[node name="Warning Hud" type="CanvasLayer" parent="."]
-process_mode = 3
-script = ExtResource("7_k0mbh")
-
-[node name="Panel" type="Panel" parent="Warning Hud"]
-process_mode = 3
-offset_left = 711.0
-offset_top = 1.0
-offset_right = 754.0
-offset_bottom = 41.0
-scale = Vector2(9.91709, 5.28957)
-mouse_filter = 2
-
-[node name="Label" type="Label" parent="Warning Hud"]
-process_mode = 3
-offset_left = 726.0
-offset_top = 11.0
-offset_right = 878.0
-offset_bottom = 216.0
-text = "Current Disasters/Weather is:"
-
-[node name="Panel2" type="Panel" parent="Warning Hud"]
-process_mode = 3
-offset_left = 972.0
-offset_top = 27.0
-offset_right = 1021.0
-offset_bottom = 67.0
-scale = Vector2(2.92153, 3.89434)
-mouse_filter = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
-position = Vector2(1042, 102)
-scale = Vector2(7.58173, 7.86641)
-texture = ExtResource("8_5jfek")
-
-[node name="Chat" type="CanvasLayer" parent="."]
-process_mode = 3
-script = ExtResource("6_wgonp")
-
-[node name="TextEdit" type="TextEdit" parent="Chat"]
-process_mode = 3
-offset_top = 606.0
-offset_right = 284.0
-offset_bottom = 770.0
-mouse_filter = 2
-editable = false
-
-[node name="LineEdit" type="LineEdit" parent="Chat"]
-process_mode = 3
-offset_left = 2.0
-offset_top = 770.0
-offset_right = 230.0
-offset_bottom = 801.0
-
-[node name="Button" type="Button" parent="Chat"]
-process_mode = 3
-offset_left = 231.0
-offset_top = 769.0
-offset_right = 281.0
-offset_bottom = 800.0
-text = "Enter"
-
 [node name="Mobile Buttons" type="CanvasLayer" parent="."]
+script = ExtResource("22_5fm01")
 
 [node name="Virtual Joystick" parent="Mobile Buttons" instance=ExtResource("14_nhtb3")]
 offset_left = 16.0
@@ -993,6 +932,80 @@ scale = Vector2(10, 10)
 texture_normal = ExtResource("16_p2ihs")
 action = "ui_accept"
 visibility_mode = 1
+
+[node name="Chat" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("25_jnqb0")
+
+[node name="TextEdit" type="TextEdit" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_top = 606.0
+offset_right = 284.0
+offset_bottom = 770.0
+mouse_filter = 2
+editable = false
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 2.0
+offset_top = 770.0
+offset_right = 230.0
+offset_bottom = 801.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 231.0
+offset_top = 769.0
+offset_right = 281.0
+offset_bottom = 800.0
+text = "Enter"
+metadata/_edit_use_anchors_ = true
+
+[node name="Warning Hud" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("26_bdi0g")
+
+[node name="Panel" type="Panel" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 711.0
+offset_top = 1.0
+offset_right = 754.0
+offset_bottom = 41.0
+scale = Vector2(9.91709, 5.28957)
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 726.0
+offset_top = 11.0
+offset_right = 878.0
+offset_bottom = 216.0
+text = "Current Disasters/Weather is:"
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel2" type="Panel" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 972.0
+offset_top = 27.0
+offset_right = 1021.0
+offset_bottom = 67.0
+scale = Vector2(2.92153, 3.89434)
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
+position = Vector2(1042, 102)
+scale = Vector2(7.58173, 7.86641)
+texture = ExtResource("27_328la")
 
 [connection signal="pressed" from="Pause menu/Menu/Return" to="Pause menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]

@@ -1,13 +1,6 @@
 extends CanvasLayer
 
-
-
 func _ready() -> void:
-	if Globals.is_networking:
-		if not is_multiplayer_authority():
-			self.visible = is_multiplayer_authority()
-			return
-
 	self.visible = true
 
 @rpc("any_peer", "call_local")
@@ -48,9 +41,8 @@ func msg_rpc(username, data):
 
 func _on_button_pressed():
 	if Globals.is_networking:
-		if not is_multiplayer_authority():
-			return
-
+		print("is networking")
 		msg_rpc.rpc(Globals.username, $LineEdit.text)
 	else:
+		print("is not networking")
 		msg_rpc(Globals.username, $LineEdit.text)
