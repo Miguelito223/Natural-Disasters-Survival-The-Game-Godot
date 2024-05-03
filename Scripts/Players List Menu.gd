@@ -2,12 +2,9 @@ extends CanvasLayer
 
 func _ready():
 	if Globals.is_networking:
-		self.visible = is_multiplayer_authority()
-
 		if not is_multiplayer_authority():
+			self.visible = is_multiplayer_authority()
 			return
-
-
 
 	self.visible = false
 
