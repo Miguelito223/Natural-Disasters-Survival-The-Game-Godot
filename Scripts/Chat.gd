@@ -29,8 +29,7 @@ func _process(_delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete') or Input.is_action_just_released('dev_console_autocomplete')
-
+		last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete')
 
 func autocomplete() -> void:
 	var matches = []
@@ -120,8 +119,6 @@ func msg_rpc(username, data):
 
 	if data != "" or data != " ":
 		$TextEdit.text +=  str(username, ": ", data, "\n")	
-
-	$LineEdit.text = ""
 	$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 
 func _on_button_pressed():
@@ -131,3 +128,5 @@ func _on_button_pressed():
 	else:
 		print("is not networking")
 		msg_rpc(Globals.username, $LineEdit.text)
+
+	$LineEdit.text = ""
