@@ -25,7 +25,7 @@ func _input(_event: InputEvent) -> void:
 		last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete') \
 			or Input.is_action_just_released('dev_console_autocomplete')
 
-		if Input.is_action_pressed('dev_console_autocomplete'):
+		if Input.is_action_just_released('dev_console_autocomplete'):
 			autocomplete()
 
 		if Input.is_action_just_pressed('_dev_console_enter'):
