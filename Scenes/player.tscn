@@ -91,27 +91,33 @@ animation = &"Walk"
 xfade_time = 0.2
 input_0/name = "true"
 input_0/auto_advance = true
+input_0/break_loop_at_end = false
 input_0/reset = true
 input_1/name = "false"
 input_1/auto_advance = true
+input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_g8dly"]
 xfade_time = 0.2
 input_0/name = "true"
 input_0/auto_advance = true
+input_0/break_loop_at_end = false
 input_0/reset = true
 input_1/name = "false"
 input_1/auto_advance = true
+input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_f40e7"]
 xfade_time = 0.2
 input_0/name = "idle"
 input_0/auto_advance = true
+input_0/break_loop_at_end = false
 input_0/reset = true
 input_1/name = "walk"
 input_1/auto_advance = true
+input_1/break_loop_at_end = false
 input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_rc5yr"]
@@ -433,15 +439,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.667397, -4.60844e-05, 5.15262e-05, 0.744702)
+bones/4/rotation = Quaternion(0.398602, -2.74914e-05, 6.34172e-05, 0.917124)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.00424528, -3.62381e-07, -6.91269e-05, 0.999991)
+bones/5/rotation = Quaternion(0.430122, -2.97957e-05, -6.23769e-05, 0.902771)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.617054, 3.07707e-18, -1.51636e-18, 0.786921)
+bones/7/rotation = Quaternion(-0.405532, 1.8826e-18, -1.78358e-18, 0.914081)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.00436112, 5.10869e-05, 6.25949e-05, 0.999991)
+bones/8/rotation = Quaternion(-0.491866, 0.00357682, 0.00438255, 0.870652)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -511,15 +517,42 @@ max_distance = 10.0
 root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
+parameters/current_length = 1.66667
+parameters/current_position = 1.06567
+parameters/current_delta = 0.099003
+parameters/Fall/current_length = null
+parameters/Fall/current_position = null
+parameters/Fall/current_delta = null
+parameters/Idle/current_length = 1.66667
+parameters/Idle/current_position = 1.06567
+parameters/Idle/current_delta = 0.099003
+parameters/Jump/current_length = null
+parameters/Jump/current_position = null
+parameters/Jump/current_delta = null
+parameters/Walk/current_length = null
+parameters/Walk/current_position = null
+parameters/Walk/current_delta = null
+parameters/is_jumping/current_length = 1.66667
+parameters/is_jumping/current_position = 1.06567
+parameters/is_jumping/current_delta = 0.099003
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
+parameters/is_on_floor/current_length = 1.66667
+parameters/is_on_floor/current_position = 1.06567
+parameters/is_on_floor/current_delta = 0.099003
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
+parameters/movement/current_length = 1.66667
+parameters/movement/current_position = 1.06567
+parameters/movement/current_delta = 0.099003
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
+parameters/output/current_length = 1.66667
+parameters/output/current_position = 1.06567
+parameters/output/current_delta = 0.099003
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
