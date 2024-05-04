@@ -15,22 +15,12 @@ var prev_autocomplete_matches: Array = []
 
 func _ready() -> void:
 	self.visible = true
-	autocomplete_methods = get_script().get_script_method_list().map(func (x): return x.name)
+	autocomplete_methods = Globals.map.get_script().get_script_method_list().map(func (x): return x.name)	
 
-func _process(_delta: float) -> void:
-	if Globals.is_networking:
-		if $LineEdit.text.begins_with("/") and multiplayer.is_server():
-			on_input()
-			autocomplete()
-	else:
-		if $LineEdit.text.begins_with("/"):
-			on_input()
-			autocomplete()		
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey:
-		last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete')
-
+func _process(_delta):
+	if $TextEdit.text.begins_with("/"):
+		on_input()
+	
 func autocomplete() -> void:
 	var matches = []
 	var match_string = $LineEdit.text
@@ -39,7 +29,7 @@ func autocomplete() -> void:
 	if last_input_was_autocomplete:
 		matches = prev_autocomplete_matches
 	# Step through all possible matches if no input string
-	elif match_string.length() == 0:
+	elif match_string.is_empty():
 		matches = autocomplete_methods
 	# Otherwise check if each possible method begins with the user string
 	else:
@@ -83,6 +73,10 @@ func _run_command(cmd: String) -> void:
 		print(result)
 
 func on_input() -> void:
+	last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete') or Input.is_action_just_released('dev_console_autocomplete')
+
+	autocomplete()
+
 	if Input.is_action_just_pressed('_dev_console_enter'):
 		history.push_front($LineEdit.text)
 		_run_command($LineEdit.text)
@@ -111,6 +105,8 @@ func msg_rpc(username, data):
 			data = data.erase(0, 1)
 			print(data)
 			_run_command.rpc(data)
+		elif data.begins_with("/") and !multiplayer.is_server():
+			$TextEdit.text +=  str("You not admin...")	
 	else:
 		if data.begins_with("/"):
 			data = data.erase(0, 1)
@@ -119,6 +115,7 @@ func msg_rpc(username, data):
 
 	if data != "" or data != " ":
 		$TextEdit.text +=  str(username, ": ", data, "\n")	
+
 	$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 
 func _on_button_pressed():
@@ -128,5 +125,5 @@ func _on_button_pressed():
 	else:
 		print("is not networking")
 		msg_rpc(Globals.username, $LineEdit.text)
-
+	
 	$LineEdit.text = ""
