@@ -4,17 +4,8 @@ extends CanvasLayer
 
 var history: Array[String] = []
 var history_index: int = -1
-var autocomplete_index: int = 0
-# All methods that are viable for autocomplete
-var autocomplete_methods: Array = []
-# Track if that last input was related to autocomplete
-var last_input_was_autocomplete: bool = false
-# Store matches of the last autocomplete so that the search doesn't have to be repeated
-# when Tab is pressed multiple times
-var prev_autocomplete_matches: Array = []
 
-var matches = []
-@onready var match_string = $LineEdit.text.erase(0,1)
+var autocomplete_methods: Array = []
 
 func _ready() -> void:
 	self.visible = true
@@ -22,11 +13,13 @@ func _ready() -> void:
 
 func _input(_event: InputEvent) -> void:
 	if $LineEdit.text.begins_with("/"):
-		last_input_was_autocomplete = Input.is_action_just_pressed('dev_console_autocomplete') \
-			or Input.is_action_just_released('dev_console_autocomplete')
-
 		if Input.is_action_just_pressed('dev_console_autocomplete'):
-			autocomplete()
+			for method in autocomplete_methods:
+				if method.begins_with($LineEdit.text.erase(0,1)):
+					# Populate console input with match
+					$LineEdit.text = "/" + method
+					# Make sure the caret goes to the end of the line
+					$LineEdit.caret_column = 100000
 
 		if Input.is_action_just_pressed('_dev_console_enter'):
 			history.push_front($LineEdit.text.erase(0, 1))
@@ -73,42 +66,6 @@ func _run_command(cmd: String) -> void:
 		if not result is Object:
 			$TextEdit.text += str(result) + "\n"
 			$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
-
-func autocomplete() -> void:
-
-	# Run through matches for the last string if the user is stepping through autocomplete options
-	if last_input_was_autocomplete:
-		matches = prev_autocomplete_matches
-	# Step through all possible matches if no input string
-	elif match_string.is_empty():
-		matches = autocomplete_methods
-	# Otherwise check if each possible method begins with the user string
-	else:
-		for method in autocomplete_methods:
-			if method.begins_with(match_string):
-				matches.append(method)
-
-	# Store matches string for later
-	prev_autocomplete_matches = matches
-
-	# Nothing to return if no matches
-	if matches.size() == 0:
-		return
-
-	# Go to the next possible autocomplete option if the user is Tabbing through options
-	if last_input_was_autocomplete:
-		autocomplete_index = wrapi(
-			autocomplete_index + 1,
-			0,
-			matches.size()
-		)
-	else:
-		autocomplete_index = 0
-
-	# Populate console input with match
-	$LineEdit.text = "/" + matches[autocomplete_index]
-	# Make sure the caret goes to the end of the line
-	$LineEdit.caret_column = 100000
 
 @rpc("any_peer", "call_local")
 func msg_rpc(username, data):
