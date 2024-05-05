@@ -36,7 +36,13 @@ func _input(_event: InputEvent) -> void:
 			history.push_front($LineEdit.text.erase(0, 1))
 			
 			if Globals.is_networking:
-				msg_rpc.rpc(Globals.username, $LineEdit.text)
+				if not is_multiplayer_authority():
+					return
+					
+				if $LineEdit.text.begins_with("/"):
+					msg_rpc(Globals.username, $LineEdit.text)
+				else:
+					msg_rpc.rpc(Globals.username, $LineEdit.text)
 			else:
 				msg_rpc(Globals.username, $LineEdit.text)
 
@@ -81,11 +87,11 @@ func _run_command(cmd: String) -> void:
 @rpc("any_peer", "call_local")
 func msg_rpc(username, data):
 	if Globals.is_networking:
-		if data.begins_with("/") :
+		if data.begins_with("/"):
 			if multiplayer.is_server() and is_multiplayer_authority():
 				if data != "" or data != " ":
 					$TextEdit.text += str(username, ": ", data, "\n")
-				$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
+					$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 				data = data.erase(0, 1)
 				print(data)
 				_run_command.rpc(data)
@@ -100,14 +106,14 @@ func msg_rpc(username, data):
 		if data.begins_with("/"):
 			if data != "" or data != " ":
 				$TextEdit.text += str(username, ": ", data, "\n")
-			$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
+				$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 			data = data.erase(0, 1)
 			print(data)
 			_run_command(data)
 		else:
 			if data != "" or data != " ":
 				$TextEdit.text += str(username, ": ", data, "\n")
-			$TextEdit.scroll_vertical =  $TextEdit.get_line_height()	
+				$TextEdit.scroll_vertical =  $TextEdit.get_line_height()	
 
 	
 
@@ -116,7 +122,10 @@ func _on_button_pressed():
 		if not is_multiplayer_authority():
 			return
 
-		msg_rpc.rpc(Globals.username, $LineEdit.text)
+		if $LineEdit.text.begins_with("/"):
+			msg_rpc(Globals.username, $LineEdit.text)
+		else:
+			msg_rpc.rpc(Globals.username, $LineEdit.text)
 	else:
 		msg_rpc(Globals.username, $LineEdit.text)
 	
