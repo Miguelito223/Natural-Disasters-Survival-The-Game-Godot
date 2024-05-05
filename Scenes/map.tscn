@@ -263,11 +263,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
 shape = SubResource("BoxShape3D_rb6xg")
 
 [node name="Spawn" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 129.471, 9.32904, 174.652)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1201.83, 9.32904, 996.233)
 gizmo_extents = 2.9
 
 [node name="Hause" parent="." instance=ExtResource("11_e1biu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 110.24, -4.62622, 190.44)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 5.03559, 1012.02)
+freeze = true
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
