@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=32 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_cimji"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://i5u8vemqarug" path="res://slot0_normal_roughness.png" id="8_gopco"]
 [ext_resource type="Texture2D" uid="uid://cd6f2317lg0fh" path="res://slot1_normal_roughness.png" id="9_w2el2"]
 [ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_e1biu"]
+[ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_mg8ec"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
@@ -270,6 +271,40 @@ gizmo_extents = 2.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 5.03559, 1012.02)
 freeze = true
 
+[node name="Chat" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("12_mg8ec")
+
+[node name="TextEdit" type="TextEdit" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_top = 606.0
+offset_right = 284.0
+offset_bottom = 770.0
+mouse_filter = 2
+editable = false
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 2.0
+offset_top = 770.0
+offset_right = 230.0
+offset_bottom = 801.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="Chat"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 231.0
+offset_top = 769.0
+offset_right = 281.0
+offset_bottom = 800.0
+text = "Enter"
+metadata/_edit_use_anchors_ = true
+
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]

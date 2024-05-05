@@ -14,6 +14,7 @@ func _physics_process(delta):
 			var projected_direction = body_direction.project(relative_direction)
 			var force = projected_direction.normalized() * tsunami_strength
 			body.apply_central_impulse(force)
+			body.freeze = false
 		elif body.is_in_group("player"):
 			body.velocity = self.velocity
 			body.move_and_slide()

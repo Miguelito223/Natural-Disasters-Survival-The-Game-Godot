@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=63 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -24,7 +24,6 @@
 [ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
-[ext_resource type="Script" path="res://Scripts/Chat.gd" id="25_jnqb0"]
 [ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="26_bdi0g"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="27_328la"]
 
@@ -439,15 +438,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.61158, -4.22232e-05, 5.46967e-05, 0.791183)
+bones/4/rotation = Quaternion(0.344717, -2.37643e-05, 6.49594e-05, 0.938707)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.102426, -7.14902e-06, -6.87572e-05, 0.994741)
+bones/5/rotation = Quaternion(0.499783, -3.46086e-05, -5.98406e-05, 0.866151)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.571705, 2.20964e-18, -1.59555e-18, 0.820459)
+bones/7/rotation = Quaternion(-0.36396, 2.58191e-18, -1.80645e-18, 0.931414)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.116805, 0.000864751, 0.00105955, 0.993154)
+bones/8/rotation = Quaternion(-0.568379, 0.00412964, 0.0050599, 0.822741)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -518,14 +517,14 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 1.43115
-parameters/current_delta = 0.013333
+parameters/current_position = 0.734697
+parameters/current_delta = 0.0133333
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 1.43115
-parameters/Idle/current_delta = 0.013333
+parameters/Idle/current_position = 0.734697
+parameters/Idle/current_delta = 0.0133333
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
 parameters/Jump/current_delta = null
@@ -533,26 +532,26 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 1.43115
-parameters/is_jumping/current_delta = 0.013333
+parameters/is_jumping/current_position = 0.734697
+parameters/is_jumping/current_delta = 0.0133333
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 1.43115
-parameters/is_on_floor/current_delta = 0.013333
+parameters/is_on_floor/current_position = 0.734697
+parameters/is_on_floor/current_delta = 0.0133333
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 1.43115
-parameters/movement/current_delta = 0.013333
+parameters/movement/current_position = 0.734697
+parameters/movement/current_delta = 0.0133333
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 1.43115
-parameters/output/current_delta = 0.013333
+parameters/output/current_position = 0.734697
+parameters/output/current_delta = 0.0133333
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
@@ -967,39 +966,6 @@ texture_normal = ExtResource("16_p2ihs")
 action = "ui_accept"
 visibility_mode = 1
 
-[node name="Chat" type="CanvasLayer" parent="."]
-process_mode = 3
-script = ExtResource("25_jnqb0")
-
-[node name="TextEdit" type="TextEdit" parent="Chat"]
-process_mode = 3
-auto_translate_mode = 1
-offset_top = 606.0
-offset_right = 284.0
-offset_bottom = 770.0
-mouse_filter = 2
-editable = false
-metadata/_edit_use_anchors_ = true
-
-[node name="LineEdit" type="LineEdit" parent="Chat"]
-process_mode = 3
-auto_translate_mode = 1
-offset_left = 2.0
-offset_top = 770.0
-offset_right = 230.0
-offset_bottom = 801.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="Chat"]
-process_mode = 3
-auto_translate_mode = 1
-offset_left = 231.0
-offset_top = 769.0
-offset_right = 281.0
-offset_bottom = 800.0
-text = "Enter"
-metadata/_edit_use_anchors_ = true
-
 [node name="Warning Hud" type="CanvasLayer" parent="."]
 process_mode = 3
 script = ExtResource("26_bdi0g")
@@ -1056,7 +1022,6 @@ texture = ExtResource("27_328la")
 [connection signal="pressed" from="Pause menu/Settings/Back" to="Pause menu" method="_on_back_pressed"]
 [connection signal="pressed" from="Death Menu/Buttons/Return" to="Death Menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Death Menu/Buttons/Exit" to="Death Menu" method="_on_exit_pressed"]
-[connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]
 
 [editable path="Model"]
 [editable path="Model/Camera3D/PlayerInteractor"]
