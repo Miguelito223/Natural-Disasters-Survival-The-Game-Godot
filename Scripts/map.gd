@@ -249,6 +249,9 @@ func kill_player(player_id):
 		if player2.name.to_int() == player_id and player2.is_in_group("player"):
 			player2.damage(100)
 
+func kick_player(player_id):
+	multiplayer.multiplayer_peer.disconnect_peer(player_id)
+
 func damage_player(player_id, damage):
 	for player2 in self.get_children():
 		if player2.name.to_int() == player_id and player2.is_in_group("player"):
