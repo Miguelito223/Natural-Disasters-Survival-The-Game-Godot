@@ -57,7 +57,7 @@ func _ready():
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Globals.volumen_music))
 	$Settings/Volumen.value = Globals.volumen
 	$"Settings/Volumen Music".value = Globals.volumen_music
-	$Settings/Time.value = Globals.timer
+	$Settings/Time.value = Globals.timer_disasters
 
 func _process(_delta):
 	if self.visible:
@@ -129,7 +129,7 @@ func _on_username_text_changed(new_text:String):
 
 
 func _on_h_slider_2_value_changed(value):
-	Globals.timer = value
+	Globals.timer_disasters = value
 	if Globals.map == null:
 		return
 	Globals.sync_timer(value)

@@ -56,12 +56,10 @@ func _ready():
 	if not Globals.is_networking:
 		player_join(1)
 		started = true
-		Globals.sync_timer(Globals.timer)
+		Globals.sync_timer(Globals.timer_disasters)
 	else:
 		multiplayer.peer_connected.connect(player_join)
 		multiplayer.peer_disconnected.connect(player_disconect)
-
-
 
 		if multiplayer.is_server():
 			if not OS.has_feature("dedicated_server") :
@@ -101,13 +99,13 @@ func player_join(peer_id):
 			Globals.add_player_to_list.rpc(peer_id, player)
 
 			if Globals.players_conected_int >= 2 and started == false:
-				Globals.sync_timer.rpc(Globals.timer)
+				Globals.sync_timer.rpc(Globals.timer_disasters)
 				set_started.rpc(true)
 			elif Globals.players_conected_int < 2 and started == true:
 				Globals.sync_timer.rpc(60)
 				set_started.rpc(false)
 			elif Globals.players_conected_int >= 2 and started == true:
-				Globals.sync_timer.rpc(Globals.timer)
+				Globals.sync_timer.rpc(Globals.timer_disasters)
 				set_started.rpc(true)
 			else:
 				Globals.sync_timer.rpc(60)
@@ -145,13 +143,13 @@ func player_disconect(peer_id):
 				print("syncring timer, map, player_list and weather/disasters in server")
 				Globals.remove_player_to_list.rpc(peer_id, player)
 				if Globals.players_conected_int >= 2 and started == false:
-					Globals.sync_timer.rpc(Globals.timer)
+					Globals.sync_timer.rpc(Globals.timer_disasters)
 					set_started.rpc(true)
 				elif Globals.players_conected_int < 2 and started == true:
 					Globals.sync_timer.rpc(60)
 					set_started.rpc(false)
 				elif Globals.players_conected_int >= 2 and started == true:
-					Globals.sync_timer.rpc(Globals.timer)
+					Globals.sync_timer.rpc(Globals.timer_disasters)
 					set_started.rpc(true)
 				else:
 					Globals.sync_timer.rpc(60)
@@ -231,9 +229,9 @@ func _on_timer_timeout():
 	if started:
 		if Globals.is_networking:
 			if multiplayer.is_server():
-				Globals.sync_timer.rpc(Globals.timer)
+				Globals.sync_timer.rpc(Globals.timer_disasters)
 		else:
-			Globals.sync_timer(Globals.timer)
+			Globals.sync_timer(Globals.timer_disasters)
 	
 		sync_weather_and_disaster()
 	else:

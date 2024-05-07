@@ -6,7 +6,7 @@
 script = ExtResource("1_kp8fp")
 
 [node name="MapSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://Scenes/map.tscn")
+_spawnable_scenes = PackedStringArray("res://Scenes/map_1.tscn")
 spawn_path = NodePath("..")
 spawn_limit = 1
 

@@ -58,7 +58,7 @@ func _ready():
 	$Settings/antialiasing.button_pressed = Globals.antialiasing
 	$Settings/Volumen.value = Globals.volumen
 	$"Settings/Volumen Music".value = Globals.volumen_music
-	$Settings/Time.value = Globals.timer
+	$Settings/Time.value = Globals.timer_disasters
 
 
 
@@ -161,7 +161,7 @@ func _process(_delta):
 
 func _on_time_value_changed(value):
 	if not Globals.is_networking:
-		Globals.timer = value
+		Globals.timer_disasters = value
 		Data.save_file()
 		Globals.sync_timer(value)
 		
@@ -172,7 +172,7 @@ func _on_time_value_changed(value):
 		if not Globals.map.started:
 			return
 		
-		Globals.timer = value
+		Globals.timer_disasters = value
 		Data.save_file()
 		Globals.sync_timer.rpc(value)
 		

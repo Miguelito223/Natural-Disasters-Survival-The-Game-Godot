@@ -1,17 +1,18 @@
-[gd_scene load_steps=32 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=30 format=3 uid="uid://cllvucut8u42n"]
 
-[ext_resource type="Script" path="res://Scripts/map.gd" id="1_cimji"]
-[ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="2_dy54i"]
-[ext_resource type="Shader" path="res://clouds.gdshader" id="2_ftxso"]
-[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_kvy81"]
-[ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="4_sb5yn"]
-[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_g0ne1"]
-[ext_resource type="Texture2D" uid="uid://co3l5n6ahjvrl" path="res://slot0_albedo_bump.png" id="6_8jm77"]
-[ext_resource type="Texture2D" uid="uid://diaiwvm7l2cr" path="res://slot1_albedo_bump.png" id="7_t8l8t"]
-[ext_resource type="Texture2D" uid="uid://i5u8vemqarug" path="res://slot0_normal_roughness.png" id="8_gopco"]
-[ext_resource type="Texture2D" uid="uid://cd6f2317lg0fh" path="res://slot1_normal_roughness.png" id="9_w2el2"]
-[ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_e1biu"]
-[ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_mg8ec"]
+[ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
+[ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
+[ext_resource type="Script" path="res://Scripts/world_environment.gd" id="3_575xv"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_je8e7"]
+[ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="4_6560e"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_sr3y7"]
+[ext_resource type="Texture2D" uid="uid://co3l5n6ahjvrl" path="res://slot0_albedo_bump.png" id="6_80fau"]
+[ext_resource type="Texture2D" uid="uid://diaiwvm7l2cr" path="res://slot1_albedo_bump.png" id="7_7vlh5"]
+[ext_resource type="Texture2D" uid="uid://i5u8vemqarug" path="res://slot0_normal_roughness.png" id="8_wolt8"]
+[ext_resource type="Texture2D" uid="uid://cd6f2317lg0fh" path="res://slot1_normal_roughness.png" id="9_8injy"]
+[ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="10_w1fny"]
+[ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_8ni8s"]
+[ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_osvto"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
@@ -32,7 +33,7 @@ noise = SubResource("FastNoiseLite_n1wjd")
 noise = SubResource("FastNoiseLite_p2733")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ihtyg"]
-shader = ExtResource("2_ftxso")
+shader = ExtResource("2_sc6k1")
 shader_parameter/wind_direction = Vector2(1, 0)
 shader_parameter/wind_speed = 1.0
 shader_parameter/_density = 0.05
@@ -60,130 +61,56 @@ sky = SubResource("Sky_lk1p6")
 sdfgi_enabled = true
 
 [sub_resource type="Resource" id="Resource_xvsuy"]
-script = ExtResource("5_g0ne1")
+script = ExtResource("5_sr3y7")
 mode = 0
-textures = [[ExtResource("6_8jm77"), ExtResource("7_t8l8t")], [ExtResource("8_gopco"), ExtResource("9_w2el2")]]
-
-[sub_resource type="Animation" id="Animation_y7xl6"]
-resource_name = "DNC"
-length = 900.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sun:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 900),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(-6.28319, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Moon:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 900),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(6.28319, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_5s0dj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sun:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(6.28319, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Moon:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_lgbnl"]
-_data = {
-"DNC": SubResource("Animation_y7xl6"),
-"RESET": SubResource("Animation_5s0dj")
-}
+textures = [[ExtResource("6_80fau"), ExtResource("7_7vlh5")], [ExtResource("8_wolt8"), ExtResource("9_8injy")]]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8u7l0"]
-properties/0/path = NodePath("Sun:rotation")
+properties/0/path = NodePath("Timer:wait_time")
 properties/0/spawn = true
 properties/0/replication_mode = 1
-properties/1/path = NodePath("Sun:position")
+properties/1/path = NodePath("Timer:process_callback")
 properties/1/spawn = true
 properties/1/replication_mode = 1
-properties/2/path = NodePath("Sun:scale")
+properties/2/path = NodePath("Timer:autostart")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("Timer:wait_time")
+properties/3/path = NodePath("Timer:one_shot")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath("Moon:rotation")
+properties/4/path = NodePath("FogVolume:shape")
 properties/4/spawn = true
 properties/4/replication_mode = 1
-properties/5/path = NodePath("Moon:scale")
+properties/5/path = NodePath("FogVolume:layers")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-properties/6/path = NodePath("Moon:position")
+properties/6/path = NodePath("HTerrain:position")
 properties/6/spawn = true
 properties/6/replication_mode = 1
-properties/7/path = NodePath("Timer:process_callback")
+properties/7/path = NodePath("HTerrain:rotation")
 properties/7/spawn = true
 properties/7/replication_mode = 1
-properties/8/path = NodePath("Timer:autostart")
+properties/8/path = NodePath("HTerrain:scale")
 properties/8/spawn = true
 properties/8/replication_mode = 1
-properties/9/path = NodePath("Timer:one_shot")
+properties/9/path = NodePath("WorldEnvironment/Sun:rotation")
 properties/9/spawn = true
 properties/9/replication_mode = 1
-properties/10/path = NodePath("AnimationPlayer:current_animation")
+properties/10/path = NodePath("WorldEnvironment/Sun:scale")
 properties/10/spawn = true
 properties/10/replication_mode = 1
-properties/11/path = NodePath("AnimationPlayer:speed_scale")
+properties/11/path = NodePath("WorldEnvironment/Sun:position")
 properties/11/spawn = true
 properties/11/replication_mode = 1
-properties/12/path = NodePath("AnimationPlayer:playback_default_blend_time")
+properties/12/path = NodePath("WorldEnvironment/Moon:rotation")
 properties/12/spawn = true
 properties/12/replication_mode = 1
-properties/13/path = NodePath("AnimationPlayer:movie_quit_on_finish")
+properties/13/path = NodePath("WorldEnvironment/Moon:position")
 properties/13/spawn = true
 properties/13/replication_mode = 1
-properties/14/path = NodePath("FogVolume:shape")
+properties/14/path = NodePath("WorldEnvironment/Moon:scale")
 properties/14/spawn = true
 properties/14/replication_mode = 1
-properties/15/path = NodePath("FogVolume:layers")
-properties/15/spawn = true
-properties/15/replication_mode = 1
-properties/16/path = NodePath("HTerrain:position")
-properties/16/spawn = true
-properties/16/replication_mode = 1
-properties/17/path = NodePath("HTerrain:rotation")
-properties/17/spawn = true
-properties/17/replication_mode = 1
-properties/18/path = NodePath("HTerrain:scale")
-properties/18/spawn = true
-properties/18/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
@@ -198,29 +125,35 @@ density_texture = SubResource("NoiseTexture3D_bq76v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
 size = Vector3(1e+06, 0, 1e+06)
 
-[node name="Map" type="Node3D"]
-script = ExtResource("1_cimji")
+[node name="Map_1" type="Node3D"]
+script = ExtResource("1_xn4hm")
 noise = SubResource("FastNoiseLite_lao53")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")
 spawn_path = NodePath("..")
 
+[node name="DisastersSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Scenes/earthquake.tscn", "res://Scenes/explosion.tscn", "res://Scenes/meteors.tscn", "res://Scenes/tornado.tscn", "res://Scenes/thunder.tscn", "res://Scenes/tsunami.tscn", "res://Scenes/Volcano.tscn")
+spawn_path = NodePath("..")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cfhfe")
+script = ExtResource("3_575xv")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, -4.46638e-06, 0, 4.46638e-06, 1, 0, 0, 0)
+[node name="Sun" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Moon" type="DirectionalLight3D" parent="."]
+[node name="Moon" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 light_color = Color(0.686275, 0.686275, 0.686275, 1)
 light_energy = 0.2
 shadow_enabled = true
 
 [node name="HTerrain" type="Node3D" parent="."]
-script = ExtResource("3_kvy81")
-_terrain_data = ExtResource("4_sb5yn")
+script = ExtResource("3_je8e7")
+_terrain_data = ExtResource("4_6560e")
 chunk_size = 32
 collision_enabled = true
 collision_layer = 1
@@ -239,17 +172,11 @@ shader_params/u_tile_reduction = null
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_lgbnl")
-}
-autoplay = "DNC"
-
 [node name="MapSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8u7l0")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_dy54i")
+stream = ExtResource("10_w1fny")
 autoplay = true
 bus = &"Music"
 
@@ -267,13 +194,13 @@ shape = SubResource("BoxShape3D_rb6xg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1201.83, 9.32904, 996.233)
 gizmo_extents = 2.9
 
-[node name="Hause" parent="." instance=ExtResource("11_e1biu")]
+[node name="Hause" parent="." instance=ExtResource("11_8ni8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 5.03559, 1012.02)
 freeze = true
 
 [node name="Chat" type="CanvasLayer" parent="."]
 process_mode = 3
-script = ExtResource("12_mg8ec")
+script = ExtResource("12_osvto")
 
 [node name="TextEdit" type="TextEdit" parent="Chat"]
 process_mode = 3

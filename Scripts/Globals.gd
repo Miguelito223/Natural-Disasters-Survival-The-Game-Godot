@@ -23,7 +23,7 @@ var FPS = false
 var antialiasing = false
 var volumen = 1
 var volumen_music = 1
-var timer = 60
+var timer_disasters = 60
 var fullscreen = false
 var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())
 
@@ -37,6 +37,12 @@ var Wind_Direction: Vector2 = Vector2(1,0)
 var Wind_speed: float = 0
 var is_raining: bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+#Globals Time
+var timer:float = 0.0
+var Day:int = 0
+var Hour:int = 0
+var Minute:int = 00
 
 #Globals Weather target
 var Temperature_target: float = 23
@@ -63,7 +69,7 @@ var main_menu
 var map
 
 var main_scene = preload("res://Scenes/main.tscn")
-var map_scene = preload("res://Scenes/map.tscn")
+var map_scene = preload("res://Scenes/map_1.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
 	
@@ -249,6 +255,22 @@ func sync_wind_speed(new_value):
 func sync_Wind_Direction(new_value):
 	Wind_Direction = new_value
 
+@rpc("any_peer", "call_local")
+func _sync_time(timer_value):
+	timer = timer_value
+
+@rpc("any_peer", "call_local")
+func _sync_day(day_value):
+	Day = day_value
+
+@rpc("any_peer", "call_local")
+func _sync_hour(hour_value):
+	Hour = hour_value
+
+@rpc("any_peer", "call_local")
+func _sync_minute(minute_value):
+	Minute = minute_value
+
 
 func _process(_delta):
 	
@@ -293,6 +315,10 @@ func _process(_delta):
 			sync_oxygen.rpc(oxygen)
 			sync_bradiation.rpc(bradiation)
 			sync_points.rpc(points)
+			_sync_time.rpc(timer)
+			_sync_day.rpc(Day)
+			_sync_hour.rpc(Hour)
+			_sync_minute.rpc(Minute)
 		
 
 		

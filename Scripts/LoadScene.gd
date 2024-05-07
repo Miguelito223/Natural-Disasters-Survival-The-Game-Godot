@@ -4,7 +4,7 @@ signal progress_changed(progress)
 signal load_done
 
 const GAME_SCENE ={
-	"map": "res://Scenes/map.tscn",
+	"map": "res://Scenes/map_1.tscn",
 }
 
 var loading_screen_path: String = "res://Scenes/loading_screen.tscn"
