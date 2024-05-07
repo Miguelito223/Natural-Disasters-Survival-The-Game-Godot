@@ -30,8 +30,6 @@ var sand_texture = preload("res://Textures/sand.png")
 @onready var timer = $Timer
 var started = false
 
-
-
 func _exit_tree():
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
@@ -65,16 +63,6 @@ func _ready():
 			if not OS.has_feature("dedicated_server") :
 				player_join(1)	
 				
-
-		
-				
-
-
-
-
-
-
-
 func player_join(peer_id):
 
 	if Globals.is_networking:

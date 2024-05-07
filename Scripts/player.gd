@@ -43,6 +43,9 @@ var min_bdradiation = 0
 @export var Outdoor = false
 @export var IsInWater = false
 @export var IsInLava = false
+@export var IsUnderWater = false
+@export var IsUnderLava = false
+@export var IsOnFire = false
 
 
 
@@ -122,13 +125,7 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
-
-
-func _process(delta):
-	if Globals.is_networking:
-		if not is_multiplayer_authority():
-			return
-
+func body_temp(delta):
 	var body_heat_genK        = delta
 	var body_heat_genMAX      = 0.01/4
 	var fire_heat_emission    = 50
@@ -162,8 +159,9 @@ func _process(delta):
 
 	if body_temperature < 35 and randi() % 400 == 0:
 		sneeze()
-	
-	if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsInWater:
+
+func body_oxy(delta):
+	if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsUnderWater:
 		body_oxygen = clamp(body_oxygen - 5 * delta, min_oxygen, Max_oxygen)
 	else:
 		body_oxygen = clamp(body_oxygen + 5 * delta, min_oxygen, Max_oxygen)
@@ -173,8 +171,7 @@ func _process(delta):
 		if randi_range(1,25) == 25:
 			damage(randi_range(1,30))
 
-	
-
+func body_rad(delta):
 	if Globals.bradiation >= 80 and Globals.is_outdoor(self) and Outdoor:
 		body_bradiation = clamp(body_bradiation + 5 * delta, min_bdradiation, Max_bradiation)
 	else:
@@ -184,11 +181,42 @@ func _process(delta):
 		if randi_range(1,25) == 25:
 			damage(randi_range(1,30))
 
-	$Underwater.visible = IsInWater
-	$UnderLava.visible = IsInLava	
+
+func Underwater_or_Underlava_effects():
+	$Underwater.visible = IsUnderWater
+	$UnderLava.visible = IsUnderLava	
 
 	if IsInLava:
-		damage(5)
+		if !IsOnFire:
+			IsOnFire = true
+	elif IsInWater:
+		if IsOnFire:
+			IsOnFire = false	
+
+func IsOnFire_effects():
+	$Fire.emitting = IsOnFire
+	if IsOnFire:
+		damage(10)
+
+
+func _process(delta):
+	if Globals.is_networking:
+		if not is_multiplayer_authority():
+			return
+
+			
+
+	points = Globals.points
+	username = Globals.username
+	label.text = Globals.username
+
+	body_temp(delta)
+	body_oxy(delta)
+	body_rad(delta)
+	Underwater_or_Underlava_effects()
+	IsOnFire_effects()
+	
+
 	
 	Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
 	if Globals.is_raining:
@@ -217,9 +245,7 @@ func _process(delta):
 		$"Wind Morerate sound".stop()
 		$"Wind Extreme sound".stop()
 
-	points = Globals.points
-	username = Globals.username
-	label.text = Globals.username
+
 
 
 	

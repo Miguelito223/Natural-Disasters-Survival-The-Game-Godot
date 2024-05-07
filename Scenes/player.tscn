@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=68 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -296,6 +296,34 @@ collision_use_scale = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_44xct"]
 
+[sub_resource type="Gradient" id="Gradient_stww6"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.517647, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_um3gg"]
+gradient = SubResource("Gradient_stww6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o7crc"]
+angle_min = 1.07288e-05
+angle_max = 360.0
+direction = Vector3(0, 1, 0)
+spread = 20.0
+initial_velocity_min = 1.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 9.8, 0)
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_um3gg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30ewc"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_4s522"]
+material = SubResource("StandardMaterial3D_30ewc")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8gfme"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -420,6 +448,7 @@ shader_parameter/Shader_color = null
 [node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 script = ExtResource("1_btpoi")
+username = "Michael2911"
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -438,15 +467,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.540035, -3.72732e-05, 5.82378e-05, 0.841643)
+bones/4/rotation = Quaternion(0.519796, -3.58732e-05, 5.91136e-05, 0.854291)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.221316, -1.53663e-05, -6.73983e-05, 0.975202)
+bones/5/rotation = Quaternion(0.253405, -1.7584e-05, -6.6854e-05, 0.96736)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.515075, 2.89726e-18, -1.65667e-18, 0.857145)
+bones/7/rotation = Quaternion(-0.499264, 2.86678e-18, -1.67534e-18, 0.86645)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.254086, 0.0018578, 0.00227629, 0.967177)
+bones/8/rotation = Quaternion(-0.291097, 0.00212546, 0.00260425, 0.956688)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -517,14 +546,14 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 0.39091
-parameters/current_delta = 0.000818875
+parameters/current_position = 0.422298
+parameters/current_delta = 0.00718
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 0.39091
-parameters/Idle/current_delta = 0.000818875
+parameters/Idle/current_position = 0.422298
+parameters/Idle/current_delta = 0.00718
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
 parameters/Jump/current_delta = null
@@ -532,26 +561,26 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 0.39091
-parameters/is_jumping/current_delta = 0.000818875
+parameters/is_jumping/current_position = 0.422298
+parameters/is_jumping/current_delta = 0.00718
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 0.39091
-parameters/is_on_floor/current_delta = 0.000818875
+parameters/is_on_floor/current_position = 0.422298
+parameters/is_on_floor/current_delta = 0.00718
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 0.39091
-parameters/movement/current_delta = 0.000818875
+parameters/movement/current_position = 0.422298
+parameters/movement/current_delta = 0.00718
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 0.39091
-parameters/output/current_delta = 0.000818875
+parameters/output/current_position = 0.422298
+parameters/output/current_delta = 0.00718
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
@@ -619,6 +648,15 @@ randomness = 1.0
 visibility_aabb = AABB(-64.6803, -75.4599, -81.5125, 137.636, 80.7026, 156.326)
 process_material = SubResource("ParticleProcessMaterial_4yba3")
 draw_pass_1 = SubResource("QuadMesh_44xct")
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.83868, -0.721791)
+amount = 100
+lifetime = 0.5
+randomness = 1.0
+visibility_aabb = AABB(-9.13553, -1.00001, -6.81066, 10.8106, 15.1793, 10.7716)
+process_material = SubResource("ParticleProcessMaterial_o7crc")
+draw_pass_1 = SubResource("QuadMesh_4s522")
 
 [node name="Wind sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_fjmn6")

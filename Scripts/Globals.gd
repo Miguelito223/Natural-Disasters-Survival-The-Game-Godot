@@ -140,10 +140,18 @@ func is_outdoor(ply):
 func is_inwater(ply):
 	if ply.is_in_group("player"):
 		return ply.IsInWater
+
+func is_underwater(ply):
+	if ply.is_in_group("player"):
+		return ply.IsUnderWater
 	
 func is_inlava(ply):
 	if ply.is_in_group("player"):
 		return ply.IsInLava
+
+func is_underlava(ply):
+	if ply.is_in_group("player"):
+		return ply.IsUnderLava
 
 
 func vec2_to_vec3(vector):
