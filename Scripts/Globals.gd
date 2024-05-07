@@ -2,7 +2,7 @@ extends Node
 
 #Network
 var ip = "127.0.0.1"
-var port = 25565
+var port = 9999
 var points = 0
 var username = ""
 var players_conected_array = []
@@ -39,7 +39,7 @@ var is_raining: bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #Globals Time
-var timer:float = 0.0
+var time:float = 0.0
 var Day:int = 0
 var Hour:int = 0
 var Minute:int = 00
@@ -256,8 +256,8 @@ func sync_Wind_Direction(new_value):
 	Wind_Direction = new_value
 
 @rpc("any_peer", "call_local")
-func _sync_time(timer_value):
-	timer = timer_value
+func _sync_time(time_value):
+	time = time_value
 
 @rpc("any_peer", "call_local")
 func _sync_day(day_value):
@@ -315,7 +315,7 @@ func _process(_delta):
 			sync_oxygen.rpc(oxygen)
 			sync_bradiation.rpc(bradiation)
 			sync_points.rpc(points)
-			_sync_time.rpc(timer)
+			_sync_time.rpc(time)
 			_sync_day.rpc(Day)
 			_sync_hour.rpc(Hour)
 			_sync_minute.rpc(Minute)
