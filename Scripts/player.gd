@@ -198,26 +198,7 @@ func IsOnFire_effects():
 	if IsOnFire:
 		damage(10)
 
-
-func _process(delta):
-	if Globals.is_networking:
-		if not is_multiplayer_authority():
-			return
-
-			
-
-	points = Globals.points
-	username = Globals.username
-	label.text = Globals.username
-
-	body_temp(delta)
-	body_oxy(delta)
-	body_rad(delta)
-	Underwater_or_Underlava_effects()
-	IsOnFire_effects()
-	
-
-	
+func rain_sound():
 	Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
 	if Globals.is_raining:
 		if not $"Rain sound".playing:
@@ -225,6 +206,7 @@ func _process(delta):
 	else:
 		$"Rain sound".stop()
 
+func wind_sound():
 	if body_wind > 0 and body_wind < 50:
 		if not $"Wind sound".playing:
 			$"Wind sound".play()
@@ -246,8 +228,23 @@ func _process(delta):
 		$"Wind Extreme sound".stop()
 
 
+func _process(delta):
+	if Globals.is_networking:
+		if not is_multiplayer_authority():
+			return
 
+			
 
+	points = Globals.points
+	username = Globals.username
+	label.text = Globals.username
+
+	body_temp(delta)
+	body_oxy(delta)
+	body_rad(delta)
+	Underwater_or_Underlava_effects()
+	IsOnFire_effects()
+	rain_sound()
 	
 
 func _physics_process(delta):

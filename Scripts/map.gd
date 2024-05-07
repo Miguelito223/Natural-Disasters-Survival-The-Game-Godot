@@ -30,6 +30,10 @@ var sand_texture = preload("res://Textures/sand.png")
 @onready var timer = $Timer
 var started = false
 
+func _enter_tree():
+	if Globals.is_networking:
+		set_multiplayer_authority(multiplayer.get_unique_id())
+
 func _exit_tree():
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
@@ -226,6 +230,30 @@ func _on_timer_timeout():
 		if Globals.is_networking:
 			multiplayer.multiplayer_peer.close()
 
+
+func teleport_position(pos):
+	for player in self.get_children():
+		if player.is_multiplayer_authority() and player.is_in_group("player"):
+			player.position = pos
+
+func teleport_player(player_id):
+	for player in self.get_children():
+		if player.is_multiplayer_authority() and player.is_in_group("player"):
+			for player2 in self.get_children():
+				if player2.name.to_int() == player_id  and player2.is_in_group("player"):
+					player.position = player2.position
+
+
+func kill_player(player_id):
+	for player2 in self.get_children():
+		if player2.name.to_int() == player_id and player2.is_in_group("player"):
+			player2.damage(100)
+
+func damage_player(player_id, damage):
+	for player2 in self.get_children():
+		if player2.name.to_int() == player_id and player2.is_in_group("player"):
+			player2.damage(damage)
+					
 
 func sync_weather_and_disaster():
 	if Globals.is_networking:

@@ -7,10 +7,6 @@ var history_index: int = -1
 
 var autocomplete_methods: Array = []
 
-func _enter_tree():
-	if Globals.is_networking:
-		set_multiplayer_authority(multiplayer.get_unique_id())
-
 func _ready() -> void:
 	if Globals.is_networking:
 		if not is_multiplayer_authority():
