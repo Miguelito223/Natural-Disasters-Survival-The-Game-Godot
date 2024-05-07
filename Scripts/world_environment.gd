@@ -19,9 +19,13 @@ func _ready():
 	if Globals.is_networking:
 		if multiplayer.is_server():
 			Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
+			Sun.rotation_degrees.x = 0
+			Moon.rotation_degrees.x = 0
 			Data.load_file()
 	else:
 		Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
+		Sun.rotation_degrees.x = 0
+		Moon.rotation_degrees.x = 0
 		Data.load_file()		
 
 func _process(delta):
@@ -44,6 +48,6 @@ func _recalculate_time(delta):
 	if past_minute != Globals.Minute:
 		past_minute = Globals.Minute
 
-	Sun.rotation_degrees.x = lerpf(Sun.rotation_degrees.x, 180 - float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
-	Moon.rotation_degrees.x = lerpf(Moon.rotation_degrees.x, 180 + float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
+	Sun.rotation_degrees.x = lerpf(Sun.rotation_degrees.x, 90 - float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
+	Moon.rotation_degrees.x = lerpf(Moon.rotation_degrees.x, 90 + float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
 	
