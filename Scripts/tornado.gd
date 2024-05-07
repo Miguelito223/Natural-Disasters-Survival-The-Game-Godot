@@ -42,6 +42,7 @@ func _physics_process(_delta):
 			var perpendicular_direction = Vector3(-direction.z, 0, direction.x)  # Dirección perpendicular al vector hacia el tornado
 			var force = perpendicular_direction * tornado_strength
 			body.apply_central_impulse(force)
+			body.freeze = false
 		elif body.is_in_group("player"):
 			var direction = (body.global_position - global_position).normalized()
 			var perpendicular_direction = Vector3(-direction.z, 0, direction.x)  # Dirección perpendicular al vector hacia el tornado

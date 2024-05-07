@@ -25,6 +25,7 @@ func _on_area_3d_body_entered(body:Node3D):
 		var direction = (body.global_position - global_position).normalized()
 		var force = explosion_force * (1 - distance / explosion_radius)
 		body.apply_central_impulse(direction * force)
+		body.freeze = false
 
 
 func _on_finished():
