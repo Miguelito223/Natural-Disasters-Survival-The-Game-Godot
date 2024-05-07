@@ -4,7 +4,7 @@ extends Node
 var ip = "127.0.0.1"
 var port = 25565
 var points = 0
-var username = "Michael2911"
+var username = ""
 var players_conected_array = []
 var players_conected_list = {}
 var players_conected_int = players_conected_list.size()
