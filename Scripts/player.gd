@@ -1,8 +1,8 @@
 extends CharacterBody3D
 
 @export var id = 1
-@export var username = Globals.username
-@export var points = Globals.points
+@export var username: String = Globals.username
+@export var points: int = Globals.points
 
 var SPEED = 0
 
