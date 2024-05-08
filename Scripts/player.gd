@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var id = 1
+@export var id: int = 1
 @export var username: String = Globals.username
 @export var points: int = Globals.points
 
@@ -16,7 +16,7 @@ const bob_freq = 2.0
 const bob_am = 0.08
 var t_bob = 0.0
 
-@export var mass = 1
+@export var mass: int = 1
 
 
 var Max_Hearth = 100
@@ -26,29 +26,28 @@ var Max_bradiation = 100
 
 var fall_strength = 0
 
-
 var min_Hearth = 0
 var min_temp = 24
 var min_oxygen = 0
 var min_bdradiation = 0
 
 
-@export var hearth = Max_Hearth
+@export var hearth: float = Max_Hearth
 
-@export var body_temperature = 37
-@export var body_oxygen = Max_oxygen
-@export var body_bradiation = min_bdradiation
-@export var body_wind = 0
+@export var body_temperature: float = 37
+@export var body_oxygen: float = Max_oxygen
+@export var body_bradiation: float = min_bdradiation
+@export var body_wind: float = 0
 
-@export var Outdoor = false
-@export var IsInWater = false
-@export var IsInLava = false
-@export var IsUnderWater = false
-@export var IsUnderLava = false
-@export var IsOnFire = false
+@export var Outdoor: bool = false
+@export var IsInWater: bool = false
+@export var IsInLava: bool = false
+@export var IsUnderWater: bool = false
+@export var IsUnderLava: bool = false
+@export var IsOnFire: bool = false
 
-var swim_factor = 0.25
-var swim_cap = 200
+var swim_factor: float = 0.25
+var swim_cap: float = 50
 
 @onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
@@ -262,20 +261,22 @@ func _physics_process(delta):
 			damage(50)
 
 	if not is_on_floor() and IsInWater:
-		velocity.y = clampf(velocity.y - (Globals.gravity * mass  * delta * swim_factor), -swim_cap, swim_cap)
+		velocity.y = clampf(velocity.y - (Globals.gravity * mass * delta * swim_factor), -10000, swim_cap)
 	
 
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") :
+	if Input.is_action_just_pressed("ui_accept"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+		
 		if IsInWater:
 			velocity.y += JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
-	elif Input.is_action_pressed("ui_accept") and not is_on_floor():
-		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+		
+		if not is_on_floor():
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	else:
 		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
 
@@ -338,6 +339,11 @@ func _reset_player():
 	body_bradiation = min_bdradiation
 	velocity = Vector3(0,0,0)
 	position = $"../Spawn".position
+	IsUnderWater = false
+	IsUnderLava = false
+	IsInWater = false
+	IsInLava = false
+
 
 	print("Finish Resetting player :D")
 
