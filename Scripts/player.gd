@@ -271,11 +271,25 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 		
+		if not is_on_floor():
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+
 		if IsInWater:
 			velocity.y += JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+	else:
+		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
+
+	if Input.is_action_pressed("ui_accept"):
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 		
 		if not is_on_floor():
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+
+		if IsInWater:
+			velocity.y += JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	else:
 		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
