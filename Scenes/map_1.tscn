@@ -125,7 +125,7 @@ density_texture = SubResource("NoiseTexture3D_bq76v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
 size = Vector3(1e+06, 0, 1e+06)
 
-[node name="Map_1" type="Node3D"]
+[node name="map_1" type="Node3D"]
 script = ExtResource("1_xn4hm")
 noise = SubResource("FastNoiseLite_lao53")
 
