@@ -4,14 +4,14 @@ extends CharacterBody3D
 @onready var collision_wave = $CollisionShape3D
 @onready var area_wave_collision = $Area3D/CollisionShape3D
 
-var speed = 5000
+var speed = 100
 var tsunami_strength = 100
 var tsunami_start_height = 1
-var tsunami_middle_height = 50
+var tsunami_middle_height = 1000
 var tsunami_finish_height = 10
 var direction = Vector3(0, 0, 1)
 var distance_traveled = 0.0
-var total_distance = 500.0  # Adjust this value based on your scene
+var total_distance = 4097.0  # Adjust this value based on your scene
 
 
 func _ready() -> void:

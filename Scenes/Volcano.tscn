@@ -100,6 +100,7 @@ shape = SubResource("ConcavePolygonShape3D_kwbbx")
 [node name="Volcano" parent="." instance=ExtResource("2_5ph2p")]
 
 [node name="Skeleton3D" parent="Volcano/ref_skeleton" index="0"]
+bones/1/position = Vector3(0, 21.9889, 0)
 bones/5/rotation = Quaternion(-0.142949, 0.863798, 0.0496701, -0.480575)
 bones/8/rotation = Quaternion(0.0953014, 0.718826, 0.625547, -0.287921)
 bones/8/scale = Vector3(1, 1, 1)

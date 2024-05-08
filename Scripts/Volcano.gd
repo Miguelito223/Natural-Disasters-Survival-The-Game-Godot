@@ -5,7 +5,7 @@ var fireball_scene = preload("res://Scenes/meteors.tscn")  # Escena de la bola d
 var launch_interval = 5  # Intervalo de lanzamiento en segundos
 var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
-var Lava_Level  = 230
+var Lava_Level  = 250
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 
@@ -17,19 +17,19 @@ func set_lava_level(lvl: float) -> void:
 	var lava_lvl = clamp(lvl, 0, 250)
 
 	if lava_lvl <= 100:
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 0, lava_lvl))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, lava_lvl, 0))
 		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"), Vector3(0, 0, 0))
 		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"),  Vector3(0, 0, 0))
 	elif lava_lvl > 100 and lava_lvl < 200:
 		var diff = lava_lvl - 100
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 0, 100))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),Vector3(0, diff, 0))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 100, 0))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),Vector3(0, 0, diff))
 		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"), Vector3(0, 0, 0))
 	elif lava_lvl >= 200 and lava_lvl <= 300:
 		var diff = lava_lvl - 200
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 0, 100))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),  Vector3(0, 100, 0))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"), Vector3(0, diff, 0))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 100, 0))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),  Vector3(0, 0, 100))
+		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"), Vector3(0, 0, diff))
 
 	self.Lava_Level = lava_lvl
 
