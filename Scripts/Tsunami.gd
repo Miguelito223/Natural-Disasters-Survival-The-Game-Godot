@@ -1,10 +1,34 @@
 extends CharacterBody3D
+
+@onready var wave = $CSGBox3D
+@onready var collision_wave = $CollisionShape3D
+@onready var area_wave_collision = $Area3D/CollisionShape3D
+
 var speed = 5000
 var tsunami_strength = 100
-var direction = Vector3(0,0,1)
+var tsunami_start_height = 1
+var tsunami_middle_height = 100
+var tsunami_finish_height = 10
+var direction = Vector3(0, 0, 1)
+var distance_traveled = 0.0
+var total_distance = 500.0  # Adjust this value based on your scene
+
+
+func _ready() -> void:
+	wave.size.y = tsunami_start_height
+	collision_wave.size.y = tsunami_start_height
 
 func _physics_process(delta):
-	self.velocity = direction * speed * delta
+	var distance_this_frame = speed * delta
+	distance_traveled += distance_this_frame
+
+	# Calculate current height based on distance traveled
+	var current_height = calculate_height(distance_traveled)
+
+	# Update wave height
+	wave.size.y = current_height
+	collision_wave.size.y = current_height
+
 	move_and_slide()
 
 	for body in $Area3D.get_overlapping_bodies():
@@ -16,17 +40,26 @@ func _physics_process(delta):
 			body.apply_central_impulse(force)
 			body.freeze = false
 		elif body.is_in_group("player"):
-			body.velocity = self.velocity
-			body.move_and_slide()
+			if not body.is_on_floor():
+				body.velocity = self.velocity
+				body.move_and_slide()
+
+func calculate_height(distance):
+	# Height increases up to a point and then decreases
+	if distance <= total_distance / 2:
+		return lerp(tsunami_start_height, tsunami_middle_height, distance / (total_distance / 2))
+	else:
+		return lerp(tsunami_middle_height, tsunami_finish_height, (distance - total_distance / 2) / (total_distance / 2))
 
 
 
-func _on_area_3d_body_entered(body:Node3D):
+func _on_area_3d_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = true
-		body.damage(5)
 
+		if body.camera_node:
+			body.IsUnderwater = true
 
-func _on_area_3d_body_exited(body:Node3D):
+func _on_area_3d_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = false
