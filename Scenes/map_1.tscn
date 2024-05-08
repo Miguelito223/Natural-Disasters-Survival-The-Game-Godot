@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=32 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="10_w1fny"]
 [ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_8ni8s"]
 [ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_osvto"]
+[ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="14_p61f1"]
+[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="15_32db0"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
 frequency = 0.001
@@ -228,6 +230,47 @@ offset_right = 281.0
 offset_bottom = 800.0
 text = "Enter"
 metadata/_edit_use_anchors_ = true
+
+[node name="Warning Hud" type="CanvasLayer" parent="."]
+process_mode = 3
+script = ExtResource("14_p61f1")
+
+[node name="Panel" type="Panel" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 711.0
+offset_top = 1.0
+offset_right = 754.0
+offset_bottom = 41.0
+scale = Vector2(9.91709, 5.28957)
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 726.0
+offset_top = 11.0
+offset_right = 878.0
+offset_bottom = 216.0
+text = "Current Disasters/Weather is:"
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel2" type="Panel" parent="Warning Hud"]
+process_mode = 3
+auto_translate_mode = 1
+offset_left = 972.0
+offset_top = 27.0
+offset_right = 1021.0
+offset_bottom = 67.0
+scale = Vector2(2.92153, 3.89434)
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
+position = Vector2(1042, 102)
+scale = Vector2(7.58173, 7.86641)
+texture = ExtResource("15_32db0")
 
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
