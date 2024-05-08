@@ -45,9 +45,12 @@ var min_bdradiation = 0
 @export var IsUnderWater: bool = false
 @export var IsUnderLava: bool = false
 @export var IsOnFire: bool = false
+@export var god_mode: bool = false
 
 var swim_factor: float = 0.25
 var swim_cap: float = 50
+
+
 
 @onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
@@ -74,7 +77,8 @@ func _exit_tree():
 
 @rpc("any_peer", "call_local")
 func damage(value):
-	setlife(hearth - value)
+	if not god_mode:
+		setlife(hearth - value)
 
 func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)

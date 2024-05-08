@@ -232,25 +232,32 @@ func teleport_position(pos):
 		if player.is_multiplayer_authority() and player.is_in_group("player"):
 			player.position = pos
 
-func teleport_player(player_id):
+func teleport_player(player_name):
 	for player in self.get_children():
 		if player.is_multiplayer_authority() and player.is_in_group("player"):
 			for player2 in self.get_children():
-				if player2.name.to_int() == player_id  and player2.is_in_group("player"):
+				if player2.is_in_group("player") and player2.username == player_name  :
 					player.position = player2.position
 
 
-func kill_player(player_id):
+func kill_player(player_name):
 	for player2 in self.get_children():
-		if player2.name.to_int() == player_id and player2.is_in_group("player"):
+		if player2.is_in_group("player") and player2.username == player_name  :
 			player2.damage(100)
 
-func kick_player(player_id):
-	multiplayer.multiplayer_peer.disconnect_peer(player_id)
-
-func damage_player(player_id, damage):
+func god_mode_player(player_name):
 	for player2 in self.get_children():
-		if player2.name.to_int() == player_id and player2.is_in_group("player"):
+		if player2.is_in_group("player") and player2.username == player_name  :
+			player2.god_mode = true
+
+func kick_player(player_name):
+	for player2 in self.get_children():
+		if player2.is_in_group("player") and player2.username == player_name  :
+			multiplayer.multiplayer_peer.disconnect_peer(player2.id, true)
+
+func damage_player(player_name, damage):
+	for player2 in self.get_children():
+		
 			player2.damage(damage)
 					
 
