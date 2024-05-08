@@ -6,4 +6,4 @@ func _ready() -> void:
 
 
 func _on_map_spawner_spawned(_node:Node):
-	Globals.map = $Map
+	Globals.map = _node

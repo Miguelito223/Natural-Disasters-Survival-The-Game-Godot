@@ -113,6 +113,12 @@ properties/13/replication_mode = 1
 properties/14/path = NodePath("WorldEnvironment/Moon:scale")
 properties/14/spawn = true
 properties/14/replication_mode = 1
+properties/15/path = NodePath("Warning Hud/Label:text")
+properties/15/spawn = true
+properties/15/replication_mode = 1
+properties/16/path = NodePath("Chat/TextEdit:text")
+properties/16/spawn = true
+properties/16/replication_mode = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hhy4h"]
 metadata/_preview_in_3d_space_ = true
@@ -249,11 +255,16 @@ metadata/_edit_use_anchors_ = true
 [node name="Label" type="Label" parent="Warning Hud"]
 process_mode = 3
 auto_translate_mode = 1
+anchors_preset = -1
+anchor_top = -0.012037
+anchor_right = 0.0401042
+anchor_bottom = -0.012037
 offset_left = 726.0
 offset_top = 11.0
 offset_right = 878.0
 offset_bottom = 216.0
-text = "Current Disasters/Weather is:"
+text = "Current Disasters/Weather is:
+Tornado"
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel2" type="Panel" parent="Warning Hud"]

@@ -7,7 +7,7 @@ extends CharacterBody3D
 var speed = 5000
 var tsunami_strength = 100
 var tsunami_start_height = 1
-var tsunami_middle_height = 100
+var tsunami_middle_height = 50
 var tsunami_finish_height = 10
 var direction = Vector3(0, 0, 1)
 var distance_traveled = 0.0
@@ -16,18 +16,25 @@ var total_distance = 500.0  # Adjust this value based on your scene
 
 func _ready() -> void:
 	wave.size.y = tsunami_start_height
-	collision_wave.size.y = tsunami_start_height
+	collision_wave.shape.size.y = tsunami_start_height
+	area_wave_collision.shape.size.y = tsunami_start_height
 
 func _physics_process(delta):
 	var distance_this_frame = speed * delta
 	distance_traveled += distance_this_frame
+	var displacement = direction * distance_this_frame
 
 	# Calculate current height based on distance traveled
 	var current_height = calculate_height(distance_traveled)
 
 	# Update wave height
 	wave.size.y = current_height
-	collision_wave.size.y = current_height
+	collision_wave.shape.size.y = current_height
+	area_wave_collision.shape.size.y = current_height
+	
+	wave.size += displacement
+	collision_wave.shape.size += displacement
+	area_wave_collision.shape.size += displacement
 
 	move_and_slide()
 
@@ -58,7 +65,7 @@ func _on_area_3d_body_entered(body: Node3D):
 		body.IsInWater = true
 
 		if body.camera_node:
-			body.IsUnderwater = true
+			body.IsUnderWater = true
 
 func _on_area_3d_body_exited(body: Node3D):
 	if body.is_in_group("player"):

@@ -47,7 +47,8 @@ var min_bdradiation = 0
 @export var IsUnderLava = false
 @export var IsOnFire = false
 
-
+var swim_factor = 0.25
+var swim_cap = 200
 
 @onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
@@ -260,18 +261,23 @@ func _physics_process(delta):
 		if fall_strength <= -90:
 			damage(50)
 
+	if not is_on_floor() and IsInWater:
+		velocity.y = clampf(velocity.y - (Globals.gravity * mass  * delta * swim_factor), -swim_cap, swim_cap)
+	
+
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+	if Input.is_action_just_pressed("ui_accept") :
+		if is_on_floor():
+			velocity.y = JUMP_VELOCITY
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+		if IsInWater:
+			velocity.y += JUMP_VELOCITY
+			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	elif Input.is_action_pressed("ui_accept") and not is_on_floor():
 		animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	else:
 		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
-
-	if Input.is_action_just_pressed("ui_accept") and IsInWater:
-		velocity.y += JUMP_VELOCITY
 
 	if Input.is_action_just_pressed("Flashligh"):
 		$Model/Camera3D/SpotLight3D.visible = !$Model/Camera3D/SpotLight3D.visible

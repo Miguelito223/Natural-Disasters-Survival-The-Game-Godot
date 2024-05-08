@@ -11,24 +11,32 @@ var bounding_radius_area = null
 @onready var door_close_sound = $Close_door_sound
 var door_open = false
 
-
+@rpc("any_peer", "call_local")
 func open_door():
+	print("Open the door!!")
 	door.rotation.y = deg_to_rad(145)
 	door_collisions.rotation.y = deg_to_rad(145)
 	door_open = true
 
+@rpc("any_peer", "call_local")
 func close_door():
+	print("Close the door!!")
 	door.rotation.y = deg_to_rad(0)
 	door_collisions.rotation.y = deg_to_rad(0)
 	door_open = false
 
 
 func _on_interactable_interacted(_interactor:Interactor) -> void:
-	print("Open the door!!")
-	if not door_open:
-		open_door()
+	if Globals.is_networking:
+		if not door_open:
+			open_door.rpc()
+		else:
+			close_door.rpc()
 	else:
-		close_door()
+		if not door_open:
+			open_door()
+		else:
+			close_door()		
 
 
 func _on_interactable_focused(_interactor:Interactor) -> void:

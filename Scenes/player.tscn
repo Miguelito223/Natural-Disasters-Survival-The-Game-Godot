@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=66 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -24,8 +24,6 @@
 [ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
-[ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="26_bdi0g"]
-[ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="27_328la"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 margin = 2.71
@@ -473,15 +471,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.670644, -4.6309e-05, 5.13238e-05, 0.741779)
+bones/4/rotation = Quaternion(0.458236, -3.16152e-05, 6.15052e-05, 0.888831)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(-0.00160428, 4.19856e-08, -6.91278e-05, 0.999999)
+bones/5/rotation = Quaternion(0.346562, -2.40217e-05, -6.48199e-05, 0.938027)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.619734, 3.08136e-18, -1.51215e-18, 0.784812)
+bones/7/rotation = Quaternion(-0.451524, 2.77101e-18, -1.72724e-18, 0.892259)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(0.00228812, 2.96389e-06, 3.63155e-06, 0.999997)
+bones/8/rotation = Quaternion(-0.397819, 0.00289708, 0.00354969, 0.917452)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -552,13 +550,13 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 0.0381173
+parameters/current_position = 0.515407
 parameters/current_delta = 0.00833333
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 0.0381173
+parameters/Idle/current_position = 0.515407
 parameters/Idle/current_delta = 0.00833333
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
@@ -567,25 +565,25 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 0.0381173
+parameters/is_jumping/current_position = 0.515407
 parameters/is_jumping/current_delta = 0.00833333
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 0.0381173
+parameters/is_on_floor/current_position = 0.515407
 parameters/is_on_floor/current_delta = 0.00833333
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 0.0381173
+parameters/movement/current_position = 0.515407
 parameters/movement/current_delta = 0.00833333
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 0.0381173
+parameters/output/current_position = 0.515407
 parameters/output/current_delta = 0.00833333
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
@@ -1010,47 +1008,6 @@ scale = Vector2(10, 10)
 texture_normal = ExtResource("16_p2ihs")
 action = "ui_accept"
 visibility_mode = 1
-
-[node name="Warning Hud" type="CanvasLayer" parent="."]
-process_mode = 3
-script = ExtResource("26_bdi0g")
-
-[node name="Panel" type="Panel" parent="Warning Hud"]
-process_mode = 3
-auto_translate_mode = 1
-offset_left = 711.0
-offset_top = 1.0
-offset_right = 754.0
-offset_bottom = 41.0
-scale = Vector2(9.91709, 5.28957)
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Warning Hud"]
-process_mode = 3
-auto_translate_mode = 1
-offset_left = 726.0
-offset_top = 11.0
-offset_right = 878.0
-offset_bottom = 216.0
-text = "Current Disasters/Weather is:"
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel2" type="Panel" parent="Warning Hud"]
-process_mode = 3
-auto_translate_mode = 1
-offset_left = 972.0
-offset_top = 27.0
-offset_right = 1021.0
-offset_bottom = 67.0
-scale = Vector2(2.92153, 3.89434)
-mouse_filter = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
-position = Vector2(1042, 102)
-scale = Vector2(7.58173, 7.86641)
-texture = ExtResource("27_328la")
 
 [connection signal="pressed" from="Pause menu/Menu/Return" to="Pause menu" method="_on_return_pressed"]
 [connection signal="pressed" from="Pause menu/Menu/Settings" to="Pause menu" method="_on_settings_pressed"]
