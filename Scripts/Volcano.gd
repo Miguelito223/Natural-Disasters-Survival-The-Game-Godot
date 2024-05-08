@@ -5,7 +5,7 @@ var fireball_scene = preload("res://Scenes/meteors.tscn")  # Escena de la bola d
 var launch_interval = 5  # Intervalo de lanzamiento en segundos
 var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
-var Lava_Level  = 250
+var Lava_Level  = 230
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 
