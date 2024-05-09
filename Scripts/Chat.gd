@@ -101,7 +101,7 @@ func msg_rpc(username, data):
 		else:
 			if data != "" or data != " ":
 				$TextEdit.text += str(username, ": ", data, "\n")
-			$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
+				$TextEdit.scroll_vertical =  $TextEdit.get_line_height()
 	else:
 		if data.begins_with("/"):
 			if data != "" or data != " ":

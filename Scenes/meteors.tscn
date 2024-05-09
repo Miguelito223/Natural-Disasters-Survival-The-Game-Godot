@@ -181,6 +181,11 @@ draw_pass_1 = SubResource("SphereMesh_hqrhf")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_2w7a8")
 
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.458824, 0, 1)
+light_energy = 1000.0
+shadow_enabled = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 
 [editable path="Meteorite"]

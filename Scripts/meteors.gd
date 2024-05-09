@@ -2,13 +2,17 @@ extends RigidBody3D
 
 var explosion_scene = preload("res://Scenes/explosion.tscn")
 var rand_num = randi_range(1,50)
+var is_volcano_rock = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$CollisionShape3D.scale = Vector3(rand_num,rand_num,rand_num)
-	$Meteorite.scale = Vector3(rand_num,rand_num,rand_num)
-	$Fire.scale = Vector3(rand_num,rand_num,rand_num)
-	self.gravity_scale = Globals.gravity
+	if not is_volcano_rock:
+		$CollisionShape3D.scale = Vector3(rand_num,rand_num,rand_num)
+		$Meteorite.scale = Vector3(rand_num,rand_num,rand_num)
+		$Fire.process_material.emission_shape_offset = rand_num
+		self.gravity_scale = Globals.gravity
+	else:
+		self.gravity_scale = Globals.gravity
 
 func _on_body_entered(_body):
 	if _body == self:

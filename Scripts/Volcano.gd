@@ -3,15 +3,17 @@ extends Node3D
 # Variables para configurar el lanzamiento de bolas de fuego
 var fireball_scene = preload("res://Scenes/meteors.tscn")  # Escena de la bola de fuego
 var launch_interval = 5  # Intervalo de lanzamiento en segundos
-var launch_force = 1000  # Fuerza de lanzamiento de la bola de fuego
+var launch_force = 5000  # Fuerza de lanzamiento de la bola de fuego
 var launch_radius = 10
-var Lava_Level  = 230
+var Lava_Level  = 125
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 
 func _ready():
-	set_lava_level(Lava_Level)
 	_launch_fireball()
+
+func _process(_delta: float) -> void:
+	set_lava_level(230)
 
 func set_lava_level(lvl: float) -> void:
 	var lava_lvl = clamp(lvl, 0, 250)
@@ -43,6 +45,7 @@ func _launch_fireball():
 	var launch_direction = Vector3(randi_range(-1,1), 1, randi_range(-1,1)).normalized()  # Dirección hacia arriba
 	fireball.global_position = GetLavaLevelPosition() # Posición inicial en el volcán
 	fireball.scale = Vector3(1,1,1)
+	fireball.is_volcano_rock = true
 	fireball.apply_impulse(GetLavaLevelPosition(), launch_direction * launch_force)  # Aplicar fuerza para lanzar la bola de fuego
 	add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
@@ -53,7 +56,13 @@ func _on_area_3d_body_entered(body:Node3D) -> void:
 	if body.is_in_group("player"):
 		body.IsInLava = true
 
+		if body.camera_node:
+			body.IsUnderLava = true
+
 
 func _on_area_3d_body_exited(body:Node3D) -> void:
 	if body.is_in_group("player"):
 		body.IsInLava = false
+
+		if body.camera_node:
+			body.IsUnderLava = false

@@ -16,8 +16,8 @@ var total_distance = 4097.0  # Adjust this value based on your scene
 
 func _ready() -> void:
 	wave.size.y = tsunami_start_height
-	collision_wave.shape.size.y = tsunami_start_height
-	area_wave_collision.shape.size.y = tsunami_start_height
+	collision_wave.shape.size.y = wave.size.y
+	area_wave_collision.shape.size.y = wave.size.y
 
 func _physics_process(delta):
 	var distance_this_frame = speed * delta
@@ -29,12 +29,12 @@ func _physics_process(delta):
 
 	# Update wave height
 	wave.size.y = current_height
-	collision_wave.shape.size.y = current_height
-	area_wave_collision.shape.size.y = current_height
+	collision_wave.shape.size.y = wave.size.y
+	area_wave_collision.shape.size.y = wave.size.y
 	
 	wave.size += displacement
-	collision_wave.shape.size += displacement
-	area_wave_collision.shape.size += displacement
+	collision_wave.shape.size = wave.size
+	area_wave_collision.shape.size = wave.size
 
 	move_and_slide()
 

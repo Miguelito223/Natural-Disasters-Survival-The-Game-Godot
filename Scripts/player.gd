@@ -165,7 +165,7 @@ func body_temp(delta):
 		sneeze()
 
 func body_oxy(delta):
-	if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsUnderWater:
+	if Globals.oxygen <= 20 or Globals.is_inwater(self) or IsUnderWater or Globals.is_inlava(self) or IsUnderLava:
 		body_oxygen = clamp(body_oxygen - 5 * delta, min_oxygen, Max_oxygen)
 	else:
 		body_oxygen = clamp(body_oxygen + 5 * delta, min_oxygen, Max_oxygen)
@@ -249,6 +249,7 @@ func _process(delta):
 	Underwater_or_Underlava_effects()
 	IsOnFire_effects()
 	rain_sound()
+	wind_sound()
 	
 
 func _physics_process(delta):
@@ -258,16 +259,18 @@ func _physics_process(delta):
 			
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y -= Globals.gravity * mass * delta 
-		fall_strength = velocity.y
+		if IsInWater or IsInLava:
+			velocity.y = clampf(velocity.y - (Globals.gravity * mass * delta * swim_factor), -10000, swim_cap)
+		else:
+			velocity.y -= Globals.gravity * mass * delta 
+			fall_strength = velocity.y
+		
 	else:
-		if fall_strength <= -90:
-			damage(50)
-
-	if not is_on_floor() and IsInWater:
-		velocity.y = clampf(velocity.y - (Globals.gravity * mass * delta * swim_factor), -10000, swim_cap)
-	
-
+		if IsInWater or IsInLava:
+			pass
+		else:
+			if fall_strength <= -90:
+				damage(50)
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept"):
@@ -278,7 +281,7 @@ func _physics_process(delta):
 		if not is_on_floor():
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 
-		if IsInWater:
+		if IsInWater or IsInLava:
 			velocity.y += JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
 	else:
