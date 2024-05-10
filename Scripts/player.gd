@@ -46,11 +46,10 @@ var min_bdradiation = 0
 @export var IsUnderLava: bool = false
 @export var IsOnFire: bool = false
 @export var god_mode: bool = false
+@export var is_alive: bool = true
 
-var swim_factor: float = 0.25
-var swim_cap: float = 50
-
-
+@export var swim_factor: float = 0.25
+@export var swim_cap: float = 50
 
 @onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
@@ -80,10 +79,15 @@ func damage(value):
 	if not god_mode:
 		setlife(hearth - value)
 
+func ignite(time):
+	IsOnFire = true
+	await get_tree().create_timer(time).timeout
+	IsOnFire = false
+
 func setlife(value):
 	hearth = clamp(value, min_Hearth, Max_Hearth)
 	if hearth <= 0:
-		print("you death :O")
+		is_alive = false
 
 		Globals.points -= 1
 		
@@ -93,6 +97,8 @@ func setlife(value):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
 		$"Death Menu".show()
+	else:
+		is_alive = true
 
 func sneeze():
 	$"Model/Camera3D/sneeze audio".play()
@@ -191,9 +197,9 @@ func Underwater_or_Underlava_effects():
 	$UnderLava.visible = IsUnderLava	
 
 	if IsInLava:
-		if !IsOnFire:
-			IsOnFire = true
-	elif IsInWater:
+		ignite(10)
+	
+	if IsInWater:
 		if IsOnFire:
 			IsOnFire = false	
 

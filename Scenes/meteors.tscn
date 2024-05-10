@@ -142,7 +142,7 @@ properties/3/path = NodePath(".:rotation")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Meteor" type="RigidBody3D"]
+[node name="Meteor" type="RigidBody3D" groups=["movable_objects", "wind_effected_objects"]]
 collision_layer = 255
 collision_mask = 255
 physics_material_override = SubResource("PhysicsMaterial_ph7js")

@@ -9,7 +9,8 @@ func _ready():
 	if not is_volcano_rock:
 		$CollisionShape3D.scale = Vector3(rand_num,rand_num,rand_num)
 		$Meteorite.scale = Vector3(rand_num,rand_num,rand_num)
-		$Fire.process_material.emission_shape_offset = rand_num
+		$Fire.process_material.emission_sphere_radius = rand_num
+		$Fire/Smoke.process_material.emission_sphere_radius = rand_num
 		self.gravity_scale = Globals.gravity
 	else:
 		self.gravity_scale = Globals.gravity
@@ -20,7 +21,8 @@ func _on_body_entered(_body):
 
 	var explosion_node = explosion_scene.instantiate()
 	explosion_node.position = self.position
-	explosion_node.scale = Vector3(rand_num,rand_num,rand_num)
+	explosion_node.process_material.emission_sphere_radius = rand_num
+	explosion_node.get_node("Area3D/CollisionShape3D").shape.radius = rand_num
 	get_parent().add_child(explosion_node, true)
 	self.queue_free()
 

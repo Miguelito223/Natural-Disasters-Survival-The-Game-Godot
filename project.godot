@@ -42,6 +42,12 @@ window/handheld/orientation=4
 
 enabled=PackedStringArray("res://addons/GPTIntegration/plugin.cfg", "res://addons/destruction/plugin.cfg", "res://addons/virtual_joystick/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
+[global_group]
+
+movable_objects=""
+wind_effected_objects=""
+player=""
+
 [importer_defaults]
 
 scene={

@@ -73,7 +73,7 @@ var map_scene = preload("res://Scenes/map_1.tscn")
 var player_scene = preload("res://Scenes/player.tscn")
 
 	
-
+var bounding_radius_areas = {}
 
 func convert_MetoSU(metres):
 	return (metres * 39.37) / 0.75
@@ -93,6 +93,17 @@ func perform_trace_collision(ply, direction):
 	var result = space_state.intersect_ray(ray)
 
 	return result
+
+func get_node_by_id_recursive(node: Node, node_id: int) -> Node:
+	if node.get_instance_id() == node_id:
+		return node
+
+	for child in node.get_children():
+		var result := get_node_by_id_recursive(child, node_id)
+		if result != null:
+			return result
+
+	return null
 
 func is_below_sky(ply):
 	var space_state = ply.get_world_3d().direct_space_state
@@ -166,7 +177,7 @@ func is_something_blocking_wind(entity):
 	return result
 
 func calcule_bounding_radius(entity):
-	var mesh_instance = entity.get_node_or_null("MeshInstance") # Ajusta esto según la estructura de tu entidad
+	var mesh_instance = entity.get_node_or_null("MeshInstance3D") # Ajusta esto según la estructura de tu entidad
 	if mesh_instance != null:
 		var aabb = mesh_instance.get_transformed_aabb()
 		var size = aabb.size
@@ -176,12 +187,12 @@ func calcule_bounding_radius(entity):
 		return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
 
 func Area(entity):
-	if entity.bounding_radius_area == null:
+	if not "bounding_radius_area" in entity or entity.bounding_radius_area == null:
 		var bounding_radius = calcule_bounding_radius(entity)
-		var area = (2 * PI) * (bounding_radius * bounding_radius)
-
-		entity.bounding_radius_area = area
-		return area
+		var bounding_radius_area = (2 * PI) * (bounding_radius * bounding_radius)
+		bounding_radius_areas[entity] = bounding_radius_area
+		
+		return bounding_radius_area
 	else:
 		return entity.bounding_radius_area
 

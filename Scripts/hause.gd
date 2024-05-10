@@ -1,6 +1,5 @@
 extends Node3D
 
-var bounding_radius_area = null
 @onready var door = $Room/Door_Group/DoorFrame/Door
 @onready var door_collisions = $DoorCollision
 @onready var room = $Room

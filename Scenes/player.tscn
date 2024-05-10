@@ -448,20 +448,9 @@ shader_parameter/frequency = 1.0
 shader_parameter/speed = 1.0
 shader_parameter/Shader_color = Color(1, 0.352941, 0.113725, 1)
 
-[node name="Player" type="CharacterBody3D" groups=["player", "wind_effected_objects"]]
+[node name="Player" type="CharacterBody3D" groups=["movable_objects", "player", "wind_effected_objects"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4, 0)
 script = ExtResource("1_btpoi")
-id = null
-mass = null
-body_temperature = null
-body_wind = null
-Outdoor = null
-IsInWater = null
-IsInLava = null
-IsUnderWater = null
-IsUnderLava = null
-IsOnFire = null
-god_mode = null
 metadata/_edit_horizontal_guides_ = [-952.0]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -480,15 +469,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.580046, -4.00416e-05, 5.63167e-05, 0.814584)
+bones/4/rotation = Quaternion(0.389465, -2.68595e-05, 6.36885e-05, 0.921041)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.155831, -1.08403e-05, -6.82726e-05, 0.987784)
+bones/5/rotation = Quaternion(0.44232, -3.06384e-05, -6.19673e-05, 0.896858)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.546576, 2.16284e-18, -1.62946e-18, 0.837409)
+bones/7/rotation = Quaternion(-0.398488, 1.8679e-18, -1.78983e-18, 0.917174)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.178416, 0.00131048, 0.00160568, 0.983953)
+bones/8/rotation = Quaternion(-0.505399, 0.00367461, 0.00450237, 0.862866)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556665)
@@ -559,13 +548,13 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 1.36833
+parameters/current_position = 1.04774
 parameters/current_delta = 0.00833333
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 1.36833
+parameters/Idle/current_position = 1.04774
 parameters/Idle/current_delta = 0.00833333
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
@@ -574,25 +563,25 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 1.36833
+parameters/is_jumping/current_position = 1.04774
 parameters/is_jumping/current_delta = 0.00833333
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 1.36833
+parameters/is_on_floor/current_position = 1.04774
 parameters/is_on_floor/current_delta = 0.00833333
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 1.36833
+parameters/movement/current_position = 1.04774
 parameters/movement/current_delta = 0.00833333
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 1.36833
+parameters/output/current_position = 1.04774
 parameters/output/current_delta = 0.00833333
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]

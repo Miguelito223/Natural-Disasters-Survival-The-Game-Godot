@@ -646,13 +646,13 @@ func is_sandstorm():
 		break
 
 func is_volcano():
-	Globals.Temperature_target =  randf_range(30,40)
-	Globals.Humidity_target = randf_range(0,10)
+	Globals.Temperature_target = randf_range(20,31)
+	Globals.Humidity_target = randf_range(0,20)
 	Globals.bradiation_target = 0
-	Globals.oxygen_target = 0
+	Globals.oxygen_target = 100
 	Globals.pressure_target = randf_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
-	Globals.Wind_speed_target = randf_range(0, 50)
+	Globals.Wind_Direction_target = Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_speed_target = randf_range(0, 10)
 
 	var rand_pos = Vector3(randf_range(0,4097),1000,randf_range(0,4097))
 	var space_state = get_world_3d().direct_space_state
@@ -666,34 +666,6 @@ func is_volcano():
 		volcano.position = Vector3(randf_range(0,4097),0,randf_range(0,4097))
 	
 	add_child(volcano, true)
-
-	while current_weather_and_disaster == "Volcano":
-		var player
-
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
-
-		if is_instance_valid(player):
-			if Globals.is_outdoor(player):
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = player.is_multiplayer_authority() or true
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
-			else:
-				player.rain_node.emitting = false
-				player.sand_node.emitting = false
-				player.dust_node.emitting = false
-				player.snow_node.emitting = false
-				$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
-				$WorldEnvironment.environment.volumetric_fog_enabled = false
-				$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)				
-			
-		await get_tree().create_timer(0.5).timeout
 
 	while current_weather_and_disaster != "Volcano":
 		if is_instance_valid(volcano):
