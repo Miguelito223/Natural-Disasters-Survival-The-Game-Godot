@@ -64,12 +64,16 @@ func _on_area_3d_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = true
 
-		if body.camera_node:
+		if body.camera_node.position.y < wave.size.y:
 			body.IsUnderWater = true
+		else:
+			body.IsUnderWater = false
 
 func _on_area_3d_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = false
 		
-		if body.camera_node:
+		if body.camera_node.position.y < wave.size.y:
+			body.IsUnderWater = true
+		else:
 			body.IsUnderWater = false

@@ -15,8 +15,8 @@ var old_entities_inside_lava = {}
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 
 func pressure_increment():
-	var pressure_increase = 0.05
-	var pressure_decrease = 0.1
+	var pressure_increase = 0.005
+	var pressure_decrease = 0.01
 
 	if not IsGoingToErupt and not IsPressureLeaking:
 		Pressure = clamp(Pressure + pressure_increase, 0, 100)
@@ -103,10 +103,12 @@ func inside_lava_effect():
 			if v.is_in_group("player"):
 				# Aplica una reducción significativa en la velocidad
 				v.velocity *= -0.9
+				v.IsInLava = true
 
-				# Aplica la ignición y daño
-				v.ignite(15)
-				v.damage(10)
+				if v.camera_node.position.y < get_lava_level_position().y:
+					v.IsUnderLava = true
+				else:
+					v.IsUnderLava = false
 
 		elif v.is_class("RigidBody3D"):
 			# Aplica una reducción significativa en la velocidad
@@ -170,28 +172,42 @@ func _process(_delta: float) -> void:
 func set_lava_level(lvl: float) -> void:
 	var lava_lvl = clamp(lvl, 0, 250)
 
-	if lava_lvl <= 100:
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, lava_lvl, 0))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"), Vector3(0, 0, 0))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"),  Vector3(0, 0, 0))
-	elif lava_lvl > 100 and lava_lvl < 200:
-		var diff = lava_lvl - 100
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 100, 0))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),Vector3(0, 0, diff))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"), Vector3(0, 0, 0))
-	elif lava_lvl >= 200 and lava_lvl <= 300:
-		var diff = lava_lvl - 200
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level"), Vector3(0, 100, 0))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension"),  Vector3(0, 0, 100))
-		skeleton.set_bone_pose_position(skeleton.find_bone("lava_level_extension_02"), Vector3(0, 0, diff))
-
+	if skeleton:
+		var lava_level_main_idx = skeleton.find_bone("lava_level")
+		var lava_level_extension_idx = skeleton.find_bone("lava_level_extension")
+		var lava_level_extension2_idx = skeleton.find_bone("lava_level_extension_02")
+		
+		if lava_level_main_idx >= 0 and lava_level_extension_idx >= 0 and lava_level_extension2_idx >= 0:
+			var transform_main = Transform3D()
+			var transform_extension = Transform3D()
+			var transform_extension2 = Transform3D()
+			
+			if lava_lvl <= 100:
+				transform_main.origin.y = lava_lvl
+				transform_extension.origin.z = 0
+				transform_extension2.origin.z = 0
+			elif lava_lvl > 100 and lava_lvl < 200:
+				var diff = lava_lvl - 100
+				transform_main.origin.y = 100
+				transform_extension.origin.z = diff
+				transform_extension2.origin.z = 0
+			elif lava_lvl >= 200 and lava_lvl <= 300:
+				var diff = lava_lvl - 200
+				transform_main.origin.y = 100
+				transform_extension.origin.z = 100
+				transform_extension2.origin.z = diff
+			
+			skeleton.set_bone_global_pose_override(lava_level_main_idx, transform_main, 1.0)
+			skeleton.set_bone_global_pose_override(lava_level_extension_idx, transform_extension, 1.0)
+			skeleton.set_bone_global_pose_override(lava_level_extension2_idx, transform_extension2, 1.0)
+	
 	self.Lava_Level = lava_lvl
 
 
 func get_lava_level_position():
 	return skeleton.get_bone_pose_position(skeleton.find_bone("lava_level"))
 
-func _launch_fireball(range):
+func _launch_fireball(range: int):
 	for i in range:
 		# Instanciar una nueva bola de fuego y lanzarla
 		var fireball = fireball_scene.instantiate()
@@ -202,17 +218,3 @@ func _launch_fireball(range):
 		fireball.apply_impulse(get_lava_level_position(), launch_direction * launch_force)  # Aplicar fuerza para lanzar la bola de fuego
 		add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 
-func _on_area_3d_body_entered(body:Node3D) -> void:
-	if body.is_in_group("player"):
-		body.IsInLava = true
-
-		if body.camera_node:
-			body.IsUnderLava = true
-
-
-func _on_area_3d_body_exited(body:Node3D) -> void:
-	if body.is_in_group("player"):
-		body.IsInLava = false
-
-		if body.camera_node:
-			body.IsUnderLava = false
