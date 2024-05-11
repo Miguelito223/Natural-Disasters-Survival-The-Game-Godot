@@ -10,7 +10,7 @@ var Lava_Level  = 125
 var Pressure = 0
 var IsGoingToErupt = false
 var IsPressureLeaking = false 
-var old_entities_inside_lava = []
+var old_entities_inside_lava = {}
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 @onready var volcano = $Volcano
