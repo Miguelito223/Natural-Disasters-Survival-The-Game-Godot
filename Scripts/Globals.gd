@@ -186,6 +186,26 @@ func calcule_bounding_radius(entity):
 	else:
 		return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
 
+func search_in_node(node, origin: Vector3, radius: float, result: Array):
+	for i in range(node.get_child_count()):
+		var child = node.get_child(i)
+		if child.is_class("Spatial"): # Solo considerar nodos Spatial (puedes ajustar esto según tus necesidades)
+			var distance = origin.distance_to(child.global_transform.origin)
+			if distance <= radius:
+				result.append(child)
+		# Recursión si el nodo tiene hijos
+		if child.get_child_count() > 0:
+			search_in_node(child, origin, radius, result)
+
+func find_in_sphere(origin: Vector3, radius: float) -> Array:
+	var result = []
+	var scene_root = get_tree().get_root()
+	
+	search_in_node(scene_root, origin, radius, result)
+
+	print(result)
+	return result
+
 func Area(entity):
 	if not "bounding_radius_area" in entity or entity.bounding_radius_area == null:
 		var bounding_radius = calcule_bounding_radius(entity)

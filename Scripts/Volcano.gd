@@ -38,10 +38,10 @@ func check_pressure():
 			
 			# Crea una instancia del objeto que representa el terremoto
 			var earthquake = earthquake_scene.instantiate()
-			earthquake.global_transform.origin = global_transform.origin
 			
 			# Si un número aleatorio entre 1 y 3 es igual a 3
 			if randi() % 3 == 0:
+				earthquake.global_transform.origin = global_transform.origin
 				get_parent().add_child(earthquake)
 
 				
@@ -65,26 +65,14 @@ func get_entities_inside_lava() -> Array:
 
 	var lpos = get_lava_level_position()
 
-	var space_state = PhysicsServer3D.space_get_direct_state(get_world_3d().get_space())
-	var query_parameters = PhysicsShapeQueryParameters3D.new()
-	query_parameters.shape = SphereShape3D.new()
-	query_parameters.shape.radius = 360 * scale.x
-	query_parameters.transform.origin = lpos
-	var result = space_state.intersect_shape(query_parameters)
-
-	for intersection in result:
-		var collider_id = intersection["collider_id"]
-		var collider = Globals.get_node_by_id_recursive(get_tree().get_root(), collider_id)
-		var pos = intersection["position"]
-
-		print(collider_id)
+	for v in Globals.find_in_sphere(lpos, 360 * scale.x):
 
 		# Comprueba si la posición Z del objeto es menor o igual a la posición Z de la lava y si es una entidad válida
-		if pos.y <= lpos.y and collider != self:
-			lents[null] = collider
-			lents2[collider] = true
+		if v.position.y <= lpos.y and v != self:
+			lents[null] = v
+			lents2[v] = true
 		else:
-			lents2[collider] = false
+			lents2[v] = false
 
 	return [lents, lents2]	
 
@@ -189,14 +177,19 @@ func set_lava_level(lvl: float) -> void:
 				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
 			elif lava_lvl > 100 and lava_lvl < 200:
 				var diff = lava_lvl - 100
-				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
+				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,100,0))
 				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,diff))
 				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
 			elif lava_lvl >= 200 and lava_lvl <= 300:
 				var diff = lava_lvl - 200
-				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
+				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,100,0))
 				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,100))
 				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,diff))
+
+			print(skeleton.get_bone_pose_position(lava_level_main_idx))
+			print(skeleton.get_bone_pose_position(lava_level_extension_idx))
+			print(skeleton.get_bone_pose_position(lava_level_extension2_idx))
+	
 	
 	self.Lava_Level = lava_lvl
 
@@ -213,5 +206,5 @@ func _launch_fireball(range: int):
 		fireball.scale = Vector3(1,1,1)
 		fireball.is_volcano_rock = true
 		fireball.apply_impulse(get_lava_level_position(), launch_direction * launch_force)  # Aplicar fuerza para lanzar la bola de fuego
-		add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
+		get_parent().add_child(fireball, true)  # Agregar la bola de fuego como hijo del volcán
 

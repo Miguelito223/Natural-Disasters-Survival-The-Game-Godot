@@ -97,7 +97,6 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="Volcano" type="StaticBody3D"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 script = ExtResource("1_m5bkw")
 
 [node name="Smoke" type="GPUParticles3D" parent="."]
@@ -121,6 +120,26 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_hycms")
 draw_pass_1 = SubResource("SphereMesh_tafo1")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
+shape = SubResource("ConcavePolygonShape3D_kwbbx")
+
+[node name="Volcano" parent="." instance=ExtResource("2_5ph2p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
+
+[node name="Skeleton3D" parent="Volcano/ref_skeleton" index="0"]
+bones/5/rotation = Quaternion(-0.142949, 0.863798, 0.0496701, -0.480575)
+bones/8/rotation = Quaternion(0.0953014, 0.718826, 0.625547, -0.287921)
+bones/8/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.0175413, 0.0246519, -0.0627842, 0.997568)
+bones/12/rotation = Quaternion(0.329881, 0.638098, 0.562386, -0.40955)
+bones/13/rotation = Quaternion(-0.116855, -0.0244707, 0.221192, 0.967895)
+
+[node name="ref" parent="Volcano/ref_skeleton/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_mol2f")
+surface_material_override/1 = SubResource("StandardMaterial3D_por2n")
+surface_material_override/2 = SubResource("StandardMaterial3D_l20wa")
+
 [node name="Erupt Sound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 318.367, 0)
 stream = ExtResource("3_w7y1d")
@@ -134,32 +153,11 @@ volume_db = 16.054
 autoplay = true
 max_distance = 500.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
-shape = SubResource("ConcavePolygonShape3D_kwbbx")
-
-[node name="Volcano" parent="." instance=ExtResource("2_5ph2p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
-
-[node name="Skeleton3D" parent="Volcano/ref_skeleton" index="0"]
-bones/2/position = Vector3(0, 200.596, 0)
-bones/5/rotation = Quaternion(-0.142949, 0.863798, 0.0496701, -0.480575)
-bones/8/rotation = Quaternion(0.0953014, 0.718826, 0.625547, -0.287921)
-bones/8/scale = Vector3(1, 1, 1)
-bones/11/rotation = Quaternion(-0.0175413, 0.0246519, -0.0627842, 0.997568)
-bones/12/rotation = Quaternion(0.329881, 0.638098, 0.562386, -0.40955)
-bones/13/rotation = Quaternion(-0.116855, -0.0244707, 0.221192, 0.967895)
-
-[node name="ref" parent="Volcano/ref_skeleton/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("StandardMaterial3D_mol2f")
-surface_material_override/1 = SubResource("StandardMaterial3D_por2n")
-surface_material_override/2 = SubResource("StandardMaterial3D_l20wa")
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_kspno")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 245.32, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04098, 114.685, 0.212049)
 light_color = Color(1, 0.516667, 0, 1)
 light_energy = 1000.0
 shadow_enabled = true
