@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://qf81iinh5hke"]
+[gd_scene load_steps=21 format=3 uid="uid://qf81iinh5hke"]
 
 [ext_resource type="Script" path="res://Scripts/Volcano.gd" id="1_m5bkw"]
 [ext_resource type="AudioStream" uid="uid://cm7i1jqvye8j2" path="res://Sounds/disasters/nature/volcano_idle.wav" id="2_1dlfw"]
@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://c3hos2355t6un" path="res://Materials/Models/Volcano/base_volcano.png" id="4_dypqn"]
 [ext_resource type="Texture2D" uid="uid://djo7srjuuleb1" path="res://Materials/Models/Volcano/base_volcano_normal.png" id="5_le1wx"]
 [ext_resource type="Texture2D" uid="uid://duq4emo3l1hn4" path="res://Materials/Models/Volcano/crater_volcano_glow.png" id="8_7s53r"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kqr15"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_somxg"]
 shading_mode = 0
@@ -98,8 +96,7 @@ properties/5/spawn = true
 properties/5/replication_mode = 1
 
 [node name="Volcano" type="StaticBody3D"]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
-physics_material_override = SubResource("PhysicsMaterial_kqr15")
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 script = ExtResource("1_m5bkw")
 
 [node name="Smoke" type="GPUParticles3D" parent="."]
@@ -131,9 +128,11 @@ autoplay = true
 max_distance = 500.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
 shape = SubResource("ConcavePolygonShape3D_kwbbx")
 
 [node name="Volcano" parent="." instance=ExtResource("2_5ph2p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
 
 [node name="Skeleton3D" parent="Volcano/ref_skeleton" index="0"]
 bones/2/position = Vector3(0, 200.596, 0)

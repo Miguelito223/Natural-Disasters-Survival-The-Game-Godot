@@ -10,9 +10,10 @@ var Lava_Level  = 125
 var Pressure = 0
 var IsGoingToErupt = false
 var IsPressureLeaking = false 
-var old_entities_inside_lava = {}
+var old_entities_inside_lava = []
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
+@onready var volcano = $Volcano
 
 func pressure_increment():
 	var pressure_increase = 0.005
@@ -167,10 +168,11 @@ func erupt():
 func _process(_delta: float) -> void:
 	pressure_increment()
 	check_pressure()
+	inside_lava_effect()
 	lava_control()
 
 func set_lava_level(lvl: float) -> void:
-	var lava_lvl = clamp(lvl, 0, 250)
+	var lava_lvl = clamp(lvl, 0, 500)
 
 	if skeleton:
 		var lava_level_main_idx = skeleton.find_bone("lava_level")
@@ -178,34 +180,32 @@ func set_lava_level(lvl: float) -> void:
 		var lava_level_extension2_idx = skeleton.find_bone("lava_level_extension_02")
 		
 		if lava_level_main_idx >= 0 and lava_level_extension_idx >= 0 and lava_level_extension2_idx >= 0:
-			var transform_main = Transform3D()
-			var transform_extension = Transform3D()
-			var transform_extension2 = Transform3D()
 			
 			if lava_lvl <= 100:
-				transform_main.origin.y = lava_lvl
-				transform_extension.origin.z = 0
-				transform_extension2.origin.z = 0
+				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
+				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,0))
+				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
 			elif lava_lvl > 100 and lava_lvl < 200:
 				var diff = lava_lvl - 100
-				transform_main.origin.y = 100
-				transform_extension.origin.z = diff
-				transform_extension2.origin.z = 0
+				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
+				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,diff))
+				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
 			elif lava_lvl >= 200 and lava_lvl <= 300:
 				var diff = lava_lvl - 200
-				transform_main.origin.y = 100
-				transform_extension.origin.z = 100
-				transform_extension2.origin.z = diff
+				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
+				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,100))
+				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,diff))
 			
-			skeleton.set_bone_global_pose_override(lava_level_main_idx, transform_main, 1.0)
-			skeleton.set_bone_global_pose_override(lava_level_extension_idx, transform_extension, 1.0)
-			skeleton.set_bone_global_pose_override(lava_level_extension2_idx, transform_extension2, 1.0)
+			print(skeleton.get_bone_pose_position(lava_level_main_idx))
+			print(skeleton.get_bone_pose_position(lava_level_extension_idx))
+			print(skeleton.get_bone_pose_position(lava_level_extension2_idx))
+	
 	
 	self.Lava_Level = lava_lvl
 
 
 func get_lava_level_position():
-	return skeleton.get_bone_pose_position(skeleton.find_bone("lava_level"))
+	return Vector3(volcano.position.x, volcano.position.y + Lava_Level, volcano.position.z)
 
 func _launch_fireball(range: int):
 	for i in range:
