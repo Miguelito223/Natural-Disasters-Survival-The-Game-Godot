@@ -59,7 +59,7 @@ func check_pressure():
 				
 
 func get_entities_inside_lava() -> Array:
-	var lents = []
+	var lents = {}
 	var lents2 = {}
 
 	var lpos = get_lava_level_position()
@@ -78,7 +78,7 @@ func get_entities_inside_lava() -> Array:
 
 		# Comprueba si la posición Z del objeto es menor o igual a la posición Z de la lava y si es una entidad válida
 		if pos.y <= lpos.y and collider.name != "WorldSpawn" and collider != self:
-			lents.append(collider)
+			lents[null] = collider
 			lents2[collider] = true
 			collider.is_in_lava = true
 		else:
