@@ -16,8 +16,8 @@ var old_entities_inside_lava = {}
 @onready var volcano = $Volcano
 
 func pressure_increment():
-	var pressure_increase = 0.005
-	var pressure_decrease = 0.01
+	var pressure_increase = 0.05
+	var pressure_decrease = 0.1
 
 	if not IsGoingToErupt and not IsPressureLeaking:
 		Pressure = clamp(Pressure + pressure_increase, 0, 100)
@@ -172,7 +172,7 @@ func _process(_delta: float) -> void:
 	lava_control()
 
 func set_lava_level(lvl: float) -> void:
-	var lava_lvl = clamp(lvl, 0, 500)
+	var lava_lvl = clamp(lvl, 0, 250)
 
 	if skeleton:
 		var lava_level_main_idx = skeleton.find_bone("lava_level")
