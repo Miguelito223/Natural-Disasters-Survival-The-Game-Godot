@@ -15,6 +15,7 @@ var old_entities_inside_lava = {}
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 @onready var volcano = $Volcano
 
+
 func pressure_increment():
 	var pressure_increase = 0.05
 	var pressure_decrease = 0.1
@@ -76,14 +77,14 @@ func get_entities_inside_lava() -> Array:
 		var collider = Globals.get_node_by_id_recursive(get_tree().get_root(), collider_id)
 		var pos = intersection["position"]
 
+		print(collider_id)
+
 		# Comprueba si la posición Z del objeto es menor o igual a la posición Z de la lava y si es una entidad válida
-		if pos.y <= lpos.y and collider.name != "WorldSpawn" and collider != self:
+		if pos.y <= lpos.y and collider != self:
 			lents[null] = collider
 			lents2[collider] = true
-			collider.is_in_lava = true
 		else:
 			lents2[collider] = false
-			collider.is_in_lava = false
 
 	return [lents, lents2]	
 
@@ -123,6 +124,7 @@ func lava_control():
 func erupt():
 	$Smoke.emitting = false
 	$Erupt.emitting = true
+	$"Erupt Sound".play()
 	_launch_fireball(20)
 
 	await await get_tree().create_timer(10).timeout
@@ -195,11 +197,6 @@ func set_lava_level(lvl: float) -> void:
 				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
 				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,100))
 				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,diff))
-			
-			print(skeleton.get_bone_pose_position(lava_level_main_idx))
-			print(skeleton.get_bone_pose_position(lava_level_extension_idx))
-			print(skeleton.get_bone_pose_position(lava_level_extension2_idx))
-	
 	
 	self.Lava_Level = lava_lvl
 

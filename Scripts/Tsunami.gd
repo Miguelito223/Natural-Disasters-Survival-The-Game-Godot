@@ -10,6 +10,7 @@ var tsunami_start_height = 1
 var tsunami_middle_height = 1000
 var tsunami_finish_height = 10
 var direction = Vector3(0, 0, 1)
+var current_height
 var distance_traveled = 0.0
 var total_distance = 4097.0  # Adjust this value based on your scene
 
@@ -25,7 +26,7 @@ func _physics_process(delta):
 	var displacement = direction * distance_this_frame
 
 	# Calculate current height based on distance traveled
-	var current_height = calculate_height(distance_traveled)
+	current_height = calculate_height(distance_traveled)
 
 	# Update wave height
 	wave.size.y = current_height
@@ -63,17 +64,12 @@ func calculate_height(distance):
 func _on_area_3d_body_entered(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = true
-
-		if body.camera_node.position.y < wave.size.y:
+		if body.camera_node:
 			body.IsUnderWater = true
-		else:
-			body.IsUnderWater = false
 
 func _on_area_3d_body_exited(body: Node3D):
 	if body.is_in_group("player"):
 		body.IsInWater = false
-		
-		if body.camera_node.position.y < wave.size.y:
-			body.IsUnderWater = true
-		else:
+		if body.camera_node:
 			body.IsUnderWater = false
+
