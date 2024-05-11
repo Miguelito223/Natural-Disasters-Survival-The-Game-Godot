@@ -2,5 +2,5 @@
 
 [ext_resource type="PackedScene" uid="uid://beixacf0xmoki" path="res://Models/Breakable hause.blend" id="1_mcvrf"]
 
-[node name="Breakable hause" instance=ExtResource("1_mcvrf")]
+[node name="Breakable hause" groups=["movable_objects", "wind_effected_objects"] instance=ExtResource("1_mcvrf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.196303, 0.756151, -1.03868)
