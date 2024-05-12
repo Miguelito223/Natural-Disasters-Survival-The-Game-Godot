@@ -413,7 +413,7 @@ shape = SubResource("ConcavePolygonShape3D_qa0pu")
 [node name="Destruction" type="Node" parent="." index="2" node_paths=PackedStringArray("shard_container")]
 script = ExtResource("1_kia18")
 fragmented = ExtResource("3_kqll8")
-shard_container = NodePath("")
+shard_container = NodePath("../..")
 
 [node name="SueloCollision" type="CollisionShape3D" parent="." index="3"]
 transform = Transform3D(15.7556, 0, 0, 0, 10.9068, 0, 0, 0, 15.7947, 16.476, 0.33769, -16.7585)
