@@ -170,25 +170,28 @@ func set_lava_level(lvl: float) -> void:
 		var lava_level_extension2_idx = skeleton.find_bone("lava_level_extension_02")
 		
 		if lava_level_main_idx >= 0 and lava_level_extension_idx >= 0 and lava_level_extension2_idx >= 0:
+			var transform_main = Transform3D()
+			var transform_extension = Transform3D()
+			var transform_extension2 = Transform3D()
 			
 			if lava_lvl <= 100:
-				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,lava_lvl,0))
-				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,0))
-				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
+				transform_main.origin = Vector3(0,lava_lvl,0)
+				transform_extension.origin = Vector3(0,0,0)
+				transform_extension2.origin = Vector3(0,0,0)
 			elif lava_lvl > 100 and lava_lvl < 200:
 				var diff = lava_lvl - 100
-				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,100,0))
-				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,diff))
-				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,0))
+				transform_main.origin = Vector3(0,100,0)
+				transform_extension.origin = Vector3(0,0,diff)
+				transform_extension2.origin = Vector3(0,0,0)
 			elif lava_lvl >= 200 and lava_lvl <= 300:
 				var diff = lava_lvl - 200
-				skeleton.set_bone_pose_position(lava_level_main_idx, Vector3(0,100,0))
-				skeleton.set_bone_pose_position(lava_level_extension_idx, Vector3(0,0,100))
-				skeleton.set_bone_pose_position(lava_level_extension2_idx, Vector3(0,0,diff))
-
-			print(skeleton.get_bone_pose_position(lava_level_main_idx))
-			print(skeleton.get_bone_pose_position(lava_level_extension_idx))
-			print(skeleton.get_bone_pose_position(lava_level_extension2_idx))
+				transform_main.origin = Vector3(0,100,0)
+				transform_extension.origin = Vector3(0,0,100)
+				transform_extension2.origin = Vector3(0,0,diff)
+			
+			skeleton.set_bone_global_pose_override(lava_level_main_idx, transform_main, 1.0)
+			skeleton.set_bone_global_pose_override(lava_level_extension_idx, transform_extension, 1.0)
+			skeleton.set_bone_global_pose_override(lava_level_extension2_idx, transform_extension2, 1.0)
 	
 	
 	self.Lava_Level = lava_lvl
