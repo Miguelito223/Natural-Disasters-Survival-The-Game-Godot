@@ -13,7 +13,7 @@ var Life = [15,20]
 @onready var earthqueake_aftershot_sound = $earqueake_aftershot
 
 func _physics_process(_delta):
-	magnitude_modulate_sound(Globals.local_player)
+	magnitude_modulate_sound()
 	magnitude_modifier_increment()
 	process_magnitude()
 
@@ -251,7 +251,7 @@ func magnitude_twelve():
 func unfreeze(v, mag):
 	if randi_range(1, 1024 - (25.6 * magnitude)) == 1:
 		v.freeze = false
-	if randi_range(1, 512 - (25.6 * magnitude)) == 1 and v.get_class() != "worldspawn":
+	if randi_range(1, 512 - (25.6 * magnitude)) == 1:
 		v.sleeping = false
 		v.freeze = false
 
@@ -266,13 +266,13 @@ func can_do_physics(next_time):
 			return true
 	return false
 
-func magnitude_modulate_sound(ply):
+func magnitude_modulate_sound():
 	var volume = self.magnitude  # Asumiendo que self.magnitude es una propiedad que representa la magnitud del terremoto
 	var vol_mod = pow(volume / 10, 3)
 	var distance_mod = 0
 
 	# Calcula la modulación de volumen basada en la distancia al jugador (ejemplo simplificado)
-	var local_player_pos = ply.position  # Obtén la posición del jugador local
+	var local_player_pos = Globals.local_player.position  # Obtén la posición del jugador local
 	var ray_params = PhysicsRayQueryParameters3D.create(local_player_pos, local_player_pos + Vector3(0, 0, -3000))
 	var ray_result = get_world_3d().direct_space_state.intersect_ray(ray_params)
 	if ray_result.size() > 0:
@@ -280,10 +280,8 @@ func magnitude_modulate_sound(ply):
 
 	vol_mod *= distance_mod
     
-    # Modula el volumen del sonido (requiere manejo personalizado del sonido en Godot)
-    # Aquí deberías usar la API de audio de Godot para manejar el sonido
-    # La implementación específica dependerá de cómo estés manejando los sonidos en tu juego en Godot
-
+	earthquake_sound.play()
+	earthquake_sound.volume_db = vol_mod
 
 func do_physics():
 	var t = 0.1 # Obtener el valor del ConVar "gdisasters_envearthquake_simquality"
@@ -302,6 +300,7 @@ func do_physics():
 	
 	# Aplicar efectos a los jugadores
 	for v in get_tree().get_nodes_in_group("player"):
+		print(v)
 		if v.is_on_floor():
 			match mag:
 				3.0 < 4.0:
@@ -327,52 +326,52 @@ func do_physics():
 	
 	# Aplicar efectos a las entidades
 	for v in get_tree().get_nodes_in_group("movable_objects"):
+		print(v)
 		if v.get_class() == "RigidBody3D":
-			var mass = v.mass
 			var vel_mod = 1 - clamp(v.get_linear_velocity().length() / 2000, 0, 1)
 			var ang_v = ang_vv * vel_mod
 			
 			match mag:
 				3.0 < 4.0:
-					if mass < 60 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v)
 						v.add_central_impulse(ang_v)
 				4.0 < 5.0:
-					if mass < 400 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v)
 						v.add_central_impulse(ang_v)
 						unfreeze(v, mag)
 				5.0 < 6.0:
-					if mass < 800 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v)
 						v.add_central_impulse(ang_v)
 						unfreeze(v, mag)
 				6.0 < 7.0:
-					if mass < 1600 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 2)
 						v.add_central_impulse(ang_v)
 						unfreeze(v, mag)
 				7.0 < 8.0:
-					if mass < 3400 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 4)
 						v.add_central_impulse(ang_v * 2)
 						unfreeze(v, mag)
 				8.0 < 9.0:
-					if mass < 13600 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 8)
 						v.add_central_impulse(ang_v * 4)
 						unfreeze(v, mag)
 				9.0 < 10.0:
-					if mass < 37200 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 12)
 						v.add_central_impulse(ang_v * 6)
 						unfreeze(v, mag)
 				10.0 < 11.0:
-					if mass <= 50000 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 24)
 						v.add_central_impulse(ang_v * 12)
 						unfreeze(v, mag)
 				11.0 < 12.0:
-					if mass <= 80000 and randi_range(1, 2) == 1:
+					if randi_range(1, 2) == 1:
 						v.add_torque_impulse(ang_v * 36)
 
