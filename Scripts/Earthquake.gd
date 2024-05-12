@@ -102,52 +102,42 @@ func do_physics():
 			
 			if 3 <= mag and mag < 4:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v)
-					v.add_central_impulse(ang_v)
+					v.apply_impulse(ang_v)
 			elif 4 <= mag and mag < 5:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v)
-					v.add_central_impulse(ang_v)
+					v.apply_impulse(ang_v)
 					unfreeze(v, mag)
 			elif 5 <= mag and mag < 6:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v)
-					v.add_central_impulse(ang_v)
+					v.apply_impulse(ang_v)
 					unfreeze(v, mag)
 			elif 6 <= mag and mag < 7:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 2)
-					v.add_central_impulse(ang_v)
+					v.apply_impulse(ang_v * 2)
 					unfreeze(v, mag)
 			elif 7 <= mag and mag < 8:
 				if  randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 4)
-					v.add_central_impulse(ang_v * 2)
+					v.apply_impulse(ang_v * 4)
 					unfreeze(v, mag)
 			elif 8 <= mag and mag < 9:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 8)
-					v.add_central_impulse(ang_v * 4)
+					v.apply_impulse(ang_v * 8)
 					unfreeze(v, mag)
 			elif 9 <= mag and mag < 10:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 12)
-					v.add_central_impulse(ang_v * 6)
+					v.apply_impulse(ang_v * 12)
 					unfreeze(v, mag)
 			elif 10 <= mag and mag < 11:
 				if  randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 24)
-					v.add_central_impulse(ang_v * 12)
+					v.apply_impulse(ang_v * 24)
 					unfreeze(v, mag)
 			elif 11 <= mag and mag < 12:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 36)
-					v.add_central_impulse(ang_v * 24)
+					v.apply_impulse(ang_v * 36)
 					unfreeze(v, mag)
 			elif 12 <= mag and mag < 13:
 				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v * 40)
-					v.add_central_impulse(ang_v * 30)
+					v.apply_impulse(ang_v * 40)
 					unfreeze(v, mag)
 
 	
