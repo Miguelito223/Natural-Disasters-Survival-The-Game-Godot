@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var magnitude: float = 7
+@export var magnitude = 7
 var magnitude_modifier = 0
 var next_physics_time = Time.get_ticks_msec()
 var SpawnTime = Time.get_ticks_msec()
@@ -72,25 +72,25 @@ func do_physics():
 	for v in get_tree().get_nodes_in_group("player"):
 		print(v)
 		if v.is_on_floor():
-			if 3 <= mag < 4:
+			if 3 <= mag and mag < 4:
 				pass
-			elif 4 <= mag < 5:
+			elif 4 <= mag and mag < 5:
 				pass
-			elif 5 <= mag < 6:
+			elif 5 <= mag and mag < 6:
 				pass
-			elif 6 <= mag < 7:
+			elif 6 <= mag and mag < 7:
 				pass
-			elif 7 <= mag < 8:
+			elif 7 <= mag and mag < 8:
 				v.set_velocity(vec)
-			elif 8 <= mag < 9:
+			elif 8 <= mag and mag < 9:
 				v.set_velocity(vec * 1.125)
-			elif 9 <= mag < 10:
+			elif 9 <= mag and mag < 10:
 				v.set_velocity(vec * 1.5)
-			elif 10 <= mag < 11:
+			elif 10 <= mag and mag < 11:
 				v.set_velocity(vec * 2)
-			elif 11 <= mag < 12:
+			elif 11 <= mag and mag < 12:
 				v.set_velocity(vec * 2.125)
-			elif 12 <= mag < 13:
+			elif 12 <= mag and mag < 13:
 				v.set_velocity(vec * 2.5)
 	
 	# Aplicar efectos a las entidades
@@ -100,51 +100,51 @@ func do_physics():
 			var vel_mod = 1 - clamp(v.get_linear_velocity().length() / 2000, 0, 1)
 			var ang_v = ang_vv * vel_mod
 			
-			if 3 <= mag < 4:
+			if 3 <= mag and mag < 4:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v)
 					v.add_central_impulse(ang_v)
-			elif 4 <= mag < 5:
-				if randi_range(1, 2) == 1:
-					v.add_torque_impulse(ang_v)
-					v.add_central_impulse(ang_v)
-					unfreeze(v, mag)
-			elif 5 <= mag < 6:
+			elif 4 <= mag and mag < 5:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v)
 					v.add_central_impulse(ang_v)
 					unfreeze(v, mag)
-			elif 6 <= mag < 7:
+			elif 5 <= mag and mag < 6:
+				if randi_range(1, 2) == 1:
+					v.add_torque_impulse(ang_v)
+					v.add_central_impulse(ang_v)
+					unfreeze(v, mag)
+			elif 6 <= mag and mag < 7:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 2)
 					v.add_central_impulse(ang_v)
 					unfreeze(v, mag)
-			elif 7 <= mag < 8:
+			elif 7 <= mag and mag < 8:
 				if  randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 4)
 					v.add_central_impulse(ang_v * 2)
 					unfreeze(v, mag)
-			elif 8 <= mag < 9:
+			elif 8 <= mag and mag < 9:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 8)
 					v.add_central_impulse(ang_v * 4)
 					unfreeze(v, mag)
-			elif 9 <= mag < 10:
+			elif 9 <= mag and mag < 10:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 12)
 					v.add_central_impulse(ang_v * 6)
 					unfreeze(v, mag)
-			elif 10 <= mag < 11:
+			elif 10 <= mag and mag < 11:
 				if  randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 24)
 					v.add_central_impulse(ang_v * 12)
 					unfreeze(v, mag)
-			elif 11 <= mag < 12:
+			elif 11 <= mag and mag < 12:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 36)
 					v.add_central_impulse(ang_v * 24)
 					unfreeze(v, mag)
-			elif 12 <= mag < 13:
+			elif 12 <= mag and mag < 13:
 				if randi_range(1, 2) == 1:
 					v.add_torque_impulse(ang_v * 40)
 					v.add_central_impulse(ang_v * 30)
