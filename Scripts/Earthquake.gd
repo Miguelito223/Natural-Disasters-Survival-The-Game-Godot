@@ -59,8 +59,8 @@ func do_physics():
 		print("Nuh uh")
 		return
 	
-	var vec = (mag * 25) * Vector3(randi_range(-15, 15) / 10, randi_range(-5, 4) / 10, randi_range(-5, 4) / 10)
-	var ang_vv = Vector3((randi_range(-15, 15) / 10), randi_range(-5, 4) / 10, randi_range(-5, 4) / 10) * (mag * 8)
+	var vec = (mag * 25) * Vector3(randi_range(-15, 15) / 10, randi_range(-15, 15) / 10, randi_range(-5, 4) / 10)
+	var ang_vv = Vector3((randi_range(-15, 15) / 10), randi_range(-15, 15) / 10, randi_range(-5, 4) / 10) * (mag * 8)
 	
 	# Si hay una posibilidad de golpear, incrementamos la velocidad angular
 	if Globals.hit_chance(2):
@@ -68,7 +68,6 @@ func do_physics():
 	
 	# Aplicar efectos a los jugadores
 	for v in get_tree().get_nodes_in_group("player"):
-		print(v)
 		if v.is_on_floor():
 			if 3 <= mag and mag < 4:
 				pass
@@ -93,7 +92,6 @@ func do_physics():
 	
 	# Aplicar efectos a las entidades
 	for v in get_tree().get_nodes_in_group("movable_objects"):
-		print(v)
 		if v.get_class() == "RigidBody3D":
 			var vel_mod = 1 - clamp(v.get_linear_velocity().length() / 2000, 0, 1)
 			var ang_v = ang_vv * vel_mod
@@ -159,9 +157,14 @@ func magnitude_modulate_sound():
 		distance_mod = 1 - (ray_result["position"].distance_to(local_player_pos) / 3000)
 
 	vol_mod *= distance_mod
+
 	
-	earthquake_sound.play()
+	
+	if not earthquake_sound.playing:
+		earthquake_sound.play()
+
 	earthquake_sound.volume_db = vol_mod
+		
 
 
 func create_earthquake_with_parent():
@@ -169,7 +172,7 @@ func create_earthquake_with_parent():
 	if not decider:
 		if int(floor(magnitude)) > 1:
 			earthqueake_aftershot_sound.play()
-			var aftershock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 10)
+			var aftershock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 12)
 			var aftershock = load("res://Scenes/earthquake.tscn").instantiate()
 			aftershock.magnitude = aftershock_magnitude
 			aftershock.position = Vector3.ZERO
@@ -179,7 +182,7 @@ func create_earthquake_with_parent():
 			
 	else:
 		earthqueake_aftershot_sound.play()
-		var foreshock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 10)
+		var foreshock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 12)
 		var foreshock = load("res://Scenes/earthquake.tscn").instantiate()
 		foreshock.magnitude = foreshock_magnitude
 		foreshock.position = position
@@ -196,8 +199,6 @@ func get_real_magnitude():
 
 func process_magnitude():
 	var mag = magnitude * magnitude_modifier
-
-	print("Processing...", mag)
 	
 	if mag >= 0 and mag < 1:
 		print("nuh uh, very low")
