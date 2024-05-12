@@ -53,8 +53,6 @@ func can_do_physics(next_time):
 func do_physics():
 	var t = 0.1 # Obtener el valor del ConVar "gdisasters_envearthquake_simquality"
 	var mag = magnitude * magnitude_modifier
-
-	print("w2eñdèwod'0wd")
 	
 	# Si no podemos hacer física en este momento o la magnitud es menor que 3, no hacemos nada
 	if mag < 3:
