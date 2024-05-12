@@ -36,11 +36,13 @@ func check_pressure():
 			# Establece que el volcán está en proceso de erupción
 			IsGoingToErupt = true
 			
-			# Crea una instancia del objeto que representa el terremoto
-			var earthquake = earthquake_scene.instantiate()
+			
+			var earthquake 
 			
 			# Si un número aleatorio entre 1 y 3 es igual a 3
 			if randi() % 3 == 0:
+				# Crea una instancia del objeto que representa el terremoto
+				earthquake = earthquake_scene.instantiate()
 				earthquake.global_transform.origin = global_transform.origin
 				get_parent().add_child(earthquake)
 
@@ -64,6 +66,8 @@ func get_entities_inside_lava() -> Array:
 	var lents2 = {}
 
 	var lpos = get_lava_level_position()
+
+	print(lpos)
 
 	for v in Globals.find_in_sphere(lpos, 360 * scale.x):
 
@@ -156,10 +160,12 @@ func erupt():
 		await get_tree().create_timer(0.5).timeout
 
 func _process(_delta: float) -> void:
+	var t = (1.0 / _delta) / 66.666 * 0.1
 	pressure_increment()
 	check_pressure()
 	inside_lava_effect()
 	lava_control()
+	await get_tree().create_timer(Time.get_ticks_msec() + t).timeout
 
 func set_lava_level(lvl: float) -> void:
 	var lava_lvl = clamp(lvl, 0, 250)
@@ -180,12 +186,12 @@ func set_lava_level(lvl: float) -> void:
 				transform_extension2.origin = Vector3(0,0,0)
 			elif lava_lvl > 100 and lava_lvl < 200:
 				var diff = lava_lvl - 100
-				transform_main.origin = Vector3(0,100,0)
+				transform_main.origin = Vector3(0,lava_lvl,0)
 				transform_extension.origin = Vector3(0,0,diff)
 				transform_extension2.origin = Vector3(0,0,0)
 			elif lava_lvl >= 200 and lava_lvl <= 300:
 				var diff = lava_lvl - 200
-				transform_main.origin = Vector3(0,100,0)
+				transform_main.origin = Vector3(0,lava_lvl,0)
 				transform_extension.origin = Vector3(0,0,100)
 				transform_extension2.origin = Vector3(0,0,diff)
 			
@@ -198,11 +204,10 @@ func set_lava_level(lvl: float) -> void:
 
 
 func get_lava_level_position():
-	return Vector3(volcano.position.x, volcano.position.y + Lava_Level, volcano.position.z)
+	return Vector3(self.position.x, self.position.y + Lava_Level, self.position.z)
 
 func _launch_fireball(range: int):
 	for i in range:
-		# Instanciar una nueva bola de fuego y lanzarla
 		var fireball = fireball_scene.instantiate()
 		var launch_direction = Vector3(randi_range(-1,1), 1, randi_range(-1,1)).normalized()  # Dirección hacia arriba
 		fireball.global_position = get_lava_level_position() # Posición inicial en el volcán
