@@ -336,19 +336,19 @@ func set_weather_and_disaster(weather_and_disaster_index):
 
 		"Cloud":
 			current_weather_and_disaster = "Cloud"
-			current_weather_and_disaster_int = 0
+			current_weather_and_disaster_int = 1
 			is_cloud()	
 		"Raining":
 			current_weather_and_disaster = "Raining"
-			current_weather_and_disaster_int = 0
+			current_weather_and_disaster_int = 2
 			is_raining()
 		"Storm":
 			current_weather_and_disaster = "Storm"
-			current_weather_and_disaster_int = 0
+			current_weather_and_disaster_int = 3
 			is_storm()
 		"Linghting storm":
 			current_weather_and_disaster = "Linghting storm"
-			current_weather_and_disaster_int = 0
+			current_weather_and_disaster_int = 4
 			is_linghting_storm()		
 		"Tsunami":
 			current_weather_and_disaster = "Tsunami"
