@@ -67,6 +67,7 @@ var seconds = Time.get_unix_time_from_system()
 var main
 var main_menu
 var map
+var local_player
 
 var main_scene = preload("res://Scenes/main.tscn")
 var map_scene = preload("res://Scenes/map_1.tscn")

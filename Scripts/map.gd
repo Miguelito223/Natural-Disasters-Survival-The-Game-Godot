@@ -30,6 +30,9 @@ var sand_texture = preload("res://Textures/sand.png")
 @onready var timer = $Timer
 var started = false
 
+func _enter_tree() -> void:
+	Globals.map = self
+
 func _exit_tree():
 	Globals.Temperature_target = Globals.Temperature_original
 	Globals.Humidity_target = Globals.Humidity_original
@@ -39,7 +42,8 @@ func _exit_tree():
 	Globals.Wind_Direction_target = Globals.Wind_Direction_original
 	Globals.Wind_speed_target = Globals.Wind_speed_original
 	$WorldEnvironment.environment.sky.sky_material.set_shader_parameter("cloud_coverage", 0.25)
-	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1,1,1)
+	$WorldEnvironment.environment.volumetric_fog_enabled = false
+	$WorldEnvironment.environment.volumetric_fog_albedo = Color(1, 1, 1)
 	
 	if Globals.is_networking:
 		multiplayer.peer_connected.disconnect(player_join)
@@ -397,12 +401,7 @@ func is_tsunami():
 	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Tsunami":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 		
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -440,12 +439,7 @@ func is_linghting_storm():
 
 
 	while current_weather_and_disaster == "Linghting storm":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -498,12 +492,7 @@ func is_meteor_shower():
 	Globals.Wind_speed_target = randf_range(0, 10)
 	
 	while current_weather_and_disaster == "Meteor shower":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -539,12 +528,7 @@ func is_blizzard():
 
 	while current_weather_and_disaster == "blizzard":
 		
-		var player
-
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -598,12 +582,7 @@ func is_sandstorm():
 	Globals.Wind_speed_target = randf_range(30, 50)
 
 	while current_weather_and_disaster == "Sand Storm":
-		var player
-
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -702,12 +681,7 @@ func is_tornado():
 	Globals.Wind_speed_target = randf_range(0, 30)
 
 	while current_weather_and_disaster == "Tornado":
-		var player
-
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -766,12 +740,7 @@ func is_acid_rain():
 	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Acid rain":
-		var player
-
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -812,12 +781,7 @@ func is_earthquake():
 	add_child(earquake,true)
 
 	while current_weather_and_disaster == "Earthquake":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -852,12 +816,7 @@ func is_sun():
 	Globals.Wind_speed_target = randf_range(0, 10)
 
 	while current_weather_and_disaster == "Sun":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			player.rain_node.emitting = false
@@ -882,12 +841,7 @@ func is_cloud():
 
 
 	while current_weather_and_disaster == "Cloud":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -928,12 +882,7 @@ func is_raining():
 	Globals.Wind_speed_target = randf_range(0, 20)
 	
 	while current_weather_and_disaster == "Raining":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 		
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -971,12 +920,7 @@ func is_storm():
 	Globals.Wind_speed_target = randf_range(30, 60)
 
 	while current_weather_and_disaster == "Storm":
-		var player
-		
-		if Globals.is_networking:
-			player = get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):

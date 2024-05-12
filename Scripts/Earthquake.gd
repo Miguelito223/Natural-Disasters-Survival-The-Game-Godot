@@ -2,9 +2,10 @@ extends Node3D
 
 @export var magnitude = 0
 var magnitude_modifier = 0
-var NextPhysicsTime = Time.get_ticks_msec()
+var next_physics_time = Time.get_ticks_msec()
 var SpawnTime = Time.get_ticks_msec()
 var Life = [15,20]
+
 
 @onready var start_weak_earthquake = $earquake_start_sound_weak
 @onready var start_strong_earthquake = $earquake_start_sound_strong
@@ -12,11 +13,14 @@ var Life = [15,20]
 @onready var earthqueake_aftershot_sound = $earqueake_aftershot
 
 func _physics_process(_delta):
+	magnitude_modulate_sound(Globals.local_player)
 	magnitude_modifier_increment()
 	process_magnitude()
 
 func _ready() -> void:
 	PlayInitialSounds()
+	
+	await get_tree().create_timer(randi_range(Life[0], Life[1])).timeout
 	EarthquakeDecay()
 
 func PlayInitialSounds():
@@ -31,17 +35,31 @@ func EarthquakeDecay():
 	queue_free()  # Esto libera el nodo actual, eliminándolo del escenario
 
 func send_clientside_effects(ply, offset_ang, amplitude):
-	var magnitude = floor(magnitude * magnitude_modifier)
 	if randi_range(1, 8) == 1:
-		var gd_shakescreen = ply.camera_node._camera_shake(amplitude)
+		ply.camera_node._camera_shake(amplitude)
 
 func create_earthquake_with_parent():
 	var decider = randi() % int(floor(magnitude * 2)) == 1
 	if not decider:
 		if int(floor(magnitude)) > 1:
 			earthqueake_aftershot_sound.play()
+			var aftershock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 10)
+			var aftershock = load("res://Scenes/earthquake.tscn").instantiate()
+			aftershock.magnitude = aftershock_magnitude
+			aftershock.position = Vector3.ZERO
+			get_parent().add_child(aftershock)
+			aftershock.global_transform.origin = get_parent().global_transform.origin
+			aftershock.show()
+			
 	else:
 		earthqueake_aftershot_sound.play()
+		var foreshock_magnitude = clamp(int(floor(magnitude)) - randi() % 3, 1, 10)
+		var foreshock = load("res://Scenes/earthquake.tscn").instantiate()
+		foreshock.magnitude = foreshock_magnitude
+		foreshock.position = position
+		get_parent().add_child(foreshock)
+		foreshock.global_transform.origin = get_parent().global_transform.origin
+		foreshock.show()
 
 func magnitude_modifier_increment():
 	# Ajustar el valor de MagnitudeModifier
@@ -91,9 +109,7 @@ func magnitude_one():
 	var mya = (randi_range(-4, 4) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 
 	do_physics()
 
@@ -105,9 +121,7 @@ func magnitude_two():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 
 	do_physics()
 
@@ -120,9 +134,7 @@ func magnitude_three():
 	var xa = bxa + mxa
 	var ya = bya + mya
 
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -135,9 +147,7 @@ func magnitude_four():
 	var xa = bxa + mxa
 	var ya = bya + mya
 
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -150,9 +160,7 @@ func magnitude_five():
 	var xa = bxa + mxa
 	var ya = bya + mya
 
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -164,9 +172,7 @@ func magnitude_six():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -178,9 +184,7 @@ func magnitude_seven():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -192,9 +196,7 @@ func magnitude_eight():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -206,9 +208,7 @@ func magnitude_nine():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -220,9 +220,7 @@ func magnitude_ten():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -234,9 +232,7 @@ func magnitude_eleven():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -248,9 +244,7 @@ func magnitude_twelve():
 	var mya = (randi_range(-425, 425) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
-	for v in get_tree().get_nodes_in_group("player"):
-		if v.is_on_floor():
-			send_clientside_effects(v, Vector3(xa, ya, 0), 38)
+
 	
 	do_physics()
 
@@ -261,13 +255,42 @@ func unfreeze(v, mag):
 		v.sleeping = false
 		v.freeze = false
 
+func can_do_physics(next_time):
+	if Engine.get_frames_per_second() > 0:  # Asegúrate de que no estemos dividiendo por cero
+		var current_time = Engine.get_frames_drawn() / Engine.get_frames_per_second()  # Obtener el tiempo actual del juego
+		if current_time >= self.next_physics_time:
+			if Globals.hit_chance(1):
+				self.next_physics_time = current_time + (randi_range(0, 250) / 100)
+			else:
+				self.next_physics_time = current_time + next_time
+			return true
+	return false
+
+func magnitude_modulate_sound(ply):
+	var volume = self.magnitude  # Asumiendo que self.magnitude es una propiedad que representa la magnitud del terremoto
+	var vol_mod = pow(volume / 10, 3)
+	var distance_mod = 0
+
+	# Calcula la modulación de volumen basada en la distancia al jugador (ejemplo simplificado)
+	var local_player_pos = ply.position  # Obtén la posición del jugador local
+	var ray_params = PhysicsRayQueryParameters3D.create(local_player_pos, local_player_pos + Vector3(0, 0, -3000))
+	var ray_result = get_world_3d().direct_space_state.intersect_ray(ray_params)
+	if ray_result.size() > 0:
+		distance_mod = 1 - (ray_result["position"].distance_to(local_player_pos) / 3000)
+
+	vol_mod *= distance_mod
+    
+    # Modula el volumen del sonido (requiere manejo personalizado del sonido en Godot)
+    # Aquí deberías usar la API de audio de Godot para manejar el sonido
+    # La implementación específica dependerá de cómo estés manejando los sonidos en tu juego en Godot
+
 
 func do_physics():
-	var t = 0.10 # Obtener el valor del ConVar "gdisasters_envearthquake_simquality"
+	var t = 0.1 # Obtener el valor del ConVar "gdisasters_envearthquake_simquality"
 	var mag = magnitude * magnitude_modifier
 	
 	# Si no podemos hacer física en este momento o la magnitud es menor que 3, no hacemos nada
-	if !Globals.can_do_physics(t) or mag < 3:
+	if !can_do_physics(t) or mag < 3:
 		return
 	
 	var vec = (mag * 25) * Vector3(randi_range(-15, 15) / 10, 0, randi_range(-5, 4) / 10)

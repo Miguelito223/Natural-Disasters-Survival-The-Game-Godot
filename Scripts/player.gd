@@ -121,7 +121,8 @@ func _ready():
 		if not is_multiplayer_authority():
 			return
 
-
+	Globals.local_player = self
+	
 	rain_node.emitting = false
 	sand_node.emitting = false
 	splash_node.emitting = false
