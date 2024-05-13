@@ -294,5 +294,6 @@ omni_range = 363.787
 shape = SubResource("SphereShape3D_lhoig")
 
 [connection signal="body_entered" from="Volcano_Area" to="." method="_on_volcano_area_body_entered"]
+[connection signal="body_exited" from="Volcano_Area" to="." method="_on_volcano_area_body_exited"]
 
 [editable path="Volcano"]

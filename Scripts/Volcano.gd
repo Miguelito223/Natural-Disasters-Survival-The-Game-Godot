@@ -73,12 +73,7 @@ func erupt():
 	Globals.Wind_speed_target = randf_range(0, 50)
 
 	while get_parent().current_weather_and_disaster == "Volcano":
-		var player
-
-		if Globals.is_networking:
-			player = get_parent().get_node(str(multiplayer.get_unique_id()))
-		else:
-			player = get_parent().get_node("1")
+		var player = Globals.local_player
 
 		if is_instance_valid(player):
 			if Globals.is_outdoor(player):
@@ -123,6 +118,14 @@ func _launch_fireball(range: int, time: int):
 
 
 func _on_volcano_area_body_entered(body:Node3D) -> void:
+	if body.is_in_group("player"):
+		body.IsInLava = true
+
+		if body.camera_node:
+			body.IsUnderLava = true
+
+
+func _on_volcano_area_body_exited(body:Node3D) -> void:
 	if body.is_in_group("player"):
 		body.IsInLava = true
 
