@@ -35,9 +35,9 @@ func EarthquakeDecay():
 		create_earthquake_with_parent()
 	queue_free()  # Esto libera el nodo actual, eliminándolo del escenario
 
-func send_clientside_effects(ply, offset_ang, amplitude):
-	if randi_range(1, 8) == 1:
-		ply.camera_node._camera_shake(amplitude)
+func send_clientside_effects(ply, amplitude):
+	if randi() % 8 == 0:
+		ply.camera_node.start_screen_shake(0.6, amplitude * 2, 25)
 
 func can_do_physics(next_time):
 	if Engine.get_frames_per_second() > 0:  # Asegúrate de que no estemos dividiendo por cero
@@ -237,6 +237,10 @@ func magnitude_one():
 	var mya = (randi_range(-4, 4) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 0.1)
+	
 	do_physics()
 
 func magnitude_two():
@@ -247,6 +251,9 @@ func magnitude_two():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 0.2)
 	do_physics()
 
 func magnitude_three():
@@ -257,6 +264,9 @@ func magnitude_three():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("players"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 0.3)
 	do_physics()
 
 func magnitude_four():
@@ -267,6 +277,9 @@ func magnitude_four():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("players"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 0.4)
 	do_physics()
 
 func magnitude_five():
@@ -276,7 +289,10 @@ func magnitude_five():
 	var mxa = (randi_range(-5, 5) / 100) * percentage
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
-	var ya = bya + mya	
+	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 0.5)	
 	do_physics()
 
 func magnitude_six():
@@ -287,6 +303,9 @@ func magnitude_six():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 2)	
 	do_physics()
 
 func magnitude_seven():
@@ -297,6 +316,9 @@ func magnitude_seven():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 4)	
 	do_physics()
 
 func magnitude_eight():
@@ -307,6 +329,9 @@ func magnitude_eight():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 8)	
 	do_physics()
 
 func magnitude_nine():
@@ -317,6 +342,9 @@ func magnitude_nine():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 16)	
 	do_physics()
 
 func magnitude_ten():
@@ -327,6 +355,9 @@ func magnitude_ten():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 38)	
 	do_physics()
 
 func magnitude_eleven():
@@ -337,6 +368,9 @@ func magnitude_eleven():
 	var mya = (randi_range(-5, 5) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 38)
 	do_physics()
 
 func magnitude_twelve():
@@ -347,6 +381,9 @@ func magnitude_twelve():
 	var mya = (randi_range(-425, 425) / 100) * percentage
 	var xa = bxa + mxa
 	var ya = bya + mya
+	for v in get_tree().get_nodes_in_group("player"):
+		if v.is_on_floor():
+			send_clientside_effects(v, 38)
 	do_physics()
 
 
