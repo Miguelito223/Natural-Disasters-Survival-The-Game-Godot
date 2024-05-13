@@ -96,7 +96,7 @@ func erupt():
 		await get_tree().create_timer(0.5).timeout
 
 func _process(_delta: float) -> void:
-	volcano_area.position = get_lava_level_position()
+	volcano_area.global_position = get_lava_level_position()
 	check_pressure()
 
 
