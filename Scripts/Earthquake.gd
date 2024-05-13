@@ -59,8 +59,8 @@ func do_physics():
 		print("Nuh uh")
 		return
 	
-	var vec = (mag * 25) * Vector3(randi_range(-15, 15) / 10, randi_range(-15, 15) / 10, randi_range(-5, 4) / 10)
-	var ang_vv = Vector3((randi_range(-15, 15) / 10), randi_range(-15, 15) / 10, randi_range(-5, 4) / 10) * (mag * 8)
+	var vec = (mag * 25) * Vector3(randi_range(-15, 15) / 10,  randi_range(-5, 4) / 10, randi_range(-15, 15) / 10)
+	var ang_vv = Vector3((randi_range(-15, 15) / 10),  randi_range(-5, 4) / 10, randi_range(-15, 15) / 10) * (mag * 8)
 	
 	# Si hay una posibilidad de golpear, incrementamos la velocidad angular
 	if Globals.hit_chance(2):
