@@ -19,7 +19,8 @@ void fragment() {
 
     // Apply the offset to the UV coordinate and sample the texture
     vec4 color = texture(TEXTURE, uv + vec2(0.0, offset));
+	color.rgba = Shader_color.rgba;
 
     // Set the fragment color output
-    COLOR = Shader_color;
+    COLOR = color;
 }

@@ -62,6 +62,7 @@ var min_bdradiation = 0
 @onready var animation_tree_node = $AnimationTree
 @onready var mi_personaje_node = $"Model"
 @onready var label = $Name
+@onready var temp_effect = $Temp_Effect/ColorRect
 
 
 
@@ -154,7 +155,7 @@ func body_temp(delta):
 		ambient_equilibrium	= 0
 	
 	body_temperature = clamp(body_temperature + core_equilibrium  + heatsource_equilibrium + coldsource_equilibrium + ambient_equilibrium, min_temp, Max_temp)
-
+	temp_effect.material.set_shader_param("Temp", body_temperature)
 
 	var alpha_hot  =  1-((44-clamp(body_temperature,39,44))/5)
 	var alpha_cold =  ((35-clamp(body_temperature,24,35))/11)

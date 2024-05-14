@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=69 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -19,6 +19,7 @@
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scripts/Death Menu.gd" id="9_jd7ok"]
 [ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Death_Screen_theme.tres" id="11_twqia"]
+[ext_resource type="Shader" path="res://Scenes/temp.gdshader" id="12_w8j6f"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
@@ -440,7 +441,11 @@ shader = ExtResource("7_787g2")
 shader_parameter/amplitude = 0.1
 shader_parameter/frequency = 1.0
 shader_parameter/speed = 1.0
-shader_parameter/Shader_color = Color(0, 0, 1, 0.0862745)
+shader_parameter/Shader_color = Color(0, 0, 0.870588, 0.313726)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t2j75"]
+shader = ExtResource("12_w8j6f")
+shader_parameter/temp = 37.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ynsy4"]
 shader = ExtResource("8_txqea")
@@ -470,15 +475,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.494963, -3.41561e-05, 6.00784e-05, 0.868914)
+bones/4/rotation = Quaternion(0.401368, -2.76821e-05, 6.3381e-05, 0.915917)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.2918, -2.02374e-05, -6.60992e-05, 0.956479)
+bones/5/rotation = Quaternion(0.426386, -2.95375e-05, -6.24996e-05, 0.904541)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.479952, 2.03394e-18, -1.70946e-18, 0.877295)
+bones/7/rotation = Quaternion(-0.407661, 2.67836e-18, -1.76938e-18, 0.913133)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.335245, 0.00244469, 0.0029954, 0.942123)
+bones/8/rotation = Quaternion(-0.487701, 0.00354672, 0.00434567, 0.872993)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -551,14 +556,14 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 1.22635
-parameters/current_delta = 0.029233
+parameters/current_position = 0.607941
+parameters/current_delta = 0.103907
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 1.22635
-parameters/Idle/current_delta = 0.029233
+parameters/Idle/current_position = 0.607941
+parameters/Idle/current_delta = 0.103907
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
 parameters/Jump/current_delta = null
@@ -566,26 +571,26 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 1.22635
-parameters/is_jumping/current_delta = 0.029233
+parameters/is_jumping/current_position = 0.607941
+parameters/is_jumping/current_delta = 0.103907
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 1.22635
-parameters/is_on_floor/current_delta = 0.029233
+parameters/is_on_floor/current_position = 0.607941
+parameters/is_on_floor/current_delta = 0.103907
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 1.22635
-parameters/movement/current_delta = 0.029233
+parameters/movement/current_position = 0.607941
+parameters/movement/current_delta = 0.103907
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 1.22635
-parameters/output/current_delta = 0.029233
+parameters/output/current_position = 0.607941
+parameters/output/current_delta = 0.103907
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
@@ -692,6 +697,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Temp_Effect" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Temp_Effect"]
+material = SubResource("ShaderMaterial_t2j75")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="UnderLava" type="CanvasLayer" parent="."]
 process_mode = 3
