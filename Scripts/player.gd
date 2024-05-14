@@ -103,11 +103,11 @@ func setlife(value):
 
 func sneeze():
 	$"Model/Camera3D/sneeze audio".play()
-	$"Model/Camera3D/Sneeze".emmiting = true
+	$"Model/Camera3D/Sneeze".emitting = true
 
 func vomit():	
 	$"Model/Camera3D/vomit audio".play()
-	$"Model/Camera3D/Vomit".emmiting = true
+	$"Model/Camera3D/Vomit".emitting = true
 
 func _ready():
 

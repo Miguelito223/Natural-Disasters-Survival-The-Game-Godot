@@ -445,7 +445,7 @@ shader_parameter/Shader_color = Color(0, 0, 0.870588, 0.313726)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t2j75"]
 shader = ExtResource("12_w8j6f")
-shader_parameter/temp = 100.0
+shader_parameter/temp = 37.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ynsy4"]
 shader = ExtResource("8_txqea")
@@ -475,15 +475,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.4219, -2.91027e-05, 6.26912e-05, 0.906642)
+bones/4/rotation = Quaternion(0.507309, -3.50095e-05, 5.9631e-05, 0.861764)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.398271, -2.75949e-05, -6.33813e-05, 0.917268)
+bones/5/rotation = Quaternion(0.272843, -1.89274e-05, -6.64862e-05, 0.962059)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.423487, 1.91977e-18, -1.76706e-18, 0.905902)
+bones/7/rotation = Quaternion(-0.489542, 2.84773e-18, -1.68644e-18, 0.87198)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.456261, 0.00331951, 0.00406728, 0.889831)
+bones/8/rotation = Quaternion(-0.313467, 0.00228722, 0.00280245, 0.949592)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -556,14 +556,14 @@ root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/current_length = 1.66667
-parameters/current_position = 1.10754
-parameters/current_delta = 0.00644675
+parameters/current_position = 0.441358
+parameters/current_delta = 0.00755633
 parameters/Fall/current_length = null
 parameters/Fall/current_position = null
 parameters/Fall/current_delta = null
 parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 1.10754
-parameters/Idle/current_delta = 0.00644675
+parameters/Idle/current_position = 0.441358
+parameters/Idle/current_delta = 0.00755633
 parameters/Jump/current_length = null
 parameters/Jump/current_position = null
 parameters/Jump/current_delta = null
@@ -571,26 +571,26 @@ parameters/Walk/current_length = null
 parameters/Walk/current_position = null
 parameters/Walk/current_delta = null
 parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 1.10754
-parameters/is_jumping/current_delta = 0.00644675
+parameters/is_jumping/current_position = 0.441358
+parameters/is_jumping/current_delta = 0.00755633
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
 parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 1.10754
-parameters/is_on_floor/current_delta = 0.00644675
+parameters/is_on_floor/current_position = 0.441358
+parameters/is_on_floor/current_delta = 0.00755633
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
 parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 1.10754
-parameters/movement/current_delta = 0.00644675
+parameters/movement/current_position = 0.441358
+parameters/movement/current_delta = 0.00755633
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
 parameters/output/current_length = 1.66667
-parameters/output/current_position = 1.10754
-parameters/output/current_delta = 0.00644675
+parameters/output/current_position = 0.441358
+parameters/output/current_delta = 0.00755633
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
