@@ -155,7 +155,8 @@ func body_temp(delta):
 		ambient_equilibrium	= 0
 	
 	body_temperature = clamp(body_temperature + core_equilibrium  + heatsource_equilibrium + coldsource_equilibrium + ambient_equilibrium, min_temp, Max_temp)
-	temp_effect.material.set_shader_param("Temp", body_temperature)
+	temp_effect.material.set_shader_parameter("temp", body_temperature)
+	temp_effect.material.set_shader_parameter("Temp", body_temperature)
 
 	var alpha_hot  =  1-((44-clamp(body_temperature,39,44))/5)
 	var alpha_cold =  ((35-clamp(body_temperature,24,35))/11)
