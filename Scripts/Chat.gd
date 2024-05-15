@@ -23,9 +23,8 @@ func _ready() -> void:
 
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed('Select Chat'):
+	if Input.is_action_just_released('Select Chat'):
 		$LineEdit.grab_focus()
-		$LineEdit.text = ""
 
 	if $LineEdit.text.begins_with("/"):
 		if Input.is_action_just_pressed('dev_console_autocomplete'):
@@ -37,22 +36,23 @@ func _input(_event: InputEvent) -> void:
 					$LineEdit.caret_column = 100000
 
 		if Input.is_action_just_pressed('_dev_console_enter'):
-			history.push_front($LineEdit.text.erase(0, 1))
-			
-			if Globals.is_networking:
-				if not is_multiplayer_authority():
-					return
-					
-				if $LineEdit.text.begins_with("/"):
-					msg_rpc(Globals.username, $LineEdit.text)
+			if $LineEdit.has_focus():
+				history.push_front($LineEdit.text.erase(0, 1))
+				
+				if Globals.is_networking:
+					if not is_multiplayer_authority():
+						return
+						
+					if $LineEdit.text.begins_with("/"):
+						msg_rpc(Globals.username, $LineEdit.text)
+					else:
+						msg_rpc.rpc(Globals.username, $LineEdit.text)
 				else:
-					msg_rpc.rpc(Globals.username, $LineEdit.text)
-			else:
-				msg_rpc(Globals.username, $LineEdit.text)
+					msg_rpc(Globals.username, $LineEdit.text)
 
-			history_index = -1
-			$LineEdit.text = ""
-			$LineEdit.release_focus()
+				history_index = -1
+				$LineEdit.text = ""
+				$LineEdit.release_focus()
 			$Button.release_focus()
 		elif Input.is_action_just_released('_dev_console_prev'):
 			if history.size() == 0:
@@ -71,17 +71,18 @@ func _input(_event: InputEvent) -> void:
 
 	else:
 		if Input.is_action_just_pressed('Enter'):
-			if Globals.is_networking:
-				if not is_multiplayer_authority():
-					return
+			if $LineEdit.has_focus():
+				if Globals.is_networking:
+					if not is_multiplayer_authority():
+						return
 
-				msg_rpc.rpc(Globals.username, $LineEdit.text)
-			else:
-				msg_rpc(Globals.username, $LineEdit.text)
+					msg_rpc.rpc(Globals.username, $LineEdit.text)
+				else:
+					msg_rpc(Globals.username, $LineEdit.text)
 
-			$LineEdit.text = ""
-			$LineEdit.release_focus()
-			$Button.release_focus()
+				$LineEdit.text = ""
+				$LineEdit.release_focus()
+				$Button.release_focus()
 	
 @rpc("any_peer", "call_local")
 func _run_command(cmd: String) -> void:

@@ -209,7 +209,8 @@ func Underwater_or_Underlava_effects():
 func IsOnFire_effects():
 	$Fire.emitting = IsOnFire
 	if IsOnFire:
-		damage(10)
+		if randi_range(1,5) == 5:
+			damage(10)
 
 func rain_sound():
 	Globals.is_raining = rain_node.emitting and Globals.is_outdoor(self) and Outdoor
