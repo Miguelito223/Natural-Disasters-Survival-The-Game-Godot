@@ -57,7 +57,7 @@ func calculate_height(distance):
 	if distance <= total_distance / 2:
 		return lerp(tsunami_start_height, tsunami_middle_height, distance / (total_distance / 2))
 	else:
-		return lerp(tsunami_middle_height, tsunami_finish_height, (distance - total_distance / 2) / (total_distance / 2))
+		return max(lerp(tsunami_middle_height, tsunami_finish_height, (distance - total_distance / 2) / (total_distance / 2)), 0)
 
 
 

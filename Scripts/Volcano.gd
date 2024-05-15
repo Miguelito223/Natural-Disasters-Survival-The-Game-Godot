@@ -81,7 +81,7 @@ func erupt():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = player.is_multiplayer_authority() or true
 				player.snow_node.emitting = false
-				$"../WorldEnvironment".environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+				$"../WorldEnvironment".environment.sky.sky_material.set_shader_parameter("clouds_fuzziness", 1)
 				$"../WorldEnvironment".environment.volumetric_fog_enabled = player.is_multiplayer_authority() or true
 				$"../WorldEnvironment".environment.volumetric_fog_albedo = Color(0.5,0.5,0.5)
 			else:
@@ -89,7 +89,7 @@ func erupt():
 				player.sand_node.emitting = false
 				player.dust_node.emitting = false
 				player.snow_node.emitting = false
-				$"../WorldEnvironment".environment.sky.sky_material.set_shader_parameter("cloud_coverage", 1)
+				$"../WorldEnvironment".environment.sky.sky_material.set_shader_parameter("clouds_fuzziness", 1)
 				$"../WorldEnvironment".environment.volumetric_fog_enabled = false
 				$"../WorldEnvironment".environment.volumetric_fog_albedo = Color(1,1,1)				
 			
