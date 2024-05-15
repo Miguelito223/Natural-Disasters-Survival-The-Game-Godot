@@ -282,7 +282,7 @@ func _physics_process(delta):
 				damage(50)
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("Jump"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
@@ -296,7 +296,7 @@ func _physics_process(delta):
 	else:
 		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
 
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("Jump"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			animation_tree_node.set("parameters/is_jumping/transition_request", "true")

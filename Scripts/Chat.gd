@@ -23,6 +23,10 @@ func _ready() -> void:
 
 
 func _input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed('Select Chat'):
+		$LineEdit.grab_focus()
+		$LineEdit.text = ""
+
 	if $LineEdit.text.begins_with("/"):
 		if Input.is_action_just_pressed('dev_console_autocomplete'):
 			for method in autocomplete_methods:
@@ -47,7 +51,9 @@ func _input(_event: InputEvent) -> void:
 				msg_rpc(Globals.username, $LineEdit.text)
 
 			history_index = -1
-			$LineEdit.text = ''
+			$LineEdit.text = ""
+			$LineEdit.release_focus()
+			$Button.release_focus()
 		elif Input.is_action_just_released('_dev_console_prev'):
 			if history.size() == 0:
 				return
@@ -62,6 +68,20 @@ func _input(_event: InputEvent) -> void:
 			history_index = clamp(history_index - 1, 0, history.size() - 1)
 			$LineEdit.text = "/" + history[history_index]
 			$LineEdit.caret_column = 100000
+
+	else:
+		if Input.is_action_just_pressed('Enter'):
+			if Globals.is_networking:
+				if not is_multiplayer_authority():
+					return
+
+				msg_rpc.rpc(Globals.username, $LineEdit.text)
+			else:
+				msg_rpc(Globals.username, $LineEdit.text)
+
+			$LineEdit.text = ""
+			$LineEdit.release_focus()
+			$Button.release_focus()
 	
 @rpc("any_peer", "call_local")
 func _run_command(cmd: String) -> void:
@@ -130,3 +150,5 @@ func _on_button_pressed():
 		msg_rpc(Globals.username, $LineEdit.text)
 	
 	$LineEdit.text = ""
+	$LineEdit.release_focus()
+	$Button.release_focus()

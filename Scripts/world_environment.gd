@@ -6,6 +6,10 @@ extends WorldEnvironment
 var minutes_per_day = 1440
 var minutes_per_hour = 60
 var ingame_to_real_minute_duration = (2 * PI) / minutes_per_day
+var sun_node # Referencia al nodo del sol
+var sun_speed = 15  # Velocidad a la que el sol se mueve en grados por hora
+var sun_angle = -90 # Ángulo inicial del sol
+var moon_angle = 90
 
 @export var ingame_speed = 1
 @export var initial_hour = 12:
@@ -48,6 +52,9 @@ func _recalculate_time(delta):
 	if past_minute != Globals.Minute:
 		past_minute = Globals.Minute
 
-	Sun.rotation_degrees.x = lerpf(Sun.rotation_degrees.x, 90 - float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
-	Moon.rotation_degrees.x = lerpf(Moon.rotation_degrees.x, 90 + float((Globals.Minute + Globals.Hour * 60) * 0.2500005), ingame_speed * delta)
-	
+	var angle_increment = sun_speed / 60.0 * delta
+	sun_angle += angle_increment
+	moon_angle -= angle_increment
+
+	Sun.rotation_degrees.x = sun_angle
+	Moon.rotation_degrees.x = moon_angle

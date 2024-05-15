@@ -157,7 +157,7 @@ tracks/1/path = NodePath(".:Pressure")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(1.4985, 126.7, 300),
+"times": PackedFloat32Array(0, 126.7, 300),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [0, 100, 0]
@@ -192,7 +192,7 @@ tracks/4/enabled = true
 tracks/4/path = NodePath("Volcano/ref_skeleton/Skeleton3D:lava_level")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
-tracks/4/keys = PackedFloat32Array(0, 1, 0, -1, 0, 125.567, 1, 3.11953e-05, 16.4195, 3.11953e-05, 300, 1, 0, -1, 0)
+tracks/4/keys = PackedFloat32Array(0, 1, 0, -1, 0, 126.673, 1, 3.11953e-05, 16.4195, 3.11953e-05, 300, 1, 0, -1, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4f0xq"]
 _data = {
@@ -253,6 +253,9 @@ shape = SubResource("ConcavePolygonShape3D_kwbbx")
 
 [node name="Volcano" parent="." instance=ExtResource("2_5ph2p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.9742, 0)
+
+[node name="Skeleton3D" parent="Volcano/ref_skeleton" index="0"]
+bones/2/position = Vector3(0, -1, 0)
 
 [node name="ref" parent="Volcano/ref_skeleton/Skeleton3D" index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_mol2f")

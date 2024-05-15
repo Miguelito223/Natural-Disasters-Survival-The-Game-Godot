@@ -14,6 +14,8 @@ var door_open = false
 func open_door():
 	print("Open the door!!")
 	door.rotation.y = deg_to_rad(145)
+	if not door_open_sound.playing:
+		door_open_sound.play()
 	door_collisions.rotation.y = deg_to_rad(145)
 	door_open = true
 
@@ -21,6 +23,8 @@ func open_door():
 func close_door():
 	print("Close the door!!")
 	door.rotation.y = deg_to_rad(0)
+	if not door_close_sound.playing:
+		door_close_sound.play()
 	door_collisions.rotation.y = deg_to_rad(0)
 	door_open = false
 
