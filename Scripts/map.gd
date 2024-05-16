@@ -54,6 +54,7 @@ func _exit_tree():
 
 func _ready():
 	Globals.map = self
+	is_sun()
 
 	if not Globals.is_networking:
 		player_join(1)

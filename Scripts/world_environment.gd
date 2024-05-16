@@ -7,7 +7,7 @@ var minutes_per_day = 1440
 var minutes_per_hour = 60
 var ingame_to_real_minute_duration = (2 * PI) / minutes_per_day
 var sun_node # Referencia al nodo del sol
-var sun_speed = 15  # Velocidad a la que el sol se mueve en grados por hora
+var celestial_speed_per_hour = 15  # Velocidad a la que el sol se mueve en grados por hora
 var sun_angle = -90 # Ángulo inicial del sol
 var moon_angle = 90
 
@@ -52,9 +52,21 @@ func _recalculate_time(delta):
 	if past_minute != Globals.Minute:
 		past_minute = Globals.Minute
 
-	var angle_increment = sun_speed / 60.0 * delta
-	sun_angle += angle_increment
-	moon_angle -= angle_increment
+	# Obtener la hora del día en horas decimales (ej. 14:30 = 14.5)
+	var time_of_day = Globals.Hour + Globals.Minute / 60.0
+
+	# Calcular el ángulo del sol en función de la hora del día
+	sun_angle = 90 + (time_of_day * celestial_speed_per_hour)
+
+	# Calcular el ángulo de la luna (asumiendo una fase opuesta al sol)
+	moon_angle = -90 + (time_of_day * celestial_speed_per_hour)
+
+
+	# Asegurarse de que los ángulos permanezcan en el rango [-90, 270]
+	if sun_angle < -90:
+		sun_angle += 360
+	if moon_angle < -90:
+		moon_angle += 360
 
 	Sun.rotation_degrees.x = sun_angle
 	Moon.rotation_degrees.x = moon_angle
