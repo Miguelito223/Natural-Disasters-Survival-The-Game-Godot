@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
-[ext_resource type="Texture2D" uid="uid://dj5sglybifc2g" path="res://Sprites/nightsky_00_00_00.png" id="3_8v2uk"]
 [ext_resource type="Script" path="res://Scripts/world_environment.gd" id="3_575xv"]
+[ext_resource type="Texture2D" uid="uid://p56xwtihxq22" path="res://Sprites/dark-black-texture-with-beautiful-stars-vector.jpg" id="3_bukha"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_je8e7"]
 [ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="4_6560e"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_sr3y7"]
@@ -49,7 +49,7 @@ shader_parameter/clouds_fuzziness = 0.5
 shader_parameter/clouds_weight = 0.0
 shader_parameter/clouds_blur = 0.25
 shader_parameter/stars_speed = 1.0
-shader_parameter/stars_texture = ExtResource("3_8v2uk")
+shader_parameter/stars_texture = ExtResource("3_bukha")
 shader_parameter/overwritten_time = 0.0
 
 [sub_resource type="Sky" id="Sky_lk1p6"]

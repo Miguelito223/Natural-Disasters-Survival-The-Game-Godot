@@ -374,6 +374,7 @@ func _reset_player():
 	IsUnderLava = false
 	IsInWater = false
 	IsInLava = false
+	IsOnFire = false
 
 
 	print("Finish Resetting player :D")
