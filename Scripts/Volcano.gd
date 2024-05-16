@@ -10,7 +10,7 @@ var earthquake_scene = preload("res://Scenes/earthquake.tscn")
 @export var Pressure = 0
 @export var IsGoingToErupt = false
 @export var IsPressureLeaking = false 
-var old_entities_inside_lava = {}
+@export var IsVolcanoAsh = false
 
 @onready var skeleton = $Volcano/ref_skeleton/Skeleton3D
 @onready var volcano = $Volcano
@@ -62,6 +62,8 @@ func erupt():
 
 	await await get_tree().create_timer(10).timeout
 
+	IsVolcanoAsh = true
+
 	$Smoke.emitting = true
 
 	Globals.Temperature_target =  randf_range(30,40)
@@ -72,11 +74,11 @@ func erupt():
 	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
 	Globals.Wind_speed_target = randf_range(0, 50)
 
-	while get_parent().current_weather_and_disaster == "Volcano":
+	while get_parent().current_weather_and_disaster == "Volcano" and IsVolcanoAsh:
 		var player = Globals.local_player
 
 		if is_instance_valid(player):
-			if Globals.is_outdoor(player):
+			if Globals.is_outdoor(player): 
 				player.rain_node.emitting = false
 				player.sand_node.emitting = false
 				player.dust_node.emitting = player.is_multiplayer_authority() or true
@@ -94,6 +96,15 @@ func erupt():
 				$"../WorldEnvironment".environment.volumetric_fog_albedo = Color(1,1,1)				
 			
 		await get_tree().create_timer(0.5).timeout
+
+	while get_parent().current_weather_and_disaster != "Volcano":
+		if is_instance_valid(volcano):
+			IsVolcanoAsh = false
+			queue_free()
+
+		Globals.points += 1
+		
+		break
 
 func _process(_delta: float) -> void:
 	volcano_area.global_position = get_lava_level_position()

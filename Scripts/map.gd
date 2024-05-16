@@ -646,7 +646,7 @@ func is_volcano():
 
 	add_child(volcano, true)
 
-	while current_weather_and_disaster == "Volcano":
+	while current_weather_and_disaster == "Volcano" and not volcano.IsVolcanoAsh:
 		var player = Globals.local_player
 
 		if is_instance_valid(player):
@@ -664,6 +664,7 @@ func is_volcano():
 
 	while current_weather_and_disaster != "Volcano":
 		if is_instance_valid(volcano):
+			volcano.IsVolcanoAsh = false
 			volcano.queue_free()
 
 		Globals.points += 1
