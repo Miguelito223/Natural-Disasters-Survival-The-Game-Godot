@@ -178,17 +178,41 @@ func is_something_blocking_wind(entity):
 	return result
 
 func calcule_bounding_radius(entity):
+	var max_radius = 0.0
+	
 	for child in entity.get_children():
 		if child.get_child_count() > 0:
-			calcule_bounding_radius(child)
+			return calcule_bounding_radius(child)
 
 		if child.is_class("MeshInstance3D") and child != null:
-			var aabb = child.get_transformed_aabb()
-			var size = aabb.size
-			var bounding_radius = size.length() / 2.0
-			return bounding_radius
-		else:
-			return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
+			var mesh = child.mesh
+			var aabb = mesh.get_aabb()
+			
+			# Obtener los 8 vértices de la AABB original
+			var vertices = [
+				aabb.position,
+				aabb.position + Vector3(aabb.size.x, 0, 0),
+				aabb.position + Vector3(0, aabb.size.y, 0),
+				aabb.position + Vector3(0, 0, aabb.size.z),
+				aabb.position + Vector3(aabb.size.x, aabb.size.y, 0),
+				aabb.position + Vector3(aabb.size.x, 0, aabb.size.z),
+				aabb.position + Vector3(0, aabb.size.y, aabb.size.z),
+				aabb.position + aabb.size
+			]
+			
+			# Transformar los vértices con la matriz de transformación del MeshInstance3D
+			var transformed_vertices = []
+			for vertex in vertices:
+				transformed_vertices.append(child.transform * vertex )
+			
+			# Calcular el nuevo AABB a partir de los vértices transformados
+            # Calcular el radio de contorno a partir de los vértices transformados
+			for vertex in transformed_vertices:
+				var distance = vertex.length()
+				max_radius = max(max_radius, distance)
+
+
+	return max_radius
 
 
 
