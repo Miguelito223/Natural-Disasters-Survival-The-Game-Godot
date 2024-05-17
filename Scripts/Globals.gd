@@ -172,37 +172,44 @@ func vec2_to_vec3(vector):
 func is_something_blocking_wind(entity):
 	var space_state = entity.get_world_3d().direct_space_state
 	var position = entity.global_position + Vector3(0, 10, 0)
-	var ray = PhysicsRayQueryParameters3D.create(position, position + vec2_to_vec3(Wind_Direction) * 300, 1, [entity])
+	var ray = PhysicsRayQueryParameters3D.create(position, position + (vec2_to_vec3(Wind_Direction) * 300), 1, [entity])
 	var result = space_state.intersect_ray(ray)
 
 	return result
 
 func calcule_bounding_radius(entity):
-	var mesh_instance = entity.get_node_or_null("MeshInstance3D") # Ajusta esto según la estructura de tu entidad
-	if mesh_instance != null:
-		var aabb = mesh_instance.get_transformed_aabb()
-		var size = aabb.size
-		var bounding_radius = size.length() / 2.0
-		return bounding_radius
-	else:
-		return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
+	for child in entity.get_children():
+		if child.get_child_count() > 0:
+			calcule_bounding_radius(child)
+
+		if child.is_class("MeshInstance3D") and child != null:
+			var aabb = child.get_transformed_aabb()
+			var size = aabb.size
+			var bounding_radius = size.length() / 2.0
+			return bounding_radius
+		else:
+			return 0.0 # O algún otro valor predeterminado en caso de que no se encuentre MeshInstance
+
+
 
 func search_in_node(node, origin: Vector3, radius: float, result: Array):
 	for i in range(node.get_child_count()):
 		var child = node.get_child(i)
 		if child.is_class("Spatial"): # Solo considerar nodos Spatial (puedes ajustar esto según tus necesidades)
-			var distance = origin.distance_to(child.global_transform.origin)
+			var distance = origin.distance_to(child.global_position)
 			if distance <= radius:
 				result.append(child)
 		# Recursión si el nodo tiene hijos
 		if child.get_child_count() > 0:
 			search_in_node(child, origin, radius, result)
 
+	return result
+
 func find_in_sphere(origin: Vector3, radius: float) -> Array:
 	var result = []
 	var scene_root = get_tree().get_root()
 	
-	search_in_node(scene_root, origin, radius, result)
+	result = search_in_node(scene_root, origin, radius, result)
 
 	return result
 
