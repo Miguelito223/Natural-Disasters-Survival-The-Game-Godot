@@ -204,7 +204,6 @@ func find_in_sphere(origin: Vector3, radius: float) -> Array:
 	
 	search_in_node(scene_root, origin, radius, result)
 
-	print(result)
 	return result
 
 func Area(entity):

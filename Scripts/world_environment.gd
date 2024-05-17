@@ -10,6 +10,7 @@ var sun_node # Referencia al nodo del sol
 var celestial_speed_per_hour = 15  # Velocidad a la que el sol se mueve en grados por hora
 var sun_angle = -90 # Ángulo inicial del sol
 var moon_angle = 90
+var interpolation_speed = 1.0
 
 @export var ingame_speed = 1
 @export var initial_hour = 12:
@@ -23,13 +24,9 @@ func _ready():
 	if Globals.is_networking:
 		if multiplayer.is_server():
 			Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
-			Sun.rotation_degrees.x = 0
-			Moon.rotation_degrees.x = 0
 			Data.load_file()
 	else:
 		Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
-		Sun.rotation_degrees.x = 0
-		Moon.rotation_degrees.x = 0
 		Data.load_file()		
 
 func _process(delta):
@@ -68,5 +65,5 @@ func _recalculate_time(delta):
 	if moon_angle < -90:
 		moon_angle += 360
 
-	Sun.rotation_degrees.x = sun_angle
-	Moon.rotation_degrees.x = moon_angle
+	Sun.rotation_degrees.x = lerp(Sun.rotation_degrees.x,sun_angle, interpolation_speed * delta)
+	Moon.rotation_degrees.x = lerp(Moon.rotation_degrees.x,moon_angle, interpolation_speed * delta)
