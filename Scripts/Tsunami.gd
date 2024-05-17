@@ -50,7 +50,6 @@ func _physics_process(delta):
 		elif body.is_in_group("player"):
 			if not body.is_on_floor():
 				body.velocity = self.velocity
-				body.move_and_slide()
 
 func calculate_height(distance):
 	# Height increases up to a point and then decreases

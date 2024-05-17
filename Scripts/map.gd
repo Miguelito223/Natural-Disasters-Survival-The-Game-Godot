@@ -188,7 +188,6 @@ func wind(object):
 			
 			if delta_velocity.length() != 0:
 				object.set_velocity(delta_velocity * 0.3)
-				object.move_and_slide()
 
 
 	elif object.is_in_group("movable_objects") and object.is_class("RigidBody3D"):

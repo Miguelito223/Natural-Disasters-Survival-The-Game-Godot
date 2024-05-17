@@ -48,5 +48,4 @@ func _physics_process(_delta):
 			var perpendicular_direction = Vector3(-direction.z, 0, direction.x)  # Dirección perpendicular al vector hacia el tornado
 			var force = perpendicular_direction * tornado_strength
 			body.velocity = force
-			body.move_and_slide()
 
