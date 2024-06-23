@@ -166,8 +166,18 @@ func wind(object):
 	if object.is_in_group("player"):
 		var is_outdoor = Globals.is_outdoor(object)
 
-		# Calcular el área expuesta al viento
-		var area_percentage = Globals.calculate_exposed_area(object, 10)
+		var pos = object.global_position
+		var hit_left = Globals.perform_trace_wind(object, Vector3(1, 0, 0))
+		var hit_right = Globals.perform_trace_wind(object, Vector3(-1, 0, 0))
+		var hit_forward = Globals.perform_trace_wind(object, Vector3(0, 1, 0))
+		var hit_behind = Globals.perform_trace_wind(object, Vector3(0, -1, 0))
+		
+		var distance_left_right = hit_left.distance_to(hit_right)
+		var distance_forward = pos.distance_to(hit_forward)
+		var distance_behind = pos.distance_to(hit_behind)
+		
+		var area = (0.5 * (distance_left_right * distance_forward)) + (0.5 * (distance_left_right * distance_behind))
+		var area_percentage = clamp(area / 5000000, 0, 1)
 		
 		# Calcular la velocidad del viento local
 		var local_wind = area_percentage * Globals.Wind_speed

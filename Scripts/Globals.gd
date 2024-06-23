@@ -95,6 +95,18 @@ func perform_trace_collision(ply, direction):
 
 	return result
 
+func perform_trace_wind(ply, direction):
+	var start_pos = ply.global_position
+	var end_pos = start_pos + direction * 60000
+	var space_state = ply.get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos, 1, [RigidBody3D, PhysicsBody3D])
+	var result = space_state.intersect_ray(ray)
+
+	if result:
+		return result.position
+	else:
+		return end_pos
+
 func get_node_by_id_recursive(node: Node, node_id: int) -> Node:
 	if node.get_instance_id() == node_id:
 		return node
@@ -206,7 +218,7 @@ func calcule_bounding_radius(entity):
 				transformed_vertices.append(child.transform * vertex )
 			
 			# Calcular el nuevo AABB a partir de los vértices transformados
-            # Calcular el radio de contorno a partir de los vértices transformados
+			# Calcular el radio de contorno a partir de los vértices transformados
 			for vertex in transformed_vertices:
 				var distance = vertex.length()
 				max_radius = max(max_radius, distance)
