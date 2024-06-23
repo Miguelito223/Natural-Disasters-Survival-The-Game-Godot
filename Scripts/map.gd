@@ -181,7 +181,7 @@ func wind(object):
 		
 		# Calcular la velocidad del viento local
 		var local_wind = area_percentage * Globals.Wind_speed
-		if not is_outdoor:
+		if not is_outdoor and Globals.is_something_blocking_wind(object):
 			local_wind = 0
 
 		object.body_wind = local_wind
