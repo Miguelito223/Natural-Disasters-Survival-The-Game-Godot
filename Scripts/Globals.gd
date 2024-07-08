@@ -251,8 +251,7 @@ func wind(object):
 	# Verificar si el objeto es un jugador
 	if object.is_in_group("player"):
 		var is_outdoor = is_outdoor(object)
-
-		var pos = object.global_position
+		var is_something_blocking_wind = is_something_blocking_wind(object)
 		var hit_left = perform_trace_wind(object, Vector3(1, 0, 0))
 		var hit_right = perform_trace_wind(object, Vector3(-1, 0, 0))
 		var hit_forward = perform_trace_wind(object, Vector3(0, 0, 1))
@@ -266,7 +265,7 @@ func wind(object):
 		
 		# Calcular la velocidad del viento local
 		var local_wind = area_percentage * Wind_speed
-		if not is_outdoor and is_something_blocking_wind(object):
+		if not is_outdoor or is_something_blocking_wind:
 			local_wind = 0
 
 		object.body_wind = local_wind
@@ -278,17 +277,15 @@ func wind(object):
 		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
 
 		# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
-		if is_outdoor and not is_something_blocking_wind(object):
+		if is_outdoor and not is_something_blocking_wind:
 			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
 			
 			if delta_velocity.length() != 0:
 				object.set_velocity(delta_velocity * 0.3)
-
-
 	elif object.is_in_group("movable_objects") and object.is_class("RigidBody3D"):
 		var is_outdoor = is_outdoor(object)
-
-		if is_outdoor and not is_something_blocking_wind(object):
+		var is_something_blocking_wind = is_something_blocking_wind(object)
+		if is_outdoor and not is_something_blocking_wind:
 			var area = Area(object)
 			var mass = object.mass
 
