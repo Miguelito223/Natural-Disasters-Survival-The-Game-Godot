@@ -84,9 +84,9 @@ func convert_KMPHtoMe(kmph):
 
 func convert_VectorToAngle(vector):
 	var x = vector.x
-	var y = vector.y
+	var y = vector.z
 	
-	return atan2(y,x)
+	return int(360 + rad_to_deg(atan2(y,x))) % 360
 
 func perform_trace_collision(ply, direction):
 	var start_pos = ply.global_position
@@ -178,7 +178,7 @@ func is_something_blocking_wind(entity):
 	var start_pos = entity.global_position
 	var end_pos = start_pos + (Wind_Direction * 300)
 	var space_state = entity.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos )
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
 	ray.exclude = [entity.get_rid()]
 	var result = space_state.intersect_ray(ray)
 

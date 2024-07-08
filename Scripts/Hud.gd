@@ -29,7 +29,7 @@ func _process(_delta):
 	var x = 272.5 - (w/2)
 	var y = 972.5  - (h/2)
 
-	$Label.text = "Temperature: " + str(snapped(Globals.Temperature, 0.1)) + "ºC\n" + "Humidity: " + str(round(Globals.Humidity)) + "%\n" + "Wind Direction: " + str(round(rad_to_deg(Globals.convert_VectorToAngle(Globals.Wind_Direction)))) + "º\n" + "Wind Velocity: " + str(round(Globals.Wind_speed)) + "km\n" + "Body Hearth: " + str(round(player.hearth)) + "%\n" + "Body Temperature: " + str(snapped(player.body_temperature, 0.1)) + "ºC\n" + "Body Oxygen: " + str(round(player.body_oxygen))  + "%\n" + "Local Wind: " + str(round(player.body_wind)) + "km\n"
+	$Label.text = "Temperature: " + str(snapped(Globals.Temperature, 0.1)) + "ºC\n" + "Humidity: " + str(round(Globals.Humidity)) + "%\n" + "Wind Direction: " + str(round(Globals.convert_VectorToAngle(Globals.Wind_Direction))) + "º\n" + "Wind Speed: " + str(round(Globals.Wind_speed)) + "km/s\n" + "Body Hearth: " + str(round(player.hearth)) + "%\n" + "Body Temperature: " + str(snapped(player.body_temperature, 0.1)) + "ºC\n" + "Body Oxygen: " + str(round(player.body_oxygen))  + "%\n" + "Local Wind Speed: " + str(round(player.body_wind)) + "km/s\n"
 	$Heart.scale = Vector2(w,h)
 	$Heart.position = Vector2(x,y)
 	$FPS.text = "FPS: " + str(Engine.get_frames_per_second())
