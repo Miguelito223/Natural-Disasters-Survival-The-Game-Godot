@@ -33,7 +33,7 @@ var pressure: float = 10000
 var oxygen: float  = 100
 var bradiation: float = 0
 var Humidity: float = 25
-var Wind_Direction: Vector2 = Vector2(1,0)
+var Wind_Direction: Vector3 = Vector3(1,0,0)
 var Wind_speed: float = 0
 var is_raining: bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -50,7 +50,7 @@ var pressure_target: float = 10000
 var oxygen_target: float = 100
 var bradiation_target: float = 0
 var Humidity_target: float = 25
-var Wind_Direction_target: Vector2 = Vector2(1,0)
+var Wind_Direction_target: Vector3 = Vector3(1,0,0)
 var Wind_speed_target: float = 0
 
 #Globals Weather original
@@ -59,7 +59,7 @@ var pressure_original: float = 10000
 var oxygen_original: float = 100
 var bradiation_original: float = 0
 var Humidity_original: float = 25
-var Wind_Direction_original: Vector2 = Vector2(1,0)
+var Wind_Direction_original: Vector3 = Vector3(1,0,0)
 var Wind_speed_original: float = 0
 
 var seconds = Time.get_unix_time_from_system()
@@ -96,7 +96,10 @@ func perform_trace_collision(ply, direction):
 	ray.exclude = [ply.get_rid()]
 	var result = space_state.intersect_ray(ray)
 
-	return result
+	if result:
+		return true
+	else:
+		return false
 
 func perform_trace_wind(ply, direction):
 	var start_pos = ply.global_position
@@ -172,14 +175,17 @@ func vec2_to_vec3(vector):
 	return Vector3(vector.x, 0, vector.y)
 
 func is_something_blocking_wind(entity):
-	var start_pos = entity.global_position + Vector3(0, 10, 0)
-	var end_pos = start_pos + (vec2_to_vec3(Wind_Direction) * 300)
+	var start_pos = entity.global_position
+	var end_pos = start_pos + (Wind_Direction * 300)
 	var space_state = entity.get_world_3d().direct_space_state
 	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos )
 	ray.exclude = [entity.get_rid()]
 	var result = space_state.intersect_ray(ray)
 
-	return result
+	if result:
+		return true
+	else:
+		return false
 
 func calcule_bounding_radius(entity):
 	var max_radius = 0.0
@@ -240,6 +246,65 @@ func find_in_sphere(origin: Vector3, radius: float) -> Array:
 	result = search_in_node(scene_root, origin, radius, result)
 
 	return result
+
+func wind(object):
+	# Verificar si el objeto es un jugador
+	if object.is_in_group("player"):
+		var is_outdoor = is_outdoor(object)
+
+		var pos = object.global_position
+		var hit_left = perform_trace_wind(object, Vector3(1, 0, 0))
+		var hit_right = perform_trace_wind(object, Vector3(-1, 0, 0))
+		var hit_forward = perform_trace_wind(object, Vector3(0, 0, 1))
+		var hit_behind = perform_trace_wind(object, Vector3(0, 0,-1))
+		
+		var distance_left_right = hit_left.distance_to(hit_right)
+		var distance_forward_behind = hit_forward.distance_to(hit_behind)
+		
+		var area = distance_left_right * distance_forward_behind / 2
+		var area_percentage = clamp(area / 100, 0, 1)
+		
+		# Calcular la velocidad del viento local
+		var local_wind = area_percentage * Wind_speed
+		if not is_outdoor and is_something_blocking_wind(object):
+			local_wind = 0
+
+		object.body_wind = local_wind
+		
+		# Calcular la velocidad del viento y la fricción
+		var wind_vel = convert_MetoSU(convert_KMPHtoMe((clamp(((clamp(local_wind / 256, 0, 1) * 5) ** 2) * local_wind, 0, local_wind) / 2.9225))) * Wind_Direction
+		var frictional_scalar = clamp(wind_vel.length(), -400, 400)
+		var frictional_velocity = frictional_scalar * -wind_vel.normalized()
+		var wind_vel_new = (wind_vel + frictional_velocity) * 0.5
+
+		# Verificar si está al aire libre y no hay obstáculos que bloqueen el viento
+		if is_outdoor and not is_something_blocking_wind(object):
+			var delta_velocity = (object.get_velocity() - wind_vel_new) - object.get_velocity()
+			
+			if delta_velocity.length() != 0:
+				object.set_velocity(delta_velocity * 0.3)
+
+
+	elif object.is_in_group("movable_objects") and object.is_class("RigidBody3D"):
+		var is_outdoor = is_outdoor(object)
+
+		if is_outdoor and not is_something_blocking_wind(object):
+			var area = Area(object)
+			var mass = object.mass
+
+			var force_mul_area = clamp((area / 680827), 0, 1) # bigger the area >> higher the f multiplier is
+			var friction_mul = clamp((mass / 50000), 0, 1) # lower the mass  >> lower frictional force 
+			var avrg_mul = (force_mul_area + friction_mul) / 2 
+			
+			var wind_vel = convert_MetoSU(convert_KMPHtoMe(Wind_speed / 2.9225)) * Wind_Direction
+			var frictional_scalar = clamp(wind_vel.length(), 0, mass)
+			var frictional_velocity = frictional_scalar * -wind_vel.normalized()
+			var wind_vel_new = (wind_vel + frictional_velocity) * -1
+			
+			var windvel_cap = wind_vel_new.length() - object.get_linear_velocity().length()
+
+			if windvel_cap > 0:
+				object.add_constant_central_force(wind_vel_new * avrg_mul) 
 
 func Area(entity):
 	if not "bounding_radius_area" in entity or entity.bounding_radius_area == null:

@@ -71,7 +71,7 @@ func erupt():
 	Globals.bradiation_target = 0
 	Globals.oxygen_target = 0
 	Globals.pressure_target = randf_range(10000,10020)
-	Globals.Wind_Direction_target =  Vector2(randf_range(-1,1),randf_range(-1,1))
+	Globals.Wind_Direction_target =  Vector3(randf_range(-1,1),0,randf_range(-1,1))
 	Globals.Wind_speed_target = randf_range(0, 50)
 
 	while get_parent().current_weather_and_disaster == "Volcano" and IsVolcanoAsh:
