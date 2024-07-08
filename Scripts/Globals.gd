@@ -89,8 +89,11 @@ func convert_VectorToAngle(vector):
 	return atan2(y,x)
 
 func perform_trace_collision(ply, direction):
+	var start_pos = ply.global_position
+	var end_pos = start_pos + direction * 1000
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + direction * 60000, 1, [RigidBody3D, PhysicsBody3D])
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+	ray.exclude = [ply.get_rid()]
 	var result = space_state.intersect_ray(ray)
 
 	return result
@@ -99,7 +102,8 @@ func perform_trace_wind(ply, direction):
 	var start_pos = ply.global_position
 	var end_pos = start_pos + direction * 60000
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos, 1, [RigidBody3D, PhysicsBody3D])
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+	ray.exclude = [ply.get_rid()]
 	var result = space_state.intersect_ray(ray)
 
 	if result:
@@ -119,28 +123,14 @@ func get_node_by_id_recursive(node: Node, node_id: int) -> Node:
 	return null
 
 func is_below_sky(ply):
+	var start_pos = ply.global_position
+	var end_pos = start_pos + Vector3(0, 48000, 0)
 	var space_state = ply.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(ply.global_position, ply.global_position + Vector3(0, 48000, 0), 1, [ply])
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos)
+	ray.exclude = [ply.get_rid()]
 	var result = space_state.intersect_ray(ray)
 	
 	return !result
-
-func calculate_exposed_area(player, range):
-	var cell_size = Vector2(64, 64)  # Tamaño de la celda en unidades
-	var exposed_cells = 0
-
-	for x in range(-range, range):
-		for z in range(-range, range):
-			var cell_center = Vector3(x * cell_size.x + cell_size.x / 2, player.global_position.y, z * cell_size.y + cell_size.y / 2)
-			var ray = PhysicsRayQueryParameters3D.create(player.global_position, cell_center, 1, [player])
-			var result = player.get_world_3d().direct_space_state.intersect_ray(ray)
-
-			if result.is_empty():
-				exposed_cells += 1
-
-	var total_cells = (range * 2) * (range * 2)  # Área total del rango cuadrado
-	var area_percentage = exposed_cells / total_cells
-	return clamp(area_percentage, 0, 1)
 
 
 func is_outdoor(ply):
@@ -182,9 +172,11 @@ func vec2_to_vec3(vector):
 	return Vector3(vector.x, 0, vector.y)
 
 func is_something_blocking_wind(entity):
+	var start_pos = entity.global_position + Vector3(0, 10, 0)
+	var end_pos = start_pos + (vec2_to_vec3(Wind_Direction) * 300)
 	var space_state = entity.get_world_3d().direct_space_state
-	var position = entity.global_position + Vector3(0, 10, 0)
-	var ray = PhysicsRayQueryParameters3D.create(position, position + (vec2_to_vec3(Wind_Direction) * 300), 1, [entity])
+	var ray = PhysicsRayQueryParameters3D.create(start_pos, end_pos )
+	ray.exclude = [entity.get_rid()]
 	var result = space_state.intersect_ray(ray)
 
 	return result

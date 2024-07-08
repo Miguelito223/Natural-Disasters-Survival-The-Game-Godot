@@ -169,8 +169,8 @@ func wind(object):
 		var pos = object.global_position
 		var hit_left = Globals.perform_trace_wind(object, Vector3(1, 0, 0))
 		var hit_right = Globals.perform_trace_wind(object, Vector3(-1, 0, 0))
-		var hit_forward = Globals.perform_trace_wind(object, Vector3(0, 1, 0))
-		var hit_behind = Globals.perform_trace_wind(object, Vector3(0, -1, 0))
+		var hit_forward = Globals.perform_trace_wind(object, Vector3(0, 0, 1))
+		var hit_behind = Globals.perform_trace_wind(object, Vector3(0, 0,-1))
 		
 		var distance_left_right = hit_left.distance_to(hit_right)
 		var distance_forward = pos.distance_to(hit_forward)
@@ -178,6 +178,8 @@ func wind(object):
 		
 		var area = (0.5 * (distance_left_right * distance_forward)) + (0.5 * (distance_left_right * distance_behind))
 		var area_percentage = clamp(area / 5000000, 0, 1)
+
+		print(area_percentage)
 		
 		# Calcular la velocidad del viento local
 		var local_wind = area_percentage * Globals.Wind_speed
