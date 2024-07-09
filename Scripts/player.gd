@@ -9,7 +9,7 @@ var SPEED = 0
 const SPEED_RUN = 25.0
 const SPEED_WALK = 15.0
 const JUMP_VELOCITY = 7.0
-const SENSIBILITY = 0.01
+const SENSIBILITY = 0.02
 const LERP_VAL =  .15
 
 const bob_freq = 2.0
@@ -354,6 +354,13 @@ func _unhandled_input(event):
 		mi_personaje_node.rotate_y(-event.relative.x * SENSIBILITY)
 		camera_node.rotate_x(-event.relative.y * SENSIBILITY)
 		camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+	elif event is InputEventJoypadMotion:
+		if event.axis == 2:
+			mi_personaje_node.rotate_y(event.axis_value * SENSIBILITY)
+		elif event.axis == 3:
+			camera_node.rotate_x(event.axis_value * SENSIBILITY)
+			camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			
 
 
 
