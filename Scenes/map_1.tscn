@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=28 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
@@ -128,8 +128,11 @@ noise = SubResource("FastNoiseLite_hhy4h")
 density = 0.05
 density_texture = SubResource("NoiseTexture3D_bq76v")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rb6xg"]
-size = Vector3(1e+06, 0, 1e+06)
+[sub_resource type="BoxShape3D" id="BoxShape3D_b68bb"]
+size = Vector3(0, 100, 10000)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t040d"]
+size = Vector3(10000, 100, 1)
 
 [node name="map_1" type="Node3D"]
 script = ExtResource("1_xn4hm")
@@ -170,7 +173,7 @@ render_layers = 1
 cast_shadow = 1
 shader_params/u_ground_uv_scale = 20
 shader_params/u_depth_blending = true
-shader_params/u_triplanar = null
+shader_params/u_triplanar = false
 shader_params/u_tile_reduction = null
 
 [node name="Timer" type="Timer" parent="."]
@@ -187,12 +190,6 @@ bus = &"Music"
 [node name="FogVolume" type="FogVolume" parent="."]
 shape = 4
 material = SubResource("FogMaterial_w14ph")
-
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2048, -754.478, 2048)
-shape = SubResource("BoxShape3D_rb6xg")
 
 [node name="Spawn" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1201.83, 9.32904, 996.233)
@@ -281,7 +278,39 @@ position = Vector2(1042, 102)
 scale = Vector2(7.58173, 7.86641)
 texture = ExtResource("15_32db0")
 
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_b68bb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_t040d")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4095.09, 0, 0)
+shape = SubResource("BoxShape3D_b68bb")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4095.09, 0, 0)
+shape = SubResource("BoxShape3D_t040d")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4095.09, 0, 4095.09)
+shape = SubResource("BoxShape3D_b68bb")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4095.09, 0, 4095.09)
+shape = SubResource("BoxShape3D_t040d")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4095.09)
+shape = SubResource("BoxShape3D_b68bb")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4095.09)
+shape = SubResource("BoxShape3D_t040d")
+
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]
