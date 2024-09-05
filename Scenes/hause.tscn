@@ -467,7 +467,6 @@ light_energy = 5.0
 shadow_enabled = true
 omni_range = 31.0114
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
 
 [editable path="Interactable"]

@@ -1,16 +1,15 @@
-[gd_scene load_steps=28 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=30 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
 [ext_resource type="Script" path="res://Scripts/world_environment.gd" id="3_575xv"]
 [ext_resource type="Texture2D" uid="uid://p56xwtihxq22" path="res://Sprites/dark-black-texture-with-beautiful-stars-vector.jpg" id="3_bukha"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="3_je8e7"]
-[ext_resource type="Resource" path="res://Data Terrain/data.hterrain" id="4_6560e"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="5_sr3y7"]
-[ext_resource type="Texture2D" uid="uid://co3l5n6ahjvrl" path="res://slot0_albedo_bump.png" id="6_80fau"]
-[ext_resource type="Texture2D" uid="uid://diaiwvm7l2cr" path="res://slot1_albedo_bump.png" id="7_7vlh5"]
-[ext_resource type="Texture2D" uid="uid://i5u8vemqarug" path="res://slot0_normal_roughness.png" id="8_wolt8"]
-[ext_resource type="Texture2D" uid="uid://cd6f2317lg0fh" path="res://slot1_normal_roughness.png" id="9_8injy"]
+[ext_resource type="Resource" path="res://Data/data.hterrain" id="6_ipvnn"]
+[ext_resource type="Texture2D" uid="uid://iwbot60sbjqm" path="res://Textures/texture-grass-field.jpg" id="8_n5486"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_smrgu"]
+[ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="10_lmmy2"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="10_w1fny"]
 [ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_8ni8s"]
 [ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_osvto"]
@@ -60,10 +59,23 @@ background_mode = 2
 sky = SubResource("Sky_lk1p6")
 sdfgi_enabled = true
 
-[sub_resource type="Resource" id="Resource_xvsuy"]
+[sub_resource type="Resource" id="Resource_xkn0v"]
 script = ExtResource("5_sr3y7")
 mode = 0
-textures = [[ExtResource("6_80fau"), ExtResource("7_7vlh5")], [ExtResource("8_wolt8"), ExtResource("9_8injy")]]
+textures = [[ExtResource("8_n5486")], [null]]
+
+[sub_resource type="Gradient" id="Gradient_rgw5g"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.072, 0.48, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_afvhq"]
+gradient = SubResource("Gradient_rgw5g")
+use_hdr = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hf602"]
+radius = 0.1
+height = 1.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8u7l0"]
 properties/0/path = NodePath("Timer:wait_time")
@@ -160,7 +172,7 @@ shadow_enabled = true
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("3_je8e7")
-_terrain_data = ExtResource("4_6560e")
+_terrain_data = ExtResource("6_ipvnn")
 chunk_size = 32
 collision_enabled = true
 collision_layer = 1
@@ -168,13 +180,27 @@ collision_mask = 1
 shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null
-texture_set = SubResource("Resource_xvsuy")
+texture_set = SubResource("Resource_xkn0v")
 render_layers = 1
 cast_shadow = 1
 shader_params/u_ground_uv_scale = 20
 shader_params/u_depth_blending = true
-shader_params/u_triplanar = false
+shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
+metadata/_edit_group_ = true
+
+[node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
+script = ExtResource("9_smrgu")
+layer_index = 1
+texture = SubResource("GradientTexture1D_afvhq")
+density = 0.5
+instance_mesh = SubResource("CapsuleMesh_hf602")
+shader_params/u_globalmap_tint_bottom = 0.0
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = null
+shader_params/u_roughness = null
+metadata/_editor_icon = ExtResource("10_lmmy2")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 60.0
@@ -196,7 +222,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1201.83, 9.32904, 996.233)
 gizmo_extents = 2.9
 
 [node name="Hause" parent="." instance=ExtResource("11_8ni8s")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 5.03559, 1012.02)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 0.505142, 1012.02)
 freeze = true
 
 [node name="Chat" type="CanvasLayer" parent="."]
