@@ -13,19 +13,20 @@
 [ext_resource type="AudioStream" uid="uid://2enmqi3m2mv0" path="res://Sounds/disasters/nature/wind_heavy.wav" id="4_qip45"]
 [ext_resource type="AudioStream" uid="uid://bcbahjxisvk4u" path="res://Sounds/disasters/nature/rain-light.wav" id="6_dfbmn"]
 [ext_resource type="AudioStream" uid="uid://d2vgse17u5635" path="res://Sounds/disasters/player/heartbeat.wav" id="6_vn0ni"]
-[ext_resource type="Shader" path="res://UnderWater.gdshader" id="7_787g2"]
-[ext_resource type="Shader" path="res://UnderLava.gdshader" id="8_txqea"]
+[ext_resource type="Shader" path="res://Shaders/UnderWater.gdshader" id="7_787g2"]
+[ext_resource type="Shader" path="res://Shaders/UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scripts/Players List Menu.gd" id="8_u7k75"]
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scripts/Death Menu.gd" id="9_jd7ok"]
 [ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Death_Screen_theme.tres" id="11_twqia"]
-[ext_resource type="Shader" path="res://Scenes/temp.gdshader" id="12_w8j6f"]
+[ext_resource type="Shader" path="res://Shaders/temp.gdshader" id="12_w8j6f"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
 [ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
+
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 margin = 2.71
