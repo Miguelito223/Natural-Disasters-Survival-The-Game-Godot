@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Main Menu.gd" id="1_r752f"]
 [ext_resource type="AudioStream" uid="uid://cjhfwfsyaih6q" path="res://Sounds/music/waiting-time-175800.mp3" id="2_0u7u3"]
-[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="2_8ye2w"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="2_8ye2w"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="3_wgml2"]
 
 [node name="Main Menu" type="Control"]
@@ -38,7 +38,7 @@ text = "Natural Disaster The Game"
 
 [node name="Disasters" type="Sprite2D" parent="Title"]
 process_mode = 3
-position = Vector2(697, 33)
+position = Vector2(712.5, 35.5)
 scale = Vector2(4.00438, 4.34087)
 texture = ExtResource("3_wgml2")
 
@@ -163,6 +163,7 @@ text = "Back"
 
 [node name="Settings" type="VBoxContainer" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 0
 offset_left = 442.0
 offset_top = 230.0

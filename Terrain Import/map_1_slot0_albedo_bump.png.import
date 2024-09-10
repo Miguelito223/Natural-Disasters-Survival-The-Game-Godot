@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnvv72pv4sk41"
-path.s3tc="res://.godot/imported/map_1_slot0_normal_roughness.png-5d39f8e1754f0a7f6e1288393cc59cf2.s3tc.ctex"
-path.etc2="res://.godot/imported/map_1_slot0_normal_roughness.png-5d39f8e1754f0a7f6e1288393cc59cf2.etc2.ctex"
+uid="uid://b0n5a00x75ep7"
+path.s3tc="res://.godot/imported/map_1_slot0_albedo_bump.png-03d612063fe5157669aa266fff19c426.s3tc.ctex"
+path.etc2="res://.godot/imported/map_1_slot0_albedo_bump.png-03d612063fe5157669aa266fff19c426.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://map_1_slot0_normal_roughness.png"
-dest_files=["res://.godot/imported/map_1_slot0_normal_roughness.png-5d39f8e1754f0a7f6e1288393cc59cf2.s3tc.ctex", "res://.godot/imported/map_1_slot0_normal_roughness.png-5d39f8e1754f0a7f6e1288393cc59cf2.etc2.ctex"]
+source_file="res://Terrain Import/map_1_slot0_albedo_bump.png"
+dest_files=["res://.godot/imported/map_1_slot0_albedo_bump.png-03d612063fe5157669aa266fff19c426.s3tc.ctex", "res://.godot/imported/map_1_slot0_albedo_bump.png-03d612063fe5157669aa266fff19c426.etc2.ctex"]
 
 [params]
 
@@ -33,4 +33,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

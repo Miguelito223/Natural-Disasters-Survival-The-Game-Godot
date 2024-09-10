@@ -16,9 +16,9 @@
 [ext_resource type="Shader" path="res://Shaders/UnderWater.gdshader" id="7_787g2"]
 [ext_resource type="Shader" path="res://Shaders/UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scripts/Players List Menu.gd" id="8_u7k75"]
-[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://pause_and_menu_theme.tres" id="9_6lvyl"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scripts/Death Menu.gd" id="9_jd7ok"]
-[ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Death_Screen_theme.tres" id="11_twqia"]
+[ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Tres/Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="Shader" path="res://Shaders/temp.gdshader" id="12_w8j6f"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
@@ -26,7 +26,6 @@
 [ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
-
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1y4s5"]
 margin = 2.71
@@ -476,15 +475,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.387015, -2.66901e-05, 6.376e-05, 0.922074)
+bones/4/rotation = Quaternion(0.382211, -2.63579e-05, 6.38987e-05, 0.924075)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.445569, -3.08629e-05, -6.18558e-05, 0.895248)
+bones/5/rotation = Quaternion(0.45191, -3.1301e-05, -6.16353e-05, 0.892064)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.396599, 1.86395e-18, -1.79148e-18, 0.917992)
+bones/7/rotation = Quaternion(-0.392899, 1.8562e-18, -1.7947e-18, 0.919582)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.508998, 0.00370062, 0.00453424, 0.860748)
+bones/8/rotation = Quaternion(-0.516016, 0.00375133, 0.00459637, 0.856559)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -556,42 +555,15 @@ max_distance = 10.0
 root_node = NodePath("../Model")
 tree_root = SubResource("AnimationNodeBlendTree_rc5yr")
 anim_player = NodePath("../Model/AnimationPlayer")
-parameters/current_length = 1.66667
-parameters/current_position = 1.04295
-parameters/current_delta = 0.00833333
-parameters/Fall/current_length = null
-parameters/Fall/current_position = null
-parameters/Fall/current_delta = null
-parameters/Idle/current_length = 1.66667
-parameters/Idle/current_position = 1.04295
-parameters/Idle/current_delta = 0.00833333
-parameters/Jump/current_length = null
-parameters/Jump/current_position = null
-parameters/Jump/current_delta = null
-parameters/Walk/current_length = null
-parameters/Walk/current_position = null
-parameters/Walk/current_delta = null
-parameters/is_jumping/current_length = 1.66667
-parameters/is_jumping/current_position = 1.04295
-parameters/is_jumping/current_delta = 0.00833333
 parameters/is_jumping/current_state = "false"
 parameters/is_jumping/transition_request = ""
 parameters/is_jumping/current_index = 1
-parameters/is_on_floor/current_length = 1.66667
-parameters/is_on_floor/current_position = 1.04295
-parameters/is_on_floor/current_delta = 0.00833333
 parameters/is_on_floor/current_state = "true"
 parameters/is_on_floor/transition_request = ""
 parameters/is_on_floor/current_index = 0
-parameters/movement/current_length = 1.66667
-parameters/movement/current_position = 1.04295
-parameters/movement/current_delta = 0.00833333
 parameters/movement/current_state = "idle"
 parameters/movement/transition_request = ""
 parameters/movement/current_index = 0
-parameters/output/current_length = 1.66667
-parameters/output/current_position = 1.04295
-parameters/output/current_delta = 0.00833333
 
 [node name="GPUParticlesCollisionHeightField3D" type="GPUParticlesCollisionHeightField3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35376, -2)
@@ -867,20 +839,14 @@ text = "Back"
 [node name="Death Menu" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 2
-visible = false
 script = ExtResource("9_jd7ok")
 
 [node name="Panel" type="Panel" parent="Death Menu"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -2937.0
-offset_top = -2681.0
-offset_right = -2937.0
-offset_bottom = -2681.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(47.9002, 27.0257)
 theme = ExtResource("11_twqia")
 
 [node name="Label" type="Label" parent="Death Menu"]
@@ -890,6 +856,7 @@ offset_right = 907.0
 offset_bottom = 168.0
 scale = Vector2(2.20665, 2.55236)
 theme = ExtResource("11_twqia")
+theme_override_font_sizes/font_size = 40
 text = "You Death
 you want to continue?"
 horizontal_alignment = 1
@@ -905,12 +872,14 @@ theme = ExtResource("11_twqia")
 [node name="Return" type="Button" parent="Death Menu/Buttons"]
 layout_mode = 2
 theme = ExtResource("11_twqia")
+theme_override_font_sizes/font_size = 30
 text = "Return
 "
 
 [node name="Exit" type="Button" parent="Death Menu/Buttons"]
 layout_mode = 2
 theme = ExtResource("11_twqia")
+theme_override_font_sizes/font_size = 30
 text = "Exit
 "
 
