@@ -60,6 +60,7 @@ func _ready():
 	$Settings/Volumen.value = GlobalsData.volumen
 	$"Settings/Volumen Music".value = GlobalsData.volumen_music
 	$Settings/Time.value = GlobalsData.timer_disasters
+	$Settings/quality.value = GlobalsData.quality
 
 func _process(_delta):
 	if self.visible:

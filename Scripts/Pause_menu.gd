@@ -61,6 +61,7 @@ func _ready():
 	$Settings/Volumen.value = GlobalsData.volumen
 	$"Settings/Volumen Music".value = GlobalsData.volumen_music
 	$Settings/Time.value = GlobalsData.timer_disasters
+	$Settings/quality.value = GlobalsData.quality
 
 
 
@@ -220,21 +221,28 @@ func _on_volumen_music_value_changed(value):
 	GlobalsData.save_file()
 
 func _on_option_button_item_selected(index: int):
+	var worldenvironment = Globals.map.get_node("WorldEnvironment")
+	var light = Globals.map.get_node("WorldEnvironment/Sun")
+	var light2 = Globals.map.get_node("WorldEnvironment/Moon")
+
 	match index:
 		0:
-			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = false
-			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = false
-			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = false
-			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = false
+			light.shadow_enabled = false
+			light2.shadow_enabled = false
+			worldenvironment.environment.sdfgi_enabled = false
+			worldenvironment.environment.glow_enabled = false
+			worldenvironment.environment.ssao_enabled = false
 		1:
-			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = true
-			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = false
-			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = true
-			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = false
+			light.shadow_enabled = true
+			light2.shadow_enabled = true
+			worldenvironment.environment.sdfgi_enabled = false
+			worldenvironment.environment.glow_enabled = true
+			worldenvironment.environment.ssao_enabled = false
 		2:
-			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = true
-			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = true
-			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = true
-			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = true
+			light.shadow_enabled = true
+			light2.shadow_enabled = true
+			worldenvironment.environment.sdfgi_enabled = true
+			worldenvironment.environment.glow_enabled = true
+			worldenvironment.environment.ssao_enabled = true
 	GlobalsData.quality = index
 	GlobalsData.save_file()
