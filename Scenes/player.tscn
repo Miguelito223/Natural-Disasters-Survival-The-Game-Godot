@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=70 format=3 uid="uid://c51w31cirngs7"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
 [ext_resource type="Texture2D" uid="uid://bau3vk2guhl36" path="res://Icons/jump.png" id="16_p2ihs"]
+[ext_resource type="Script" path="res://Scripts/spawn_menu.gd" id="19_hx71c"]
 [ext_resource type="Script" path="res://Scripts/mobile_buttons.gd" id="22_5fm01"]
 [ext_resource type="PackedScene" uid="uid://djlaofq84cdh6" path="res://Scenes/player_interactor.tscn" id="23_d7wpg"]
 [ext_resource type="Texture2D" uid="uid://bvvjw6ir5wb6h" path="res://Icons/Interact.png" id="24_ys47s"]
@@ -475,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.382211, -2.63579e-05, 6.38987e-05, 0.924075)
+bones/4/rotation = Quaternion(0.379684, -2.61824e-05, 6.40181e-05, 0.925116)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.45191, -3.1301e-05, -6.16353e-05, 0.892064)
+bones/5/rotation = Quaternion(0.455214, -3.15293e-05, -6.15188e-05, 0.890382)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.392899, 1.8562e-18, -1.7947e-18, 0.919582)
+bones/7/rotation = Quaternion(-0.390948, 2.64194e-18, -1.78412e-18, 0.920413)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.516016, 0.00375133, 0.00459637, 0.856559)
+bones/8/rotation = Quaternion(-0.519654, 0.00377762, 0.00462858, 0.854356)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -839,6 +840,7 @@ text = "Back"
 [node name="Death Menu" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 2
+visible = false
 script = ExtResource("9_jd7ok")
 
 [node name="Panel" type="Panel" parent="Death Menu"]
@@ -903,6 +905,31 @@ offset_right = 934.0
 offset_bottom = 519.0
 scale = Vector2(2, 2)
 mouse_filter = 2
+
+[node name="SpawnMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+layer = 2
+script = ExtResource("19_hx71c")
+
+[node name="Panel" type="Panel" parent="SpawnMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 335.0
+offset_top = 183.0
+offset_right = -294.0
+offset_bottom = -162.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="grid" type="GridContainer" parent="SpawnMenu/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Hud" type="CanvasLayer" parent="."]
 process_mode = 3

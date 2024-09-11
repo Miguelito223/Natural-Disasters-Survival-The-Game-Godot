@@ -20,6 +20,10 @@ boot_splash/use_filter=false
 config/icon="res://Icons/disasters.png"
 boot_splash/minimum_display_time=5
 
+[audio]
+
+buses/default_bus_layout="res://Tres/default_bus_layout.tres"
+
 [autoload]
 
 Globals="*res://Scripts/Globals.gd"

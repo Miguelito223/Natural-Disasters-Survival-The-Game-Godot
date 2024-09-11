@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="1_f6j85"]
 [ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="2_hioyu"]
 
-
 [sub_resource type="Animation" id="Animation_fabrc"]
 length = 0.001
 tracks/0/type = "value"
@@ -111,4 +110,5 @@ offset_top = 422.0
 offset_right = 1542.0
 offset_bottom = 611.0
 theme = ExtResource("2_hioyu")
+theme_override_font_sizes/font_size = 60
 metadata/_edit_use_anchors_ = true
