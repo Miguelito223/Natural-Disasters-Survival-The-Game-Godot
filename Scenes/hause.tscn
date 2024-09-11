@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=4 uid="uid://cm35toy86s52l"]
+[gd_scene load_steps=39 format=4 uid="uid://da8gu8hvvo54v"]
 
 [ext_resource type="Script" path="res://addons/destruction/destruction.gd" id="1_kia18"]
 [ext_resource type="PackedScene" uid="uid://d06m8ie0q1v5c" path="res://Models/hause.blend" id="1_m7w7y"]

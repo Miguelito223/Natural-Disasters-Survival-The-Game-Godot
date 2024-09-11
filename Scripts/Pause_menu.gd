@@ -222,16 +222,19 @@ func _on_volumen_music_value_changed(value):
 func _on_option_button_item_selected(index: int):
 	match index:
 		0:
-			# Configuración para la calidad baja
-			ProjectSettings.set_setting("rendering/quality/low", true)
-			ProjectSettings.set_setting("rendering/quality/high", false)
+			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = false
+			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = false
+			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = false
+			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = false
 		1:
-			# Configuración para la calidad media
-			ProjectSettings.set_setting("rendering/quality/low", false)
-			ProjectSettings.set_setting("rendering/quality/high", false)
+			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = true
+			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = false
+			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = true
+			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = false
 		2:
-			# Configuración para la calidad alta
-			ProjectSettings.set_setting("rendering/quality/low", false)
-			ProjectSettings.set_setting("rendering/quality/high", true)
+			Globals.map.get_node("WorldEnvironment").environment.shadow_enabled = true
+			Globals.map.get_node("WorldEnvironment").environment.sdfgi_enabled = true
+			Globals.map.get_node("WorldEnvironment").environment.glow_enabled = true
+			Globals.map.get_node("WorldEnvironment").environment.ssao_enabled = true
 	GlobalsData.quality = index
 	GlobalsData.save_file()

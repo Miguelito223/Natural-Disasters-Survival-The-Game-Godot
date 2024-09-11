@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://c51w31cirngs7"]
+[gd_scene load_steps=70 format=3 uid="uid://b2g31vrdy6c1x"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_btpoi"]
 [ext_resource type="AudioStream" uid="uid://bh1falqx3lhi4" path="res://Sounds/disasters/nature/wind_moderate.wav" id="2_8ny0w"]
@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.666236, -4.6004e-05, 5.15981e-05, 0.745741)
+bones/4/rotation = Quaternion(0.367114, -2.53131e-05, 6.43685e-05, 0.930176)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.0063315, -5.06596e-07, -6.9126e-05, 0.99998)
+bones/5/rotation = Quaternion(0.471514, -3.26555e-05, -6.09284e-05, 0.881858)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.616097, 3.07553e-18, -1.51785e-18, 0.78767)
+bones/7/rotation = Quaternion(-0.381255, 2.62056e-18, -1.79235e-18, 0.92447)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.00673348, 6.82563e-05, 8.3632e-05, 0.999977)
+bones/8/rotation = Quaternion(-0.53758, 0.00390713, 0.00478727, 0.84319)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)

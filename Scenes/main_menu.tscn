@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dshrj55scr44d"]
+[gd_scene load_steps=5 format=3 uid="uid://do0o8aqqmmmlj"]
 
 [ext_resource type="Script" path="res://Scripts/Main Menu.gd" id="1_r752f"]
 [ext_resource type="AudioStream" uid="uid://cjhfwfsyaih6q" path="res://Sounds/music/waiting-time-175800.mp3" id="2_0u7u3"]
