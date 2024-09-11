@@ -222,8 +222,8 @@ func _on_volumen_music_value_changed(value):
 
 func _on_option_button_item_selected(index: int):
 	var worldenvironment = Globals.map.get_node("WorldEnvironment")
-	var light = Globals.map.get_node("WorldEnvironment/Sun")
-	var light2 = Globals.map.get_node("WorldEnvironment/Moon")
+	var light = worldenvironment.get_node("Sun")
+	var light2 = worldenvironment.get_node("Moon")
 
 	match index:
 		0:
