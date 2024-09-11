@@ -61,7 +61,7 @@ func _ready():
 	$Settings/Volumen.value = GlobalsData.volumen
 	$"Settings/Volumen Music".value = GlobalsData.volumen_music
 	$Settings/Time.value = GlobalsData.timer_disasters
-	$Settings/quality.value = GlobalsData.quality
+	$Settings/quality.selected = GlobalsData.quality
 
 
 
@@ -244,5 +244,6 @@ func _on_option_button_item_selected(index: int):
 			worldenvironment.environment.sdfgi_enabled = true
 			worldenvironment.environment.glow_enabled = true
 			worldenvironment.environment.ssao_enabled = true
+	
 	GlobalsData.quality = index
 	GlobalsData.save_file()

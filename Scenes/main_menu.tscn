@@ -45,7 +45,6 @@ texture = ExtResource("3_wgml2")
 
 [node name="Menu" type="VBoxContainer" parent="."]
 process_mode = 3
-visible = false
 layout_mode = 0
 offset_left = 511.0
 offset_top = 312.0
@@ -84,6 +83,7 @@ text = "Exit"
 
 [node name="Multiplayer" type="VBoxContainer" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 0
 offset_left = 651.0
 offset_top = 194.0
