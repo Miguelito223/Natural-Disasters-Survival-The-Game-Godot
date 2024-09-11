@@ -3,6 +3,10 @@ extends CanvasLayer
 var pause_state = false
 var mouse_action_state = false
 
+@onready var worldenvironment = Globals.map.get_node("WorldEnvironment")
+@onready var light = worldenvironment.get_node("Sun")
+@onready var light2 = worldenvironment.get_node("Moon")
+
 var resolution = {
 	"2400x1080 ": Vector2i(2400, 1080 ),
 	"1920x1080": Vector2i(1920, 1080),
@@ -62,6 +66,26 @@ func _ready():
 	$"Settings/Volumen Music".value = GlobalsData.volumen_music
 	$Settings/Time.value = GlobalsData.timer_disasters
 	$Settings/quality.selected = GlobalsData.quality
+
+	match GlobalsData.quality:
+		0:
+			light.shadow_enabled = false
+			light2.shadow_enabled = false
+			worldenvironment.environment.sdfgi_enabled = false
+			worldenvironment.environment.glow_enabled = false
+			worldenvironment.environment.ssao_enabled = false
+		1:
+			light.shadow_enabled = true
+			light2.shadow_enabled = true
+			worldenvironment.environment.sdfgi_enabled = false
+			worldenvironment.environment.glow_enabled = true
+			worldenvironment.environment.ssao_enabled = false
+		2:
+			light.shadow_enabled = true
+			light2.shadow_enabled = true
+			worldenvironment.environment.sdfgi_enabled = true
+			worldenvironment.environment.glow_enabled = true
+			worldenvironment.environment.ssao_enabled = true
 
 
 
@@ -221,9 +245,6 @@ func _on_volumen_music_value_changed(value):
 	GlobalsData.save_file()
 
 func _on_option_button_item_selected(index: int):
-	var worldenvironment = Globals.map.get_node("WorldEnvironment")
-	var light = worldenvironment.get_node("Sun")
-	var light2 = worldenvironment.get_node("Moon")
 
 	match index:
 		0:
