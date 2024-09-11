@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var player = get_parent()
 @export var spawnlist: Array[Node]
 @export var buttonlist: Array[Button]
+var spawnmenu_state = false
 
 func _ready():
 
@@ -52,7 +53,19 @@ func on_press(i: Node):
 
 func _process(_delta):
 	if Input.is_action_pressed("Spawnmenu"):
-		self.visible = !self.visible
+
+		self.visible = spawnmenu_state
+		
+		if spawnmenu_state:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			if not Globals.is_networking:
+				get_tree().paused = true
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			if not Globals.is_networking:
+				get_tree().paused = false
+	
+		spawnmenu_state = !spawnmenu_state
 
 	for i in spawnlist:
 		if i == null or !is_instance_valid(i):
