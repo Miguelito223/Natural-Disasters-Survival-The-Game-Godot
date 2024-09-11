@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cllvucut8u42n"]
+[gd_scene load_steps=30 format=3 uid="uid://cllvucut8u42n"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
@@ -13,12 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="10_w1fny"]
 [ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="11_8ni8s"]
 [ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_osvto"]
-[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="14_fkpsg"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Resources/pause_and_menu_theme.tres" id="14_fkpsg"]
 [ext_resource type="Script" path="res://Scripts/Warning Hud.gd" id="14_p61f1"]
 [ext_resource type="Texture2D" uid="uid://66hhd27hjdj8" path="res://Icons/disasters.png" id="15_32db0"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lao53"]
-frequency = 0.001
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ihtyg"]
 shader = ExtResource("2_sc6k1")
@@ -149,7 +146,6 @@ size = Vector3(10000, 100, 1)
 
 [node name="map_1" type="Node3D"]
 script = ExtResource("1_xn4hm")
-noise = SubResource("FastNoiseLite_lao53")
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://Scenes/player.tscn")

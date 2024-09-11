@@ -12,20 +12,11 @@ var tsunami_scene = preload("res://Scenes/tsunami.tscn")
 var volcano_scene = preload("res://Scenes/Volcano.tscn")
 var earthquake_scene = preload("res://Scenes/earthquake.tscn")
 
-const HTerrain = preload("res://addons/zylann.hterrain/hterrain.gd")
-const HTerrainData = preload("res://addons/zylann.hterrain/hterrain_data.gd")
-const HTerrainTextureSet = preload("res://addons/zylann.hterrain/hterrain_texture_set.gd")
-
-@export var noise: FastNoiseLite
-var noise_seed
-var noise_multiplier = 50.0
-
-# You may want to change paths to your own textures
-var grass_texture = preload("res://Textures/texture-grass-field.jpg")
-var rock_texture = preload("res://Textures/dark-cracked-concrete-wall.jpg")
 var snow_texture = preload("res://Textures/snow.png")
 var sand_texture = preload("res://Textures/sand.png")
 
+
+var GlobalsData: DataResource = DataResource.load_file()
 
 @onready var timer = $Timer
 var started = false
@@ -59,7 +50,7 @@ func _ready():
 	if not Globals.is_networking:
 		player_join(1)
 		started = true
-		Globals.sync_timer(Globals.timer_disasters)
+		Globals.sync_timer(GlobalsData.timer_disasters)
 	else:
 		multiplayer.peer_connected.connect(player_join)
 		multiplayer.peer_disconnected.connect(player_disconect)

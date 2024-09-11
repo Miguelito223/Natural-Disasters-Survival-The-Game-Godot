@@ -16,9 +16,9 @@
 [ext_resource type="Shader" path="res://Shaders/UnderWater.gdshader" id="7_787g2"]
 [ext_resource type="Shader" path="res://Shaders/UnderLava.gdshader" id="8_txqea"]
 [ext_resource type="Script" path="res://Scripts/Players List Menu.gd" id="8_u7k75"]
-[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="9_6lvyl"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Resources/pause_and_menu_theme.tres" id="9_6lvyl"]
 [ext_resource type="Script" path="res://Scripts/Death Menu.gd" id="9_jd7ok"]
-[ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Tres/Death_Screen_theme.tres" id="11_twqia"]
+[ext_resource type="Theme" uid="uid://ctfcvmj6op0i5" path="res://Resources/Death_Screen_theme.tres" id="11_twqia"]
 [ext_resource type="Shader" path="res://Shaders/temp.gdshader" id="12_w8j6f"]
 [ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="14_nhtb3"]
 [ext_resource type="Texture2D" uid="uid://u4gj8mq7yl2v" path="res://Icons/Pause.png" id="15_beddy"]
@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.602958, -4.16267e-05, 5.51529e-05, 0.797773)
+bones/4/rotation = Quaternion(0.666236, -4.6004e-05, 5.15981e-05, 0.745741)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.117192, -8.16967e-06, -6.86434e-05, 0.993109)
+bones/5/rotation = Quaternion(0.0063315, -5.06596e-07, -6.9126e-05, 0.99998)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.564807, 2.1969e-18, -1.60508e-18, 0.825223)
+bones/7/rotation = Quaternion(-0.616097, 3.07553e-18, -1.51785e-18, 0.78767)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.13383, 0.000987929, 0.00121047, 0.991003)
+bones/8/rotation = Quaternion(-0.00673348, 6.82563e-05, 8.3632e-05, 0.999977)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -750,10 +750,10 @@ text = "Exit"
 [node name="Settings" type="VBoxContainer" parent="Pause menu"]
 process_mode = 3
 visible = false
-offset_left = 431.0
-offset_top = 229.0
-offset_right = 766.0
-offset_bottom = 742.0
+offset_left = 476.0
+offset_top = 116.0
+offset_right = 811.0
+offset_bottom = 713.0
 scale = Vector2(3, 1.5)
 theme = ExtResource("9_6lvyl")
 
@@ -794,6 +794,24 @@ text = "Resolution:"
 layout_mode = 2
 theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
+
+[node name="quality Label" type="Label" parent="Pause menu/Settings"]
+process_mode = 3
+layout_mode = 2
+theme = ExtResource("9_6lvyl")
+theme_override_font_sizes/font_size = 30
+text = "quality:"
+
+[node name="quality" type="OptionButton" parent="Pause menu/Settings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+selected = 2
+item_count = 3
+popup/item_0/text = "Low"
+popup/item_1/text = "Medium"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
 
 [node name="Volumen Label" type="Label" parent="Pause menu/Settings"]
 layout_mode = 2
@@ -909,6 +927,7 @@ mouse_filter = 2
 [node name="SpawnMenu" type="CanvasLayer" parent="."]
 process_mode = 3
 layer = 2
+visible = false
 script = ExtResource("19_hx71c")
 
 [node name="Panel" type="Panel" parent="SpawnMenu"]
@@ -1004,8 +1023,10 @@ stream = ExtResource("6_vn0ni")
 script = ExtResource("22_5fm01")
 
 [node name="Virtual Joystick" parent="Mobile Buttons" instance=ExtResource("14_nhtb3")]
-offset_top = -304.0
-offset_bottom = 0.0
+offset_left = 30.0
+offset_top = -526.0
+offset_right = 330.0
+offset_bottom = -222.0
 joystick_mode = 1
 visibility_mode = 2
 
@@ -1039,6 +1060,7 @@ visibility_mode = 1
 [connection signal="toggled" from="Pause menu/Settings/antialiasing" to="Pause menu" method="_on_antialiasing_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/Fullscreen" to="Pause menu" method="_on_fullscreen_toggled"]
 [connection signal="item_selected" from="Pause menu/Settings/resolutions" to="Pause menu" method="_on_resolutions_item_selected"]
+[connection signal="item_selected" from="Pause menu/Settings/quality" to="Pause menu" method="_on_quality_item_selected"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen" to="Pause menu" method="_on_volumen_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen Music" to="Pause menu" method="_on_volumen_music_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]

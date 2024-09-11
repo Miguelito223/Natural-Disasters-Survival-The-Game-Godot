@@ -17,16 +17,6 @@ var Websocket_local_peer: WebSocketPeer
 var Enet_peers
 var is_networking = false
 
-#Globals Settings
-var vsync = false
-var FPS = false
-var antialiasing = false
-var volumen = 1
-var volumen_music = 1
-var timer_disasters = 60
-var fullscreen = false
-var resolution = DisplayServer.screen_get_size(DisplayServer.window_get_current_screen())
-
 #Globals Weather
 var Temperature: float = 23
 var pressure: float = 10000

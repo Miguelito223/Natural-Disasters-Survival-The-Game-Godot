@@ -1,6 +1,6 @@
 extends Control
 
-var resolution = {
+var resolution: Dictionary = {
 	"2400x1080 ": Vector2i(2400, 1080 ),
 	"1920x1080": Vector2i(1920, 1080),
 	"1600x900": Vector2i(1600, 900),
@@ -21,8 +21,10 @@ var resolution = {
 	"720x480": Vector2i(720, 480),
 }
 
+var GlobalsData: DataResource = DataResource.load_file()
+
 func addresolutions():
-	var current_resolution = Globals.resolution
+	var current_resolution = GlobalsData.resolution
 	var index = 0
 	
 	for r in resolution:
@@ -46,18 +48,18 @@ func _ready():
 	$Multiplayer/port.text = str(Globals.port)
 	
 	addresolutions()
-	DisplayServer.window_set_size(Globals.resolution)
-	get_viewport().set_size(Globals.resolution)
+	DisplayServer.window_set_size(GlobalsData.resolution)
+	get_viewport().set_size(GlobalsData.resolution)
 
-	$Settings/Fullscreen.button_pressed = Globals.fullscreen
-	$Settings/fps.button_pressed = Globals.FPS
-	$Settings/vsync.button_pressed = Globals.vsync
-	$Settings/antialiasing.button_pressed = Globals.antialiasing
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(Globals.volumen))
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(Globals.volumen_music))
-	$Settings/Volumen.value = Globals.volumen
-	$"Settings/Volumen Music".value = Globals.volumen_music
-	$Settings/Time.value = Globals.timer_disasters
+	$Settings/Fullscreen.button_pressed = GlobalsData.fullscreen
+	$Settings/fps.button_pressed = GlobalsData.FPS
+	$Settings/vsync.button_pressed = GlobalsData.vsync
+	$Settings/antialiasing.button_pressed = GlobalsData.antialiasing
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(GlobalsData.volumen))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(GlobalsData.volumen_music))
+	$Settings/Volumen.value = GlobalsData.volumen
+	$"Settings/Volumen Music".value = GlobalsData.volumen_music
+	$Settings/Time.value = GlobalsData.timer_disasters
 
 func _process(_delta):
 	if self.visible:
@@ -101,20 +103,20 @@ func _on_exit_pressed():
 
 
 func _on_fps_toggled(toggled_on:bool):
-	Globals.FPS = toggled_on
-	Data.save_file()
+	GlobalsData.FPS = toggled_on
+	GlobalsData.save_file()
 
 
 func _on_vsycn_toggled(toggled_on:bool):
-	Globals.vsync = toggled_on
+	GlobalsData.vsync = toggled_on
 	ProjectSettings.set_setting("display/window/vsync/vsync_mode", toggled_on)
-	Data.save_file()
+	GlobalsData.save_file()
 
 
 func _on_antialiasing_toggled(toggled_on:bool):
-	Globals.antialiasing = toggled_on
+	GlobalsData.antialiasing = toggled_on
 	ProjectSettings.set_setting("rendering/anti_aliasing/screen_space_roughness_limiter/enabled", toggled_on)
-	Data.save_file()
+	GlobalsData.save_file()
 
 
 func _on_back_pressed():
@@ -125,28 +127,28 @@ func _on_back_pressed():
 
 func _on_username_text_changed(new_text:String):
 	Globals.username = new_text
-	Data.save_file()
+	GlobalsData.save_file()
 
 
 func _on_h_slider_2_value_changed(value):
-	Globals.timer_disasters = value
+	GlobalsData.timer_disasters = value
 	if Globals.map == null:
 		return
 	Globals.sync_timer(value)
-	Data.save_file()
+	GlobalsData.save_file()
 
 
 func _on_volumen_value_changed(value:float):
-	Globals.volumen = value
+	GlobalsData.volumen = value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(value))
-	Data.save_file()
+	GlobalsData.save_file()
 
 func _on_resolutions_item_selected(index:int):
 	var size = resolution.get($Settings/resolutions.get_item_text(index))
 	DisplayServer.window_set_size(size)
 	get_viewport().set_size(size)
-	Globals.resolution = size
-	Data.save_file()
+	GlobalsData.resolution = size
+	GlobalsData.save_file()
 
 
 func _on_fullscreen_toggled(toggled_on:bool):
@@ -154,8 +156,8 @@ func _on_fullscreen_toggled(toggled_on:bool):
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-	Globals.fullscreen = toggled_on
-	Data.save_file()
+	GlobalsData.fullscreen = toggled_on
+	GlobalsData.save_file()
 
 
 func _on_singleplayer_pressed():
@@ -164,6 +166,24 @@ func _on_singleplayer_pressed():
 
 
 func _on_volumen_music_value_changed(value):
-	Globals.volumen_music = value
+	GlobalsData.volumen_music = value
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(value))
-	Data.save_file()
+	GlobalsData.save_file()
+
+
+func _on_option_button_item_selected(index: int):
+	match index:
+		0:
+			# Configuración para la calidad baja
+			ProjectSettings.set_setting("rendering/quality/low", true)
+			ProjectSettings.set_setting("rendering/quality/high", false)
+		1:
+			# Configuración para la calidad media
+			ProjectSettings.set_setting("rendering/quality/low", false)
+			ProjectSettings.set_setting("rendering/quality/high", false)
+		2:
+			# Configuración para la calidad alta
+			ProjectSettings.set_setting("rendering/quality/low", false)
+			ProjectSettings.set_setting("rendering/quality/high", true)
+	GlobalsData.quality = index
+	GlobalsData.save_file()

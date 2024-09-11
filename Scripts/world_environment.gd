@@ -12,6 +12,9 @@ var sun_angle = -90 # Ángulo inicial del sol
 var moon_angle = 90
 var interpolation_speed = 1.0
 
+var GlobalsData: DataResource = DataResource.load_file()
+
+
 @export var ingame_speed = 1
 @export var initial_hour = 12:
 	set(h):
@@ -24,10 +27,8 @@ func _ready():
 	if Globals.is_networking:
 		if multiplayer.is_server():
 			Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
-			Data.load_file()
 	else:
-		Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour
-		Data.load_file()		
+		Globals.time = ingame_to_real_minute_duration * initial_hour * minutes_per_hour	
 
 func _process(delta):
 	if Globals.is_networking:

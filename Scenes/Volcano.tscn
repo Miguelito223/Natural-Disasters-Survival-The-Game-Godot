@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://cm7i1jqvye8j2" path="res://Sounds/disasters/nature/volcano_idle.wav" id="2_1dlfw"]
 [ext_resource type="PackedScene" uid="uid://ucwf1wbil5c7" path="res://Models/Volcano.blend" id="2_5ph2p"]
 [ext_resource type="Texture2D" uid="uid://ci2jq2evmgdk0" path="res://Materials/Models/Volcano/lava_anim.png" id="2_13yay"]
-[ext_resource type="Texture2D" uid="uid://ccekod24udoyv" path="res://Tres/Volcano.tres" id="2_jyw2b"]
+[ext_resource type="Texture2D" uid="uid://ccekod24udoyv" path="res://Resources/Volcano.tres" id="2_jyw2b"]
 [ext_resource type="AudioStream" uid="uid://c6lbbct1aom2r" path="res://Sounds/disasters/nature/minivolcano_explosion.mp3" id="3_w7y1d"]
 [ext_resource type="Texture2D" uid="uid://cu4yxjvvcuoyo" path="res://Materials/Models/Volcano/crater_volcano.png" id="4_04b5e"]
 [ext_resource type="Texture2D" uid="uid://c3hos2355t6un" path="res://Materials/Models/Volcano/base_volcano.png" id="4_dypqn"]

@@ -9,10 +9,11 @@ var spawnmenu_state = false
 func _ready():
 
 	self.visible = false
+	load_spawnlist_entities()
 	load_buttons()
-	
 
-func load_buttons():
+
+func load_spawnlist_entities():
 	var directory = DirAccess.open("res://Scenes/")
 	if directory:
 		var files = directory.get_files()
@@ -25,6 +26,7 @@ func load_buttons():
 				print("i cant import that")
 				return
 
+func load_buttons():
 	for i in spawnlist:
 		var button = Button.new()
 		button.text = i.name
@@ -48,30 +50,9 @@ func on_press(i: Node):
 	var spawn_position = player_position
 	spawn_position += player_forward_vector * 100
 	i.global_transform.origin = spawn_position
-	player.get_parent().add_child(i)	
+	var new_i = i.duplicate()
+	player.get_parent().add_child(new_i)	
 
-
-func reload_list():
-	for i in spawnlist:
-		for j in buttonlist:
-			if is_instance_valid(i) and is_instance_valid(j):
-				i.queue_free()
-				j.queue_free()
-
-	spawnlist.clear()
-	buttonlist.clear()
-	load_buttons()
-
-func check_if_spawned():
-	for i in spawnlist:
-		if is_instance_valid(i) or i == null:
-			if i.is_inside_tree():
-				i.queue_free()
-				reload_list()
-			else:
-				return
-		else:
-			reload_list()
 
 
 
@@ -93,5 +74,3 @@ func spawnmenu():
 
 func _process(_delta):
 	spawnmenu()
-	check_if_spawned()
-

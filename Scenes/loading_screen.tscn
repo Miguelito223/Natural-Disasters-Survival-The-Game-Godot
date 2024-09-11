@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://daheu4r7g53ps"]
 
 [ext_resource type="Script" path="res://Scripts/loading_screen.gd" id="1_f6j85"]
-[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Tres/pause_and_menu_theme.tres" id="2_hioyu"]
+[ext_resource type="Theme" uid="uid://cb8utilpq2brs" path="res://Resources/pause_and_menu_theme.tres" id="2_hioyu"]
 
 [sub_resource type="Animation" id="Animation_fabrc"]
 length = 0.001
@@ -100,15 +100,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_hioyu")
-metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="Control"]
 process_mode = 3
-layout_mode = 0
-offset_left = 427.0
-offset_top = 422.0
-offset_right = 1542.0
-offset_bottom = 611.0
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -42.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_hioyu")
 theme_override_font_sizes/font_size = 60
-metadata/_edit_use_anchors_ = true
