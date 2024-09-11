@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtvwojq6fi0t3"]
+
+[ext_resource type="Script" path="res://Scripts/icons.gd" id="1_i50jd"]
+[ext_resource type="PackedScene" uid="uid://d3nqv2bmoyl5d" path="res://Scenes/hause_icon.tscn" id="1_pr3mh"]
+
+[node name="icons" type="Node"]
+script = ExtResource("1_i50jd")
+
+[node name="hause_icon" parent="." instance=ExtResource("1_pr3mh")]
+size = Vector2i(256, 256)

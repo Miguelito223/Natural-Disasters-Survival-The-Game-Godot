@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.379684, -2.61824e-05, 6.40181e-05, 0.925116)
+bones/4/rotation = Quaternion(0.455105, -3.13986e-05, 6.16165e-05, 0.890438)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.455214, -3.15293e-05, -6.15188e-05, 0.890382)
+bones/5/rotation = Quaternion(0.351115, -2.43363e-05, -6.47024e-05, 0.936332)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.390948, 2.64194e-18, -1.78412e-18, 0.920413)
+bones/7/rotation = Quaternion(-0.449105, 2.76601e-18, -1.72969e-18, 0.893479)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.519654, 0.00377762, 0.00462858, 0.854356)
+bones/8/rotation = Quaternion(-0.402993, 0.00293448, 0.00359552, 0.915191)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -922,6 +922,7 @@ offset_bottom = -162.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("9_6lvyl")
 
 [node name="grid" type="GridContainer" parent="SpawnMenu/Panel"]
 layout_mode = 1
@@ -930,6 +931,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("9_6lvyl")
+theme_override_constants/h_separation = 100
+theme_override_constants/v_separation = 100
+columns = 5
 
 [node name="Hud" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -940,6 +945,7 @@ offset_left = 15.0
 offset_top = 811.0
 offset_right = 55.0
 offset_bottom = 834.0
+theme = ExtResource("9_6lvyl")
 theme_override_font_sizes/font_size = 30
 text = "FPS:"
 metadata/_edit_use_anchors_ = true
@@ -952,6 +958,7 @@ offset_right = 45.0
 offset_bottom = 905.0
 scale = Vector2(8.35709, 5.28957)
 mouse_filter = 2
+theme = ExtResource("9_6lvyl")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Hud"]
@@ -960,6 +967,7 @@ offset_left = 17.0
 offset_top = 875.0
 offset_right = 63.0
 offset_bottom = 898.0
+theme = ExtResource("9_6lvyl")
 text = "Temp: 17º
 Humidity: 20%
 Wind Direction: 0º
@@ -979,6 +987,7 @@ offset_right = 248.0
 offset_bottom = 934.0
 scale = Vector2(2.92153, 3.89434)
 mouse_filter = 2
+theme = ExtResource("9_6lvyl")
 metadata/_edit_use_anchors_ = true
 
 [node name="Heart" type="Sprite2D" parent="Hud"]

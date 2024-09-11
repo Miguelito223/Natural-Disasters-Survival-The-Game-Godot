@@ -278,6 +278,7 @@ offset_right = 754.0
 offset_bottom = 41.0
 scale = Vector2(9.91709, 5.28957)
 mouse_filter = 2
+theme = ExtResource("14_fkpsg")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="Warning Hud"]
@@ -291,6 +292,7 @@ offset_left = 726.0
 offset_top = 11.0
 offset_right = 878.0
 offset_bottom = 216.0
+theme = ExtResource("14_fkpsg")
 text = "Current Disasters/Weather is:
 Tornado"
 metadata/_edit_use_anchors_ = true
@@ -304,6 +306,7 @@ offset_right = 1021.0
 offset_bottom = 67.0
 scale = Vector2(2.92153, 3.89434)
 mouse_filter = 2
+theme = ExtResource("14_fkpsg")
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]

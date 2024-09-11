@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3nqv2bmoyl5d"]
+
+[ext_resource type="PackedScene" uid="uid://cm35toy86s52l" path="res://Scenes/hause.tscn" id="1_0ct46"]
+
+[node name="hause_icon" type="SubViewport"]
+render_target_update_mode = 4
+
+[node name="Hause" parent="." instance=ExtResource("1_0ct46")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.7809, 25.9471, 20)
