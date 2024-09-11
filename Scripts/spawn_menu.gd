@@ -9,7 +9,10 @@ var spawnmenu_state = false
 func _ready():
 
 	self.visible = false
+	load_buttons()
 	
+
+func load_buttons():
 	var directory = DirAccess.open("res://Scenes/")
 	if directory:
 		var files = directory.get_files()
@@ -45,13 +48,34 @@ func on_press(i: Node):
 	var spawn_position = player_position
 	spawn_position += player_forward_vector * 100
 	i.global_transform.origin = spawn_position
-	player.get_parent().add_child(i)
-				
-				
+	player.get_parent().add_child(i)	
 
-		
 
-func _process(_delta):
+func reload_list():
+	for i in spawnlist:
+		for j in buttonlist:
+			if is_instance_valid(i) and is_instance_valid(j):
+				i.queue_free()
+				j.queue_free()
+
+	spawnlist.clear()
+	buttonlist.clear()
+	load_buttons()
+
+func check_if_spawned():
+	for i in spawnlist:
+		if is_instance_valid(i):
+			if i.is_inside_tree():
+				i.queue_free()
+				reload_list()
+			else:
+				return
+		else:
+			reload_list()
+
+
+
+func spawnmenu():
 	if Input.is_action_pressed("Spawnmenu"):
 
 		self.visible = spawnmenu_state
@@ -64,10 +88,11 @@ func _process(_delta):
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			if not Globals.is_networking:
 				get_tree().paused = false
-	
-		spawnmenu_state = !spawnmenu_state
 
-	for i in spawnlist:
-		if i == null or !is_instance_valid(i):
-			spawnlist.erase(i)
+	spawnmenu_state = !spawnmenu_state
+
+func _process(_delta):
+	spawnmenu()
+	check_if_spawned()
+	reload_list()
 
