@@ -28,26 +28,23 @@ func _ready():
 		button.icon = load("res://icons/" + i.name + "_icon.png")
 		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
-		button.pressed.connect(on_press)
+		button.pressed.connect(func(): on_press(i))
 		buttonlist.append(button)
 		grid.add_child(button)
 
-func on_press():
+func on_press(i: Node):
 	if Globals.is_networking:
 		if not multiplayer.is_server():
 			print("You not a host")
 			return
 
-	for i in spawnlist:
-		for j in buttonlist:
-			if i.name == j.text:
-				var player_position = player.global_transform.origin
-				var player_forward_vector = player.global_transform.basis.z
-				player_forward_vector = player_forward_vector.normalized()
-				var spawn_position = player_position
-				spawn_position += player_forward_vector * 100
-				i.global_transform.origin = spawn_position
-				player.get_parent().add_child(i)
+	var player_position = player.global_transform.origin
+	var player_forward_vector = player.global_transform.basis.z
+	player_forward_vector = player_forward_vector.normalized()
+	var spawn_position = player_position
+	spawn_position += player_forward_vector * 100
+	i.global_transform.origin = spawn_position
+	player.get_parent().add_child(i)
 				
 				
 
