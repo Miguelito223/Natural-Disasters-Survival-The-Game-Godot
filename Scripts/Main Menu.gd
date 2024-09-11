@@ -43,6 +43,7 @@ func _ready():
 	$Multiplayer.hide()
 	$Settings.hide()
 
+   
 	$Multiplayer/username.text = Globals.username
 	$Multiplayer/ip.text = Globals.ip
 	$Multiplayer/port.text = str(Globals.port)

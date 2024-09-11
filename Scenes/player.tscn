@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.498723, -3.44162e-05, 5.99293e-05, 0.866762)
+bones/4/rotation = Quaternion(0.345672, -2.38309e-05, 6.48881e-05, 0.938356)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.286057, -1.98406e-05, -6.62194e-05, 0.958213)
+bones/5/rotation = Quaternion(0.498597, -3.45266e-05, -5.9888e-05, 0.866834)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.48287, 2.03973e-18, -1.70624e-18, 0.875692)
+bones/7/rotation = Quaternion(-0.364697, 1.79657e-18, -1.81808e-18, 0.931126)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.328654, 0.00239704, 0.002937, 0.944443)
+bones/8/rotation = Quaternion(-0.567092, 0.00412034, 0.00504851, 0.823629)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -1060,7 +1060,7 @@ visibility_mode = 1
 [connection signal="toggled" from="Pause menu/Settings/antialiasing" to="Pause menu" method="_on_antialiasing_toggled"]
 [connection signal="toggled" from="Pause menu/Settings/Fullscreen" to="Pause menu" method="_on_fullscreen_toggled"]
 [connection signal="item_selected" from="Pause menu/Settings/resolutions" to="Pause menu" method="_on_resolutions_item_selected"]
-[connection signal="item_selected" from="Pause menu/Settings/quality" to="Pause menu" method="_on_quality_item_selected"]
+[connection signal="item_selected" from="Pause menu/Settings/quality" to="Pause menu" method="_on_option_button_item_selected"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen" to="Pause menu" method="_on_volumen_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Volumen Music" to="Pause menu" method="_on_volumen_music_value_changed"]
 [connection signal="value_changed" from="Pause menu/Settings/Time" to="Pause menu" method="_on_time_value_changed"]
