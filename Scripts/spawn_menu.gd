@@ -94,5 +94,4 @@ func spawnmenu():
 func _process(_delta):
 	spawnmenu()
 	check_if_spawned()
-	reload_list()
 
