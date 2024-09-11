@@ -45,6 +45,7 @@ texture = ExtResource("3_wgml2")
 
 [node name="Menu" type="VBoxContainer" parent="."]
 process_mode = 3
+visible = false
 layout_mode = 0
 offset_left = 511.0
 offset_top = 312.0
@@ -83,7 +84,6 @@ text = "Exit"
 
 [node name="Multiplayer" type="VBoxContainer" parent="."]
 process_mode = 3
-visible = false
 layout_mode = 0
 offset_left = 651.0
 offset_top = 194.0
@@ -98,6 +98,13 @@ layout_mode = 2
 theme = ExtResource("2_8ye2w")
 theme_override_font_sizes/font_size = 30
 text = "Username:"
+
+[node name="Label" type="Label" parent="Multiplayer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_8ye2w")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+text = "Your Username is Invalid"
 
 [node name="username" type="LineEdit" parent="Multiplayer"]
 process_mode = 3

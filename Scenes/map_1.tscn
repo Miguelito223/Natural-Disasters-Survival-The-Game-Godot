@@ -308,6 +308,7 @@ theme = ExtResource("14_fkpsg")
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Warning Hud"]
+texture_filter = 1
 position = Vector2(1042, 102)
 scale = Vector2(7.58173, 7.86641)
 texture = ExtResource("15_32db0")

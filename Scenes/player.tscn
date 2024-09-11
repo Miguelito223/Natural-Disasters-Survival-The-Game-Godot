@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.345672, -2.38309e-05, 6.48881e-05, 0.938356)
+bones/4/rotation = Quaternion(0.640837, -4.42473e-05, 5.30696e-05, 0.767677)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.498597, -3.45266e-05, -5.9888e-05, 0.866834)
+bones/5/rotation = Quaternion(0.051508, -3.62947e-06, -6.90325e-05, 0.998673)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.364697, 1.79657e-18, -1.81808e-18, 0.931126)
+bones/7/rotation = Quaternion(-0.595313, 2.25262e-18, -1.56164e-18, 0.803494)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.567092, 0.00412034, 0.00504851, 0.823629)
+bones/8/rotation = Quaternion(-0.0582969, 0.000441407, 0.00054084, 0.998299)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -915,6 +915,7 @@ offset_right = 778.0
 offset_bottom = 328.0
 scale = Vector2(9.75896, 11.5355)
 mouse_filter = 2
+theme = ExtResource("9_6lvyl")
 
 [node name="List" type="VBoxContainer" parent="Players List Menu"]
 offset_left = 739.0
@@ -923,6 +924,7 @@ offset_right = 934.0
 offset_bottom = 519.0
 scale = Vector2(2, 2)
 mouse_filter = 2
+theme = ExtResource("9_6lvyl")
 
 [node name="SpawnMenu" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -1011,6 +1013,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Heart" type="Sprite2D" parent="Hud"]
 process_mode = 3
+texture_filter = 1
 position = Vector2(272.5, 972.5)
 scale = Vector2(1.08594, 1.19531)
 texture = ExtResource("4_ni53t")

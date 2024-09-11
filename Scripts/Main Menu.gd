@@ -80,11 +80,21 @@ func _on_port_text_changed(new_text:String):
 
 
 func _on_join_pressed():
-	Globals.joinwithip(Globals.ip, Globals.port)
+	if Globals.username.length() < 10 and Globals.username.length() >= 1:
+		Globals.joinwithip(Globals.ip, Globals.port)
+	else:
+		$Multiplayer/Label.visible = true
+		await get_tree().create_timer(2).timeout
+		$Multiplayer/Label.visible = false
 
 
 func _on_host_pressed():
-	Globals.hostwithport(Globals.port)
+	if Globals.username.length() < 10 and Globals.username.length() >= 1:
+		Globals.hostwithport(Globals.port)
+	else:
+		$Multiplayer/Label.visible = true
+		await get_tree().create_timer(2).timeout
+		$Multiplayer/Label.visible = false
 
 
 func _on_play_pressed():
