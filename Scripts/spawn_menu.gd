@@ -64,7 +64,7 @@ func reload_list():
 
 func check_if_spawned():
 	for i in spawnlist:
-		if is_instance_valid(i):
+		if is_instance_valid(i) or i == null:
 			if i.is_inside_tree():
 				i.queue_free()
 				reload_list()
