@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://csivk4bmioako"]
+[gd_scene load_steps=28 format=3 uid="uid://csivk4bmioako"]
 
 [ext_resource type="Script" path="res://Scripts/map.gd" id="1_xn4hm"]
 [ext_resource type="Shader" path="res://clouds.gdshader" id="2_sc6k1"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://iwbot60sbjqm" path="res://Textures/texture-grass-field.jpg" id="8_n5486"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_smrgu"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="10_lmmy2"]
+[ext_resource type="Texture2D" uid="uid://b8j13f56alvd7" path="res://Sprites/clipart974730.png" id="10_ux663"]
 [ext_resource type="AudioStream" uid="uid://dm8qudq1y2lbp" path="res://Sounds/music/survival-metal-with-solo-109315.mp3" id="10_w1fny"]
 [ext_resource type="PackedScene" uid="uid://da8gu8hvvo54v" path="res://Scenes/hause.tscn" id="11_8ni8s"]
 [ext_resource type="Script" path="res://Scripts/Chat.gd" id="12_osvto"]
@@ -63,19 +64,6 @@ glow_enabled = true
 script = ExtResource("5_sr3y7")
 mode = 0
 textures = [[ExtResource("8_n5486")], [null]]
-
-[sub_resource type="Gradient" id="Gradient_rgw5g"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(0.072, 0.48, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_afvhq"]
-gradient = SubResource("Gradient_rgw5g")
-use_hdr = true
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hf602"]
-radius = 0.1
-height = 1.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8u7l0"]
 properties/0/path = NodePath("Timer:wait_time")
@@ -191,9 +179,9 @@ metadata/_edit_group_ = true
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
 script = ExtResource("9_smrgu")
 layer_index = 1
-texture = SubResource("GradientTexture1D_afvhq")
-density = 0.5
-instance_mesh = SubResource("CapsuleMesh_hf602")
+texture = ExtResource("10_ux663")
+view_distance = 500.0
+density = 5.0
 shader_params/u_globalmap_tint_bottom = 0.0
 shader_params/u_globalmap_tint_top = null
 shader_params/u_bottom_ao = null
@@ -223,6 +211,9 @@ gizmo_extents = 2.9
 [node name="Hause" parent="." instance=ExtResource("11_8ni8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1184.2, 0.505142, 1012.02)
 freeze = true
+
+[node name="Destruction" parent="Hause" index="2" node_paths=PackedStringArray("shard_container")]
+shard_container = NodePath("../..")
 
 [node name="Chat" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -349,3 +340,6 @@ shape = SubResource("BoxShape3D_t040d")
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_player_spawner_spawned"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Chat/Button" to="Chat" method="_on_button_pressed"]
+
+[editable path="Hause"]
+[editable path="Hause/Interactable"]

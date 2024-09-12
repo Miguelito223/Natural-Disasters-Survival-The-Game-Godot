@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ucwf1wbil5c7"
+uid="uid://dh7qnguj1oij3"
 path="res://.godot/imported/Volcano.blend-a9b80adca34b1637d8b926d9aeb387c9.scn"
 
 [deps]
@@ -31,51 +31,14 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"materials": {
-"base_volcano": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/Models/Volcano/base_volcano.png"
-},
-"crater_volcano": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/Models/Volcano/crater_volcano.png"
-},
-"lava_anim": {
-"use_external/enabled": true,
-"use_external/path": "res://Materials/Models/Volcano/lava_anim.png"
-}
-},
-"meshes": {
-"Volcano_ref": {
-"generate/lightmap_uv": 0,
-"generate/lods": 0,
-"generate/shadow_meshes": 0,
-"lods/normal_merge_angle": 60.0,
-"lods/normal_split_angle": 25.0,
-"save_to_file/enabled": false,
-"save_to_file/path": "res://Volcano_ref.res"
-}
-},
-"nodes": {
-"PATH:ref_skeleton/Skeleton3D": {
-"rest_pose/external_animation_library": null,
-"retarget/bone_map": Object(BoneMap,"resource_local_to_scene":false,"resource_name":"","profile":Resource("res://volcano_skeleton.tres"),"bonemap":null,"bone_map/blender_implicit":&"","bone_map/crtr":&"","bone_map/lava_level":&"","bone_map/lava_level_extension":&"","bone_map/lava_level_extension_02":&"","bone_map/lava_level_extension_03":&"","bone_map/wave_01":&"","bone_map/wave_02":&"","bone_map/wave_03":&"","bone_map/wave_04":&"","bone_map/lava_level_extension_03.001":&"","bone_map/bounding_box_max":&"","bone_map/lava_level_extension_03.002":&"","bone_map/bounding_box_min":&"","script":null)
-,
-"retarget/bone_renamer/unique_node/skeleton_name": "Skeleton3D",
-"retarget/remove_tracks/except_bone_transform": true,
-"retarget/remove_tracks/unmapped_bones": true,
-"retarget/rest_fixer/fix_silhouette/enable": true
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true
 blender/nodes/cameras=true
 blender/nodes/custom_properties=true
 blender/nodes/modifiers=1
-blender/meshes/colors=true
+blender/meshes/colors=false
 blender/meshes/uvs=true
 blender/meshes/normals=true
 blender/meshes/tangents=true
