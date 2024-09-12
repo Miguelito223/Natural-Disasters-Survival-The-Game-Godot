@@ -5,6 +5,9 @@ extends CanvasLayer
 @export var buttonlist: Array[Button]
 @export var spawnedobject: Array[Node]
 var spawnmenu_state = false
+@onready var camera = get_parent().get_node("Model/Camera3D")
+
+const RAY_LENGTH = 1000
 
 func _ready():
 
@@ -44,10 +47,9 @@ func on_press(i: Node):
 			print("You not a host")
 			return
 
-	var camera = Globals.local_player.get_node("Model/Camera3D")
-	var spawn_position = camera.transform.origin
+	var mousePos = get_viewport().get_mouse_position()
 	var space_state = Globals.local_player.get_world_3d().direct_space_state
-	var ray = PhysicsRayQueryParameters3D.create(spawn_position, spawn_position + Vector3(10000,0,0))
+	var ray = PhysicsRayQueryParameters3D.create(camera.project_ray_origin(mousePos), camera.project_ray_normal(mousePos) * RAY_LENGTH)
 	var result = space_state.intersect_ray(ray)
 	i.transform.origin = result.position
 	var new_i = i.duplicate()

@@ -470,14 +470,14 @@ font_size = 182
 [node name="Model" parent="." instance=ExtResource("2_bu6xy")]
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.457279, -3.15496e-05, 6.14917e-05, 0.889323)
+bones/4/rotation = Quaternion(0.653681, -4.51354e-05, 5.23616e-05, 0.75677)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.347972, -2.41192e-05, -6.47837e-05, 0.937505)
+bones/5/rotation = Quaternion(0.0287776, -2.05822e-06, -6.90972e-05, 0.999586)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.450788, 1.97551e-18, -1.74031e-18, 0.892631)
+bones/7/rotation = Quaternion(-0.605788, 3.05876e-18, -1.53371e-18, 0.795626)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.399436, 0.00290877, 0.00356401, 0.91675)
+bones/8/rotation = Quaternion(-0.0323105, 0.000253357, 0.000310429, 0.999478)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)

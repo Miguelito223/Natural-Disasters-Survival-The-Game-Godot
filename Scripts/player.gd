@@ -334,6 +334,9 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
 
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	camera_node.transform.origin = _headbob(t_bob)
+
 	animation_tree_node.set("parameters/is_on_floor/transition_request", is_on_floor())
 	
 	if input_dir.x != 0 or input_dir.y != 0:
@@ -343,7 +346,11 @@ func _physics_process(delta):
 	
 	move_and_slide()
 
-
+func _headbob(time):
+	var pos = Vector3.ZERO
+	pos.y = sin(time * bob_freq) * bob_am
+	pos.x = sin(time * bob_freq / 2) * bob_am
+	return pos
 
 func _unhandled_input(event):
 	if Globals.is_networking:
