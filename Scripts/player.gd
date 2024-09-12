@@ -352,15 +352,15 @@ func _unhandled_input(event):
 
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
-			mi_personaje_node.rotate_y(-event.relative.x * SENSIBILITY)
-			camera_node.rotate_x(-event.relative.y * SENSIBILITY)
-			camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+			camera_node.rotation.x -= event.relative.y * SENSIBILITY
+			camera_node.rotation_degrees.x = clamp(camera_node.rotation_degrees.x, -90, 90)
+			mi_personaje_node.rotation.y -= event.relative.x * SENSIBILITY
 		elif event is InputEventJoypadMotion:
-			if event.axis == 2:
-				mi_personaje_node.rotate_y(event.axis_value * SENSIBILITY)
+			if event.axis == 2:	
+				mi_personaje_node.rotation.y += event.axis_value * SENSIBILITY
 			elif event.axis == 3:
-				camera_node.rotate_x(event.axis_value * SENSIBILITY)
-				camera_node.rotation.x = clamp(camera_node.rotation.x, deg_to_rad(-90), deg_to_rad(90))
+				camera_node.rotation.x += event.axis_value * SENSIBILITY
+				camera_node.rotation_degrees.x = clamp(camera_node.rotation_degrees.x, -90, 90)
 			
 
 

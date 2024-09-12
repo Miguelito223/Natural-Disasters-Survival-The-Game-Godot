@@ -44,13 +44,16 @@ func on_press(i: Node):
 			print("You not a host")
 			return
 
-	var marker = Globals.local_player.get_node("Model/Spawner")
-	var spawn_position = marker.global_transform.origin
-	i.global_transform.origin = spawn_position
+	var camera = Globals.local_player.get_node("Model/Camera3D")
+	var spawn_position = camera.transform.origin
+	var space_state = Globals.local_player.get_world_3d().direct_space_state
+	var ray = PhysicsRayQueryParameters3D.create(spawn_position, spawn_position + Vector3(10000,0,0))
+	var result = space_state.intersect_ray(ray)
+	i.transform.origin = result.position
 	var new_i = i.duplicate()
 	spawnedobject.append(new_i)
 	Globals.map.add_child(new_i)
-
+	
 
 
 

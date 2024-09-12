@@ -7231,6 +7231,9 @@ _subresources={
 }
 },
 "nodes": {
+"PATH:Esqueleto/Skeleton3D": {
+"rest_pose/external_animation_library": null
+},
 "PATH:Esqueleto/Skeleton3D/Cuerpo": {
 "physics/physics_material_override": null
 }
