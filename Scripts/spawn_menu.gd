@@ -1,9 +1,9 @@
 extends CanvasLayer
 
 @onready var grid = $Panel/grid
-@onready var player = get_parent()
 @export var spawnlist: Array[Node]
 @export var buttonlist: Array[Button]
+@export var spawnedobject: Array[Node]
 var spawnmenu_state = false
 
 func _ready():
@@ -44,33 +44,39 @@ func on_press(i: Node):
 			print("You not a host")
 			return
 
-	var player_position = player.global_transform.origin
-	var player_forward_vector = player.global_transform.basis.z
-	player_forward_vector = player_forward_vector.normalized()
-	var spawn_position = player_position
-	spawn_position += player_forward_vector * 100
+	var marker = Globals.local_player.get_node("Model/Spawner")
+	var spawn_position = marker.global_transform.origin
 	i.global_transform.origin = spawn_position
 	var new_i = i.duplicate()
-	player.get_parent().add_child(new_i)	
+	spawnedobject.append(new_i)
+	Globals.map.add_child(new_i)
 
 
 
 
 func spawnmenu():
-	if Input.is_action_pressed("Spawnmenu"):
-
-		self.visible = spawnmenu_state
-		
-		if spawnmenu_state:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			if not Globals.is_networking:
-				get_tree().paused = true
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			if not Globals.is_networking:
-				get_tree().paused = false
+	self.visible = spawnmenu_state
+	
+	if spawnmenu_state:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if not Globals.is_networking:
+			get_tree().paused = true
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if not Globals.is_networking:
+			get_tree().paused = false
 
 	spawnmenu_state = !spawnmenu_state
 
+func remove():
+	for i in spawnedobject:
+		if is_instance_valid(i) and spawnedobject.find(i) >= spawnedobject.size():
+			i.queue_free()
+
+
 func _process(_delta):
-	spawnmenu()
+	if Input.is_action_just_pressed("Spawnmenu"):
+		spawnmenu()
+
+	if Input.is_action_pressed("Remove"):
+		remove()

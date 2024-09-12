@@ -19,6 +19,9 @@ var sand_texture = preload("res://Textures/sand.png")
 var GlobalsData: DataResource = DataResource.load_file()
 
 @onready var timer = $Timer
+@onready var terrain = $HTerrain
+@onready var worldenvironment = $WorldEnvironment
+
 var started = false
 
 func _enter_tree() -> void:
@@ -83,13 +86,13 @@ func player_join(peer_id):
 			Globals.add_player_to_list.rpc(peer_id, player)
 
 			if Globals.players_conected_int >= 2 and started == false:
-				Globals.sync_timer.rpc(Globals.timer_disasters)
+				Globals.sync_timer.rpc(GlobalsData.timer_disasters)
 				set_started.rpc(true)
 			elif Globals.players_conected_int < 2 and started == true:
 				Globals.sync_timer.rpc(60)
 				set_started.rpc(false)
 			elif Globals.players_conected_int >= 2 and started == true:
-				Globals.sync_timer.rpc(Globals.timer_disasters)
+				Globals.sync_timer.rpc(GlobalsData.timer_disasters)
 				set_started.rpc(true)
 			else:
 				Globals.sync_timer.rpc(60)
@@ -127,13 +130,13 @@ func player_disconect(peer_id):
 				print("syncring timer, map, player_list and weather/disasters in server")
 				Globals.remove_player_to_list.rpc(peer_id, player)
 				if Globals.players_conected_int >= 2 and started == false:
-					Globals.sync_timer.rpc(Globals.timer_disasters)
+					Globals.sync_timer.rpc(GlobalsData.timer_disasters)
 					set_started.rpc(true)
 				elif Globals.players_conected_int < 2 and started == true:
 					Globals.sync_timer.rpc(60)
 					set_started.rpc(false)
 				elif Globals.players_conected_int >= 2 and started == true:
-					Globals.sync_timer.rpc(Globals.timer_disasters)
+					Globals.sync_timer.rpc(GlobalsData.timer_disasters)
 					set_started.rpc(true)
 				else:
 					Globals.sync_timer.rpc(60)
@@ -157,14 +160,17 @@ func _physics_process(_delta):
 	for object in get_children():
 		Globals.wind(object)
 
+	
+func _process(_delta):
+	terrain.ambient_wind = Globals.Wind_speed * _delta
 
 func _on_timer_timeout():
 	if started:
 		if Globals.is_networking:
 			if multiplayer.is_server():
-				Globals.sync_timer.rpc(Globals.timer_disasters)
+				Globals.sync_timer.rpc(GlobalsData.timer_disasters)
 		else:
-			Globals.sync_timer(Globals.timer_disasters)
+			Globals.sync_timer(GlobalsData.timer_disasters)
 	
 		sync_weather_and_disaster()
 	else:

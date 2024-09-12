@@ -476,15 +476,15 @@ font_size = 182
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.0841098, 0.508356, -0.740789)
 
 [node name="Skeleton3D" parent="Model/Esqueleto" index="0"]
-bones/4/rotation = Quaternion(0.330725, -2.27967e-05, 6.52978e-05, 0.943727)
+bones/4/rotation = Quaternion(0.509811, -3.51832e-05, 5.94809e-05, 0.860286)
 bones/4/scale = Vector3(1, 1, 1)
-bones/5/rotation = Quaternion(0.516962, -3.57954e-05, -5.91384e-05, 0.856009)
+bones/5/rotation = Quaternion(0.268975, -1.86601e-05, -6.65617e-05, 0.963147)
 bones/5/scale = Vector3(1, 1, 1)
 bones/6/rotation = Quaternion(-0.717998, 2.43715e-18, 2.43715e-18, 0.696046)
 bones/6/scale = Vector3(1, 1, 1)
-bones/7/rotation = Quaternion(-0.35314, 2.40036e-18, -1.81735e-18, 0.93557)
+bones/7/rotation = Quaternion(-0.491489, 2.05674e-18, -1.69658e-18, 0.870884)
 bones/7/scale = Vector3(1, 1, 1)
-bones/8/rotation = Quaternion(-0.586919, 0.00426357, 0.005224, 0.809617)
+bones/8/rotation = Quaternion(-0.309024, 0.00225509, 0.00276308, 0.951048)
 bones/10/rotation = Quaternion(-0.00363659, 0.699132, 0.714974, 0.003556)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/rotation = Quaternion(-0.0035936, 0.715584, -0.698517, 0.000556666)
@@ -551,6 +551,10 @@ max_distance = 10.0
 [node name="vomit audio" type="AudioStreamPlayer3D" parent="Model/Camera3D"]
 stream = ExtResource("4_13lgf")
 max_distance = 10.0
+
+[node name="Spawner" type="Marker3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0011, 3.12278, -9.31721)
+gizmo_extents = 0.42
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 root_node = NodePath("../Model")
@@ -673,6 +677,8 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Temp_Effect" type="CanvasLayer" parent="."]
+layer = 0
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="Temp_Effect"]
 material = SubResource("ShaderMaterial_t2j75")
@@ -699,8 +705,6 @@ mouse_filter = 2
 
 [node name="Pause menu" type="CanvasLayer" parent="."]
 process_mode = 3
-layer = 2
-visible = false
 script = ExtResource("2_vj7s0")
 
 [node name="Panel" type="Panel" parent="Pause menu"]
