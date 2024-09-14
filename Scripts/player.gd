@@ -14,9 +14,9 @@ const LERP_VAL =  .15
 
 const bob_freq = 2.0
 const bob_am = 0.08
-var t_bob = 0.0
+@export var t_bob = 0.0
 
-@export var mass: int = 1
+@export var mass: float = 0.5
 
 
 var Max_Hearth = 100
@@ -51,16 +51,17 @@ var min_bdradiation = 0
 @export var swim_factor: float = 0.25
 @export var swim_cap: float = 50
 
-@onready var camera_node = $"Model/Camera3D"
 @onready var rain_node = $Rain
 @onready var splash_node = $splash
 @onready var dust_node = $Dust
 @onready var sand_node = $Sand
 @onready var snow_node = $Snow
 @onready var pause_menu_node = $"Pause menu"
-@onready var animationplayer_node = $"Model/AnimationPlayer"
+@onready var animationplayer_node = $"AnimationPlayer"
 @onready var animation_tree_node = $AnimationTree
-@onready var mi_personaje_node = $"Model"
+@onready var camera_node = $"head/Camera3D"
+@onready var head_node = $"head"
+@onready var esqueleto_node = $"Esqueleto"
 @onready var label = $Name
 @onready var temp_effect = $Temp_Effect/ColorRect
 
@@ -102,12 +103,12 @@ func setlife(value):
 		is_alive = true
 
 func sneeze():
-	$"Model/Camera3D/sneeze audio".play()
-	$"Model/Camera3D/Sneeze".emitting = true
+	$"head/Camera3D/sneeze audio".play()
+	$"head/Camera3D/Sneeze".emitting = true
 
 func vomit():	
-	$"Model/Camera3D/vomit audio".play()
-	$"Model/Camera3D/Vomit".emitting = true
+	$"head/Camera3D/vomit audio".play()
+	$"head/Camera3D/Vomit".emitting = true
 
 func _ready():
 
@@ -286,33 +287,31 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Jump"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+			animation_tree_node.set("parameters/conditions/is_jumping", true)
 		
 		if not is_on_floor():
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+			animation_tree_node.set("parameters/conditions/is_jumping", true)
 
 		if IsInWater or IsInLava:
 			velocity.y += JUMP_VELOCITY
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+			animation_tree_node.set("parameters/conditions/is_jumping", true)
 	else:
-		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
+		animation_tree_node.set("parameters/conditions/is_jumping", false)
 
 	if Input.is_action_pressed("Jump"):
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
-		
-		if not is_on_floor():
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+			animation_tree_node.set("parameters/conditions/is_jumping", is_on_floor())
 
 		if IsInWater:
 			velocity.y += JUMP_VELOCITY
-			animation_tree_node.set("parameters/is_jumping/transition_request", "true")
+			animation_tree_node.set("parameters/conditions/is_swiming", IsInWater)
 	else:
-		animation_tree_node.set("parameters/is_jumping/transition_request", "false")
+		animation_tree_node.set("parameters/conditions/is_jumping", false)
+		animation_tree_node.set("parameters/conditions/is_swiming", IsInWater)
 
 	if Input.is_action_just_pressed("Flashligh"):
-		$Model/Camera3D/SpotLight3D.visible = !$Model/Camera3D/SpotLight3D.visible
+		$head/Camera3D/SpotLight3D.visible = !$head/Camera3D/SpotLight3D.visible
 
 	if Input.is_action_pressed("Spring"):
 		SPEED = SPEED_RUN
@@ -322,7 +321,7 @@ func _physics_process(delta):
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
-	var direction = (mi_personaje_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
+	var direction = (head_node.transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized() 
 	if is_on_floor():
 		if direction:
 			velocity.x = direction.x * SPEED
@@ -334,23 +333,17 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
 
-	t_bob += delta * velocity.length() * float(is_on_floor())
-	camera_node.transform.origin = _headbob(t_bob)
-
-	animation_tree_node.set("parameters/is_on_floor/transition_request", is_on_floor())
+	animation_tree_node.set("parameters/conditions/is_falling", !is_on_floor())
 	
 	if input_dir.x != 0 or input_dir.y != 0:
-		animation_tree_node.set("parameters/movement/transition_request", "walk")
+		animation_tree_node.set("parameters/conditions/is_walking", true)
+		animation_tree_node.set("parameters/conditions/is_idle", false)
 	else:
-		animation_tree_node.set("parameters/movement/transition_request", "idle")
-	
-	move_and_slide()
+		animation_tree_node.set("parameters/conditions/is_walking", false)
+		animation_tree_node.set("parameters/conditions/is_idle", is_on_floor())
 
-func _headbob(time):
-	var pos = Vector3.ZERO
-	pos.y = sin(time * bob_freq) * bob_am
-	pos.x = sin(time * bob_freq / 2) * bob_am
-	return pos
+		
+	move_and_slide()
 
 func _unhandled_input(event):
 	if Globals.is_networking:
@@ -361,10 +354,12 @@ func _unhandled_input(event):
 		if event is InputEventMouseMotion:
 			camera_node.rotation.x -= event.relative.y * SENSIBILITY
 			camera_node.rotation_degrees.x = clamp(camera_node.rotation_degrees.x, -90, 90)
-			mi_personaje_node.rotation.y -= event.relative.x * SENSIBILITY
+			head_node.rotation.y -= event.relative.x * SENSIBILITY
+			esqueleto_node.rotation_degrees.y = head_node.rotation_degrees.y - 90 
 		elif event is InputEventJoypadMotion:
 			if event.axis == 2:	
-				mi_personaje_node.rotation.y += event.axis_value * SENSIBILITY
+				head_node.rotation.y += event.axis_value * SENSIBILITY
+				esqueleto_node.rotation_degrees.y = head_node.rotation_degrees.y - 90 
 			elif event.axis == 3:
 				camera_node.rotation.x += event.axis_value * SENSIBILITY
 				camera_node.rotation_degrees.x = clamp(camera_node.rotation_degrees.x, -90, 90)

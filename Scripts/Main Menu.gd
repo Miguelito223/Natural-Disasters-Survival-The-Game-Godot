@@ -40,6 +40,7 @@ func _ready():
 	Globals.main_menu = self
 	
 	$Menu.show()
+	$Title.show()
 	$Multiplayer.hide()
 	$Settings.hide()
 
@@ -100,12 +101,14 @@ func _on_host_pressed():
 func _on_play_pressed():
 	$Menu.hide()
 	$Multiplayer.show()
+	$Title.hide()
 	$Settings.hide()
 
 
 func _on_settings_pressed():
 	$Menu.hide()
 	$Multiplayer.hide()
+	$Title.hide()
 	$Settings.show()
 
 
@@ -133,6 +136,7 @@ func _on_antialiasing_toggled(toggled_on:bool):
 
 func _on_back_pressed():
 	$Menu.show()
+	$Title.show()
 	$Multiplayer.hide()
 	$Settings.hide()
 

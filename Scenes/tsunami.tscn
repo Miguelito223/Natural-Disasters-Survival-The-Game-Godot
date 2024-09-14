@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Scripts/Tsunami.gd" id="1_v7drw"]
 [ext_resource type="Shader" path="res://Shaders/tsunami.gdshader" id="2_nl4w6"]
 
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_1y2fb"]
 size = Vector3(10000, 1000, 471)
 
@@ -29,6 +28,8 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Tsunami" type="CharacterBody3D"]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_v7drw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -40,6 +41,8 @@ size = Vector3(10000, 1000, 471)
 material = SubResource("ShaderMaterial_7xrna")
 
 [node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_1y2fb")

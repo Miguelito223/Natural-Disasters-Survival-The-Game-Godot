@@ -5,7 +5,7 @@ extends CanvasLayer
 @export var buttonlist: Array[Button]
 @export var spawnedobject: Array[Node]
 var spawnmenu_state = false
-@onready var camera = get_parent().get_node("Model/Camera3D")
+@onready var camera = get_parent().get_node("head/Camera3D")
 
 const RAY_LENGTH = 1000
 

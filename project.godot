@@ -206,6 +206,8 @@ Remove={
 [layer_names]
 
 3d_physics/layer_2="interactable"
+3d_physics/layer_3="water"
+3d_physics/layer_4="lava"
 
 [network]
 
